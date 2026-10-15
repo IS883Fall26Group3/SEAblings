@@ -12,6 +12,7 @@ class Settings:
     # Model names change over time; confirm current names in Google AI Studio.
     gemini_model: str
     gemini_embed_model: str
+    llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
     max_jd_chars: int = 3_000
     default_num_jobs: int = 10

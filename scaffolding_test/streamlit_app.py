@@ -1,18 +1,20 @@
 """SEAblings: CV-to-job matching. This file wires UI to core/ and holds no business logic."""
 import hashlib
+import logging
 import os
 from pathlib import Path
 
 import streamlit as st
 
 st.set_page_config(page_title="SEAblings | Job match", page_icon="🌊", layout="wide")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
 
 
 def load_secrets_into_env() -> None:
     try:
         for k, v in st.secrets.items():
             if isinstance(v, str):
-                os.environ.setdefault(k, v)
+                os.environ[k] = v.strip()  # overwrite so edited secrets take effect
     except Exception:
         pass  # no secrets file locally: core falls back to the sample job source
 
@@ -33,8 +35,13 @@ SAMPLE_CV = Path(__file__).parent / "data" / "sample" / "sample_cv.txt"
 
 # ---------- cached resources and calls (protect free-tier quotas) ----------
 @st.cache_resource
+def _llm(api_key: str, model: str, embed_model: str, timeout_s: int) -> LLMClient:
+    return LLMClient(api_key, model, embed_model, timeout_s)
+
+
 def get_llm() -> LLMClient:
-    return LLMClient(S.gemini_api_key, S.gemini_model, S.gemini_embed_model)
+    # Keyed on settings, so changing the key or model in Secrets creates a new client.
+    return _llm(S.gemini_api_key, S.gemini_model, S.gemini_embed_model, S.llm_timeout_s)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -72,6 +79,17 @@ with st.sidebar:
     run = st.button("Find matching jobs", type="primary", width="stretch")
     st.caption("Your CV is processed in memory and not saved by this app. "
                "Its text is sent to Google's Gemini API for analysis.")
+    with st.expander("Connection check"):
+        key = S.gemini_api_key
+        st.caption(f"Gemini key: {'found, ends in ' + key[-4:] if key else 'missing'}  \n"
+                   f"Model: {S.gemini_model}  \nEmbeddings: {S.gemini_embed_model}  \n"
+                   f"Job source: {S.job_source}")
+        if st.button("Test Gemini", width="stretch"):
+            try:
+                gen_s, emb_s = get_llm().ping()
+                st.success(f"Connected. Text {gen_s:.1f}s, embeddings {emb_s:.1f}s.")
+            except Exception as e:
+                st.error(str(e))
     if S.job_source == "sample":
         st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
 
