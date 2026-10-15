@@ -1,0 +1,8 @@
+# Runtime dependencies for Streamlit Community Cloud. Keep this list lean.
+streamlit==1.66.0
+google-genai==2.31.0
+pydantic==2.14.1
+pypdf==5.9.0
+python-docx==1.2.0
+requests==2.33.1
+numpy==2.4.4

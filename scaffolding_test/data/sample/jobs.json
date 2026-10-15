@@ -1,0 +1,62 @@
+[
+  {
+    "id": "s1",
+    "title": "Data Analyst",
+    "company": "Harborline Logistics (sample)",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time",
+    "url": "",
+    "description": "We are hiring a Data Analyst to build dashboards and analyze shipping performance. Required: SQL, Python, Tableau, Excel, stakeholder communication. 2+ years of experience in analytics. Nice to have: dbt, Snowflake, A/B testing."
+  },
+  {
+    "id": "s2",
+    "title": "Business Intelligence Developer",
+    "company": "Tidewater Health (sample)",
+    "location": "Cambridge, MA",
+    "source": "Sample",
+    "employment_type": "Full-time",
+    "url": "",
+    "description": "Design and maintain BI reporting. Required: Power BI, SQL, data modeling, ETL pipelines. 3+ years experience. Preferred: Azure, Python, healthcare data."
+  },
+  {
+    "id": "s3",
+    "title": "Strategy Consultant",
+    "company": "Northpoint Advisory (sample)",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time",
+    "url": "",
+    "description": "Join our strategy practice. Required: financial modeling, market research, PowerPoint, client management, structured problem solving. MBA preferred. 4+ years of relevant experience, consulting or corporate strategy."
+  },
+  {
+    "id": "s4",
+    "title": "Product Analyst, Energy Transition",
+    "company": "Brightcurrent Energy (sample)",
+    "location": "Remote",
+    "source": "Sample",
+    "employment_type": "Full-time",
+    "url": "",
+    "description": "Analyze product usage for our energy platform. Required: SQL, Python, product analytics, experimentation, energy industry knowledge. 2+ years experience. Nice to have: Looker, forecasting."
+  },
+  {
+    "id": "s5",
+    "title": "Machine Learning Engineer",
+    "company": "Seaglass AI (sample)",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time",
+    "url": "",
+    "description": "Build and deploy ML models. Required: Python, PyTorch, MLOps, Docker, AWS, LLM fine-tuning. 5+ years software engineering. Nice to have: Kubernetes, Rust."
+  },
+  {
+    "id": "s6",
+    "title": "Corporate Planning Associate",
+    "company": "Meridian Fuels (sample)",
+    "location": "Houston, TX",
+    "source": "Sample",
+    "employment_type": "Full-time",
+    "url": "",
+    "description": "Support annual planning and budgeting for downstream operations. Required: financial modeling, budgeting, Excel, scenario analysis, oil and gas industry. 3+ years experience. Preferred: MBA, SAP."
+  }
+]
