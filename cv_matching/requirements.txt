@@ -1,0 +1,5 @@
+streamlit
+google-genai
+streamlit
+sentence-transformers
+torch
