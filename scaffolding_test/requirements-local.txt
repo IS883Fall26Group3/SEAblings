@@ -1,0 +1,10 @@
+# Optional: enables the offline Hugging Face model and local embeddings.
+# Locally:  pip install -r requirements-local.txt
+# On Streamlit Cloud: append the two lines below to requirements.txt (see README).
+#
+# CPU-only torch. The default PyPI torch for Linux pulls several GB of CUDA libraries,
+# which the free tier can't hold. This wheel is for Python 3.14 (your Cloud setting);
+# for another Python version, pick the matching file at https://download.pytorch.org/whl/cpu/torch/
+-r requirements.txt
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.1%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl
+transformers==5.20.0

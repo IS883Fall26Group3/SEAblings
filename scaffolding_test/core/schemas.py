@@ -12,7 +12,7 @@ class CandidateProfile(BaseModel):
 
 
 class JobRequirements(BaseModel):
-    job_id: str
+    job_id: str = ""
     required_skills: list[str]
     nice_to_have_skills: list[str]
     min_years_experience: Optional[float] = None

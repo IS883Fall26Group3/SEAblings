@@ -37,14 +37,17 @@ def seniority_fit(cv_years: float, min_years: float | None) -> float:
 
 
 def rescale_cosine(cos: float, low: float = 0.5, high: float = 0.9) -> float:
-    """Embedding cosines cluster in a narrow band; stretch it to 0-1. Tune low/high."""
+    """Embedding cosines cluster in a narrow band; stretch it to 0-1.
+    The band depends on the embedding model, so low/high come from the embedder."""
     return float(np.clip((cos - low) / (high - low), 0.0, 1.0))
 
 
-def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job],
-               embed: EmbedFn, s: Settings) -> list[MatchResult]:
+def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedder,
+               s: Settings, embed_fn: EmbedFn | None = None) -> list[MatchResult]:
+    """embedder supplies thresholds (and embed() unless embed_fn, e.g. a cached version, is given)."""
     if not jobs:
         return []
+    embed = embed_fn or embedder.embed
     # Two embedding calls total: one for documents, one for all unique skills.
     doc_vecs = embed([cv_text[:s.max_jd_chars]] + [j.description[:s.max_jd_chars] for j in jobs])
     cv_vec, job_vecs = doc_vecs[0], doc_vecs[1:]
@@ -61,9 +64,9 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job],
         req = job.requirements
         required = [x for x in (req.required_skills if req else []) if x.strip()]
         cv_skills = [x for x in profile.skills if x.strip()]
-        matched, missing = match_skills(cv_skills, required, vec, s.skill_match_threshold)
+        matched, missing = match_skills(cv_skills, required, vec, embedder.skill_threshold)
         coverage = len(matched) / len(required) if required else 0.5  # neutral if unknown
-        semantic = rescale_cosine(float(jv @ cv_vec))
+        semantic = rescale_cosine(float(jv @ cv_vec), embedder.cos_low, embedder.cos_high)
         senior = seniority_fit(profile.years_experience, req.min_years_experience if req else None)
         score = 100 * (s.w_skill_coverage * coverage + s.w_semantic * semantic
                        + s.w_seniority * senior)

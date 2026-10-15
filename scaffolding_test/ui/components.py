@@ -66,10 +66,14 @@ def match_card(r: MatchResult, idx: int, on_explain) -> None:
             b.metric("Profile similarity", f"{r.semantic_similarity:.0%}")
             c.metric("Experience fit", f"{r.seniority_fit:.0%}")
             explanation = st.session_state.get("explanations", {}).get(job.id)
+            error = st.session_state.get("explain_errors", {}).get(job.id)
             if explanation:
                 st.markdown(explanation)
-            elif st.button("Get advice for this role", key=f"explain_{idx}"):
-                on_explain(r)
-                st.rerun()
+            else:
+                if error:
+                    st.warning(error)
+                if st.button("Get advice for this role", key=f"explain_{idx}"):
+                    on_explain(r)
+                    st.rerun()
             if job.url:
                 st.link_button("Open job posting", job.url)

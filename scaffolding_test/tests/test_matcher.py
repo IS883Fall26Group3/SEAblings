@@ -19,6 +19,13 @@ def fake_embed(texts):
     return np.array(rows)
 
 
+class FakeEmbedder:
+    name, skill_threshold, cos_low, cos_high = "fake", 0.8, 0.0, 1.0
+
+    def embed(self, texts):
+        return fake_embed(texts)
+
+
 def test_exact_and_missing_skills():
     vec = {s.lower(): fake_embed([s])[0] for s in ["sql", "python", "tableau"]}
     matched, missing = match_skills(["SQL", "Python"], ["sql", "Tableau"], vec, 0.8)
@@ -42,6 +49,6 @@ def test_better_skill_overlap_ranks_higher():
         else:
             j.requirements = JobRequirements(job_id=j.id, required_skills=["PyTorch", "Docker", "Kubernetes"],
                                              nice_to_have_skills=[], min_years_experience=5)
-    results = score_jobs(profile, "financial modeling budgeting excel", jobs, fake_embed, get_settings())
+    results = score_jobs(profile, "financial modeling budgeting excel", jobs, FakeEmbedder(), get_settings())
     assert results[0].job.id == "s6"
     assert all(0 <= r.score <= 100 for r in results)

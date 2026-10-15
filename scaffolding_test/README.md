@@ -9,10 +9,26 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON.
 3. **Search jobs** (`core/job_sources/`): JSearch API (aggregates Google for Jobs, incl. Indeed listings),
    or offline sample data.
-4. **Extract job requirements**: one batched Gemini call for all jobs.
+4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
 5. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`,
-   using Gemini embeddings. Deterministic, so the same inputs give the same score.
+   using embeddings (`core/embeddings.py`: local if installed, otherwise Gemini). Deterministic, so the same inputs give the same score.
 6. **Explain** (on demand): Gemini writes short advice for a selected job.
+
+## Choosing a model
+
+The sidebar's **AI model** menu offers each Gemini model listed in `GEMINI_MODELS`, an offline
+Hugging Face model (when installed), and **Auto**. Gemini's free tier limits requests per day
+*per model*, so Auto tries the models in order and moves on when one hits its quota or is
+overloaded. The offline model is the last resort: no quota, but slower and less accurate.
+
+**Enable the offline model.** Locally: `pip install -r requirements-local.txt`. On Streamlit Cloud,
+append the `torch` and `transformers` lines from `requirements-local.txt` to `requirements.txt`.
+The first use downloads about 1 GB of weights and takes a few minutes; later runs reuse them until
+the app restarts. Watch memory: the free tier allows up to about 2.7 GB.
+
+Embeddings switch to a local model automatically once torch is installed, which removes Gemini
+embedding calls entirely. Similarity thresholds differ per embedding model (`core/embeddings.py`),
+so re-check them with the evaluation set after switching.
 
 ## Run locally
 
@@ -38,6 +54,8 @@ streamlit_app.py        UI wiring only
 ui/                     components and CSS
 core/                   business logic, no Streamlit imports (testable)
   schemas.py            shared data contracts: change only by team agreement
+  llm/                  model providers (Gemini, offline Hugging Face) and Auto fallback
+  embeddings.py         Gemini or local embeddings, each with its own thresholds
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
 data/sample/            fictional CV and job listings for dev, tests, demo fallback
@@ -51,7 +69,7 @@ docs/                   architecture diagram, screenshots, report assets
 | Area | Files | Owner |
 |---|---|---|
 | Job data | `core/job_sources/`, `data/sample/` | TBD |
-| LLM and extraction | `core/llm_client.py`, `core/skill_extractor.py`, `core/cv_parser.py`, `prompts/` | TBD |
+| LLM and extraction | `core/llm/`, `core/embeddings.py`, `core/skill_extractor.py`, `core/cv_parser.py`, `prompts/` | TBD |
 | Scoring and evaluation | `core/matcher.py`, `tests/`, evaluation notebook | TBD |
 | UI and deployment | `streamlit_app.py`, `ui/`, `.streamlit/`, README | TBD |
 
