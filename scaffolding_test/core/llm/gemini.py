@@ -79,7 +79,8 @@ class GeminiProvider(LLMProvider):
         self.model = model
         self.name = model
 
-    def complete(self, prompt: str, *, json_mode: bool, temperature: float, what: str) -> str:
+    def complete(self, prompt: str, *, json_mode: bool, temperature: float, what: str,
+                 schema: dict | None = None) -> str:
         config = types.GenerateContentConfig(
             temperature=temperature, response_mime_type="application/json" if json_mode else None)
         resp = call_gemini(lambda: self.client.models.generate_content(

@@ -12,6 +12,8 @@ def _prompt(name: str, **kwargs) -> str:
 
 
 def extract_profile(llm: LLMProvider, cv_text: str) -> CandidateProfile:
+    if llm.max_cv_chars:
+        cv_text = cv_text[:llm.max_cv_chars]
     return llm.generate_json(_prompt("extract_profile.md", cv_text=cv_text), CandidateProfile,
                              what="extracting skills from your CV")
 

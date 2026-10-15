@@ -21,14 +21,16 @@ Hugging Face model (when installed), and **Auto**. Gemini's free tier limits req
 *per model*, so Auto tries the models in order and moves on when one hits its quota or is
 overloaded. The offline model is the last resort: no quota, but slower and less accurate.
 
-**Enable the offline model.** Locally: `pip install -r requirements-local.txt`. On Streamlit Cloud,
-append the `torch` and `transformers` lines from `requirements-local.txt` to `requirements.txt`.
-The first use downloads about 1 GB of weights and takes a few minutes; later runs reuse them until
-the app restarts. Watch memory: the free tier allows up to about 2.7 GB.
+**Offline model.** Llama 3.2 1B Instruct (4-bit GGUF, about 0.8 GB) runs inside the app with
+`llama-cpp-python`, the same setup as the course's `llama_demo`. It downloads from Hugging Face the
+first time it's used and again after each app restart. Output is constrained to the expected JSON
+schema, which keeps a small model's extraction well-formed. It reads each job separately, so fewer
+jobs means faster results.
 
-Embeddings switch to a local model automatically once torch is installed, which removes Gemini
-embedding calls entirely. Similarity thresholds differ per embedding model (`core/embeddings.py`),
-so re-check them with the evaluation set after switching.
+Embeddings use a small local model (bge-small, GGUF) whenever `llama-cpp-python` is installed, so
+scoring never uses Gemini quota; if it can't load, the app falls back to Gemini embeddings.
+Similarity thresholds differ per embedding model (`core/embeddings.py`), so re-check them with the
+evaluation set.
 
 ## Run locally
 

@@ -46,11 +46,13 @@ def extract_json(text: str) -> dict:
 
 class LLMProvider(ABC):
     name: str = "model"
-    batch_jobs: bool = True  # can it extract requirements for many jobs in one call?
+    batch_jobs: bool = True             # can it extract requirements for many jobs in one call?
+    max_cv_chars: int | None = None     # optional tighter CV limit (slow local models)
 
     @abstractmethod
-    def complete(self, prompt: str, *, json_mode: bool, temperature: float, what: str) -> str:
-        ...
+    def complete(self, prompt: str, *, json_mode: bool, temperature: float, what: str,
+                 schema: dict | None = None) -> str:
+        """schema: JSON Schema of the expected reply; providers may use it to constrain output."""
 
     def generate_json(self, prompt: str, schema: type[T], what: str = "generating",
                       temperature: float = 0.1) -> T:
@@ -58,7 +60,8 @@ class LLMProvider(ABC):
                 f"no commentary:\n{schema_hint(schema)}")
         last = None
         for _ in range(2):  # one retry if the JSON is malformed
-            raw = self.complete(full, json_mode=True, temperature=temperature, what=what)
+            raw = self.complete(full, json_mode=True, temperature=temperature, what=what,
+                                schema=schema.model_json_schema())
             try:
                 return schema.model_validate(extract_json(raw))
             except (ValueError, ValidationError) as e:

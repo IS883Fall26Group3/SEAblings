@@ -1,6 +1,7 @@
 """Text embeddings for skill matching and profile similarity.
 Each embedder carries its own thresholds: cosine values differ a lot between models."""
 import logging
+import threading
 import time
 from abc import ABC, abstractmethod
 
@@ -49,30 +50,23 @@ class GeminiEmbedder(Embedder):
 
 
 class LocalEmbedder(Embedder):
-    """Small sentence-embedding model (~90 MB) run on CPU. No API quota involved.
-    Thresholds below are starting points: tune them with your evaluation set."""
-    skill_threshold, cos_low, cos_high = 0.70, 0.2, 0.7
+    """Small GGUF embedding model (bge-small, ~35 MB) run with llama-cpp-python. No API quota.
+    Thresholds are starting points for bge-small: tune them with your evaluation set."""
+    skill_threshold, cos_low, cos_high = 0.85, 0.55, 0.9
 
-    def __init__(self, model_id: str):
+    def __init__(self, repo_id: str, filename: str, n_threads: int = 2):
         try:
-            import torch
-            from transformers import AutoModel, AutoTokenizer
+            from llama_cpp import Llama
         except ImportError as e:
-            raise LLMError("Local embeddings need torch and transformers installed.") from e
+            raise LLMError("Local embeddings need llama-cpp-python installed.") from e
         start = time.time()
-        self.torch = torch
-        self.tok = AutoTokenizer.from_pretrained(model_id)
-        self.model = AutoModel.from_pretrained(model_id).eval()
-        self.name = f"Local: {model_id.split('/')[-1]}"
-        log.info("loaded %s in %.1fs", model_id, time.time() - start)
+        self.llm = Llama.from_pretrained(repo_id=repo_id, filename=filename, embedding=True,
+                                         n_ctx=512, n_batch=512, n_threads=n_threads, verbose=False)
+        self.lock = threading.Lock()
+        self.name = f"Local: {repo_id.split('/')[-1].removesuffix('-gguf')}"
+        log.info("loaded %s in %.1fs", repo_id, time.time() - start)
 
-    def embed(self, texts: list[str], batch_size: int = 32) -> np.ndarray:
-        out = []
-        for i in range(0, len(texts), batch_size):
-            enc = self.tok(texts[i:i + batch_size], padding=True, truncation=True,
-                           max_length=256, return_tensors="pt")
-            with self.torch.inference_mode():
-                hidden = self.model(**enc).last_hidden_state
-            mask = enc["attention_mask"].unsqueeze(-1).float()
-            out.append(((hidden * mask).sum(1) / mask.sum(1).clamp(min=1e-9)).numpy())
-        return _normalize(np.vstack(out).astype(np.float32))
+    def embed(self, texts: list[str]) -> np.ndarray:
+        with self.lock:
+            vectors = [self.llm.embed(t, truncate=True) for t in texts]
+        return _normalize(np.array(vectors, dtype=np.float32))

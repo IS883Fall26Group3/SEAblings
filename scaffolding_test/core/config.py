@@ -17,15 +17,19 @@ class Settings:
     # Model names change over time; confirm current names in Google AI Studio.
     gemini_models: list[str]
     gemini_embed_model: str
-    # Local (offline) Hugging Face models; used only if torch + transformers are installed.
-    local_llm_model: str
-    local_llm_dtype: str
-    local_embed_model: str
+    # Offline GGUF models from Hugging Face, run with llama-cpp-python (no API, no quota).
+    local_llm_repo: str
+    local_llm_file: str          # filename or glob within the repo (case-sensitive)
+    local_embed_repo: str
+    local_embed_file: str
     embeddings: str              # "auto" (local if installed, else Gemini), "local", or "gemini"
     llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
     max_jd_chars: int = 3_000
-    local_max_jd_chars: int = 1_500  # small local models are slow on long inputs
+    local_max_cv_chars: int = 8_000  # the offline model runs on 2 CPUs: shorter input = faster
+    local_max_jd_chars: int = 1_500
+    local_n_ctx: int = 8_192         # llama-cpp's default context (512 tokens) is too small for a CV
+    local_threads: int = 2           # Streamlit Community Cloud allows up to 2 CPUs
     default_num_jobs: int = 10
     # Scoring weights (must sum to 1.0). Tune with your evaluation set.
     w_skill_coverage: float = 0.5
@@ -42,8 +46,9 @@ def get_settings() -> Settings:
         gemini_models=_list(env("GEMINI_MODELS", env("GEMINI_MODEL",
                                 "gemini-flash-latest,gemini-flash-lite-latest"))),
         gemini_embed_model=env("GEMINI_EMBED_MODEL", "gemini-embedding-001"),
-        local_llm_model=env("LOCAL_LLM_MODEL", "Qwen/Qwen2.5-0.5B-Instruct"),
-        local_llm_dtype=env("LOCAL_LLM_DTYPE", "bfloat16"),
-        local_embed_model=env("LOCAL_EMBED_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
+        local_llm_repo=env("LOCAL_LLM_REPO", "bartowski/Llama-3.2-1B-Instruct-GGUF"),
+        local_llm_file=env("LOCAL_LLM_FILE", "*Q4_K_M.gguf"),
+        local_embed_repo=env("LOCAL_EMBED_REPO", "CompendiumLabs/bge-small-en-v1.5-gguf"),
+        local_embed_file=env("LOCAL_EMBED_FILE", "*q8_0.gguf"),
         embeddings=env("EMBEDDINGS", "auto"),
     )

@@ -11,7 +11,7 @@ class Scripted(LLMProvider):
     def __init__(self, replies):
         self.replies, self.name = list(replies), "scripted"
 
-    def complete(self, prompt, *, json_mode, temperature, what):
+    def complete(self, prompt, *, json_mode, temperature, what, schema=None):
         return self.replies.pop(0)
 
 

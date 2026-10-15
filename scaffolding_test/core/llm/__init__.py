@@ -13,7 +13,7 @@ AUTO = "auto"
 
 
 def local_available() -> bool:
-    return all(importlib.util.find_spec(p) is not None for p in ("torch", "transformers"))
+    return importlib.util.find_spec("llama_cpp") is not None
 
 
 def model_options(s: Settings) -> dict[str, str]:
@@ -21,7 +21,8 @@ def model_options(s: Settings) -> dict[str, str]:
     opts = {AUTO: "Auto (switch models when one is unavailable)"}
     opts.update({f"gemini:{m}": f"Gemini: {m}" for m in s.gemini_models})
     if local_available():
-        opts[f"local:{s.local_llm_model}"] = f"Offline: {s.local_llm_model.split('/')[-1]} (slower)"
+        name = s.local_llm_repo.split("/")[-1].removesuffix("-GGUF")
+        opts[f"local:{s.local_llm_repo}"] = f"Offline: {name} (slower, no quota)"
     return opts
 
 
@@ -34,16 +35,23 @@ def build_provider(key: str, s: Settings) -> LLMProvider:
     if kind == "gemini":
         return GeminiProvider(s.gemini_api_key, name, s.llm_timeout_s)
     if kind == "local":
-        from .local_hf import LocalHFProvider
-        return LocalHFProvider(name, s.local_llm_dtype)
+        from .local_llama import LlamaCppProvider
+        return LlamaCppProvider(name, s.local_llm_file, s.local_n_ctx, s.local_threads,
+                                max_cv_chars=s.local_max_cv_chars)
     raise ValueError(f"Unknown model key: {key}")
 
 
 def build_embedder(s: Settings):
+    """Local embeddings when available (no quota); Gemini embeddings otherwise or if loading fails."""
     from ..embeddings import GeminiEmbedder, LocalEmbedder
     use_local = s.embeddings == "local" or (s.embeddings == "auto" and local_available())
     if use_local:
-        return LocalEmbedder(s.local_embed_model)
+        try:
+            return LocalEmbedder(s.local_embed_repo, s.local_embed_file, s.local_threads)
+        except Exception as e:
+            if s.embeddings == "local":
+                raise
+            log.warning("local embeddings unavailable, using Gemini instead: %r", e)
     return GeminiEmbedder(s.gemini_api_key, s.gemini_embed_model, s.llm_timeout_s)
 
 
