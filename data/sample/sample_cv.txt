@@ -1,0 +1,20 @@
+ALEX RIVERA (fictional sample CV for testing)
+
+SUMMARY
+Analyst with 4 years of experience in corporate planning and business analytics in the energy sector, currently completing an MBA.
+
+EXPERIENCE
+Corporate Planning Analyst, Example Energy Co. (2021 - 2025)
+- Built financial models and scenario analyses for a $2B downstream investment portfolio
+- Automated monthly KPI dashboards in Power BI and Excel, cutting reporting time by 40%
+- Wrote SQL queries to consolidate sales and supply data from SAP
+
+Business Analyst Intern, Sample Consulting (2020)
+- Conducted market research and prepared client presentations in PowerPoint
+
+EDUCATION
+MBA (expected 2027), Sample University
+B.Eng. Industrial Engineering, 2020
+
+SKILLS
+Financial modeling, Excel, Power BI, SQL, Python (basic), SAP, budgeting, market research, PowerPoint, stakeholder management
