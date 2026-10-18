@@ -28,10 +28,10 @@ def app_header() -> None:
 
 STEPS = [
     ("1", "Upload your CV", "PDF, DOCX or TXT. AI reads your skills, experience and level."),
-    ("2", "Search live openings", "Current postings for your target role and location, "
-                                  "from Google for Jobs (incl. Indeed and LinkedIn)."),
-    ("3", "See your best fits", "Jobs ranked by match score, with the skills you have, "
-                                "the gaps to close, and advice for each role."),
+    ("2", "Add the jobs you want", "Upload or paste job descriptions, or search live "
+                                   "openings for a role and location."),
+    ("3", "See how well you fit", "A match score for each job, the skills you have, "
+                                  "the gaps to close, and advice for the role."),
 ]
 
 
@@ -42,16 +42,16 @@ def hero() -> None:
         for n, t, d in STEPS)
     st.markdown(
         f"""<div class="sea-hero">
-        <h1>Find the jobs your CV is ready for</h1>
-        <p>Stop guessing which postings fit. Upload your CV, name the role and place you want,
-        and get today's openings ranked by how well you match, plus what to learn next.</p>
+        <h1>See how well your CV fits the job</h1>
+        <p>Stop guessing whether you're a fit. Upload your CV and the job descriptions you're
+        considering, and see how well you match each one, plus what to learn next.</p>
         </div>
         <div class="sea-steps">{steps}</div>
         <div class="sea-score-note"><b>How the score works:</b>
         50% skill coverage + 30% profile similarity + 20% experience fit.
         The same CV and job always get the same score.</div>
         <p class="sea-start">👈 Start in the sidebar (tap » on a phone): add your CV (or use our sample),
-        enter a role, and click <b>Find matching jobs</b>.</p>""",
+        add a job description, and click <b>Analyze my match</b>.</p>""",
         unsafe_allow_html=True,
     )
 
@@ -82,7 +82,7 @@ def match_card(r: MatchResult, idx: int, on_explain) -> None:
         left, right = st.columns([1, 6], vertical_alignment="center")
         left.markdown(score_ring(r.score), unsafe_allow_html=True)
         meta = ", ".join(x for x in (job.company, job.location, job.employment_type.title()) if x)
-        via = f" (via {escape(job.source)})" if job.source else ""
+        via = "" if not job.source else f" (via {escape(job.source)})" if meta else escape(job.source)
         right.markdown(
             f'<p class="sea-job-title">{escape(job.title)}</p>'
             f'<p class="sea-meta">{escape(meta)}{via}</p>', unsafe_allow_html=True)

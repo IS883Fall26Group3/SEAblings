@@ -1,4 +1,4 @@
-"""Turn an uploaded CV (PDF, DOCX, TXT) into plain text. Runs fully in memory."""
+"""Turn an uploaded CV or job description (PDF, DOCX, TXT) into plain text. Runs fully in memory."""
 import io
 import re
 
@@ -8,7 +8,8 @@ from pypdf import PdfReader
 SUPPORTED = (".pdf", ".docx", ".txt")
 
 
-def extract_text(file_bytes: bytes, filename: str, max_chars: int = 15_000) -> str:
+def extract_text(file_bytes: bytes, filename: str, max_chars: int = 15_000,
+                 what: str = "CV") -> str:
     name = filename.lower()
     if name.endswith(".pdf"):
         reader = PdfReader(io.BytesIO(file_bytes))
@@ -24,6 +25,6 @@ def extract_text(file_bytes: bytes, filename: str, max_chars: int = 15_000) -> s
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     if len(text) < 200:
-        raise ValueError("Couldn't read enough text from this CV. If it's a scanned PDF, "
+        raise ValueError(f"Couldn't read enough text from this {what}. If it's a scanned PDF, "
                          "upload a text-based PDF or DOCX instead.")
     return text[:max_chars]
