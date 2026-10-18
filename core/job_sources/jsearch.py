@@ -40,7 +40,10 @@ class JSearchSource(JobSource):
                 f"Job search failed (HTTP {r.status_code} from {self.url}): {r.text[:300]}. "
                 "Check your JSearch subscription and RAPIDAPI_KEY in the RapidAPI playground, "
                 "or set JOB_SOURCE to 'sample' to keep demoing.")
-        return [self._to_job(d) for d in r.json().get("data", [])[:limit]]
+        data = r.json().get("data") or []
+        if isinstance(data, dict):  # newer API version nests the list: {"data": {"jobs": [...]}}
+            data = data.get("jobs") or []
+        return [self._to_job(d) for d in data[:limit]]
 
     @staticmethod
     def _to_job(d: dict) -> Job:
