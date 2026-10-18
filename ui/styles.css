@@ -17,6 +17,30 @@ h1, h2, h3, .sea-title { font-family: 'Bricolage Grotesque', system-ui, sans-ser
 .sea-hero h1 { font-size: 3rem; font-weight: 800; line-height: 1.05; margin: 0 0 .5rem; letter-spacing: -0.02em; }
 .sea-hero p  { font-size: 1.15rem; color: #3E5459; max-width: 60ch; margin: 0; }
 
+/* Header bar, on every screen */
+.sea-header {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem;
+  padding: .75rem 1rem; margin-bottom: 1.5rem; border-radius: 14px;
+  background: var(--deep); color: white;
+}
+.sea-brand { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.sea-logo { font-size: 1.4rem; }
+.sea-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.01em; }
+.sea-tag  { font-size: .95rem; opacity: .85; }
+.sea-team { font-size: .85rem; opacity: .75; }
+
+/* Landing: how it works */
+.sea-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.75rem 0 1rem; }
+.sea-step { background: white; border: 1px solid #DCE6E4; border-radius: 14px; padding: 1rem 1.1rem; }
+.sea-step-n {
+  display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--glass); color: var(--deep); font-weight: 800; font-family: 'Bricolage Grotesque', sans-serif;
+}
+.sea-step-t { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 1.15rem; margin: .6rem 0 .25rem; color: var(--ink); }
+.sea-step-d { color: #3E5459; margin: 0; font-size: .95rem; }
+.sea-score-note { background: var(--glass); border-radius: 10px; padding: .7rem 1rem; color: var(--ink); font-size: .95rem; }
+.sea-start { margin-top: 1rem; color: #3E5459; }
+
 /* The one memorable element: the score ring */
 .sea-ring {
   --pct: 0; --c: var(--deep);

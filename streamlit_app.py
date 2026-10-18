@@ -108,6 +108,7 @@ def handle_explain(result) -> None:
 
 # ---------- layout ----------
 ui.inject_css()
+ui.app_header()
 
 with st.sidebar:
     st.subheader("Your search")

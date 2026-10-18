@@ -13,13 +13,45 @@ def inject_css() -> None:
     st.markdown(f"<style>{CSS.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 
-def hero() -> None:
+def app_header() -> None:
+    """Brand bar shown on every screen, so the app's purpose is clear at a glance."""
     st.markdown(
-        """<div class="sea-hero">
-        <h1>Find roles that fit your CV</h1>
-        <p>Upload your CV, tell us the role and location you want, and see current openings
-        ranked by how well your skills match, with the gaps to close for each one.</p>
+        """<div class="sea-header">
+        <div class="sea-brand"><span class="sea-logo" aria-hidden="true">🌊</span>
+          <span class="sea-name">SEAblings</span>
+          <span class="sea-tag">AI CV-to-job matcher</span></div>
+        <div class="sea-team">IS883 · Fall 2026 · Group 3</div>
         </div>""",
+        unsafe_allow_html=True,
+    )
+
+
+STEPS = [
+    ("1", "Upload your CV", "PDF, DOCX or TXT. AI reads your skills, experience and level."),
+    ("2", "Search live openings", "Current postings for your target role and location, "
+                                  "from Google for Jobs (incl. Indeed and LinkedIn)."),
+    ("3", "See your best fits", "Jobs ranked by match score, with the skills you have, "
+                                "the gaps to close, and advice for each role."),
+]
+
+
+def hero() -> None:
+    steps = "".join(
+        f'<div class="sea-step"><span class="sea-step-n">{n}</span>'
+        f'<p class="sea-step-t">{t}</p><p class="sea-step-d">{d}</p></div>'
+        for n, t, d in STEPS)
+    st.markdown(
+        f"""<div class="sea-hero">
+        <h1>Find the jobs your CV is ready for</h1>
+        <p>Stop guessing which postings fit. Upload your CV, name the role and place you want,
+        and get today's openings ranked by how well you match, plus what to learn next.</p>
+        </div>
+        <div class="sea-steps">{steps}</div>
+        <div class="sea-score-note"><b>How the score works:</b>
+        50% skill coverage + 30% profile similarity + 20% experience fit.
+        The same CV and job always get the same score.</div>
+        <p class="sea-start">👈 Start in the sidebar (tap » on a phone): add your CV (or use our sample),
+        enter a role, and click <b>Find matching jobs</b>.</p>""",
         unsafe_allow_html=True,
     )
 
