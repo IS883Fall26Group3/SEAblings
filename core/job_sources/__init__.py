@@ -6,5 +6,5 @@ from .sample import SampleSource
 
 def get_job_source(s: Settings) -> JobSource:
     if s.job_source == "jsearch":
-        return JSearchSource(s.rapidapi_key)
+        return JSearchSource(s.rapidapi_key, url=s.jsearch_url)
     return SampleSource()

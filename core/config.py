@@ -13,6 +13,7 @@ class Settings:
     gemini_api_key: str
     rapidapi_key: str
     job_source: str
+    jsearch_url: str             # copy from the RapidAPI playground's code snippet if it changes
     # Gemini models offered in the sidebar. Each model has its own free-tier daily quota.
     # Model names change over time; confirm current names in Google AI Studio.
     gemini_models: list[str]
@@ -43,6 +44,7 @@ def get_settings() -> Settings:
         gemini_api_key=env("GEMINI_API_KEY", ""),
         rapidapi_key=env("RAPIDAPI_KEY", ""),
         job_source=env("JOB_SOURCE", "sample"),
+        jsearch_url=env("JSEARCH_URL", "https://jsearch.p.rapidapi.com/search"),
         gemini_models=_list(env("GEMINI_MODELS", env("GEMINI_MODEL",
                                 "gemini-flash-latest,gemini-flash-lite-latest"))),
         gemini_embed_model=env("GEMINI_EMBED_MODEL", "gemini-embedding-001"),
