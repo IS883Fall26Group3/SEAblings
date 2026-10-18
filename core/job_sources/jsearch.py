@@ -7,7 +7,7 @@ import requests
 from ..schemas import Job
 from .base import JobSource
 
-URL = "https://jsearch.p.rapidapi.com/search"
+URL = "https://jsearch.p.rapidapi.com/search-v2"
 
 
 class JSearchSource(JobSource):
@@ -24,7 +24,6 @@ class JSearchSource(JobSource):
     def search(self, query: str, location: str, limit: int = 10) -> list[Job]:
         params = {
             "query": f"{query} in {location}" if location else query,
-            "page": 1,
             "num_pages": 1,          # ~10 results per page; each page counts against quota
             "country": self.country,
             "date_posted": "month",

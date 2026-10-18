@@ -44,7 +44,7 @@ def get_settings() -> Settings:
         gemini_api_key=env("GEMINI_API_KEY", ""),
         rapidapi_key=env("RAPIDAPI_KEY", ""),
         job_source=env("JOB_SOURCE", "sample"),
-        jsearch_url=env("JSEARCH_URL", "https://jsearch.p.rapidapi.com/search"),
+        jsearch_url=env("JSEARCH_URL", "https://jsearch.p.rapidapi.com/search-v2"),
         gemini_models=_list(env("GEMINI_MODELS", env("GEMINI_MODEL",
                                 "gemini-flash-latest,gemini-flash-lite-latest"))),
         gemini_embed_model=env("GEMINI_EMBED_MODEL", "gemini-embedding-001"),
