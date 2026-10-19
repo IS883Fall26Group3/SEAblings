@@ -73,6 +73,7 @@ def make_client(api_key: str, timeout_s: int) -> genai.Client:
 
 class GeminiProvider(LLMProvider):
     batch_jobs = True
+    schema_unsupported = False
 
     def __init__(self, api_key: str, model: str, timeout_s: int = 60):
         self.client = make_client(api_key, timeout_s)
@@ -81,8 +82,19 @@ class GeminiProvider(LLMProvider):
 
     def complete(self, prompt: str, *, json_mode: bool, temperature: float, what: str,
                  schema: dict | None = None) -> str:
+        use_schema = json_mode and schema is not None and not self.schema_unsupported
         config = types.GenerateContentConfig(
-            temperature=temperature, response_mime_type="application/json" if json_mode else None)
-        resp = call_gemini(lambda: self.client.models.generate_content(
-            model=self.model, contents=prompt, config=config), what, self.model)
+            temperature=temperature, response_mime_type="application/json" if json_mode else None,
+            # Constrains the reply to the expected JSON shape, so it can't add extra blocks.
+            response_json_schema=schema if use_schema else None)
+        try:
+            resp = call_gemini(lambda: self.client.models.generate_content(
+                model=self.model, contents=prompt, config=config), what, self.model)
+        except LLMError as e:
+            if not (use_schema and getattr(e.__cause__, "code", None) == 400):
+                raise
+            # Some models reject a JSON schema; fall back to plain JSON mode for this model.
+            log.warning("%s rejected the JSON schema; retrying without it", self.model)
+            self.schema_unsupported = True
+            return self.complete(prompt, json_mode=json_mode, temperature=temperature, what=what)
         return resp.text or ""

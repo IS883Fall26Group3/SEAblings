@@ -23,8 +23,8 @@ def load_secrets_into_env() -> None:
 load_secrets_into_env()
 
 from core.config import get_settings  # noqa: E402
-from core.cv_parser import extract_text  # noqa: E402
-from core.job_sources import get_job_source  # noqa: E402
+from core.cv_parser import clean_text, extract_text  # noqa: E402
+from core.job_sources import get_job_source, jobs_from_descriptions  # noqa: E402
 from core.llm import (AUTO, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
 from core.matcher import score_jobs  # noqa: E402
@@ -34,6 +34,7 @@ from ui import components as ui  # noqa: E402
 S = get_settings()
 OPTIONS = model_options(S)
 SAMPLE_CV = Path(__file__).parent / "data" / "sample" / "sample_cv.txt"
+MODE_JD, MODE_SEARCH = "My job descriptions", "Search live jobs"
 
 
 # ---------- cached models and calls (protect free-tier quotas) ----------
@@ -108,19 +109,34 @@ def handle_explain(result) -> None:
 
 # ---------- layout ----------
 ui.inject_css()
+ui.app_header()
 
 with st.sidebar:
     st.subheader("Your search")
     upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
-    if upload is None:
+    cv_paste = "" if upload is not None else st.text_area(
+        "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
+    if upload is None and not cv_paste.strip():
         st.caption("No CV yet? We'll use a fictional sample CV so you can try the app.")
-    query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst")
-    location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote")
-    limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs)
+    mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
+                    help="Use job descriptions you already have, or search current openings online.")
+    query = location = ""
+    limit = S.default_num_jobs
+    jd_files, jd_text = [], ""
+    if mode == MODE_JD:
+        jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
+                                    accept_multiple_files=True)
+        jd_text = st.text_area("Or paste a job description", height=150,
+                               placeholder="Paste the full posting. Put the job title on the first line.")
+    else:
+        query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst")
+        location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote")
+        limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs)
     st.selectbox("AI model", list(OPTIONS), format_func=label, key="model_choice",
                  help="Each Gemini model has its own free daily quota. Auto tries them in order "
                       "and uses the offline model (if installed) as a last resort.")
-    run = st.button("Find matching jobs", type="primary", width="stretch")
+    run = st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
+                    type="primary", width="stretch")
     st.caption("Your CV is processed in memory and not saved by this app. With a Gemini model, "
                "its text is sent to Google's Gemini API for analysis.")
 
@@ -137,12 +153,15 @@ with st.sidebar:
                     st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
                 except Exception as e:
                     st.error(f"{label(k)}: {e}")
-    if S.job_source == "sample":
+    if mode == MODE_SEARCH and S.job_source == "sample":
         st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
 
 if run:
-    if not query.strip():
+    if mode == MODE_SEARCH and not query.strip():
         st.sidebar.error("Enter the role you're looking for.")
+        st.stop()
+    if mode == MODE_JD and not jd_files and not jd_text.strip():
+        st.sidebar.error("Upload or paste at least one job description.")
         st.stop()
     for k in ("explanations", "explain_errors"):
         st.session_state.pop(k, None)
@@ -155,6 +174,8 @@ if run:
             st.write("Reading your CV")
             if upload is not None:
                 cv_text = extract_text(upload.getvalue(), upload.name, S.max_cv_chars)
+            elif cv_paste.strip():
+                cv_text = clean_text(cv_paste, S.max_cv_chars)
             else:
                 cv_text = SAMPLE_CV.read_text(encoding="utf-8")
             cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
@@ -162,8 +183,16 @@ if run:
             st.write("Extracting your skills")
             profile, used_p = with_fallback(model_chain(choice), lambda k: cached_profile(cv_hash, cv_text, k), notify)
 
-            st.write(f"Searching jobs for \"{query}\"")
-            raw_jobs = cached_search(S.job_source, query.strip(), location.strip(), limit)
+            if mode == MODE_JD:
+                st.write("Reading your job descriptions")
+                items = [(f.name.rsplit(".", 1)[0],
+                          extract_text(f.getvalue(), f.name, S.max_jd_chars * 2, what="job description"))
+                         for f in jd_files]
+                items.append(("Pasted job description", jd_text))
+                raw_jobs = jobs_from_descriptions(items)
+            else:
+                st.write(f"Searching jobs for \"{query}\"")
+                raw_jobs = cached_search(S.job_source, query.strip(), location.strip(), limit)
             if not raw_jobs:
                 status.update(label="No jobs found", state="error")
                 st.warning("No openings matched this search. Try a broader role or location.")
@@ -180,7 +209,8 @@ if run:
             used = sorted({label(used_p), label(used_j)})
             st.session_state.update(profile=profile, results=results,
                                     models_used=", ".join(used), embedder_used=emb.name)
-            status.update(label=f"Ranked {len(results)} jobs", state="complete", expanded=False)
+            done = "Analyzed 1 job" if len(results) == 1 else f"Ranked {len(results)} jobs"
+            status.update(label=done, state="complete", expanded=False)
         except Exception as e:  # show a clear next step instead of a stack trace
             status.update(label="Something went wrong", state="error")
             st.error(str(e))
