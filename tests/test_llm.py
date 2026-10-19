@@ -61,3 +61,30 @@ def test_local_style_provider_extracts_one_job_at_a_time():
     p.batch_jobs = False
     out = extract_requirements(p, jobs)
     assert [j.requirements.job_id for j in out] == [j.id for j in jobs]
+
+
+def test_extract_json_ignores_trailing_extra_data():
+    # Gemini sometimes appends a second object: json.loads would fail with "Extra data".
+    assert extract_json('{"items": [{"a": 1}]}\n{"items": []}') == {"items": [{"a": 1}]}
+
+
+def test_gemini_sends_schema_and_falls_back_on_400():
+    from types import SimpleNamespace
+    from google.genai import errors
+    from core.llm.gemini import GeminiProvider
+
+    configs = []
+
+    def generate_content(model, contents, config):
+        configs.append(config)
+        if config.response_json_schema is not None and len(configs) == 1:
+            raise errors.APIError(400, {"error": {"message": "schema not supported"}})
+        return SimpleNamespace(text='{"a": 1}')
+
+    p = GeminiProvider.__new__(GeminiProvider)
+    p.model = p.name = "m"
+    p.client = SimpleNamespace(models=SimpleNamespace(generate_content=generate_content))
+    out = p.complete("x", json_mode=True, temperature=0, what="t", schema={"type": "object"})
+    assert out == '{"a": 1}'
+    assert configs[0].response_json_schema == {"type": "object"}
+    assert configs[1].response_json_schema is None

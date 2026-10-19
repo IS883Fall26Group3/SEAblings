@@ -38,10 +38,15 @@ def schema_hint(schema: type[BaseModel]) -> str:
 
 def extract_json(text: str) -> dict:
     """Pull the JSON object out of a reply, tolerating code fences or extra text."""
-    start, end = text.find("{"), text.rfind("}")
-    if start == -1 or end <= start:
+    start = text.find("{")
+    if start == -1:
         raise ValueError("no JSON object in reply")
-    return json.loads(text[start:end + 1])
+    # raw_decode reads the first complete object and ignores anything after it,
+    # e.g. a second JSON block or a closing remark some models append.
+    obj, _ = json.JSONDecoder().raw_decode(text[start:])
+    if not isinstance(obj, dict):
+        raise ValueError("reply is not a JSON object")
+    return obj
 
 
 class LLMProvider(ABC):
