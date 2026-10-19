@@ -18,8 +18,8 @@ def app_header() -> None:
     st.markdown(
         """<div class="sea-header">
         <div class="sea-brand"><span class="sea-logo" aria-hidden="true">🌊</span>
-          <span class="sea-name">SEAblings</span>
-          <span class="sea-tag">AI CV-to-job matcher</span></div>
+          <span class="sea-name">AI CV-to-job matcher</span>
+          <span class="sea-tag">SEAblings</span></div>
         <div class="sea-team">IS883 · Fall 2026 · Group 3</div>
         </div>""",
         unsafe_allow_html=True,
@@ -49,9 +49,7 @@ def hero() -> None:
         <div class="sea-steps">{steps}</div>
         <div class="sea-score-note"><b>How the score works:</b>
         50% skill coverage + 30% profile similarity + 20% experience fit.
-        The same CV and job always get the same score.</div>
-        <p class="sea-start">👈 Start in the sidebar (tap » on a phone): add your CV (or use our sample),
-        add a job description, and click <b>Analyze my match</b>.</p>""",
+        The same CV and job always get the same score.</div>,""",
         unsafe_allow_html=True,
     )
 
