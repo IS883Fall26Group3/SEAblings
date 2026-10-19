@@ -23,7 +23,7 @@ def load_secrets_into_env() -> None:
 load_secrets_into_env()
 
 from core.config import get_settings  # noqa: E402
-from core.cv_parser import extract_text  # noqa: E402
+from core.cv_parser import clean_text, extract_text  # noqa: E402
 from core.job_sources import get_job_source, jobs_from_descriptions  # noqa: E402
 from core.llm import (AUTO, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
@@ -114,7 +114,9 @@ ui.app_header()
 with st.sidebar:
     st.subheader("Your search")
     upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
-    if upload is None:
+    cv_paste = "" if upload is not None else st.text_area(
+        "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
+    if upload is None and not cv_paste.strip():
         st.caption("No CV yet? We'll use a fictional sample CV so you can try the app.")
     mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
                     help="Use job descriptions you already have, or search current openings online.")
@@ -172,6 +174,8 @@ if run:
             st.write("Reading your CV")
             if upload is not None:
                 cv_text = extract_text(upload.getvalue(), upload.name, S.max_cv_chars)
+            elif cv_paste.strip():
+                cv_text = clean_text(cv_paste, S.max_cv_chars)
             else:
                 cv_text = SAMPLE_CV.read_text(encoding="utf-8")
             cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
