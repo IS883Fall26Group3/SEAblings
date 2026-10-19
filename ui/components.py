@@ -49,7 +49,7 @@ def hero() -> None:
         <div class="sea-steps">{steps}</div>
         <div class="sea-score-note"><b>How the score works:</b>
         50% skill coverage + 30% profile similarity + 20% experience fit.
-        The same CV and job always get the same score.</div>,""",
+        The same CV and job always get the same score.</div>""",
         unsafe_allow_html=True,
     )
 
