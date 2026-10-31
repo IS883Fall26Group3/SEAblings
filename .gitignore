@@ -18,6 +18,8 @@ eval/data/esco/
 eval/data/resume/
 eval/results/*.npz
 eval/results/extracted_*.json
+eval/results/profiles_roles_*.json
+eval/results/judge_*.json
 eval/results/calibration_grid_*.csv
 
 # Never commit real CVs

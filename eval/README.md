@@ -36,6 +36,10 @@ minute for `gemini-embedding-001`, where every text in a batch counts. `extract.
    settings), and scores each by mean per-CV Spearman and NDCG@5. Leave-one-CV-out: tune on 10
    CVs, test on the 11th, compare with the current settings on the same CV.
 
+5. **Experience fit** (`experience.py`): total years vs relevant years by embedding ("roles")
+   vs relevant years by LLM judge ("judge"); everything else in the score unchanged.
+   `python eval/experience.py gemini gemini:gemini-flash-lite-latest extracted_gemini-flash-lite-latest.json`
+
 ## Labeling guide
 
 **`labels/cv_job.csv`**: 176 pairs, 16 jobs per CV (the 6 most similar by document cosine plus 10
@@ -186,6 +190,40 @@ median of 0.944, "no" pairs 0.899; CV-job document cosines run 0.73-0.80 (p5-p95
   0.290), its skill coverage at 0.80 is useless (0.032).
 - The skill pairs were sampled by bge-small cosine, so they are not stratified around Gemini's
   decision boundary; a Gemini-specific sample would firm up the threshold.
+
+### Step 5: experience fit, total vs relevant years (Gemini embedder, gemini-flash-lite)
+
+Same 176 pairs and labels (with the same caveat), skills and profile similarity as in the app
+(skill threshold 0.925, weights 0.5/0.3/0.2); only the experience fit changes. Roles were
+re-extracted with the new `roles` field (3.8 per CV); the judge ran once per CV over its 16 jobs.
+
+| Experience fit | Alone: Spearman / NDCG@5 | Full score: Spearman / NDCG@5 |
+|---|---|---|
+| Total years (current) | 0.084 / 0.405 | 0.280 / 0.608 |
+| Roles, threshold 0.80 (best in-sample) | 0.197 / 0.423 | 0.316 / 0.574 |
+| Roles, threshold chosen on 10 CVs, tested on the 11th | | 0.254 / 0.541 |
+| **Judge** | **0.349 / 0.617** | **0.333 / 0.679** |
+
+- **Judge is best** on both measures, and it has no setting tuned on these labels.
+- **Roles doesn't generalize:** Gemini role-job cosines are compressed (p10 0.755, p90 0.815), so
+  relevant years jump from 7.6 to 1.7 between thresholds 0.75 and 0.80; picked on 10 CVs, it does
+  worse than total years on the 11th.
+- **Requiring relevant experience helps even when a job states no minimum** (82 of 176 pairs):
+  scoring those jobs 1.0, as the current app does, lowers the full score to 0.250 (roles) and
+  0.251 (judge) Spearman. With no minimum, one relevant year counts as a full fit.
+- The judge is strict: mean 0.8 relevant years against 7.1 total; on 39% of pairs it finds none
+  where roles finds some. It is right on clear cases (SA/FP&A: 7.8 years of credit analysis; LB/
+  strategy consulting: 6.4 years at EY and Deloitte) and arguably too strict on transfers (MS's
+  R&D leadership for a life-science consulting job: 0 years, "not consulting").
+- Cost per search: judge adds one LLM call (about 17 s for 16 jobs) on the free tier's 5 requests
+  per minute and daily cap; roles adds only a few embedded texts.
+- Extraction can double count: MS got company dates on one role and durations on the other two
+  (12.7 years against 8 total), so relevant years are capped at total years in `score_jobs`.
+- **Caveat on the judge's win:** the labels are mostly Claude's drafts, and the judge is also an
+  LLM deciding "is this relevant experience"; part of the agreement may be shared LLM judgment.
+  Its stability across reruns (temperature 0.1) wasn't measured. Confirm with independent human
+  labels before making `EXPERIENCE_FIT = "judge"` the default.
+- Per-pair years and fits: `results/experience_gemini.csv`.
 
 ## Data
 

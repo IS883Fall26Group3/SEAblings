@@ -24,6 +24,9 @@ class Settings:
     local_embed_repo: str
     local_embed_file: str
     embeddings: str              # "auto" (Gemini if a key is set, else local), "local", or "gemini"
+    # Experience fit: "total" (all years), "roles" (years in roles similar to the job, by embedding)
+    # or "judge" (years in roles the LLM judges relevant; one extra LLM call per search).
+    experience_fit: str = "total"
     llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
     max_jd_chars: int = 3_000
@@ -53,4 +56,5 @@ def get_settings() -> Settings:
         local_embed_repo=env("LOCAL_EMBED_REPO", "CompendiumLabs/bge-small-en-v1.5-gguf"),
         local_embed_file=env("LOCAL_EMBED_FILE", "*q8_0.gguf"),
         embeddings=env("EMBEDDINGS", "auto"),
+        experience_fit=env("EXPERIENCE_FIT", "total"),
     )

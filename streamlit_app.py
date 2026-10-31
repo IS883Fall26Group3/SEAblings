@@ -27,8 +27,10 @@ from core.cv_parser import clean_text, extract_text  # noqa: E402
 from core.job_sources import get_job_source, jobs_from_descriptions  # noqa: E402
 from core.llm import (AUTO, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
+from core.experience import relevant_years_by_roles, role_years  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
-from core.skill_extractor import explain_match, extract_profile, extract_requirements  # noqa: E402
+from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
+                                  judge_experience)
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -75,6 +77,11 @@ def cached_requirements(job_ids: tuple[str, ...], model_key: str, _jobs):
 @st.cache_data(ttl=6 * 3600, show_spinner=False)
 def cached_embed(texts: tuple[str, ...], embedder_name: str):
     return get_embedder().embed(list(texts))
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def cached_judgment(cv_hash: str, job_ids: tuple[str, ...], model_key: str, _cv_text, _jobs):
+    return judge_experience(get_provider(model_key), _cv_text, _jobs, S.local_max_jd_chars)
 
 
 def model_chain(choice: str) -> list[str]:
@@ -202,11 +209,20 @@ if run:
             ids = tuple(j.id for j in raw_jobs)
             jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
 
-            st.write("Scoring each job")
             emb = get_embedder()
-            results = score_jobs(profile, cv_text, jobs, emb, S,
-                                 embed_fn=lambda t: cached_embed(tuple(t), emb.name))
-            used = sorted({label(used_p), label(used_j)})
+            embed = lambda t: cached_embed(tuple(t), emb.name)  # noqa: E731
+            relevant, used_e = None, used_j
+            if S.experience_fit == "roles":
+                relevant = relevant_years_by_roles(profile.roles, jobs, embed, emb.role_threshold)
+            elif S.experience_fit == "judge":
+                st.write("Judging your relevant experience")
+                judged, used_e = with_fallback(
+                    model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
+                relevant = {jid: role_years(x.relevant_roles) for jid, x in judged.items()}
+
+            st.write("Scoring each job")
+            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_years=relevant)
+            used = sorted({label(used_p), label(used_j), label(used_e)})
             st.session_state.update(profile=profile, results=results,
                                     models_used=", ".join(used), embedder_used=emb.name)
             done = "Analyzed 1 job" if len(results) == 1 else f"Ranked {len(results)} jobs"

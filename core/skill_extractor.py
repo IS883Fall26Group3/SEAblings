@@ -2,7 +2,8 @@
 from pathlib import Path
 
 from .llm.base import LLMProvider
-from .schemas import CandidateProfile, Job, JobRequirements, JobRequirementsBatch
+from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBatch, RelevantExperience,
+                      RelevantExperienceBatch)
 
 PROMPTS = Path(__file__).resolve().parent.parent / "prompts"
 
@@ -40,6 +41,33 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
                 JobRequirements, what=f"reading the posting for {j.title}")
             j.requirements = req.model_copy(update={"job_id": j.id})
     return jobs
+
+
+def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job],
+                     max_jd_chars: int = 1_500) -> dict[str, RelevantExperience]:
+    """Technique B: the LLM picks the CV roles relevant to each job, following guided steps and
+    using only the CV. One call for all jobs on Gemini; one per job on small local models."""
+    if llm.max_cv_chars:
+        cv_text = cv_text[:llm.max_cv_chars]
+
+    def block(j: Job) -> str:
+        req = j.requirements
+        return (f"### job_id: {j.id}\nTitle: {j.title}\n"
+                f"Required skills: {', '.join(req.required_skills) if req else 'not extracted'}\n"
+                f"Minimum years: {req.min_years_experience if req and req.min_years_experience else 'not stated'}\n"
+                f"{j.description[:max_jd_chars]}")
+
+    groups = [jobs] if llm.batch_jobs else [[j] for j in jobs]
+    out = {}
+    for group in groups:
+        batch = llm.generate_json(_prompt("judge_experience.md", cv_text=cv_text,
+                                          jobs="\n\n".join(block(j) for j in group)),
+                                  RelevantExperienceBatch, what="judging your relevant experience")
+        items = batch.items
+        if len(group) == 1 and len(items) == 1:
+            items[0].job_id = group[0].id  # small models sometimes garble the id of a single job
+        out |= {i.job_id: i for i in items}
+    return out
 
 
 def explain_match(llm: LLMProvider, profile: CandidateProfile, result) -> str:

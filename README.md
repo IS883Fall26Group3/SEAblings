@@ -33,6 +33,11 @@ local one. Gemini's free tier embeds about 100 texts per minute, and one search 
 job, and every unique skill. Similarity thresholds differ per embedding model
 (`core/embeddings.py`); see `eval/README.md` for how they were checked.
 
+**Experience fit** (`EXPERIENCE_FIT`, `core/experience.py`) can count *relevant* years instead of
+all years: `"roles"` keeps CV roles whose embedding is close to the job; `"judge"` asks the LLM
+which roles count (one extra call per search, guided steps, CV only). Either way the years are
+added up in Python from the roles' dates. Default `"total"`; see `eval/README.md` for the comparison.
+
 ## Run locally
 
 ```bash

@@ -5,6 +5,7 @@ from typing import Callable
 import numpy as np
 
 from .config import Settings
+from .experience import experience_fit
 from .schemas import CandidateProfile, Job, MatchResult
 
 EmbedFn = Callable[[list[str]], np.ndarray]
@@ -43,8 +44,11 @@ def rescale_cosine(cos: float, low: float = 0.5, high: float = 0.9) -> float:
 
 
 def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedder,
-               s: Settings, embed_fn: EmbedFn | None = None) -> list[MatchResult]:
-    """embedder supplies thresholds (and embed() unless embed_fn, e.g. a cached version, is given)."""
+               s: Settings, embed_fn: EmbedFn | None = None,
+               relevant_years: dict[str, float] | None = None) -> list[MatchResult]:
+    """embedder supplies thresholds (and embed() unless embed_fn, e.g. a cached version, is given).
+    relevant_years (job id -> years in relevant roles, see core/experience.py) replaces total years
+    in the experience fit; jobs missing from it fall back to total years."""
     if not jobs:
         return []
     embed = embed_fn or embedder.embed
@@ -67,7 +71,12 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
         matched, missing = match_skills(cv_skills, required, vec, embedder.skill_threshold)
         coverage = len(matched) / len(required) if required else 0.5  # neutral if unknown
         semantic = rescale_cosine(float(jv @ cv_vec), embedder.cos_low, embedder.cos_high)
-        senior = seniority_fit(profile.years_experience, req.min_years_experience if req else None)
+        min_years = req.min_years_experience if req else None
+        if relevant_years and relevant_years.get(job.id) is not None:
+            # capped at total years: a role given both company dates and a duration can double count
+            senior = experience_fit(min(relevant_years[job.id], profile.years_experience), min_years)
+        else:
+            senior = seniority_fit(profile.years_experience, min_years)
         score = 100 * (s.w_skill_coverage * coverage + s.w_semantic * semantic
                        + s.w_seniority * senior)
         results.append(MatchResult(

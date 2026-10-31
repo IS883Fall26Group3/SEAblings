@@ -23,6 +23,7 @@ class Embedder(ABC):
     skill_threshold: float = 0.8     # cosine above which two skills count as the same
     cos_low: float = 0.5             # cosine range stretched to 0-1 for profile similarity
     cos_high: float = 0.9
+    role_threshold: float = 0.8      # cosine above which a CV role counts toward a job (EXPERIENCE_FIT="roles")
 
     @abstractmethod
     def embed(self, texts: list[str]) -> np.ndarray:
