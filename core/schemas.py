@@ -29,6 +29,8 @@ class JobRequirements(BaseModel):
     required_skills: list[str]
     nice_to_have_skills: list[str]
     min_years_experience: Optional[float] = None
+    role_summary: str = Field(default="", description="2-3 sentences describing the ideal candidate the "
+                              "way a CV summary would: main kind of work, domain, and seniority")
 
 
 class JobRequirementsBatch(BaseModel):

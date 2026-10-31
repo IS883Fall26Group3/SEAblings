@@ -38,6 +38,12 @@ all years: `"roles"` keeps CV roles whose embedding is close to the job; `"judge
 which roles count (one extra call per search, guided steps, CV only). Either way the years are
 added up in Python from the roles' dates. Default `"total"`; see `eval/README.md` for the comparison.
 
+**Profile similarity** (`PROFILE_SIMILARITY`, `core/similarity.py`): `"document"` (default)
+compares the whole CV with the whole posting; `"summary"` compares the CV summary with a 2-3
+sentence `role_summary` written during requirement extraction (no extra call); `"chunks"` averages
+each job's 3 closest CV chunks. Each mode has its own cosine band in `core/embeddings.py`; document
+ranked best in `eval/README.md` (step 6).
+
 ## Run locally
 
 ```bash

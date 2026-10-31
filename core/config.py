@@ -27,6 +27,9 @@ class Settings:
     # Experience fit: "total" (all years), "roles" (years in roles similar to the job, by embedding)
     # or "judge" (years in roles the LLM judges relevant; one extra LLM call per search).
     experience_fit: str = "total"
+    # Profile similarity: "document" (whole CV vs whole posting), "summary" (CV summary vs the job's
+    # role_summary) or "chunks" (best CV chunks per job). See core/similarity.py, eval/README.md step 6.
+    profile_similarity: str = "document"
     llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
     max_jd_chars: int = 3_000
@@ -57,4 +60,5 @@ def get_settings() -> Settings:
         local_embed_file=env("LOCAL_EMBED_FILE", "*q8_0.gguf"),
         embeddings=env("EMBEDDINGS", "auto"),
         experience_fit=env("EXPERIENCE_FIT", "total"),
+        profile_similarity=env("PROFILE_SIMILARITY", "document"),
     )

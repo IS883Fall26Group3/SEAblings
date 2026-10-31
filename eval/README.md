@@ -40,6 +40,10 @@ minute for `gemini-embedding-001`, where every text in a batch counts. `extract.
    vs relevant years by LLM judge ("judge"); everything else in the score unchanged.
    `python eval/experience.py gemini gemini:gemini-flash-lite-latest extracted_gemini-flash-lite-latest.json`
 
+6. **Profile similarity** (`similarity.py`): whole document ("document", the app default) vs
+   summaries ("summary") vs best CV chunks per job ("chunks"); everything else unchanged.
+   `python eval/similarity.py gemini:gemini-flash-lite-latest extracted_gemini-flash-lite-latest.json gemini local`
+
 ## Labeling guide
 
 **`labels/cv_job.csv`**: 176 pairs, 16 jobs per CV (the 6 most similar by document cosine plus 10
@@ -224,6 +228,51 @@ re-extracted with the new `roles` field (3.8 per CV); the judge ran once per CV 
   Its stability across reruns (temperature 0.1) wasn't measured. Confirm with independent human
   labels before making `EXPERIENCE_FIT = "judge"` the default.
 - Per-pair years and fits: `results/experience_gemini.csv`.
+
+### Step 6: profile similarity, document vs summary vs chunks
+
+Same 176 pairs and labels (same caveat). CV summaries from the latest CV extraction;
+`role_summary` extracted for the 70 labeled jobs (7 calls). Skills (threshold per embedder),
+experience fit (total years) and weights unchanged. Each mode's band is the p5-p95 of its own
+cosines (spread only, not labels); "chunks" = mean of each job's 3 closest 40-word CV chunks
+(15.6 chunks per CV).
+
+| Gemini embedder | Band | Alone: Spearman / NDCG@5 | Full score: Spearman / NDCG@5 |
+|---|---|---|---|
+| Document, app band 0.50-0.90 (before) | | | 0.280 / 0.608 |
+| Document, p5-p95 band | 0.731-0.795 | **0.315** / 0.533 | **0.345** / 0.599 |
+| Summary | 0.783-0.859 | 0.197 / **0.558** | 0.258 / 0.587 |
+| Chunks, k=3 | 0.747-0.810 | 0.221 / 0.500 | 0.330 / 0.585 |
+
+| Local embedder (bge-small) | Band | Alone | Full score |
+|---|---|---|---|
+| Document, app band 0.55-0.90 | | | 0.363 / 0.650 |
+| Document, p5-p95 band | 0.586-0.740 | 0.290 / 0.592 | 0.364 / **0.651** |
+| Summary | 0.560-0.729 | 0.246 / 0.549 | **0.369** / 0.604 |
+| Chunks, k=3 | 0.590-0.697 | 0.260 / 0.593 | 0.336 / 0.611 |
+
+- **Neither technique beats the whole document on the Gemini embedder.** Summary ranks worst
+  (0.258 vs 0.345 Spearman in the full score); chunks is close but below. On bge-small summary
+  ties document on Spearman and loses on NDCG@5.
+- Summary helps some top picks (AS: the 5-rated financial analyst job instead of a 3.5;
+  KF: the 3.5-rated life-science analyst job instead of a 1.5) but promotes a generic job
+  everywhere else: j077's summary ("a qualified product leader and business analyst ... highly
+  organized ... driving complex technical and business initiatives across global teams") is
+  Gemini's top match for 4 of 11 CVs, all rated 1.0-1.5. Generic leadership wording in short
+  summaries hides the specifics that separate jobs (here, alternative-asset expertise).
+- The summaries are not written alike: CV summaries run three sentences and end on education
+  ("Holds an MBA and MS ..."), job summaries are often one sentence. A shared template (work,
+  domain, level; no education) is the obvious next try, at 11 calls to re-extract the CVs.
+- Chunks: k=5 > k=3 > k=1 on Gemini (0.342 / 0.330 / 0.302 full Spearman); a single best chunk
+  over-rewards one matching bullet.
+- The bigger, free gain is the band: the document band set to its p5-p95 raises Gemini's full
+  score from 0.280 to 0.345 Spearman (NDCG@5 0.608 to 0.599). Bands come from the cosine spread,
+  not the labels, but the earlier leave-one-CV-out check found band tuning didn't generalize, so
+  confirm with independent labels.
+- **Changed:** the app default is `"document"` with the p5-p95 band: Gemini `cos_low`/`cos_high`
+  0.731/0.795 (was 0.5/0.9), bge-small 0.586/0.740 (was 0.55/0.9). `sim_bands` hold the summary and
+  chunks bands above for when those modes are chosen. Per-pair cosines:
+  `results/similarity_<embedder>.csv`.
 
 ## Data
 
