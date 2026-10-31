@@ -1,0 +1,881 @@
+cv,job_id,job_title,company,url,cosine
+ADW,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6273057460784912
+ADW,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.5935993790626526
+ADW,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.629257321357727
+ADW,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.5793920755386353
+ADW,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.5943865776062012
+ADW,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.6349464058876038
+ADW,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6390008330345154
+ADW,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.5939143896102905
+ADW,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.6226290464401245
+ADW,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6256021857261658
+ADW,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.5710992813110352
+ADW,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.6619107723236084
+ADW,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6313275098800659
+ADW,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6061079502105713
+ADW,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.6209946870803833
+ADW,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.5885366797447205
+ADW,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.5949585437774658
+ADW,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6424194574356079
+ADW,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.6191205978393555
+ADW,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.5695720911026001
+ADW,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6361672878265381
+ADW,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6089614033699036
+ADW,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.6379348039627075
+ADW,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6315627694129944
+ADW,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6386798620223999
+ADW,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.5880786180496216
+ADW,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6291621923446655
+ADW,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6537270545959473
+ADW,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.641065239906311
+ADW,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6070145964622498
+ADW,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6191179752349854
+ADW,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.5768639445304871
+ADW,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6395387649536133
+ADW,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.6209426522254944
+ADW,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6260055303573608
+ADW,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.5968790650367737
+ADW,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6294659376144409
+ADW,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6305816173553467
+ADW,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6262857913970947
+ADW,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.5713359713554382
+ADW,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.6297231912612915
+ADW,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6863172054290771
+ADW,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6207730174064636
+ADW,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6584596633911133
+ADW,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6386482119560242
+ADW,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.6430336236953735
+ADW,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6068911552429199
+ADW,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6064985990524292
+ADW,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6521551609039307
+ADW,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.5844559669494629
+ADW,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.602186918258667
+ADW,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.65354984998703
+ADW,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.5992987751960754
+ADW,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6092496514320374
+ADW,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6350260972976685
+ADW,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6285921931266785
+ADW,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6016733646392822
+ADW,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6172364354133606
+ADW,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6681410074234009
+ADW,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.5946872234344482
+ADW,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.5833193063735962
+ADW,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.6585460305213928
+ADW,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.5957198143005371
+ADW,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.606870174407959
+ADW,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.602672815322876
+ADW,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6077558994293213
+ADW,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.5917814373970032
+ADW,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.5911318063735962
+ADW,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6711252927780151
+ADW,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6542591452598572
+ADW,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.6224567294120789
+ADW,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.6133463978767395
+ADW,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.5573170781135559
+ADW,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6171990633010864
+ADW,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.5979085564613342
+ADW,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6001629829406738
+ADW,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6633103489875793
+ADW,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6106066107749939
+ADW,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.628368616104126
+ADW,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.5996119976043701
+AS,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6230185031890869
+AS,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6535857915878296
+AS,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6471034288406372
+AS,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6480610966682434
+AS,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6260136365890503
+AS,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.6899160146713257
+AS,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6136922836303711
+AS,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.5987880825996399
+AS,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.6317659616470337
+AS,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6195136308670044
+AS,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6431533098220825
+AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.6994059681892395
+AS,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6217588186264038
+AS,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.5704244375228882
+AS,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.6651951670646667
+AS,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.5978055596351624
+AS,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.6720354557037354
+AS,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6401771306991577
+AS,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.6068316102027893
+AS,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.594832181930542
+AS,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6409599781036377
+AS,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6006162762641907
+AS,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.6298264861106873
+AS,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6104608178138733
+AS,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6959511041641235
+AS,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6267776489257812
+AS,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.5756627321243286
+AS,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6023784875869751
+AS,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.6486490964889526
+AS,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6070646047592163
+AS,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6177493929862976
+AS,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6164196133613586
+AS,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6684173345565796
+AS,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.6497461795806885
+AS,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6119437217712402
+AS,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6107127666473389
+AS,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6208311319351196
+AS,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6038157939910889
+AS,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.7062551379203796
+AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.6440517902374268
+AS,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.5626004934310913
+AS,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.5638075470924377
+AS,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6683456301689148
+AS,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6382021307945251
+AS,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6654525995254517
+AS,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.6716697216033936
+AS,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6312172412872314
+AS,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6524564027786255
+AS,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6039361357688904
+AS,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.5839682817459106
+AS,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.5900236368179321
+AS,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.625308632850647
+AS,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6339690685272217
+AS,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6766448020935059
+AS,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.5892018675804138
+AS,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.5837002992630005
+AS,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6435300707817078
+AS,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6247848272323608
+AS,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6751090288162231
+AS,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.5527628660202026
+AS,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.5945010185241699
+AS,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.6786747574806213
+AS,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.5915198922157288
+AS,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5848302841186523
+AS,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.5850072503089905
+AS,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.5981206893920898
+AS,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.6660337448120117
+AS,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6762149930000305
+AS,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.5857215523719788
+AS,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.5888285040855408
+AS,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.6299839019775391
+AS,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.607656717300415
+AS,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.6371177434921265
+AS,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6049395203590393
+AS,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6731778383255005
+AS,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6132500171661377
+AS,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6086707711219788
+AS,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.5780171751976013
+AS,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6081423759460449
+AS,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.594756543636322
+AYP,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6382648944854736
+AYP,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6008294820785522
+AYP,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6025980710983276
+AYP,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.5854088664054871
+AYP,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6087002158164978
+AYP,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.6311189532279968
+AYP,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6146262884140015
+AYP,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.5970799922943115
+AYP,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.6249150633811951
+AYP,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6446166634559631
+AYP,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.5899547338485718
+AYP,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.6672569513320923
+AYP,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6213023662567139
+AYP,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6341071128845215
+AYP,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.5947624444961548
+AYP,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.5995118618011475
+AYP,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.649423360824585
+AYP,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6332073211669922
+AYP,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.6274796724319458
+AYP,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.5780170559883118
+AYP,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6105872392654419
+AYP,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.5859588384628296
+AYP,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.6262564659118652
+AYP,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.5971264839172363
+AYP,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6514439582824707
+AYP,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.5801957249641418
+AYP,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.5894793272018433
+AYP,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6540855169296265
+AYP,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.6220675706863403
+AYP,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.5771888494491577
+AYP,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6472667455673218
+AYP,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6173702478408813
+AYP,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6111306548118591
+AYP,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.6534988880157471
+AYP,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6420125961303711
+AYP,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6051715612411499
+AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6243318319320679
+AYP,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6214369535446167
+AYP,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6283736824989319
+AYP,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.5826139450073242
+AYP,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.5733171105384827
+AYP,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6392728090286255
+AYP,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6337552666664124
+AYP,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6179481744766235
+AYP,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6418964862823486
+AYP,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.667335033416748
+AYP,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6196790933609009
+AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6885859370231628
+AYP,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.657749593257904
+AYP,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.5962872505187988
+AYP,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6268008351325989
+AYP,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6578966379165649
+AYP,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6140041351318359
+AYP,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.5933552384376526
+AYP,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.596091091632843
+AYP,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6032748222351074
+AYP,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.599891185760498
+AYP,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6337775588035583
+AYP,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6200547218322754
+AYP,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.5686277151107788
+AYP,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.6074718236923218
+AYP,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.6563912630081177
+AYP,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.5773432850837708
+AYP,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5954908132553101
+AYP,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.6025267243385315
+AYP,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6101462244987488
+AYP,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.5985386967658997
+AYP,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6070045828819275
+AYP,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6114873886108398
+AYP,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6421529054641724
+AYP,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.5893808603286743
+AYP,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.5991547107696533
+AYP,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.5521487593650818
+AYP,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6111849546432495
+AYP,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.5749313831329346
+AYP,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6353822946548462
+AYP,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6565017700195312
+AYP,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.5788470506668091
+AYP,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6365998983383179
+AYP,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.621060848236084
+CYL,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.7534052133560181
+CYL,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6910154223442078
+CYL,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6807237863540649
+CYL,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6855489015579224
+CYL,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6531299352645874
+CYL,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.7513463497161865
+CYL,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6702781915664673
+CYL,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.644062876701355
+CYL,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.7178665399551392
+CYL,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.7014554738998413
+CYL,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6560051441192627
+CYL,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.7043721675872803
+CYL,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.7457104921340942
+CYL,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6726840734481812
+CYL,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.7228692770004272
+CYL,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.6494939923286438
+CYL,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.6915069818496704
+CYL,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.707927942276001
+CYL,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.7137707471847534
+CYL,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.7018592953681946
+CYL,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6904237270355225
+CYL,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6580056548118591
+CYL,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.7499582171440125
+CYL,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.7117109894752502
+CYL,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.658113956451416
+CYL,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6537286043167114
+CYL,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6991928815841675
+CYL,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6748994588851929
+CYL,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.7179619073867798
+CYL,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6851748824119568
+CYL,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6793302893638611
+CYL,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.7144573330879211
+CYL,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.69617760181427
+CYL,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.7728503942489624
+CYL,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6605635285377502
+CYL,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6860050559043884
+CYL,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6969789862632751
+CYL,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.7130349278450012
+CYL,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6416218280792236
+CYL,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.6139694452285767
+CYL,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.680216372013092
+CYL,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6547700762748718
+CYL,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6818912625312805
+CYL,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6510887742042542
+CYL,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6708314418792725
+CYL,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.6960671544075012
+CYL,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6822736859321594
+CYL,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6878897547721863
+CYL,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6821286678314209
+CYL,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.6690636873245239
+CYL,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.714468240737915
+CYL,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.7276929616928101
+CYL,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6474764943122864
+CYL,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6446283459663391
+CYL,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.7244409322738647
+CYL,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.7063957452774048
+CYL,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6927902698516846
+CYL,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.7089705467224121
+CYL,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6912146806716919
+CYL,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.6271693706512451
+CYL,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.64603191614151
+CYL,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7873023748397827
+CYL,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.659009575843811
+CYL,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.6159288287162781
+CYL,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.7032251954078674
+CYL,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6764755845069885
+CYL,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.6575016975402832
+CYL,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6117453575134277
+CYL,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6821524500846863
+CYL,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6990383863449097
+CYL,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.6725274920463562
+CYL,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.6630585193634033
+CYL,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.6614254713058472
+CYL,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.7367129325866699
+CYL,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.7009282112121582
+CYL,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6675220131874084
+CYL,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6864513754844666
+CYL,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6831104755401611
+CYL,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.7372872829437256
+CYL,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.7025870084762573
+KF,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6752668619155884
+KF,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6633039712905884
+KF,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.7000283598899841
+KF,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6519742012023926
+KF,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6255385875701904
+KF,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.663799524307251
+KF,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6808868050575256
+KF,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.6216442584991455
+KF,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.7159374952316284
+KF,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6968857049942017
+KF,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6651340126991272
+KF,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.7040796279907227
+KF,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6901142001152039
+KF,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6456488370895386
+KF,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.7127761840820312
+KF,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.6094290018081665
+KF,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.7074436545372009
+KF,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6683642864227295
+KF,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.7055619955062866
+KF,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.5867942571640015
+KF,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6816509962081909
+KF,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6241210699081421
+KF,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.682060182094574
+KF,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6635631322860718
+KF,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6813270449638367
+KF,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6428967118263245
+KF,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6573359966278076
+KF,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.641258716583252
+KF,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.73081374168396
+KF,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6709482073783875
+KF,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6834105253219604
+KF,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.68215012550354
+KF,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6803869009017944
+KF,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.7023807764053345
+KF,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6606838703155518
+KF,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6788826584815979
+KF,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.639906108379364
+KF,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6577739715576172
+KF,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.635529637336731
+KF,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.5817034244537354
+KF,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.6623448729515076
+KF,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6376083493232727
+KF,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.717943012714386
+KF,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6667048931121826
+KF,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6624252200126648
+KF,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.6708133220672607
+KF,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6577702760696411
+KF,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6509088277816772
+KF,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6246938705444336
+KF,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.6328096985816956
+KF,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6701797246932983
+KF,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6519523859024048
+KF,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6799497604370117
+KF,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6622848510742188
+KF,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6636849045753479
+KF,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6232402324676514
+KF,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.7249611020088196
+KF,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6508735418319702
+KF,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.719190239906311
+KF,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.658324658870697
+KF,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.6572047472000122
+KF,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7272943258285522
+KF,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6520362496376038
+KF,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.6038635969161987
+KF,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.6340079307556152
+KF,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6386102437973022
+KF,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.621798038482666
+KF,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6536533236503601
+KF,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6367023587226868
+KF,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6684569120407104
+KF,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.694909930229187
+KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.7164254784584045
+KF,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.703213095664978
+KF,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6834085583686829
+KF,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6981522440910339
+KF,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6705571413040161
+KF,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6229231357574463
+KF,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6447187662124634
+KF,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6434245109558105
+KF,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.6844502687454224
+LB,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6662757992744446
+LB,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.624630331993103
+LB,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.695395290851593
+LB,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6591873168945312
+LB,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.7130758166313171
+LB,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.7250630855560303
+LB,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6668406128883362
+LB,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.606769859790802
+LB,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.6639991998672485
+LB,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.667464017868042
+LB,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.674591600894928
+LB,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.6958925127983093
+LB,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6707172393798828
+LB,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6600403785705566
+LB,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.7041842937469482
+LB,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.596067488193512
+LB,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.6562952995300293
+LB,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6533690690994263
+LB,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.7338626980781555
+LB,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.6599363088607788
+LB,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6597875356674194
+LB,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.643332302570343
+LB,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.7125462293624878
+LB,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6366744637489319
+LB,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6939462423324585
+LB,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.639436662197113
+LB,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6804156303405762
+LB,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6352316737174988
+LB,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.6722835302352905
+LB,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6362695693969727
+LB,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6696852445602417
+LB,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6595016121864319
+LB,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.7155351638793945
+LB,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.7148780226707458
+LB,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6690206527709961
+LB,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.637582004070282
+LB,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6464947462081909
+LB,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6302158236503601
+LB,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6918025016784668
+LB,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.6464875936508179
+LB,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.6386841535568237
+LB,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6771880388259888
+LB,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6632410287857056
+LB,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6754213571548462
+LB,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6932923793792725
+LB,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.7023392915725708
+LB,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6749334335327148
+LB,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6982262134552002
+LB,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6775999069213867
+LB,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.6268826723098755
+LB,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6470826268196106
+LB,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6385301351547241
+LB,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.646935224533081
+LB,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6618500351905823
+LB,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.7113519310951233
+LB,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6643075942993164
+LB,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6598049402236938
+LB,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6264999508857727
+LB,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6684771180152893
+LB,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.609874427318573
+LB,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.6745234131813049
+LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7610132694244385
+LB,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6323238015174866
+LB,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5944173336029053
+LB,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.6079554557800293
+LB,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6180621385574341
+LB,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.6552938222885132
+LB,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6245900392532349
+LB,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6668586134910583
+LB,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6829077005386353
+LB,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.5914571285247803
+LB,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.6749173402786255
+LB,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.660123348236084
+LB,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.7034623622894287
+LB,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6794490814208984
+LB,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6919233798980713
+LB,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.689166784286499
+LB,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6213887929916382
+LB,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6355339288711548
+LB,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.6361036896705627
+MS,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6683276891708374
+MS,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6384701728820801
+MS,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6317017674446106
+MS,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6422005891799927
+MS,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6396428346633911
+MS,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.7008190751075745
+MS,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.7184451818466187
+MS,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.5837857723236084
+MS,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.700597882270813
+MS,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6962733268737793
+MS,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6356375217437744
+MS,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.6956796646118164
+MS,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6915406584739685
+MS,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.631602942943573
+MS,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.6701694130897522
+MS,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.620216429233551
+MS,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.641443133354187
+MS,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6644608974456787
+MS,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.7302684783935547
+MS,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.5924696922302246
+MS,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6959929466247559
+MS,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.7057256698608398
+MS,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.679151713848114
+MS,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6755491495132446
+MS,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6838564872741699
+MS,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6150322556495667
+MS,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6995846033096313
+MS,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6840671896934509
+MS,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.723678469657898
+MS,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6778153777122498
+MS,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6639589071273804
+MS,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6376633048057556
+MS,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6784296035766602
+MS,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.666508138179779
+MS,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6880083084106445
+MS,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6744813323020935
+MS,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6814010143280029
+MS,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6929096579551697
+MS,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6713306307792664
+MS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.6060240864753723
+MS,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.679895281791687
+MS,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6931465864181519
+MS,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6795255541801453
+MS,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6874996423721313
+MS,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6506364345550537
+MS,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.6709251403808594
+MS,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6120383739471436
+MS,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6352841258049011
+MS,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.717706561088562
+MS,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.668308436870575
+MS,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.608967661857605
+MS,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6672413945198059
+MS,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6335394382476807
+MS,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6846882104873657
+MS,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6963616013526917
+MS,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6587285995483398
+MS,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6836398839950562
+MS,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6771129369735718
+MS,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.7094582319259644
+MS,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.6332578063011169
+MS,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.628630518913269
+MS,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7199306488037109
+MS,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6844097375869751
+MS,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.6338829398155212
+MS,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.627834677696228
+MS,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6635014414787292
+MS,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.6262197494506836
+MS,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6203497648239136
+MS,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.7072909474372864
+MS,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.7090109586715698
+MS,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.6597710847854614
+MS,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.7033671736717224
+MS,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.6319317817687988
+MS,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6743017435073853
+MS,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6207792162895203
+MS,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6703804135322571
+MS,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.7218770384788513
+MS,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6381692886352539
+MS,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.664567232131958
+MS,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.6839112043380737
+SA,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.66250079870224
+SA,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6736215949058533
+SA,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6427821516990662
+SA,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6348063945770264
+SA,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6441419124603271
+SA,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.6573660969734192
+SA,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6502655148506165
+SA,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.6230161786079407
+SA,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.6649131774902344
+SA,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6499592065811157
+SA,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6541143655776978
+SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.7547609210014343
+SA,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.656592607498169
+SA,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6156471967697144
+SA,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.7083132863044739
+SA,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.6285198926925659
+SA,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.6503585577011108
+SA,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6600515246391296
+SA,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.6596906185150146
+SA,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.5740440487861633
+SA,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6518948674201965
+SA,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6169543266296387
+SA,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.6583681106567383
+SA,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6321462988853455
+SA,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6907232999801636
+SA,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6622296571731567
+SA,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6405330896377563
+SA,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.658389687538147
+SA,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.6814619302749634
+SA,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.6733869314193726
+SA,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6577059030532837
+SA,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6443636417388916
+SA,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6585108637809753
+SA,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.6642692685127258
+SA,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6171791553497314
+SA,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6461215615272522
+SA,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6517921686172485
+SA,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6410127878189087
+SA,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6571530103683472
+SA,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.6116675734519958
+SA,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.5969744920730591
+SA,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6209726929664612
+SA,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.683295726776123
+SA,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6671169400215149
+SA,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6670494079589844
+SA,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.652681291103363
+SA,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6121196150779724
+SA,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6187497973442078
+SA,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6343732476234436
+SA,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.625304639339447
+SA,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6183801889419556
+SA,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6664272546768188
+SA,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6794102191925049
+SA,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6981652975082397
+SA,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6623052358627319
+SA,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6306226253509521
+SA,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6882420182228088
+SA,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6642298698425293
+SA,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6742255091667175
+SA,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.6374514102935791
+SA,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.6186120510101318
+SA,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.6605205535888672
+SA,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6476981043815613
+SA,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5913330912590027
+SA,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.6215915679931641
+SA,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6141096353530884
+SA,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.6509962677955627
+SA,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6526679992675781
+SA,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6219081878662109
+SA,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6634731888771057
+SA,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.6524060964584351
+SA,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.6664005517959595
+SA,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.6614706516265869
+SA,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6674994230270386
+SA,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6476457118988037
+SA,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6054555177688599
+SA,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6362276077270508
+SA,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6353616714477539
+SA,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6431699991226196
+SA,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.627035915851593
+SU,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.6639842987060547
+SU,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.6478220224380493
+SU,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6585046648979187
+SU,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6338878870010376
+SU,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6517667770385742
+SU,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.7042199969291687
+SU,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6566730737686157
+SU,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.6182392239570618
+SU,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.6620630621910095
+SU,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6829546689987183
+SU,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6713160276412964
+SU,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.7100993394851685
+SU,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6860158443450928
+SU,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6362559795379639
+SU,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.6788777709007263
+SU,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.6284990310668945
+SU,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.6844490766525269
+SU,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6760265827178955
+SU,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.670039713382721
+SU,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.6547896862030029
+SU,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6718496084213257
+SU,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6463684439659119
+SU,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.6967360973358154
+SU,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6269439458847046
+SU,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6963528394699097
+SU,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6299837827682495
+SU,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6467491984367371
+SU,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6473379135131836
+SU,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.6611804962158203
+SU,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.643231213092804
+SU,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6753474473953247
+SU,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.646222710609436
+SU,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6656278371810913
+SU,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.6928777694702148
+SU,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6693567037582397
+SU,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6465363502502441
+SU,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.642208456993103
+SU,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6231132745742798
+SU,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.690923273563385
+SU,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.6260265111923218
+SU,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.6135179400444031
+SU,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6623088717460632
+SU,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6716180443763733
+SU,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6746792793273926
+SU,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6458699703216553
+SU,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.7083178758621216
+SU,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6463998556137085
+SU,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.7094885110855103
+SU,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6697736978530884
+SU,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.6274040937423706
+SU,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6751846075057983
+SU,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6666362881660461
+SU,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.651641845703125
+SU,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6674526929855347
+SU,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6498035192489624
+SU,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.652741014957428
+SU,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.6718065738677979
+SU,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6534872055053711
+SU,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.6964629888534546
+SU,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.5923752188682556
+SU,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.674819827079773
+SU,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7264282703399658
+SU,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6329106092453003
+SU,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5882971286773682
+SU,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.6142151951789856
+SU,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6248944997787476
+SU,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.631507158279419
+SU,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6446167230606079
+SU,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6482362151145935
+SU,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6794641017913818
+SU,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.6465635895729065
+SU,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.6996616721153259
+SU,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.6693594455718994
+SU,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6432978510856628
+SU,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6423398852348328
+SU,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.655512809753418
+SU,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.668775200843811
+SU,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6554406881332397
+SU,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6436725854873657
+SU,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.6369085311889648
+VV,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.7120996713638306
+VV,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.7012567520141602
+VV,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.672021210193634
+VV,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.7089964151382446
+VV,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6273362040519714
+VV,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.7145347595214844
+VV,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6587677597999573
+VV,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.5925132036209106
+VV,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.713327944278717
+VV,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.6989223957061768
+VV,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6339204907417297
+VV,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.7218802571296692
+VV,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.6934133768081665
+VV,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6222503781318665
+VV,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.7125157117843628
+VV,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.6778352856636047
+VV,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.6821757555007935
+VV,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6638818979263306
+VV,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.6843976974487305
+VV,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.6449216604232788
+VV,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.6626051068305969
+VV,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6538769006729126
+VV,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.7343167662620544
+VV,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.6897268295288086
+VV,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6604626178741455
+VV,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.625874936580658
+VV,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.6547731757164001
+VV,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6216526031494141
+VV,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.7106956839561462
+VV,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.7291606068611145
+VV,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.6985065937042236
+VV,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6918285489082336
+VV,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.7083203792572021
+VV,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.7024049758911133
+VV,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6361782550811768
+VV,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6667462587356567
+VV,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.67893385887146
+VV,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6664332151412964
+VV,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6476781368255615
+VV,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.5873751640319824
+VV,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.5986562967300415
+VV,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6427226066589355
+VV,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.7222622632980347
+VV,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.6864444613456726
+VV,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6797472238540649
+VV,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.6849978566169739
+VV,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6495857238769531
+VV,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6872133016586304
+VV,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6667878031730652
+VV,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.6620529890060425
+VV,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6698252558708191
+VV,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.6826809048652649
+VV,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.636110782623291
+VV,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6746719479560852
+VV,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6575478315353394
+VV,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6494238972663879
+VV,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.7226977348327637
+VV,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.6673086881637573
+VV,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.7175692319869995
+VV,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.629580020904541
+VV,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.6192984580993652
+VV,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7578974366188049
+VV,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6439085602760315
+VV,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5707615613937378
+VV,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.637879490852356
+VV,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6593557596206665
+VV,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.642524242401123
+VV,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6050320863723755
+VV,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6594544649124146
+VV,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6517705917358398
+VV,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.7064394354820251
+VV,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.7138026356697083
+VV,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.686509370803833
+VV,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.6972278356552124
+VV,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6629401445388794
+VV,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6610811352729797
+VV,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6739652752876282
+VV,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6184964179992676
+VV,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6778403520584106
+VV,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.6726676225662231
+ZW,j001,Data Analytics & Insights Specialist,Deloitte,https://www.indeed.com/viewjob?jk=a4dec186cce30e4c,0.7354750633239746
+ZW,j002,us Senior Data Analyst | Remote - Contract,Xperteez Technology,https://www.tealhq.com/job/senior-data-analyst_7ea1a3860a43738ae8342a75db59984202bea,0.7096062898635864
+ZW,j003,BI Developer II: Power BI Insights & Data Modeling,Boston Beer Corporation,https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7,0.6608797311782837
+ZW,j004,Remote BI Developer: Build Insightful Dashboards,Navitus,https://www.jobleads.com/us/job/remote-bi-developer-build-insightful-dashboards--montpelier--e4b01741f6e35288fb5c6734c1d383805,0.6790130138397217
+ZW,j005,"Anaplan Strategy, Growth, and Transformation Domain Senior Manager",Deloitte,https://www.linkedin.com/jobs/view/anaplan-strategy-growth-and-transformation-domain-senior-manager-at-deloitte-4485649623,0.6494921445846558
+ZW,j006,Strategy Consultant (Remote | $150–$350/hr),Synthires,https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349,0.6857028007507324
+ZW,j007,Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/product-analyst-hybrid/11524449,0.6769912242889404
+ZW,j008,Product Analyst- Hybrid/Remote,Great American Insurance Group (DBA),https://www.monster.com/job-openings/product-analyst-hybrid-remote-richfield-mn--a7c2c86f-bb53-457f-9fa5-6a9aa0255355,0.6324903964996338
+ZW,j009,"Senior Machine Learning Engineer - Boston, MA",Motion Recruitment,https://motionrecruitment.com/tech-jobs/boston/direct-hire/senior-machine-learning-engineer-boston-ma/893699,0.7168669700622559
+ZW,j010,Machine Learning Engineer- Remote,Harbor Freight Tools,https://www.theladders.com/job/machine-learning-engineer-remote-harborfreighttools-virtual-travel_89302900,0.7263405919075012
+ZW,j011,Sr. Financial Analyst- Ecommerce/Retail,Robert Half,https://www.roberthalf.com/us/en/job/boston-ma/sr-financial-analyst-ecommerceretail/02100-0013534891-usen,0.6280438899993896
+ZW,j012,Financial Planning & Analysis Analyst | Fully Remote US,HireVue,https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945,0.6929550170898438
+ZW,j013,"Platform Product Manager, Ontology & Knowledge Graph",Vizient,https://www.linkedin.com/jobs/view/platform-product-manager-ontology-knowledge-graph-at-vizient-4484858848,0.7085933685302734
+ZW,j014,"Principal Product Manager, Pro",Evolve,https://remote.com/jobs/evolve-c17jgxcw/principal-product-manager-pro-j130305t,0.6155969500541687
+ZW,j015,"Manager, Advanced Data Analytics and Insights",Fidelity Investments,https://www.builtinboston.com/job/manager-advanced-data-analytics-and-insights/11939118,0.7215915322303772
+ZW,j016,Data Analyst - Remote,YO AI Labs,https://www.linkedin.com/jobs/view/data-analyst-remote-at-yo-ai-labs-4482922233,0.6833294630050659
+ZW,j017,Business Intelligence Analyst Sr (Hybrid Webster or Boston),Mapfre,https://www.linkedin.com/jobs/view/business-intelligence-analyst-sr-hybrid-webster-or-boston-at-mapfre-4483188489,0.710396409034729
+ZW,j018,Certified EPIC Business Intelligence Developer III (Mostly Remote),UTHealth Houston,https://dailyremote.com/remote-job/certified-epic-business-intelligence-developer-iii-mostly-remote-5781195,0.6924793720245361
+ZW,j019,Associate Consultant - Discovery Strategy & Transformation,ZS,https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817,0.7286390066146851
+ZW,j020,Remote AI Strategy Consultant (Contract),Remotebridge,https://www.jobleads.com/us/job/remote-ai-strategy-consultant-contract--united-states--eef7acdd69f19973baaa12896d42a4c12,0.6083444356918335
+ZW,j021,Competitive Intelligence Product Analyst (Hybrid),American Family Insurance,https://www.builtinboston.com/job/competitive-intelligence-product-analyst-hybrid/11646106,0.696212649345398
+ZW,j022,Remote Junior Product Analyst: Agile Requirements,JMD Technologies Inc.,https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833,0.6663581132888794
+ZW,j023,AI & Machine Learning Engineering Consultant - Databricks - Manager - Consulting- Location OPEN,EY,https://ey.jobs/boston-ma/ai-machine-learning-engineering-consultant-databricks-manager-consulting-location-open/0A3E45EC8B544E34B66D09366702828F/job/,0.7290886640548706
+ZW,j024,Remote Machine Learning Engineer,Spotter,"https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",0.7006592750549316
+ZW,j025,"Senior Manager, Financial Planning & Analysis",Recipharm,https://www.linkedin.com/jobs/view/senior-manager-financial-planning-analysis-at-recipharm-4484134803,0.6421470046043396
+ZW,j026,Law firm Financial Analyst- remote,R & W Group,"https://www.ziprecruiter.com/c/R-&-W-Group/Job/Law-firm-Financial-Analyst-remote/-in-Washington,DC?jid=37ebb7706d72466b",0.6482293009757996
+ZW,j027,"Product Manager, Portfolio Management Platforms (Asset Management)",Publicis Groupe Holdings B.V,https://careers.publicisgroupe.com/jobs/178735?lang=en-us,0.668912947177887
+ZW,j028,Product Manager (Remote),Thera,https://www.linkedin.com/jobs/view/product-manager-remote-at-thera-4479659443,0.6542192101478577
+ZW,j029,Director of Data Analytics,Hi Marley,https://www.welcometothejungle.com/en/companies/hi-marley/jobs/director-of-data-analytics_boston_irthzwwz,0.7174006700515747
+ZW,j030,Remote Data Analyst V (6347),Itd Tech,https://www.talent.com/view?id=641977745851810986,0.7134482860565186
+ZW,j031,Sr. BI Data Engineer,The Boston Beer Company,https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056,0.7305470705032349
+ZW,j032,Sr. Epic Business Intelligence Developer,Montage Health,https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7,0.6945350766181946
+ZW,j033,"Director, Research Strategist – Senior Leadership and Growth Strategy",KPMG US,https://www.linkedin.com/jobs/view/director-research-strategist-%E2%80%93-senior-leadership-and-growth-strategy-at-kpmg-us-4484543132,0.6563234329223633
+ZW,j034,"Expert Opportunity - Strategy Consultant ($100/hr, up to $2,000/week)",Ethos,https://www.linkedin.com/jobs/view/expert-opportunity-strategy-consultant-%24100-hr-up-to-%242-000-week-at-ethos-4453394342,0.6865603923797607
+ZW,j035,Lead Product Analyst,Plymouth Rock Assurance Corporation,https://www.indeed.com/viewjob?jk=ce4b48b51b300399,0.6557255983352661
+ZW,j036,"Remote Data Product Analyst, Corporate",Yipitdata,https://www.talent.com/view?id=635756987206928531,0.6897213459014893
+ZW,j037,Junior Machine Learning Engineer-remote/Data Scientist,SynergisticIT,"https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",0.6951446533203125
+ZW,j038,Artificial Intelligence Machine Learning 2 - Telework 16 hrs Remote / Telecommute Jobs,Ascendant Innovations Corporation,https://www.clearancejobs.com/jobs/9277013/artificial-intelligence-machine-learning-2-telework-16-hrs,0.6922913789749146
+ZW,j039,Lead Financial Analyst,Liberty Mutual Insurance,https://searchjobs.libertymutualgroup.com/careers/job/618520442626-lead-financial-analyst-boston-massachusetts-united-states,0.6711340546607971
+ZW,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",7Seventy,https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082,0.5968239307403564
+ZW,j041,"Senior Product Manager, Brand Outcomes, Video and Native Advertising",Roku,https://www.tealhq.com/job/senior-product-manager_7ea1a2c4f6cca165c8bd711330d87c1aa3bd0,0.6095334887504578
+ZW,j042,"Product Manager, North America - Remote",Hitachi Global,https://careers.hitachi.com/product-manager-north-america-remote/job/R0120995,0.6578478813171387
+ZW,j043,Senior Market Data Analyst security master - onsite Boston- USC and GC only,"Yoh, A Day & Zimmermann Company",https://www.linkedin.com/jobs/view/senior-market-data-analyst-security-master-onsite-boston-usc-and-gc-only-at-yoh-a-day-zimmermann-company-4483578413,0.6992416381835938
+ZW,j044,W2 Long Term Remote Position- Data Analyst/Data & reporting analyst- CH2,Software Technology Inc,https://jobmesh.io/job/f43cb200-5fc4-4075-9080-a6f0fb92a2f7,0.7111093401908875
+ZW,j045,"Senior Aderant Developer, BI Reporting",Cornerstone,"https://www.ziprecruiter.com/c/cornerstone-staffing/Job/Senior-Aderant-Developer,-BI-Reporting/-in-Boston,MA?jid=0febb57855269e34",0.6801699995994568
+ZW,j046,Business Intelligence (BI) Developer - Remote with Security Clearance,Serco Inc.,https://haystackapp.io/jobs/99e3397c-fe1f-404b-add5-9f5dceae5ee1,0.7128521203994751
+ZW,j047,Senior Consultant: Strategy & Delivery Leadership,BitSight,https://jobmesh.io/job/139cafb3-eadc-4458-a085-bae74917be31,0.6219465732574463
+ZW,j048,Strategy Consultant / Sr Strategy Consultant – Remote,remote quest jobs,https://us.remotejobs.dedyn.io/job/2429311,0.6575964689254761
+ZW,j049,Alternatives Product Business Analyst – Hedge Middle Office– Assistant Vice President,State Street,https://careers.statestreet.com/global/en/job/STSTGLOBALR800091EXTERNALENGLOBAL/Alternatives-Product-Business-Analyst-Hedge-Middle-Office-Assistant-Vice-President,0.6653227210044861
+ZW,j050,Remote Senior Product Analyst - PowerApps/RPA,Remote Jobs,https://www.jobleads.com/us/job/remote-senior-product-analyst-powerapps-rpa--new-york--e94e81d15d8a585fa7d448a054c79549c,0.627050518989563
+ZW,j051,"Director, AI and Machine Learning Engineering",Bain & Company Inc,https://www.indeed.com/viewjob?jk=09fd2b2988c81539,0.6479502320289612
+ZW,j052,AI Engineer (REMOTE),EnableComp,https://remote.com/jobs/enablecomp-c1rsngxt/ai-engineer-remote-j17mmk32,0.7081667184829712
+ZW,j053,Financial Planning & Analysis Manager,Simply Business,https://www.builtinboston.com/job/financial-planning-analysis-manager/11697564,0.6509029865264893
+ZW,j054,Financial Analyst (2026-8076) Remote (United States),Dover,https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585,0.6738841533660889
+ZW,j055,Product Manager II,Deloitte,https://www.indeed.com/viewjob?jk=193e92c27e3c62bf,0.6943314671516418
+ZW,j056,Remote Product Manager: Shape New Initiatives in Compliance,Partner Company,https://www.jobleads.com/us/job/remote-product-manager-shape-new-initiatives-in-compliance--united-states--e56a51c5ee95d9ba4cb266d5dd707d8a6,0.6502029895782471
+ZW,j057,"Senior Analyst, R&D Quality Data Analytics",Takeda Pharmaceutical,https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712,0.7001539468765259
+ZW,j058,Senior Data Analyst - Remote / Telecommute,CYNET SYSTEMS,"https://www.ziprecruiter.com/c/cynet-systems/Job/Senior-Data-Analyst-Remote-Telecommute/-in-Remote,US?jid=15db367eab681a41",0.7145059108734131
+ZW,j059,Business Intelligence Developer/Report Writer,Massachusetts Water Resources Authority,https://www.indeed.com/viewjob?jk=454fb119044baf75,0.738339900970459
+ZW,j060,BI Developer Sr. or Lead,USAble Life,https://dailyremote.com/remote-job/bi-developer-sr-or-lead-5757053,0.6138105392456055
+ZW,j061,Oliver Wyman - Senior Consultant (Generalist),Oliver Wyman Group,https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist,0.60686856508255
+ZW,j062,"Knowledge, Data, and AI Strategy Lead Consultant","Enterprise Knowledge, LLC",https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/,0.7224380970001221
+ZW,j063,Hybrid Senior Product Analyst: AI-Driven Growth Insights,American Family Insurance,https://www.jobleads.com/us/job/hybrid-senior-product-analyst-ai-driven-growth-insights--boston--ee49eb7673b317b8b9a252c3a5b091c27,0.6515326499938965
+ZW,j064,"Junior Product Analyst, P&C Insurance",Preferred Mutual,https://www.jobleads.com/us/job/junior-product-analyst-p-c-insurance--united-states--e143891e7fe65223b4aee02e1fdc13b65,0.5864631533622742
+ZW,j065,Staff Machine Learning Engineer - VoIP Infrastructure,ServiceNow,https://careers.servicenow.com/jobs/744000155800119/staff-machine-learning-engineer-voip-infrastructure/,0.6647109389305115
+ZW,j066,Machine Learning Research Scientist (Remote | $60–$120/hr),Synthires,https://www.linkedin.com/jobs/view/machine-learning-research-scientist-remote-%2460%E2%80%93%24120-hr-at-synthires-4481454176,0.6839094758033752
+ZW,j067,Wealth Planning Analyst,Mariner Wealth Advisors,https://www.builtinboston.com/job/wealth-planning-analyst/11616871,0.6542428731918335
+ZW,j068,Senior Financial Analyst-Financial Planning and Analysis,Sentry Insurance,https://jobs.sentry.com/job/jr-142897,0.6381626129150391
+ZW,j069,Product Manager III - Vaux Smart Autonomy,ArcBest,"https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",0.6613520979881287
+ZW,j070,Remote Product Manager,Latitude Inc,https://www.talent.com/view?id=635758329175017979,0.6952613592147827
+ZW,j071,Data Analyst,The Panther Group,https://www.monster.com/job-openings/data-analyst-quincy-ma--556e55ed-287f-4581-aa91-80ff5fce2b74,0.701793372631073
+ZW,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,"Walter Bacon, Inc.",https://jobright.ai/jobs/info/6a6987132baf19558c924088,0.7085817456245422
+ZW,j073,"Senior BI Analyst - Hybrid, Dashboards & Insights",MFS Investments,https://www.jobleads.com/us/job/senior-bi-analyst-hybrid-dashboards-insights--boston--e53cdeed13bf3fba61e8319c90e6bd76c,0.6652464270591736
+ZW,j074,Business Intelligence Developer,TherapyNotes.com,https://apply.workable.com/therapynotes/j/546D347542,0.7101572751998901
+ZW,j075,"Strategy & Analytics Consultant, High-Impact Projects","Cartesian, Inc",https://trabajos.univision.com/job/23-14660_2A097DC9134A9DDADD6E36876E32D69D,0.6303263306617737
+ZW,j076,[Remote] Strategy Consultant,ResourceWise,https://jobright.ai/jobs/info/6a56650353b3962b910afd98,0.6635392904281616
+ZW,j077,Alternatives Product Business Analyst - Real Assets- Assistant Vice President,State Street Global Advisors,"https://www.ziprecruiter.com/c/state-street-global-advisors/Job/Alternatives-Product-Business-Analyst-Real-Assets-Assistant-Vice-President/-in-Boston,MA?jid=0c55885919f1c282",0.6661834120750427
+ZW,j078,Remote Technical Product Analyst — DTQ & Metadata,Bertelsmann,https://www.learn4good.com/jobs/online_remote/info_technology/5562218829/e/,0.6825899481773376
+ZW,j079,Head of AI Engineering,Harrington Starr,https://www.linkedin.com/jobs/view/head-of-ai-engineering-at-harrington-starr-4485238128,0.6917255520820618
+ZW,j080,Senior Machine Learning Engineer | Contract | 100% Remote,Alpha Business Solutions,"https://www.ziprecruiter.com/c/Alpha-Business-Solutions/Job/Senior-Machine-Learning-Engineer-%7C-Contract-%7C-100-Remote/-in-Chicago,IL?jid=dd329d26215c82f2",0.7080152034759521

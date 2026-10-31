@@ -30,7 +30,8 @@ class Embedder(ABC):
 
 
 class GeminiEmbedder(Embedder):
-    skill_threshold, cos_low, cos_high = 0.80, 0.5, 0.9
+    # Gemini cosines are high and compressed: at 0.80 every skill matched (eval/README.md, step 4).
+    skill_threshold, cos_low, cos_high = 0.925, 0.5, 0.9
 
     def __init__(self, api_key: str, model: str, timeout_s: int = 60):
         self.client = make_client(api_key, timeout_s)

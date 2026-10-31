@@ -1,0 +1,204 @@
+# Embedding evaluation
+
+Calibrates the thresholds in `core/embeddings.py` (`skill_threshold`, `cos_low`, `cos_high`).
+Each embedder has its own values, so run every step once per embedder.
+
+```bash
+pip install -r requirements-dev.txt
+python eval/skillmatch.py local|gemini     # step 1
+python eval/esco_pairs.py local|gemini     # step 2
+python eval/extract.py gemini:gemini-flash-lite-latest   # step 3: skills from data/jobs, data/resume
+python eval/label_sets.py extracted_gemini-flash-lite-latest.json   # step 3: build/refresh labels/
+python eval/calibrate.py local extracted_gemini-flash-lite-latest.json   # step 4
+```
+
+`GEMINI_API_KEY` is read from the environment or, failing that, from `.streamlit/secrets.toml`
+(`env.py`). Vectors are cached in `results/vectors_<embedder>.npz` and extractions in
+`results/extracted_<model>.json`, so a run that hits a quota resumes where it stopped.
+
+Free-tier limits met while running this (October 2026): 5 requests/minute and a small daily cap
+for each flash model (overloaded "503" attempts and their retries count too), and 100 texts per
+minute for `gemini-embedding-001`, where every text in a batch counts. `extract.py` spaces calls
+13 s apart and stops at a daily cap; embeddings wait and retry.
+
+## Plan
+
+1. **SkillMatch-1K** (`skillmatch.py`): how well each embedder separates related from unrelated
+   skills. A sanity check on the model, not a threshold: SkillMatch "related" means listed as
+   alternatives in job ads (HTML/CSS), which is looser than our "the CV skill covers the job skill".
+2. **ESCO** (`esco_pairs.py`): synonyms from `altLabels` vs the most similar *different* ESCO
+   skill, for a first `skill_threshold`.
+3. **Own labeled pairs** (`extract.py`, `label_sets.py`): 80 job descriptions (`data/jobs/`) and
+   11 CVs (`data/resume/`, not in git). Two sheets in `labels/`, drafted by Claude, checked by the
+   team (see Labeling guide).
+4. **Calibration** (`calibrate.py`): reproduces `core/matcher.py` scoring (checked against
+   `score_jobs`), sweeps `skill_threshold`, `cos_low`/`cos_high` and the weights (12,672
+   settings), and scores each by mean per-CV Spearman and NDCG@5. Leave-one-CV-out: tune on 10
+   CVs, test on the 11th, compare with the current settings on the same CV.
+
+## Labeling guide
+
+**`labels/cv_job.csv`**: 176 pairs, 16 jobs per CV (the 6 most similar by document cosine plus 10
+spread over the rest), shuffled. Read the CV in `data/resume/` and the posting (`url`, or the
+description in `data/jobs/`), then rate:
+
+| Score | Meaning |
+|---|---|
+| 5 | Strong fit: meets nearly all requirements, would likely get an interview |
+| 4 | Good fit: worth applying, one or two gaps |
+| 3 | Stretch: transferable experience, missing a key requirement |
+| 2 | Weak: some overlap, unlikely to be considered |
+| 1 | Wrong field or far below the level asked |
+
+Ignore work authorization, sponsorship and security clearance: the app doesn't model them, and
+counting them would make almost every pair a 1.
+
+**`labels/skill_pairs.csv`** (built after Gemini extraction): `yes` if a recruiter screening for
+`job_skill` would accept `cv_skill` as covering it (same skill, alias or abbreviation, or a
+specific instance: PostgreSQL covers SQL). `no` if it is only related, broader, or an alternative
+tool (Tableau does not cover Power BI; HTML does not cover CSS).
+
+**Who fills what.** `claude_draft` and `claude_note` are Claude's drafts. `reviewer_1` checks the
+drafts and writes their own score (copy the draft if they agree). `reviewer_2` should label
+**without looking** at the Claude or reviewer_1 columns (hide them), so the agreement between
+reviewers is an honest ceiling. Disagreements by more than 1 point go in `notes` and get settled
+together.
+
+## Results
+
+### Step 1: SkillMatch-1K (2,000 pairs, 2,648 unique skills)
+
+| Embedder | AUC-PR | ROC-AUC | Best F1 (cutoff) | Median cosine related / unrelated | At app `skill_threshold` |
+|---|---|---|---|---|---|
+| bge-small-en-v1.5 (local) | 0.856 | 0.823 | 0.750 (0.575) | 0.642 / 0.534 | 0.85: 21 pairs flagged, precision 1.00, recall 0.02 |
+| gemini-embedding-001 | not run yet | | | | |
+
+Reference from the paper: Sentence-BERT 0.876 AUC-PR off the shelf, 0.969 fine-tuned.
+
+- bge-small cosines sit in a narrow band (unrelated pairs still around 0.53), which is why the
+  thresholds are high and sensitive to small changes.
+- Some "unrelated" pairs are mislabeled (test plans/cases vs software testing), because negatives
+  are random pairs that never appeared together in job ads. This caps any model's score.
+- Per-pair cosines: `results/pairs_local.csv`.
+
+### Step 2: ESCO synonyms vs near misses (600 concepts, labels of 1-4 words)
+
+| Embedder | Synonym median | Hard-negative median | AUC-PR | Best F1 (cutoff) | At 0.85 |
+|---|---|---|---|---|---|
+| bge-small (local) | 0.918 | 0.850 | 0.794 | 0.691 (0.868) | precision 0.61, recall 0.77 |
+
+- The current 0.85 sits right at the best-F1 cutoff, so it is a reasonable starting point.
+- The "hard negatives" are noisy: ESCO keeps a skill and its knowledge form as separate concepts
+  ("search engine optimisation" vs "conduct search engine optimisation", "lawn care" vs
+  "provide lawn care"). The app should match these, so true precision is higher than shown.
+  Real near misses do appear too ("shunt inbound loads" vs "shunt outbound loads", 0.96).
+- Per-pair cosines: `results/esco_pairs_local.csv`. ESCO can't set the final threshold; step 3 does.
+
+### Step 3: early findings (from Claude's draft labels, to be confirmed by the team's labels)
+
+- **Document cosines are compressed for bge-small:** CV-job cosines run 0.59-0.72 (p5-p95, all
+  880 pairs) against an app range of `cos_low` 0.55 to `cos_high` 0.90, so the semantic score only
+  moves between about 0.1 and 0.5. A band near 0.59-0.72 would use the full scale (but would also
+  give semantic similarity more weight, so it must be tuned together with the weights).
+- **Document similarity barely tracks fit:** Spearman 0.21 between cosine and draft relevance
+  (per CV from -0.14 to 0.80). Likely cause: `LocalEmbedder` reads only the first 512 tokens
+  (about 2,000 characters), which for most CVs is the education section and the first job.
+- **One hub job:** j062 (Knowledge, Data, and AI Strategy Lead Consultant) is in the top 7 by
+  cosine for 10 of 11 CVs.
+- **Offline extraction fails on CVs:** Llama-3.2-1B loops (repeats "Financial modeling" until the
+  512-token cap), copies the prompt's example skills ("Python", "SQL", "Financial modeling") into
+  a CV that has neither, and estimated 2.5 years for about 8. Tested on one CV (ADW), which failed
+  at both 512 and 2,048 tokens; other CVs and job extraction weren't tried. Step 3 skills use Gemini.
+- **Gemini flash-lite extraction** (flash hit its daily cap; flash-lite is the app's Auto
+  fallback) worked on all 11 CVs and 80 jobs, with realistic years. Two quirks: languages are
+  listed as skills ("English", "Chinese"), and "Financial Modeling" appears for AS and LB, whose CVs
+  don't mention it. It is an example in `prompts/extract_profile.md`, so the example may leak.
+- **Few skill pairs ever reach the threshold:** of 2,611 distinct (job skill, closest CV skill)
+  pairs, 59 have a bge-small cosine of 0.85 or more.
+
+### Step 4: calibration, local embedder (bge-small), skills from gemini-flash-lite
+
+Labels: `cv_job_reviewed.csv`, mean of reviewer_1 and reviewer_2. **Caveat:** reviewer_1 equals
+Claude's draft on all 176 pairs, `notes` repeats `claude_note` on every row, and reviewer_2 is
+never more than 1 point from the draft. So these labels are mostly Claude's judgment; the
+numbers below should be rerun if the reviews are redone independently.
+
+**`skill_threshold`** (`labels/skill_pairs.csv`, 116 pairs, Claude's drafts, not reviewed yet):
+
+| Threshold | Precision | Recall | F1 | F0.5 |
+|---|---|---|---|---|
+| 0.80 | 0.53 | 0.93 | 0.67 | 0.58 |
+| **0.85 (app)** | 0.64 | 0.70 | 0.67 | 0.65 |
+| 0.90 | 0.89 | 0.40 | 0.55 | 0.71 |
+
+0.80-0.85 tie on F1; 0.90 is best if false matches are the worse error (F0.5). Misses at 0.85
+include agile/scrum (0.84) and relational database tools/SQL (0.80); false matches include
+tableau administration/tableau (0.92) and machine learning frameworks/machine learning (0.89).
+No single threshold fixes both, because bge-small scores word overlap highly.
+
+**Ranking** (176 CV-job pairs, 11 CVs):
+
+| | Spearman | NDCG@5 |
+|---|---|---|
+| Skill coverage alone | 0.302 | 0.587 |
+| Document cosine alone | 0.290 | 0.592 |
+| Seniority fit alone | 0.069 | 0.402 |
+| **Current settings** (0.85, 0.55-0.90, weights 0.5/0.3/0.2) | **0.363** | **0.650** |
+| Best setting on all 11 CVs (in-sample) | 0.463 | 0.710 |
+| Tuned on 10, tested on the 11th (mean of 11) | 0.356 | 0.568 |
+
+- **Tuning does not beat the current settings on unseen CVs** (0.356 vs 0.363 Spearman, 0.568 vs
+  0.650 NDCG@5). The in-sample gain is overfitting: the chosen settings change from fold to fold
+  (`results/calibration_loco_local.csv`). Recommendation: keep the current values for bge-small.
+- Ranking quality is limited by the inputs, not the knobs: `cos_low`/`cos_high` barely matter
+  (best Spearman 0.454-0.463 across all values), and the weights are flat between 0.3 and 0.5 for
+  skills and 0.2 and 0.3 for semantic. Bigger levers are what gets embedded (the 512-token cut),
+  extraction quality, and more labeled CVs.
+- Skill-pair drafts were corrected after this run (data analysis/data analytics and digital
+  analytics/google analytics are now "yes", 42 yes in total). With them, local 0.85 gives
+  precision 0.66, recall 0.69, F1 0.67, and the ranking numbers above are unchanged.
+
+### Step 4: calibration, Gemini embedder (gemini-embedding-001, now the app default)
+
+**At the current `skill_threshold` of 0.80, every required skill counts as matched** (mean skill
+coverage 1.00 over the 176 pairs). Half of the score is then constant, and "missing skills" is
+empty for every job. Gemini cosines are high and compressed: skill pairs labeled "yes" have a
+median of 0.944, "no" pairs 0.899; CV-job document cosines run 0.73-0.80 (p5-p95).
+
+| Threshold | Precision | Recall | F1 | F0.5 | Ranking Spearman / NDCG@5 (current weights, cos range) | Mean coverage |
+|---|---|---|---|---|---|---|
+| **0.80 (app)** | 0.37 | 1.00 | 0.54 | 0.42 | 0.331 / 0.574 | 1.00 |
+| 0.85 | 0.40 | 1.00 | 0.57 | 0.45 | 0.315 / 0.588 | 0.76 |
+| 0.875 | 0.43 | 1.00 | 0.60 | 0.49 | 0.210 / 0.483 | 0.44 |
+| 0.90 | 0.51 | 0.93 | 0.66 | 0.56 | 0.377 / 0.616 | 0.26 |
+| 0.925 | 0.68 | 0.76 | 0.72 | 0.70 | 0.280 / 0.608 | 0.14 |
+| 0.95 | 0.89 | 0.40 | 0.56 | 0.72 | | |
+
+- Skill pairs (Claude's drafts) point to 0.925 (best F1). The ranking column jumps around between
+  neighbouring thresholds, so with 11 CVs it is too noisy to pick the threshold from.
+- **Changed:** `GeminiEmbedder.skill_threshold` is now 0.925 (was 0.80). Matched/missing skills
+  become meaningful (mean coverage 0.14 instead of 1.00); ranking moves from 0.331 to 0.280
+  Spearman and from 0.574 to 0.608 NDCG@5 on these labels. Recheck with independent labels.
+- Full grid with leave-one-CV-out: tuned 0.326 vs current 0.331 Spearman, 0.573 vs 0.574 NDCG@5,
+  so, as for bge-small, tuning `cos_low`/`cos_high` and the weights doesn't generalize.
+- With current settings Gemini ranks slightly worse than bge-small on these labels (0.331 vs
+  0.363 Spearman, 0.574 vs 0.650 NDCG@5); its document cosine alone is a little better (0.315 vs
+  0.290), its skill coverage at 0.80 is useless (0.032).
+- The skill pairs were sampled by bge-small cosine, so they are not stratified around Gemini's
+  decision boundary; a Gemini-specific sample would firm up the threshold.
+
+## Data
+
+| File | Source | License | In git |
+|---|---|---|---|
+| `data/skillmatch/test.csv` | [TechWolf/SkillMatch-1K](https://huggingface.co/datasets/TechWolf/SkillMatch-1K) ([paper](https://arxiv.org/abs/2410.05006)) | MIT | yes |
+| `data/esco/skills_en.csv` | ESCO v1.2 skills, English | ESCO terms of use | no (9 MB) |
+| `data/jobs/jobs_jsearch.json` | 80 postings collected through JSearch | posting sites' terms | yes |
+| `data/resume/*.txt` | 11 classmate CVs, initials only | private | **no**: real people, share only within the team |
+
+The ESCO copy came from an unofficial
+[Hugging Face mirror](https://huggingface.co/spaces/edouardlgp/Job_Classification/blob/main/skills_en.csv)
+because the ESCO site blocked automated downloads. For anything cited in the report, download the
+official CSV (English, skills) from the ESCO portal's download section
+([file structure](https://esco.ec.europa.eu/en/structure-esco-downloadable-datasets))
+into `data/esco/`.

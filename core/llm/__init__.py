@@ -42,17 +42,12 @@ def build_provider(key: str, s: Settings) -> LLMProvider:
 
 
 def build_embedder(s: Settings):
-    """Local embeddings when available (no quota); Gemini embeddings otherwise or if loading fails."""
+    """Gemini embeddings when a key is set; the local model otherwise (no key, or EMBEDDINGS="local")."""
     from ..embeddings import GeminiEmbedder, LocalEmbedder
-    use_local = s.embeddings == "local" or (s.embeddings == "auto" and local_available())
-    if use_local:
-        try:
-            return LocalEmbedder(s.local_embed_repo, s.local_embed_file, s.local_threads)
-        except Exception as e:
-            if s.embeddings == "local":
-                raise
-            log.warning("local embeddings unavailable, using Gemini instead: %r", e)
-    return GeminiEmbedder(s.gemini_api_key, s.gemini_embed_model, s.llm_timeout_s)
+    use_gemini = s.embeddings == "gemini" or (s.embeddings == "auto" and bool(s.gemini_api_key))
+    if use_gemini:
+        return GeminiEmbedder(s.gemini_api_key, s.gemini_embed_model, s.llm_timeout_s)
+    return LocalEmbedder(s.local_embed_repo, s.local_embed_file, s.local_threads)
 
 
 def with_fallback(chain: list[str], fn: Callable[[str], R],

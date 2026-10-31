@@ -23,7 +23,7 @@ class Settings:
     local_llm_file: str          # filename or glob within the repo (case-sensitive)
     local_embed_repo: str
     local_embed_file: str
-    embeddings: str              # "auto" (local if installed, else Gemini), "local", or "gemini"
+    embeddings: str              # "auto" (Gemini if a key is set, else local), "local", or "gemini"
     llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
     max_jd_chars: int = 3_000

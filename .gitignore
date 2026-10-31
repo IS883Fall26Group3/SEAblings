@@ -13,6 +13,13 @@ venv/
 .ipynb_checkpoints/
 .DS_Store
 
+# Evaluation: large downloads and cached vectors (see eval/README.md)
+eval/data/esco/
+eval/data/resume/
+eval/results/*.npz
+eval/results/extracted_*.json
+eval/results/calibration_grid_*.csv
+
 # Never commit real CVs
 data/private/
 *.pdf
