@@ -1,0 +1,93 @@
+{
+ "b00": {
+  "j001": "An experienced AI and data analytics specialist focusing on Azure data engineering and unstructured data processing within the financial and public sector domains.",
+  "j003": "A mid-level BI developer responsible for building semantic models, interactive reports, and supporting self-service analytics on the Power BI platform.",
+  "j005": "A senior finance transformation leader specializing in Anaplan-enabled business planning, budgeting, and strategic operations for corporate finance teams.",
+  "j006": "A former top-tier management consultant engaged as a contractor to evaluate complex business reasoning in advanced AI systems.",
+  "j007": "A product analytics specialist responsible for performance monitoring, market research, and data-driven recommendations to guide product strategy.",
+  "j008": "A product analyst focused on commercial insurance products, conducting market research, pricing strategies, and competitor analysis within the transportation sector.",
+  "j009": "A senior machine learning engineer experienced in building, deploying, and optimizing predictive models and scalable AI pipelines in production.",
+  "j010": "A mid-level machine learning engineer responsible for building enterprise MLOps platforms, automated training pipelines, and monitoring scalable models.",
+  "j012": "An early-career FP&A professional specializing in SaaS financial modeling, headcount forecasting, and expense variance analysis.",
+  "j013": "A platform product manager focused on semantic technologies, knowledge graphs, and ontology layers that power enterprise AI systems.",
+  "_seconds": 16.6
+ },
+ "b01": {
+  "j014": "Principal Product Manager to lead the vacation rental Pro offering, defining product vision, strategy, and roadmap for portfolio operators and HOAs at a senior level.",
+  "j015": "Manager in advanced data analytics and customer insights to develop hypothesis-driven initiatives, generate analytical insights, and support digital assets business offerings with strong statistical and dashboarding skills.",
+  "j016": "Data Analyst to review business datasets, conduct document reviews while adhering to PII privacy requirements, and ensure data quality for AI training in a junior to mid-level capacity.",
+  "j017": "Senior Business Intelligence Analyst to investigate claims performance, leverage advanced SQL and BI tools, and turn complex insurance data into actionable business recommendations at a senior level.",
+  "j019": "Associate Consultant in Discovery Strategy and Transformation to help biotech and life sciences organizations solve complex operational and technological challenges at the intersection of science and business.",
+  "j020": "Management Consultant to evaluate AI model reasoning, write prompts, and apply business frameworks to assess and improve model performance in a remote contractor role.",
+  "j021": "Competitive Intelligence Product Analyst to support business partners with strategic decision-making, competitor profiling, and product intelligence for home and auto markets.",
+  "j022": "Junior Product Analyst to support product development, Agile requirements gathering, and IT delivery initiatives with early-career experience.",
+  "j023": "AI & Machine Learning Engineering Manager to design and deliver modern generative AI and advanced data solutions on Databricks with strong technical credibility and client-facing consulting experience.",
+  "j024": "Machine Learning Engineer to build, train, evaluate, and deploy AI models in production environments while collaborating with software engineers on real-world applications.",
+  "_seconds": 16.8
+ },
+ "b02": {
+  "j025": "An experienced senior finance professional to lead financial planning, budgeting, forecasting, and strategic decision support in the life sciences or manufacturing sector.",
+  "j026": "A mid-level financial analyst specializing in legal pricing, alternative fee arrangements, and profitability modeling within a professional services or law firm environment.",
+  "j029": "A senior analytics leader responsible for building, scaling, and guiding data teams to drive data-informed decisions across product, marketing, and finance domains.",
+  "j030": "A senior data analyst and data science expert focused on customer experience data, natural language processing, and statistical modeling to drive customer-centric business improvements.",
+  "j031": "A senior data engineer specializing in Databricks Lakehouse, distributed data processing, and cloud pipeline architecture to power enterprise-scale analytics.",
+  "j032": "A senior healthcare business intelligence developer skilled in creating data models, reports, and dashboards using Epic clinical and financial datasets.",
+  "j033": "A senior research strategist and leader responsible for directing complex quantitative and qualitative research initiatives to inform C-suite decisions in professional services.",
+  "j034": "An expert strategy consultant from a top-tier firm specializing in executive presentation design, slide structuring, and language model training for professional workflows.",
+  "j035": "A mid-level product analyst focused on insurance rating plans, underwriting guidelines, and data-driven pricing strategies within the property and casualty domain.",
+  "j036": "A corporate data analyst responsible for managing data quality, resolving pipeline issues, and delivering actionable alternative data insights to retail clients.",
+  "_seconds": 17.0
+ },
+ "b03": {
+  "j037": "Junior Machine Learning Engineer and Data Scientist responsible for building production-ready data artifacts, predictive models, and dashboards. The ideal candidate has academic background in STEM fields and needs practical portfolio projects to transition into full-time tech roles.",
+  "j038": "Mid-to-Senior AI/ML Engineer responsible for designing, deploying, and optimizing scalable machine learning models across their complete lifecycle. The ideal candidate has a strong computer science background and extensive experience in artificial intelligence algorithm development.",
+  "j039": "Lead Financial Analyst responsible for business partnering, complex financial reporting, budgeting, and variance analysis in operations and claims. The ideal candidate is an experienced finance professional with strong communication skills and advanced data analysis capabilities.",
+  "j040": "FP&A Analyst responsible for managing recurring financial planning processes, evaluating budget variances, and translating operational data into reliable business insights. The ideal candidate supports strategic finance initiatives and management decision-making.",
+  "j041": "Senior Product Manager owning brand outcomes and video advertising solutions across multi-surface streaming environments. The ideal candidate works with engineering and data science to define campaign metrics, optimization models, and third-party measurement integrations.",
+  "j042": "Senior Product Manager leading the Insulation and Components portfolio strategy and market growth across North America. The ideal candidate possesses deep industry expertise in transformer components and drives full product lifecycles.",
+  "j043": "Principal Market Data Analyst leading security master and market data functions within a central data organization. The ideal candidate is a hands-on financial data expert managing reference data integrity, vendor feeds, and strategic data transformations.",
+  "j044": "Data and Reporting Analyst supporting revenue management and trucking business operations through database maintenance and KPI dashboard development. The ideal candidate transforms complex financial and operational data into actionable business insights.",
+  "j045": "Senior Aderant Developer and BI Reporting specialist leading financial systems administration and advanced reporting solutions in a legal environment. The ideal candidate customizes legal accounting platforms and builds integrated data visualizations.",
+  "j046": "Mid-Level Business Intelligence Developer responsible for designing, deploying, and maintaining BI reports, dashboards, and semantic models in cloud environments. The ideal candidate supports mission systems and financial reporting with an active security clearance.",
+  "_seconds": 17.1
+ },
+ "b04": {
+  "j048": "An experienced senior strategy consultant specializing in corporate strategy, market entry, and operating models. The ideal candidate thrives on ambiguity and helps evaluate and refine advanced AI model reasoning on business strategy topics.",
+  "j049": "A seasoned alternative product leader and business analyst specializing in hedge middle office operations and project management. The ideal candidate drives complex business transformation and technology development initiatives using modern AI tools.",
+  "j050": "A remote senior product analyst with expertise in PowerApps and robotic process automation. The ideal candidate excels at managing product backlogs, writing user stories, and facilitating sprint planning within cross-functional Agile teams.",
+  "j051": "A senior AI and machine learning engineering director specializing in building agentic decision tools and real-time decision engines. The ideal candidate brings strong technical ambition and startup agility within a top-tier consulting environment.",
+  "j052": "A hands-on AI engineer specializing in machine learning model training, evaluation, and applied reinforcement learning. The ideal candidate collaborates closely with domain experts to translate specialized knowledge into structured, production-ready AI systems.",
+  "j053": "A proactive financial planning and analysis manager specializing in digital insurance and insurtech models. The ideal candidate translates complex operational and financial results into actionable insights to drive sound business decisions.",
+  "j054": "A corporate financial analyst with strong foundation in financial planning, accounting, and reporting. The ideal candidate is comfortable handling complex datasets, supporting pricing efforts, and delivering accurate labor and sales forecasts.",
+  "j055": "A mid-level product manager specializing in AI-first and AI-native digital products within the advertising, marketing, and commerce domain. The ideal candidate drives cross-functional execution and turns strategic objectives into measurable customer value.",
+  "j056": "A senior-level product manager specializing in B2B SaaS, business verification, and compliance technology. The ideal candidate owns end-to-end product initiatives in a fast-paced, remote-first, AI-native environment.",
+  "j057": "A senior R&D quality data analyst specializing in quality oversight, data analytics, and digital compliance solutions. The ideal candidate leverages advanced data visualization and agile practices to empower business stakeholders with actionable insights.",
+  "_seconds": 16.6
+ },
+ "b05": {
+  "j059": "An experienced Business Intelligence Developer responsible for designing, developing, and maintaining reporting solutions and dashboards for enterprise asset and resource management systems. The ideal candidate has a strong background in data analysis, SQL query development, and supporting enterprise applications in a public sector domain.",
+  "j060": "A skilled Business Intelligence Developer responsible for designing and building data-driven reporting solutions to support business strategies and operational growth. The ideal candidate possesses strong analytical skills and expertise in translating data into actionable insights within a collaborative corporate environment.",
+  "j061": "A versatile Senior Consultant generalist capable of leading complex client engagements, structuring business problems, and delivering high-impact strategic recommendations. The ideal candidate combines strong analytical and communication skills with cross-industry expertise to drive organizational transformation and client success.",
+  "j062": "A senior management consultant specializing in data, semantic layer, and AI strategy engagements, leading end-to-end client transformations and operating model designs. The ideal candidate possesses extensive experience facilitating executive workshops, structuring complex business problems, and guiding cross-functional project teams.",
+  "j064": "An Associate Product Analyst focused on developing, maintaining, and enhancing property and casualty insurance products. The ideal candidate assists with competitive research, requirement documentation, and cross-functional coordination with underwriting and actuarial teams.",
+  "j065": "A Staff Machine Learning Engineer specializing in VoIP infrastructure and real-time communication systems, integrating LLMs into voice platforms. The ideal candidate has strong software engineering experience in Python or Go, extensive cloud-native Kubernetes operations, and expertise in telecom protocols.",
+  "j066": "An advanced Machine Learning Research Scientist and Contractor holding an advanced quantitative degree, focused on model development, training pipelines, and performance optimization. The ideal candidate is highly proficient in Python, reproducible workflows, and complex machine learning engineering tasks.",
+  "j067": "A Wealth Planning Analyst supporting licensed advisors with client meetings, financial research, and plan preparation within a wealth management setting. The ideal candidate possesses foundational knowledge of financial planning concepts, strong organizational skills, and a commitment to pursuing professional licensing and designations.",
+  "j068": "A Senior Financial Analyst responsible for corporate staff planning, expense budgeting, financial forecasting, and variance analysis. The ideal candidate brings strong technical and analytical skills to provide actionable financial insights, ensure compliance, and support strategic business decisions.",
+  "j069": "A Product Manager III driving execution and value creation across autonomous intralogistics and robotics portfolios. The ideal candidate bridges commercial strategy and technical execution, translating customer feedback into actionable roadmaps, ROI models, and product requirement documents.",
+  "_seconds": 17.6
+ },
+ "b06": {
+  "j070": "An experienced product leader with a strong technical background in fintech and payments infrastructure to own the product function end-to-end. The ideal candidate excels at technical discovery, API-driven systems, and defining roadmaps for complex global money movement platforms.",
+  "j071": "An experienced IT professional specializing in database administration, platform operations, and enterprise reporting. The ideal candidate will support critical data platforms like Snowflake and Tableau while troubleshooting complex system integrations and application issues.",
+  "j072": "A seasoned data analyst and life sciences consultant specializing in biotech go-to-market strategy, market access, and commercial operations. The ideal candidate has strong presentation skills and a track record of driving data-driven advisory projects for top-tier healthcare clients.",
+  "j073": "A senior business intelligence analyst with strong expertise in SQL and data visualization tools to support distribution teams. The ideal candidate excels at designing robust dashboards, analyzing large datasets, and collaborating closely with business stakeholders in an agile environment.",
+  "j074": "A proficient Business Intelligence Developer skilled in transforming complex data into interactive Power BI dashboards and robust data models. The ideal candidate leverages modern AI tools to accelerate development efficiency and partners with stakeholders to deliver actionable behavioral health insights.",
+  "j075": "An analytical strategy consultant with a strong background in data-driven problem solving and research within the TMT sector. The ideal candidate excels at client performance enhancement and driving high-impact strategic projects.",
+  "j077": "A qualified product leader and business analyst with deep expertise in alternative assets and real assets transformation programs. The ideal candidate is highly organized, proficient in modern AI project tools, and skilled at driving complex technical and business initiatives across global teams.",
+  "j078": "A technical product analyst with strong data capabilities and a background in agile customer operations platforms. The ideal candidate bridges business requirements with technical execution, specializing in metadata and asset distribution workflows.",
+  "j079": "A hands-on Head of AI Engineering with deep expertise in building production-grade LLM applications, RAG systems, and agentic architectures. The ideal candidate combines strong technical vision with leadership skills to scale AI platforms from the ground up within complex domains.",
+  "j080": "An extraordinary Machine Learning Engineer skilled in designing and productionizing algorithmic product architectures within cloud environments. The ideal candidate bridges data science and engineering to build scalable ML pipelines, feature stores, and real-time inference systems.",
+  "_seconds": 18.1
+ }
+}

@@ -11,7 +11,7 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    or offline sample data.
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
 5. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`,
-   using embeddings (`core/embeddings.py`: local if installed, otherwise Gemini). Deterministic, so the same inputs give the same score.
+   using embeddings (`core/embeddings.py`: Gemini, or local without a key). Deterministic, so the same inputs give the same score.
 6. **Explain** (on demand): Gemini writes short advice for a selected job.
 
 ## Choosing a model
@@ -27,10 +27,22 @@ first time it's used and again after each app restart. Output is constrained to 
 schema, which keeps a small model's extraction well-formed. It reads each job separately, so fewer
 jobs means faster results.
 
-Embeddings use a small local model (bge-small, GGUF) whenever `llama-cpp-python` is installed, so
-scoring never uses Gemini quota; if it can't load, the app falls back to Gemini embeddings.
-Similarity thresholds differ per embedding model (`core/embeddings.py`), so re-check them with the
-evaluation set.
+Embeddings use Gemini (`gemini-embedding-001`) whenever `GEMINI_API_KEY` is set, and a small local
+model (bge-small, GGUF, via `llama-cpp-python`) otherwise; set `EMBEDDINGS = "local"` to force the
+local one. Gemini's free tier embeds about 100 texts per minute, and one search embeds the CV, each
+job, and every unique skill. Similarity thresholds differ per embedding model
+(`core/embeddings.py`); see `eval/README.md` for how they were checked.
+
+**Experience fit** (`EXPERIENCE_FIT`, `core/experience.py`) can count *relevant* years instead of
+all years: `"roles"` keeps CV roles whose embedding is close to the job; `"judge"` asks the LLM
+which roles count (one extra call per search, guided steps, CV only). Either way the years are
+added up in Python from the roles' dates. Default `"total"`; see `eval/README.md` for the comparison.
+
+**Profile similarity** (`PROFILE_SIMILARITY`, `core/similarity.py`): `"document"` (default)
+compares the whole CV with the whole posting; `"summary"` compares the CV summary with a 2-3
+sentence `role_summary` written during requirement extraction (no extra call); `"chunks"` averages
+each job's 3 closest CV chunks. Each mode has its own cosine band in `core/embeddings.py`; document
+ranked best in `eval/README.md` (step 6).
 
 ## Run locally
 
@@ -62,6 +74,7 @@ core/                   business logic, no Streamlit imports (testable)
 prompts/                prompt templates (version these like code)
 data/sample/            fictional CV and job listings for dev, tests, demo fallback
 tests/                  pytest, no API keys needed
+eval/                   embedding threshold calibration (see eval/README.md)
 notebooks/              experiments only; the app never imports from here
 docs/                   architecture diagram, screenshots, report assets
 ```

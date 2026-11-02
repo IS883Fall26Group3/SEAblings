@@ -1,0 +1,2001 @@
+skill_a,skill_b,related,cosine
+grasping,pinching,True,0.7265787124633789
+OpenMP,MPI,True,0.6705511808395386
+EPDM,Modified Bitumen,True,0.5443099141120911
+Qualys,Tenable,True,0.5496289730072021
+NumPy,SciPy,True,0.767769455909729
+strategic development,talent retention,True,0.6291139125823975
+PATRAN,CSW,True,0.4318225383758545
+Adobe Illustrator,Adobe Photoshop,True,0.8201687932014465
+Excel/VBA,PATRAN,True,0.42774778604507446
+vCenter,NSX,True,0.6022208333015442
+transmitters,control valves,True,0.558462381362915
+oscilloscopes,power supplies,True,0.5960949063301086
+VxWorks,Embedded Linux,True,0.5862783193588257
+Cisco certification,Microsoft certification,True,0.7789126634597778
+modems,plotters,True,0.5030498504638672
+subcontractors,architects,True,0.5892312526702881
+Volatility,EnCase,True,0.5173444151878357
+records retention,payment,True,0.5286106467247009
+Agile Games,Continuous Testing,True,0.6546200513839722
+CDMA,ICMP,True,0.5511844158172607
+Security+,CompTIA A+,True,0.7026803493499756
+dividing,adding,True,0.6245899200439453
+medical insurance,dental insurance,True,0.8061754703521729
+Outlook,PowerPoint,True,0.6618126630783081
+PCIe,USB,True,0.6511306166648865
+Asynchronous messaging,pub-sub messaging,True,0.7101611495018005
+walls,floors,True,0.755603551864624
+futures,forwards,True,0.6811012029647827
+subject lines,list management,True,0.6404891014099121
+casting,stamping,True,0.57809978723526
+editing documents,creating documents,True,0.8247762322425842
+height gage,micrometer,True,0.7151429653167725
+Pub/Sub,Dataflow,True,0.5834372043609619
+Metasploit,Burp Suite,True,0.6015443801879883
+Designer,Maxwell,True,0.6111541986465454
+BUR,EPDM,True,0.5755183100700378
+scanners,fax machines,True,0.7032610177993774
+API 510,B16.5,True,0.646256685256958
+Server 2016,Server 2022,True,0.8088662028312683
+Dagster,Prefect,True,0.5268057584762573
+Server 2012,Mac OS,True,0.6306730508804321
+Bacteriology,Blood Bank,True,0.5155985355377197
+writing English,reading English,True,0.8056098818778992
+BUR,PVC,True,0.5034900307655334
+loops,troubleshooting techniques,True,0.6065966486930847
+Jira,Confluence,True,0.5454897284507751
+generation,transmission,True,0.6073689460754395
+proportions,interest,True,0.6486124396324158
+API,ASME,True,0.5989882946014404
+government agencies,major payer groups,True,0.6211752891540527
+baking,roasting,True,0.7934557199478149
+marketing,sales,True,0.7003552913665771
+Sheets,Docs,True,0.658734917640686
+pneumatic troubleshooting,hydraulic troubleshooting,True,0.848092794418335
+circumference,proportions,True,0.7570486664772034
+lubricating equipment,relay control equipment,True,0.703749418258667
+arc welding,MIG welding,True,0.8363620638847351
+Radiant Mercury,ISSE Guards,True,0.46121034026145935
+EEO,FLSA,True,0.5478512048721313
+forwards,swaps,True,0.6309592723846436
+requirements specifications,test scripts,True,0.5976746082305908
+HCPCS codes,ICD-10 codes,True,0.7424497604370117
+writing pre-solicitation documents in compliance with another DoD Agency's acquisition policy,writing pre-solicitation documents in compliance with NSA/CSS Policy 8-2,True,0.8276364803314209
+Asynchronous messaging,STOMP,True,0.5373990535736084
+basic math,profit/loss concepts,True,0.6194297075271606
+federal laws,local laws,True,0.7759358882904053
+IP,TCP,True,0.7133632898330688
+UDP,TCP,True,0.7888798117637634
+balancing,cashiering,True,0.5718971490859985
+promoting teamwork,resolving conflict,True,0.6481884717941284
+chemistry,physics,True,0.7653793692588806
+mechanical systems,electrical systems,True,0.7943737506866455
+Naive Bayes,k-NN,True,0.492415189743042
+PSS/E,PSLF,True,0.7537386417388916
+architecture design,infrastructure planning,True,0.7054162621498108
+Kantar,Nielsen,True,0.4989613890647888
+individual counseling,group counseling,True,0.8180227875709534
+SaaS,PaaS,True,0.6441241502761841
+construction projects,rehabilitation projects,True,0.7968366146087646
+SMT,conformal coating,True,0.5523962378501892
+Genesys,Avaya,True,0.5844002366065979
+Department Manager,Sales Supervisor,True,0.6415320038795471
+MQTT,AMQP,True,0.748979389667511
+RAM,ETABS,True,0.5446388721466064
+disability,dental,True,0.6219940185546875
+roadway design,drainage design,True,0.7704104781150818
+proportions,ratios,True,0.8269705176353455
+PaaS,IaaS,True,0.7750077843666077
+creating documents,creating presentations,True,0.8223716020584106
+stemming,lemmatization,True,0.5954633951187134
+TRID,RESPA,True,0.5505607724189758
+TPO,Modified Bitumen,True,0.5182396173477173
+Cadence Concept,mentor,True,0.6261435151100159
+GRC,PO,True,0.5447249412536621
+meeting quality standards for services,needs assessment,True,0.6679960489273071
+aliquoting,centrifugation,True,0.5568139553070068
+turning,drilling,True,0.6714478731155396
+Instagram,Facebook,True,0.748296320438385
+Hanwha,Axis,True,0.484175443649292
+managing IT projects,working with diverse teams,True,0.6775090098381042
+Service Catalog,Incident,True,0.48435842990875244
+BUR,TPO,True,0.5592319965362549
+commercial banking products and services,loan administration,True,0.6356086730957031
+design-build,Progressive Design-Build,True,0.8887119293212891
+Application Engine,Query,True,0.5900354385375977
+Kubernetes,Docker,True,0.6953571438789368
+HMI's,PLC's,True,0.6141808032989502
+poaching,braising,True,0.6021929979324341
+Subpart F,international reporting,True,0.5265084505081177
+guest interaction,beverages,True,0.5408844947814941
+Sanctions,AML,True,0.5507079362869263
+FEAF,Zachman,True,0.44139033555984497
+ACH,wires,True,0.5359200239181519
+drilling,milling,True,0.7057263851165771
+Python scripting,Bash scripting,True,0.8674334287643433
+Hydraflow,HY-8,True,0.5919983386993408
+basketball rules,volleyball rules,True,0.8319598436355591
+building relationships with stakeholders,external partners,True,0.6813228726387024
+grilling,roasting,True,0.8201149702072144
+distributions,statistical testing,True,0.6828131675720215
+strain gauges,pressure transducers,True,0.7553848028182983
+APQP,PPAP,True,0.6406172513961792
+spray guns,brushes,True,0.6066020727157593
+edgers,weed eaters,True,0.6397557258605957
+knowledge engineering,legacy evolution,True,0.6474437117576599
+RISA,ETABS,True,0.5330381393432617
+physical servers,virtual servers,True,0.8264299035072327
+neural networks,decision trees,True,0.7175514101982117
+Micronaut,Quarkus,True,0.5792678594589233
+3DS Max,Lumion,True,0.5144570469856262
+HMDA,RESPA,True,0.6119597554206848
+SysML,UML,True,0.6250698566436768
+key referral sources,government agencies,True,0.6489484906196594
+fixed-price contracts,time and material contracts,True,0.7560449242591858
+COBRA,ERISA,True,0.5428252220153809
+acquisition and resource management,system integration,True,0.6420170068740845
+IDIQ,CPFF,True,0.522199273109436
+cocktails,wines,True,0.7245573997497559
+HCS,Synchro/SimTraffic,True,0.5021789073944092
+dusting,mopping,True,0.7364398837089539
+Blob Storage,Azure SQL DB,True,0.5935813784599304
+Paylocity,Paycom,True,0.7973501682281494
+Commvault,Veeam,True,0.6492866277694702
+Meditech,Cerner,True,0.5783324241638184
+BigCommerce,Magento,True,0.6263246536254883
+unions,subqueries,True,0.5817641615867615
+loss control,risk reduction,True,0.7167340517044067
+evaluating customer satisfaction,meeting quality standards,True,0.6480205059051514
+velocity,retrospection,True,0.5463824272155762
+systems lifecycle management,infrastructure planning,True,0.6576195955276489
+Single Sign-On (SSO),Multi-Factor Authentication (MFA),True,0.6355276107788086
+FHA,USDA,True,0.6518605351448059
+multiply,subtract,True,0.776708722114563
+User Interface,SLA,True,0.5169075131416321
+wills,trusts,True,0.7349445223808289
+z/OS,CICS,True,0.5943610668182373
+oncology,internal medicine,True,0.6918402910232544
+operating system software,desktop communications software,True,0.7359347939491272
+RISA,STAAD,True,0.5901470184326172
+IBC,ASCE 7,True,0.6047731041908264
+social/emotional skills,motor skills,True,0.7331109642982483
+fluid power,manufacturing processes,True,0.5791687965393066
+Subpart F,BEAT,True,0.5696631669998169
+balance sheet analysis,profitability analysis,True,0.7653552293777466
+Server 2016,Server 2012,True,0.79166179895401
+speak English,read English,True,0.834708034992218
+copying,faxing,True,0.6365901827812195
+repair of machines and tools,designs of machines and tools,True,0.8011339902877808
+motivate,lead,True,0.594078540802002
+PERT charts,Gantt charts,True,0.7812463045120239
+DAST,SCA,True,0.5313340425491333
+warranty,records retention,True,0.5702394247055054
+scikit-learn,PyTorch,True,0.6644070744514465
+installing,configuring,True,0.7615845799446106
+INV,BOM,True,0.5723937749862671
+TPO,EPDM,True,0.571108341217041
+toileting,bathing,True,0.7371888160705566
+Articulate,Captivate,True,0.6151039600372314
+electrical repairs,plumbing repairs,True,0.8154067397117615
+company web pages,MLS,True,0.5790200233459473
+KYC,AML,True,0.5593150854110718
+Nomad,Vault,True,0.5666780471801758
+merging,branching,True,0.7243346571922302
+CPT,ICD-10,True,0.5926867127418518
+sectioning,embedding,True,0.693327784538269
+Rhapsody,Enterprise Architect,True,0.48094069957733154
+Excel/VBA,CSW,True,0.508099377155304
+roadway design,utility design,True,0.7391735315322876
+Kafka,Spark,True,0.660506010055542
+user research,information architecture,True,0.6504487991333008
+refrigerators,stoves,True,0.7415286302566528
+electrical troubleshooting,mechanical troubleshooting,True,0.8285485506057739
+user research,UX Writing,True,0.6642292737960815
+Spring Cloud,Spring Data,True,0.8152258992195129
+spectrum analyzers,network analyzers,True,0.8282520771026611
+Fiori,GRC,True,0.48721301555633545
+EPA,OSHA,True,0.6544440388679504
+drying,folding,True,0.6497304439544678
+quantitative techniques,econometrics,True,0.6934270858764648
+Adobe Commerce,Adobe Campaign,True,0.7941018342971802
+arguing motions,taking depositions,True,0.6593999266624451
+interaction design,information architecture,True,0.7022207379341125
+admissions,registration,True,0.6835180521011353
+fluid dynamics,thermodynamics,True,0.747434139251709
+Isometrics,PFD,True,0.5296285152435303
+pub-sub messaging,AMQP,True,0.5765356421470642
+keyboard,mouse,True,0.7701216340065002
+querying data,aggregating data,True,0.751270055770874
+camping,fishing,True,0.663061261177063
+Platform Events,REST/SOAP APIs,True,0.5425593852996826
+wound care,medication administration,True,0.601948618888855
+GL,AP,True,0.5555986166000366
+microbiology,Blood Bank,True,0.5745849609375
+Amazon,Walmart,True,0.6648555994033813
+OM,BOM,True,0.6592131853103638
+vending,fast food,True,0.7079917788505554
+endpoint security,cloud security,True,0.7742674350738525
+SCCP,H323,True,0.5388100743293762
+RSA,AES,True,0.5849043130874634
+ICD 503,NIST Risk Management Framework,True,0.5776493549346924
+Barracuda,Mimecast,True,0.5301370024681091
+HRSD,CSM,True,0.5927247405052185
+cleaning equipment,material handling equipment,True,0.7964795827865601
+Windows system administration,Linux system administration,True,0.8449905514717102
+balancing,posting,True,0.6126119494438171
+slicing,dicing,True,0.6571109294891357
+PP,QM,True,0.5684418678283691
+mechanisms,structures,True,0.722149670124054
+dissemination methods,visual media,True,0.6293146014213562
+USB,SPI,True,0.5351672768592834
+sheers,test equipment,True,0.5486019849777222
+pulling,squatting,True,0.6703873872756958
+office procedures,managing files and records,True,0.6729608774185181
+FIB,TEM,True,0.5782617330551147
+SQR,PeopleCode,True,0.5612235069274902
+Automation Direct,Omron,True,0.4965110421180725
+EAD,Dublin Core,True,0.5936674475669861
+oral media,written media,True,0.7969557642936707
+Urinalysis,microbiology,True,0.5690031051635742
+centrifuges,autoclaves,True,0.6069672703742981
+briefs,motions,True,0.6102070808410645
+billing,and Rate Clerk,True,0.701874852180481
+FDCPA,SCRA,True,0.5606461763381958
+Juniper SRX,Cisco ASA,True,0.6490706205368042
+attenuation,bandwidth,True,0.6980987191200256
+Copado,Flosum,True,0.5656593441963196
+Fire/Life Safety systems,Nurse Call systems,True,0.6298376321792603
+PO,INV,True,0.584880530834198
+OWL Diodes,Radiant Mercury,True,0.55879807472229
+Infiniband,RDMA,True,0.48780155181884766
+SATA,NVMe,True,0.5536652207374573
+Panorama,Fortimanager,True,0.5233113765716553
+payroll taxes,preparation of payroll,True,0.8041833639144897
+Infrastructure as a Service (IaaS),Platform as a Service (PaaS),True,0.7874826788902283
+staining,tissue processing,True,0.7466644048690796
+civil design,roadway design,True,0.7898088693618774
+Apache Sling,OSGi,True,0.5948827266693115
+VPCs,AWS CLI,True,0.5362327694892883
+Twitter,Facebook,True,0.7499457597732544
+IABP,Impella,True,0.5120405554771423
+React),front-end frameworks (Angular,True,0.5966495275497437
+Instagram,YouTube,True,0.6598128080368042
+working with families,working with children,True,0.8866786360740662
+closing sales,generating sales leads,True,0.6772191524505615
+procedure manuals,maintenance instructions,True,0.6719623804092407
+team exercises,simulations,True,0.6773413419723511
+reviewing contracts,drafting contracts,True,0.8055306673049927
+CPT codes,ICD-10 codes,True,0.7341519594192505
+Application Engine,SQR,True,0.5504090785980225
+DHCP,DNS,True,0.7147527933120728
+construction specifications,building materials,True,0.7729135155677795
+TILA,TRID,True,0.5650017261505127
+payment terms,incoterms,True,0.5030322074890137
+screens,crushers,True,0.5685129165649414
+Paychex,iSolved,True,0.5666798949241638
+formal specifications,design techniques,True,0.6688278913497925
+staining,embedding,True,0.6684258580207825
+Buck,Bazel,True,0.5497571229934692
+wheel and tire equipment,alignment system,True,0.5973159670829773
+jQuery,HTML5,True,0.7905864119529724
+dial indicators,test equipment,True,0.60262131690979
+Vault,Consul,True,0.5294690728187561
+gINT,LPile,True,0.528964638710022
+subcontract flow downs,payment,True,0.5608943104743958
+Naive Bayes,SVM,True,0.7382302284240723
+balance sheet analysis,liquidity analysis,True,0.8205159902572632
+user stories,use cases,True,0.6480340957641602
+metrology,lithography,True,0.7216846346855164
+discounts,circumference,True,0.47941556572914124
+AC equipment,diagnostic equipment,True,0.7201314568519592
+IAS,PATRAN,True,0.4913228154182434
+Spark,Hive,True,0.7208302021026611
+CT scans,X-rays,True,0.737837553024292
+Avigilon,Axis,True,0.5226882696151733
+mall food courts,catering services,True,0.6534059047698975
+ANOVA,T-tests,True,0.6054555177688599
+evaluation of customer satisfaction,meeting quality standards for services,True,0.6766130924224854
+boring,tapping,True,0.5137428045272827
+guardrails,fine-tuning,True,0.4746549129486084
+mixer,oven,True,0.6570295095443726
+air brakes,hydraulic brakes,True,0.8205708861351013
+road maps,capabilities in alignment with industry standards,True,0.5461894273757935
+Illustrator,Photoshop,True,0.7077893018722534
+key referral sources,major payer groups,True,0.6224617958068848
+Core Animation,Core Data,True,0.6800013780593872
+indexing,query optimization,True,0.7886781096458435
+writing English,speaking English,True,0.8249933123588562
+806,820,True,0.664395809173584
+closing projects,planning projects,True,0.7295745015144348
+repair,uses,True,0.6169663667678833
+MASINT,HUMINT,True,0.8071128129959106
+boiling,grilling,True,0.7118360996246338
+mall food courts,institutional services,True,0.531160295009613
+MCNP,scale,True,0.577767550945282
+Azure Blob Storage,Azure Data Lake Storage,True,0.8695929646492004
+solar,wind,True,0.5915204286575317
+floor scrubbers,polishers,True,0.6870049834251404
+NDAs,INDs,True,0.6043275594711304
+Plant Layout,PFD,True,0.553991436958313
+LDP,ISIS,True,0.5012899041175842
+Ethernet/IP,Profibus,True,0.5017807483673096
+mechanical components,electrical components,True,0.8544978499412537
+Application Engine,Component Interfaces,True,0.6947692036628723
+TPO,PVC,True,0.536775529384613
+MPLS,BGP,True,0.6173076033592224
+IDAPro,OllyDbg,True,0.5451934933662415
+LEED,WELL,True,0.4852999448776245
+ArcGIS Online,ArcGIS Pro,True,0.8414595127105713
+Nortel,Nokia,True,0.6009098887443542
+bonds,stocks,True,0.6159924864768982
+Java Script,Designer,True,0.5469415187835693
+spelling of words,structure of English language,True,0.6875923275947571
+OpenGL,Vulkan,True,0.7525337338447571
+ASCP,AMT,True,0.5600101947784424
+Gluon,RESTAPI,True,0.5710742473602295
+grooming,bathing,True,0.6999883055686951
+BSA,AML,True,0.5131453275680542
+LinkedIn Ads,Facebook Ads,True,0.8087965846061707
+Snort,Suricata,True,0.45897698402404785
+writing pre-solicitation documents in compliance with another DoD Agency's acquisition policy,including annexes,True,0.6462231278419495
+ITIL,COBIT,True,0.5762025713920593
+FRED,Zemax,True,0.5033751726150513
+wine,spirits,True,0.6457979679107666
+basic math,variances,True,0.5809701681137085
+vending,catering services,True,0.59490966796875
+defibrillator,intravenous fluids,True,0.6384521722793579
+annuities,mutual funds,True,0.6752868890762329
+refinement,estimation,True,0.6148101091384888
+sheet metal brakes,test equipment,True,0.59691321849823
+5G NR,mmWave,True,0.6588456630706787
+multiplying,subtracting,True,0.8147379159927368
+WIP,CS,True,0.5939545035362244
+tablets,smartphones,True,0.7060096859931946
+dissemination methods,communication techniques,True,0.7478686571121216
+data architecture,application architecture,True,0.8492454290390015
+payroll taxes,internal control of payroll,True,0.7814806699752808
+XPS,XRD,True,0.658555805683136
+T1,DS3,True,0.5551638007164001
+office equipment,medical equipment,True,0.7845431566238403
+scope management,schedule management,True,0.7406648397445679
+Xero,QuickBooks Online,True,0.5134849548339844
+seeing,stooping,True,0.5602160692214966
+Bacteriology,Hematology,True,0.6615606546401978
+software developers,business analysts,True,0.6080343723297119
+FAR,DFAR,True,0.5417188405990601
+CloudHub,AnyPoint Studio,True,0.6009149551391602
+technical skills,auditing skills,True,0.7826758027076721
+politeness,friendliness,True,0.792794942855835
+volunteering,internships,True,0.6804560422897339
+designs,repair,True,0.5944364666938782
+Cost,and Rate Clerk,True,0.6379485130310059
+USP,EP,True,0.5745897889137268
+LIN,Automotive Ethernet,True,0.4734620749950409
+economic development,environmental planning,True,0.6505416631698608
+Excel,PowerPoint,True,0.706655740737915
+TikTok,Instagram,True,0.7620553970336914
+Change,Problem,True,0.6737856864929199
+GXP,SDLC regulations,True,0.5071191787719727
+algorithms,data structures,True,0.7678236961364746
+Caffe2,ONNX,True,0.5517077445983887
+camping,mountain biking,True,0.5765723586082458
+achievements,objectives,True,0.6562538146972656
+spreadsheets,word processing,True,0.6232560873031616
+electrical experience,mechanical experience,True,0.8330597877502441
+4G LTE,Massive MIMO,True,0.7065122127532959
+database software,spreadsheet software,True,0.814582347869873
+Excel,Word,True,0.6537924408912659
+TR-20,TR-55,True,0.7387893199920654
+MDX,TSQL,True,0.5727414488792419
+SVM,Decision Forests,True,0.6543798446655273
+fractions,percentages,True,0.7721937298774719
+biking,hiking,True,0.6922567486763
+digital circuit design,analog circuit design,True,0.8926135301589966
+Component Interfaces,Integration Broker,True,0.6781474351882935
+USDA,VA,True,0.5897876024246216
+account manager,Account Executive,True,0.847623884677887
+percentages,interest,True,0.5889773964881897
+virtual reality,augmented reality,True,0.846698522567749
+sports,games,True,0.7305068969726562
+design documents,test scripts,True,0.5950987339019775
+FTD,ASA,True,0.5620546936988831
+scikitlearn,RESTAPI,True,0.5857949256896973
+cGMP,SDLC regulations,True,0.49957770109176636
+performance testing,load testing,True,0.8256136178970337
+team members,guests,True,0.658101499080658
+story splitting,velocity,True,0.5439168810844421
+PSS/E,PowerWorld,True,0.5718249082565308
+addition,division,True,0.6731846332550049
+scikit-learn,NumPy,True,0.7101408243179321
+RoHS,TSCA,True,0.4927113652229309
+VoIP,SIP,True,0.7637553811073303
+Kali,Burp,True,0.5151950120925903
+HVAC maintenance,plumbing maintenance,True,0.8048489689826965
+FDII,international reporting,True,0.6210448741912842
+fiber optics,ICMP,True,0.539828896522522
+quadratic equations,logarithms,True,0.689476728439331
+Allscripts,NextGen,True,0.5815883874893188
+fixed income,alternatives,True,0.5364856719970703
+StarCCM,TaiTherm,True,0.6279153227806091
+email communication,phone communication,True,0.8133635520935059
+deposit operations,commercial banking products and services,True,0.6927022337913513
+AC equipment,alignment system,True,0.5701984167098999
+balance sheet,income statement,True,0.7756079435348511
+Network+,A+,True,0.719816267490387
+mill,lathe,True,0.6095708012580872
+TV,direct mail,True,0.5144636631011963
+TILA,SCRA,True,0.5399690270423889
+backhoe operation,excavator operation,True,0.7936362028121948
+Ortho,urology,True,0.5750047564506531
+product quality,staff supervision,True,0.5113945603370667
+LTE,5G,True,0.8105987906455994
+machine maintenance,machine repair,True,0.9108421802520752
+monitoring budgets,preparing budgets,True,0.8302841186523438
+loan administration,treasury management,True,0.6960127353668213
+journey mapping,user interviews,True,0.6141270399093628
+Server 2016,Server 2019,True,0.8208781480789185
+FLSA,ADA,True,0.5641034841537476
+subtracting,adding,True,0.5892433524131775
+DMVPN,DSL,True,0.6026962995529175
+DAST,IAST,True,0.6507309079170227
+Subpart F,FDII,True,0.6047592163085938
+support staff,chefs,True,0.6064066886901855
+Playwright,Cypress,True,0.47703468799591064
+DRAM,NAND,True,0.5652822852134705
+photography,videography,True,0.7885510921478271
+slicing,chopping,True,0.7442307472229004
+A/R,A/P,True,0.8470834493637085
+UDAAP,SCRA,True,0.5302839279174805
+gathering data,organizing data,True,0.8057482838630676
+potty training,motor skills,True,0.6576589345932007
+thermography,vibration analysis,True,0.6421453356742859
+Cloud SQL,Cloud Functions,True,0.7892550230026245
+Sprint Review,Sprint Retrospective,True,0.8660929203033447
+claims,underwriting,True,0.5899167060852051
+ventilator management,tracheostomy care,True,0.7010170817375183
+storing,issuing,True,0.667539119720459
+GitHub Pipelines,TravisCI,True,0.5055168867111206
+XUnit,NUnit,True,0.6266803741455078
+Blue Prism,Automation Anywhere,True,0.5208854675292969
+ASTM,ASME,True,0.766163170337677
+DSPs,SSPs,True,0.8371244668960571
+basic electrical work,grounds keeping,True,0.5891675353050232
+Agents,User Interface,True,0.5507070422172546
+packaging equipment,material handling equipment,True,0.7616357207298279
+hydraulic skills,pneumatic skills,True,0.8496978282928467
+LLM hosting,fine-tuning,True,0.6003432273864746
+economic development,urban design,True,0.6001032590866089
+credits,debits,True,0.6888505220413208
+SIP,H.323,True,0.5359371304512024
+GAMP,SDLC regulations,True,0.4351591169834137
+receipts,purchases,True,0.7397375702857971
+Ortho,neuro,True,0.5369163751602173
+hydraulic troubleshooting,electrical troubleshooting,True,0.7595645189285278
+sheet metal brakes,torque wrenches,True,0.675665020942688
+estimation,retrospection,True,0.561273455619812
+CPAF,T&M,True,0.4577330946922302
+Jenkins,Git,True,0.6999281644821167
+seals,lubrication,True,0.6457436084747314
+process builders,workflow Rules,True,0.673439621925354
+proficiency in Word,proficiency in Excel,True,0.8080174922943115
+cleaning solutions,vacuum cleaners,True,0.7728323936462402
+RNN,CNN,True,0.5740337371826172
+air tools,crimpers,True,0.6419878005981445
+thermodynamics,heat transfer,True,0.7008299827575684
+Twitter,YouTube,True,0.7397419214248657
+equities,fixed income,True,0.6107808351516724
+LAA,5G NR,True,0.5914518237113953
+wireless access points,server operating systems,True,0.6075027585029602
+circuit design,system bring-up,True,0.6082901954650879
+Lambda,RDS,True,0.6255419254302979
+fertilizers,pesticides,True,0.6980795860290527
+JCL,CICS,True,0.6008902192115784
+Hydraflow,SWMM,True,0.5505715608596802
+mechanical skills,hydraulic skills,True,0.8211404085159302
+trigonometry,algebra,True,0.6680886149406433
+office procedures,designing forms,True,0.6701330542564392
+flammables,caustics,True,0.6533337235450745
+Marketing Cloud,Service Cloud,True,0.8483880162239075
+propulsion systems,structural systems,True,0.7317831516265869
+IDA Pro,Ghidra,True,0.45041483640670776
+addition,subtraction,True,0.6986047029495239
+bundles,widgets,True,0.6260709166526794
+Core Graphics,Core Data,True,0.7191633582115173
+NASTRAN,PATRAN,True,0.6115705370903015
+computer literacy,keyboarding skills,True,0.7614136338233948
+Paylocity,Paychex,True,0.7511835098266602
+DARPA,AFRL,True,0.6004850268363953
+internet directory services software,desktop communications software,True,0.7103741765022278
+outside sales,inside sales,True,0.7831270694732666
+IMRT,IGRT,True,0.7284595370292664
+SNAP,Heap,True,0.5793716311454773
+WIP,BOM,True,0.5754796266555786
+structural design,electrical design,True,0.74461430311203
+board members,building relationships with stakeholders,True,0.642174243927002
+Excel,Outlook,True,0.6577498912811279
+meaning of words,content of English language,True,0.7021781802177429
+Magento,Shopify,True,0.6606432199478149
+local laws,state laws,True,0.8383617401123047
+trial,motion practice,True,0.610764741897583
+persuading,instructing,True,0.718761682510376
+PSCAD,Aspen,True,0.46476465463638306
+copier operation,computer operation,True,0.812361478805542
+fittings,pipes,True,0.7036176919937134
+Rollup,Parcel,True,0.6347923278808594
+knives,slicers,True,0.76495760679245
+uses of machines and tools,designs of machines and tools,True,0.8609573841094971
+regressions,T-tests,True,0.6208606958389282
+extract,transform,True,0.7078116536140442
+PLAXIS,L-pile,True,0.5763328075408936
+mechanical skills,pneumatic skills,True,0.8313180208206177
+EIBs,Workday Studio,True,0.5225870609283447
+21 CFR Part 11,FDA guidelines,True,0.6292366981506348
+SLT,RFCs,True,0.6062821745872498
+4G LTE,5G NR,True,0.7848742008209229
+design documents,test reports,True,0.5989552140235901
+cash flow statement,income statement,True,0.7965113520622253
+coaching,mentoring,True,0.7979164123535156
+PMD,OTDR,True,0.6231510639190674
+coach,mentor,True,0.7108518481254578
+NIPR,JWICS,True,0.49375221133232117
+Maya,Houdini,True,0.5607972145080566
+Spring,Hibernate,True,0.6325420141220093
+anxiety,depression,True,0.7480553388595581
+milestone charts,PERT charts,True,0.7732428312301636
+PSCAD,TARA,True,0.5625078082084656
+network security groups,firewall configurations,True,0.7163602113723755
+Capital IQ,Pitchbook,True,0.5803293585777283
+faculty,students,True,0.6720051169395447
+SharePoint Online,Exchange Online,True,0.7149277925491333
+wines,spirits,True,0.6569764614105225
+calendars,donor databases,True,0.5983006358146667
+law enforcement experience,security experience,True,0.8157025575637817
+TVAC testing,vibration testing,True,0.6642357110977173
+Change,Knowledge,True,0.6463912129402161
+ATM,DWDM,True,0.4853426218032837
+Pairing,Continuous Testing,True,0.5590276718139648
+JCL,z/OS,True,0.5671223402023315
+Yara,Suricata,True,0.6131114959716797
+subnetting,IP addressing,True,0.6871778964996338
+relay control equipment,material handling equipment,True,0.6988760232925415
+HEC-RAS,HEC-HMS,True,0.7698854207992554
+multi-vendor,LAA,True,0.5237991809844971
+scrubbing,mopping,True,0.75922691822052
+serverless functions,event-driven architecture,True,0.5710853934288025
+USB,I2C,True,0.5613381266593933
+spectrum analyzers,signal generators,True,0.7024275064468384
+reaching,squatting,True,0.6507351398468018
+DEP,DDC,True,0.6389050483703613
+risks,regulatory environments,True,0.5950312614440918
+Node JS,React JS,True,0.7913304567337036
+iTero,CBCT,True,0.4787040948867798
+Retail Assistant,General Store Manager,True,0.7266536951065063
+FRD,BRD,True,0.7484791278839111
+Android,iOS,True,0.8144916892051697
+friendly personality,professional attitude,True,0.6698906421661377
+J1939,UDS,True,0.5158288478851318
+Cisco routing,Cisco switching,True,0.8368686437606812
+Facebook,YouTube,True,0.6857975125312805
+HPLC,GC,True,0.6140360236167908
+turning,milling,True,0.6656087636947632
+care planning,RAPS,True,0.41546544432640076
+RCRA,SPCC,True,0.56807541847229
+balances,pH meters,True,0.5515143871307373
+dressing,bathing,True,0.65812087059021
+hydraulic skills,repair skills,True,0.7785184383392334
+LiveRamp,The Trade Desk,True,0.48791030049324036
+Kinaxis,O9,True,0.438784658908844
+SEM,SEO,True,0.6129690408706665
+SIEM,EDR,True,0.5433527231216431
+data imports,development methods,True,0.6066203713417053
+human services,related life experience,True,0.6090369820594788
+Adobe XD,Sketch,True,0.6745602488517761
+lifting,climbing,True,0.7504608035087585
+hospitality experience,Front Desk experience,True,0.7437206506729126
+UL,IEC,True,0.6324431896209717
+hazard analysis,fault tree analysis,True,0.756762683391571
+chemical processing,refining,True,0.7473999857902527
+general ledger,accounts payable,True,0.6235219836235046
+seeing,sitting,True,0.6652213931083679
+test plans/cases,test reports,True,0.769273579120636
+related sales experience,inside sales experience,True,0.8429558873176575
+TDMA,ICMP,True,0.5470907092094421
+GXP,GAMP,True,0.6414417624473572
+5S,Kaizen,True,0.5267060995101929
+Project Superintendent,Helpers,True,0.6046402454376221
+refinishing,stripping,True,0.6483837366104126
+FTIR,GC,True,0.5238547325134277
+uses of machines and tools,maintenance of machines and tools,True,0.8674447536468506
+storing,transferring,True,0.6576600074768066
+cleaning equipment,relay control equipment,True,0.7318629622459412
+quota attainment,opportunity management,True,0.6158541440963745
+ForgeRock,Ping Identity,True,0.500546932220459
+Geopak,OpenRoads,True,0.6601995229721069
+Asset Protection,loss control,True,0.6907148361206055
+guest interaction,foods,True,0.47284743189811707
+multi-threading,concurrency,True,0.829326868057251
+functional testing,user acceptance testing,True,0.7257384657859802
+HVAC repair,plumbing repair,True,0.798480749130249
+email marketing,SEO,True,0.6509737968444824
+compensation practices,diversity,True,0.4885038733482361
+BEAT,foreign tax credit calculations,True,0.39863747358322144
+IDA Pro,WinDbg,True,0.521253228187561
+Juniper,Cisco,True,0.6622737050056458
+operating cash register,working with mobile retail applications,True,0.5597622394561768
+MTM,MOST,True,0.5913808345794678
+Mocha,Jest,True,0.585690975189209
+USSTRATCOM,the Joint Staff,True,0.5342057943344116
+job aids,flow diagrams,True,0.5947625637054443
+Ariba,Coupa,True,0.5481946468353271
+content filtering,authentication systems,True,0.5478183627128601
+Collibra,Alation,True,0.5770179629325867
+discounts,proportions,True,0.5315715074539185
+IP Networks,TDMA,True,0.5103582143783569
+Application Designer,Query,True,0.5387448072433472
+visualizing data,querying data,True,0.7686436176300049
+PVC,EPDM,True,0.5376843810081482
+FMEAs,fault tolerance,True,0.5395121574401855
+coding standards,build processes,True,0.584215521812439
+LIHTC,Section 8,True,0.5437188148498535
+written communication skills,verbal communication skills,True,0.8979349732398987
+web design,mobile design,True,0.7721213698387146
+ECC,BW,True,0.4983288645744324
+employee relations,performance management,True,0.5976015329360962
+Power Apps,Power Automate,True,0.8089402914047241
+correct grammar,vocabulary,True,0.6621102690696716
+media,publishing,True,0.6760063767433167
+DMVPN,Frame-Relay,True,0.5856615304946899
+telephony skills,customer-care,True,0.611325204372406
+diagnostic equipment,alignment system,True,0.6247073411941528
+reach truck,Order Picker,True,0.6463905572891235
+typography,color theory,True,0.6017670035362244
+ICD-10 coding,CPT coding,True,0.7646952867507935
+SPSS,Stata,True,0.7041875720024109
+ITOM,HRSD,True,0.5942507982254028
+Reg E,Reg CC,True,0.7526304125785828
+supervisory aspects,beverages,True,0.4749416410923004
+linear regression,logistic regression,True,0.8049200773239136
+arc welding,TIG welding,True,0.8334774374961853
+copier operation,telephone operation,True,0.7242229580879211
+internet directory services software,configuration management software,True,0.7411838173866272
+MS PowerPoint,MS Excel,True,0.7989799976348877
+refrigeration equipment,water softeners,True,0.6530762910842896
+scientific advances,vendor changes,True,0.5664006471633911
+regression testing,integration testing,True,0.7406461238861084
+typing extensive reports,typing detailed reports,True,0.9485062956809998
+Lexis,Westlaw,True,0.5397593379020691
+static analysis,dynamic analysis,True,0.8433997631072998
+Siemens NX,Siemens Teamcenter,True,0.7537369728088379
+SharePoint forms,ULS Logs,True,0.5969584584236145
+proofreading skills,editing skills,True,0.8414406776428223
+geometry,algebra,True,0.7493455410003662
+Wireguard,Nebula,True,0.4614158868789673
+service techniques,foods,True,0.515311062335968
+discounts,percentages,True,0.619012176990509
+safety rules,maintenance instructions,True,0.6943396329879761
+WAN/LAN,Windows Desktop operating systems,True,0.5867058634757996
+walking,squatting,True,0.6224363446235657
+Concierge experience,Front Desk experience,True,0.7469646334648132
+STAT,Screaming Frog,True,0.4714035391807556
+ITBM,Service Portal,True,0.5940765142440796
+POTS,PRI,True,0.5094783306121826
+MPLS,OSPF,True,0.5510367155075073
+Procure to Pay,order to cash,True,0.7151433825492859
+sweeping,mopping,True,0.7654109597206116
+coding standards,code reviews,True,0.7473490238189697
+hardware support,software support,True,0.8029534220695496
+FMEA,SPC,True,0.5374736785888672
+SNS,SQS,True,0.7121157646179199
+TikTok,Twitter,True,0.766984224319458
+HLS,RTMP,True,0.5227543711662292
+Stripe,Adyen,True,0.5098736882209778
+HVAC,electrical,True,0.6816724538803101
+metabolomics,proteomics,True,0.8053246736526489
+LOPA,PHA,True,0.6847176551818848
+field of study,internships,True,0.6246019005775452
+NIST 800-53,NIST CSF,True,0.7759772539138794
+Cpk,GR&R,True,0.5022670030593872
+Bazel,CMake,True,0.42018580436706543
+BRC,IFS,True,0.5112515091896057
+designing applications,developing applications,True,0.910621166229248
+pricing strategies,pricing tools,True,0.8133227825164795
+explaining business concepts,explaining technical concepts,True,0.8801459074020386
+heavy equipment experience,auto mechanics,True,0.584758460521698
+deposit operations,treasury management,True,0.6841545701026917
+stainless steel welding,aluminum welding,True,0.8191591501235962
+CBRS,4G LTE,True,0.4675164818763733
+Toad,SQL Developer,True,0.5037816762924194
+RTP,MGCP,True,0.6134281754493713
+Application Designer,PeopleCode,True,0.6353822350502014
+functional testing,integration testing,True,0.8112440705299377
+integration architecture,business architecture,True,0.776663064956665
+rheology,thermal analysis,True,0.670934796333313
+pneumatic troubleshooting,mechanical troubleshooting,True,0.8292505741119385
+CERCLA,TSCA,True,0.5314521193504333
+formal specifications,data flow diagrams,True,0.6798186302185059
+project correspondence,summary reports,True,0.6252906918525696
+seeing,driving,True,0.6372652053833008
+visual media,media production,True,0.7529191374778748
+tools,uses,True,0.6864803433418274
+PCI compliance,HIPAA compliance,True,0.7526942491531372
+GraphPad Prism,FlowJo,True,0.533338189125061
+pneumatic systems,hydraulic systems,True,0.8218525052070618
+Prompts,consolidations,True,0.5898544192314148
+speaking,writing,True,0.6958550214767456
+defense industry,aerospace industry,True,0.799498438835144
+network security groups,Route Tables,True,0.6004648208618164
+Power BI,Tableau,True,0.5883608460426331
+general liability,property,True,0.6086786985397339
+Azure App Service,Azure SQL Database,True,0.7359977960586548
+deviations,change control,True,0.5811842679977417
+XPS,Raman,True,0.4996439814567566
+IDS/IPS,SIEM,True,0.5066229104995728
+receiving,shipping,True,0.7384754419326782
+PO,OM,True,0.7210145592689514
+Spring Integration,Spring Security,True,0.7518003582954407
+OrCAD,Altium,True,0.5454897880554199
+Atlassian Confluence,Atlassian Jira,True,0.7693095207214355
+GILTI,foreign tax credit calculations,True,0.4887446165084839
+OSPF,BGP,True,0.588908851146698
+dollies,hand trucks,True,0.6223519444465637
+frontend development,backend development,True,0.9018889665603638
+Email Studio,Journey Builder,True,0.623993992805481
+Big Data processing,Map/Reduce,True,0.658671498298645
+assessment tools,maintainability,True,0.588147759437561
+Android Studio,Xcode,True,0.6501733064651489
+HVAC design,plumbing design,True,0.8134804964065552
+configuration,installation,True,0.7469673156738281
+software management,hardware management,True,0.7649656534194946
+spreadsheet,database,True,0.7071743011474609
+rules of composition,meaning and spelling of words,True,0.6392607688903809
+ERDAS Imagine,ARC-GIS,True,0.49778077006340027
+authorization,authentication,True,0.8431006669998169
+troubleshooting techniques,router commands,True,0.579255998134613
+quality assurance testing,acquisition and resource management,True,0.5978202819824219
+Jasmine,Jest,True,0.5956023931503296
+gender,race,True,0.6484633088111877
+4G LTE,multi-vendor,True,0.5525892972946167
+turning,grinding,True,0.6815460920333862
+rollers,brushes,True,0.6560068130493164
+safety standards,quality standards,True,0.860704779624939
+GPFS,Lustre,True,0.5170727968215942
+radar,LiDAR,True,0.7036231756210327
+multiplication,subtraction,True,0.7598838806152344
+Chef,Ansible,True,0.564923882484436
+AFS,HSPICE,True,0.46357059478759766
+Slides,Docs,True,0.6633436679840088
+cardiology,internal medicine,True,0.6970442533493042
+TaiTherm,Fluent,True,0.550857663154602
+DNS,TCP/IP,True,0.6914607286453247
+desktop communications software,configuration management software,True,0.7044529914855957
+VTAM,z/OS,True,0.5965935587882996
+castings,extrusions,True,0.6479926109313965
+ELISA,qPCR,True,0.5990986824035645
+Access),Microsoft Office applications (Outlook,True,0.5357186794281006
+VPLS,LDP,True,0.5814125537872314
+project correspondence,work plans,True,0.6369892954826355
+mountain biking,hiking,True,0.6830270290374756
+PSCAD,PSLF,True,0.7127344608306885
+XPS,AFM,True,0.5186050534248352
+initiating projects,planning projects,True,0.830491304397583
+truck driving,sewing,True,0.49460864067077637
+lectures,role-playing,True,0.5112437605857849
+addition,multiplication,True,0.7921282052993774
+ODS,DM,True,0.6149450540542603
+DHCP,TCP/IP,True,0.7472729086875916
+photo sensors,variable frequency drives,True,0.5765582323074341
+Electronic Medical Record System,PACS Systems,True,0.7473578453063965
+databases,spreadsheets,True,0.7270642518997192
+Palo Alto Firewalls,ForeScout,True,0.47030022740364075
+maintenance of machines and tools,designs of machines and tools,True,0.7978248000144958
+mills,lathes,True,0.5948114395141602
+white box testing,black box testing,True,0.8328220844268799
+materials inspection,engineering support,True,0.6168520450592041
+pleadings,drafting legal documents,True,0.669062614440918
+safety rules,operating instructions,True,0.67331463098526
+French,German,True,0.8141783475875854
+Biamp,ClearOne,True,0.4996981620788574
+IT operations best practices,disaster recovery protocols,True,0.6108871698379517
+client scripts,data imports,True,0.6077500581741333
+walking,seeing,True,0.6766613721847534
+GXP,cGMP,True,0.6691259145736694
+written media,visual media,True,0.7643330097198486
+Subpart F,GILTI,True,0.4776422381401062
+Foreman,Laborers,True,0.6434726715087891
+RS232,RS485,True,0.7272367477416992
+CPT,HCPCS,True,0.6468439102172852
+Optos,OCT,True,0.5459215641021729
+Big Data processing,Hadoop ecosystem,True,0.7509840726852417
+Windows 7,Server 2012,True,0.6490917205810547
+LinkedIn,Instagram,True,0.589074432849884
+mission,objectives,True,0.7861626148223877
+safety practices,NASA standards,True,0.6416319608688354
+reach truck,cherry picker,True,0.5945260524749756
+refinement,story splitting,True,0.5860785841941833
+Component Interfaces,Application Packages,True,0.6799147129058838
+mediations,trials,True,0.6941730976104736
+event marketing,direct mail marketing,True,0.6868958473205566
+logarithms,permutations,True,0.6635064482688904
+Windows Server 2016,Windows Server 2012,True,0.820704460144043
+area,volume,True,0.6472446918487549
+Mocha,Chai,True,0.5992938876152039
+baking,sautéing,True,0.6242809295654297
+write,speak,True,0.7446424961090088
+Caffe,MXNet,True,0.5343745350837708
+SIMS,AFM,True,0.5082929134368896
+mechanical equipment,hydraulic equipment,True,0.8148559927940369
+deliverability,subject lines,True,0.6151398420333862
+Fire/Life Safety systems,Paging systems,True,0.6222144365310669
+PMA,IDE,True,0.5797582864761353
+P&ID,PFD,True,0.6595864295959473
+TikTok,YouTube,True,0.73044753074646
+key referral sources,competitor's market positioning,True,0.5755269527435303
+area,proportions,True,0.6642142534255981
+fertilization,pest control,True,0.6036620140075684
+IB,BOM,True,0.6506615281105042
+vibration testing,shock testing,True,0.7561488747596741
+iSCSI,NAS,True,0.5180991888046265
+Asset Protection,risk reduction,True,0.7170706391334534
+RCRA,CWA,True,0.6398826241493225
+HMDA,ECOA,True,0.5783023238182068
+MSN,Bing,True,0.6002455949783325
+SOAP Web Services,REST web services,True,0.8272107839584351
+GPS navigation,camera technology,True,0.5742853879928589
+divide,add,True,0.6529935598373413
+HydroCAD,HY-8,True,0.5759764909744263
+AMX,Biamp,True,0.5521607995033264
+MFA,SSO,True,0.5327534675598145
+Core Graphics,Core Animation,True,0.881838321685791
+word processing software,spreadsheet software,True,0.7592414021492004
+Ansible,Puppet,True,0.6167291402816772
+FRED,Code V,True,0.45773735642433167
+CloudBase/Acumulo,Big Table,True,0.5425416231155396
+scope development,schedule creation,True,0.6504709720611572
+LinkedIn,Twitter,True,0.66581130027771
+SSIS,SSAS,True,0.8117375373840332
+coding standards,source control management,True,0.5924854278564453
+volume,proportions,True,0.7273463010787964
+RxJava,Akka,True,0.630218505859375
+physiology,anatomy,True,0.7518534064292908
+oral media,visual media,True,0.7863316535949707
+circuits,fundamentals of electricity,True,0.6624391078948975
+managing resources,managing schedules,True,0.812458336353302
+preparation of payroll,balancing payroll,True,0.8110391497612
+IVR,ACD,True,0.556451678276062
+Genetec,Lenel,True,0.511554479598999
+SM,EMR/Spark,True,0.638249933719635
+Spring Integration,Spring Data,True,0.7924444675445557
+machines,uses,True,0.6529954075813293
+LIHTC,HUD,True,0.6015506386756897
+multi-vendor,Massive MIMO,True,0.5379766821861267
+Carbon Black,SentinelOne,True,0.5127872824668884
+data flow diagrams,design techniques,True,0.693780779838562
+SIPR,JWICS,True,0.5841077566146851
+Frame-Relay,DSL,True,0.5963662266731262
+aerospace industry,automotive industry,True,0.7609091997146606
+Lean,Six Sigma,True,0.6367833614349365
+NFPA,NEC,True,0.5380784273147583
+STOMP,AMQP,True,0.4986695349216461
+pub-sub messaging,STOMP,True,0.5390771627426147
+FFP,T&M,True,0.4493199288845062
+Project Engineer,engineer,True,0.847885012626648
+GC/MS,LC/MS,True,0.7816500663757324
+GXP,21CFR part 11,True,0.5385919809341431
+grill,fryer,True,0.6981898546218872
+baseball,basketball,True,0.7285470366477966
+CTLE,DFE,True,0.5631483197212219
+CDMA,TDMA,True,0.785431981086731
+FTK,EnCase,True,0.5412108898162842
+programmatic advertising,ad serving,True,0.7364387512207031
+MySQL,PostgreSQL,True,0.8364201784133911
+time series data analysis,probability,True,0.5302045941352844
+Solid,Commscope,True,0.5397025346755981
+poaching,roasting,True,0.5470038056373596
+disaster recovery protocols,helpdesk best practices,True,0.6310734152793884
+RS-422,RS-232,True,0.7305148839950562
+quantitative techniques,time series data analysis,True,0.6886506676673889
+proofreading skills,grammatical skills,True,0.811107873916626
+GEOINT,HUMINT,True,0.7381026744842529
+CMP,lithography,True,0.5036264657974243
+FEMAP,NASTRAN,True,0.475593626499176
+dial indicators,torque wrenches,True,0.5969051122665405
+write English fluently,speak English fluently,True,0.9063922762870789
+SQR,Component Interfaces,True,0.526724100112915
+Retail Assistant,Department Supervisor,True,0.5807234048843384
+SNOMED,ICD-10,True,0.563567042350769
+Plant Layout,P&ID,True,0.5661436319351196
+sending and receiving emails,inputting data,True,0.6390423774719238
+Solutions Architect,Advanced Networking,True,0.6203698515892029
+rules of composition,spelling of words,True,0.636573076248169
+Server 2012,Server 2022,True,0.8004018068313599
+ad exchanges,SSPs,True,0.5170819759368896
+XSD,XPath,True,0.6926671862602234
+primary care,urgent care,True,0.7036722898483276
+BAPIs,RFCs,True,0.5261068344116211
+circumference,commissions,True,0.5248894691467285
+grill,fry,True,0.7002869844436646
+PA,Heap,True,0.5222934484481812
+floor buffers,vacuum cleaners,True,0.6282976865768433
+Lenel,HID,True,0.5702406764030457
+Azure,AWS,True,0.7506875991821289
+ultrasonic welding,laser welding,True,0.8132686614990234
+log management,content filtering,True,0.6123884916305542
+lubricating equipment,motor control equipment,True,0.7556748390197754
+Waterfall,Agile,True,0.552408754825592
+VAE,GANs,True,0.5591914653778076
+DC systems,AC medium voltage systems,True,0.7198531627655029
+k-NN,Decision Forests,True,0.5188868045806885
+pushing,pulling,True,0.7931134700775146
+courtesy,professionalism,True,0.6044892072677612
+structure of English language,content of English language,True,0.8443020582199097
+mops,brooms,True,0.5849272012710571
+cleaning solutions,floor buffers,True,0.6360985636711121
+Laravel,CodeIgniter,True,0.7434960603713989
+GL,AR,True,0.5819442272186279
+system testing,integration testing,True,0.7976580262184143
+architecture design,systems lifecycle management,True,0.6282036900520325
+civil design,utility design,True,0.7646364569664001
+caliper,micrometer,True,0.637287974357605
+FDII,foreign tax credit calculations,True,0.6240880489349365
+Windows Server 2016,Windows Server 2019,True,0.846696138381958
+subcontracts,change orders,True,0.5939546227455139
+talent reviews,engagement surveys,True,0.6348882913589478
+FCRA,UDAAP,True,0.5393873453140259
+workflow analysis,process optimization,True,0.6957436800003052
+front-end development,back-end development,True,0.8829636573791504
+business/corporate development,strategy consulting,True,0.6492856740951538
+dividing,subtracting,True,0.7223120927810669
+spaCy,NLTK,True,0.5630013942718506
+radiographic positioning,anatomy and physiology,True,0.5735533833503723
+RCRA,TSCA,True,0.5874426960945129
+Sales Cloud,Service Cloud,True,0.8322234153747559
+RDS,IAM,True,0.5895198583602905
+fractions,proportions,True,0.7486354112625122
+pharmaceutical industry,medical device industry,True,0.7772349119186401
+balance sheet analysis,solvency analysis,True,0.7906949520111084
+Avigilon,Hanwha,True,0.4362011253833771
+pleadings,motions,True,0.649377703666687
+SKM,EasyPower,True,0.5291023850440979
+PA,SNAP,True,0.5577242374420166
+admissions,financial aid,True,0.6867013573646545
+exponents,logarithms,True,0.7471710443496704
+content filtering,anti-virus software,True,0.5949165225028992
+social work,psychology,True,0.6048429608345032
+log management,authentication systems,True,0.6258532404899597
+drainage,grading,True,0.6017972230911255
+Ixia,Spirent,True,0.5203193426132202
+frying,roasting,True,0.7966130971908569
+EPA regulations,OSHA regulations,True,0.8042175769805908
+UT,PT,True,0.6145365834236145
+security protocols,helpdesk best practices,True,0.6098586320877075
+government agencies,competitor's market positioning,True,0.49437078833580017
+action planning,problem identification,True,0.6586066484451294
+Marketo Engage,Adobe Commerce,True,0.6203587651252747
+ODS,EDW,True,0.5707551836967468
+unit testing,integration testing,True,0.7889117002487183
+homelessness,substance use,True,0.6588892340660095
+FAR,DFARS,True,0.5417658090591431
+safety rules,procedure manuals,True,0.6237397193908691
+subcontractors,consultants,True,0.6127577424049377
+JEE,Spring JPA,True,0.6119989156723022
+steel,aluminum,True,0.7369067668914795
+close-out,acceptance,True,0.5937914848327637
+graphics,electronic mail,True,0.5767727494239807
+procedures,policies,True,0.7086278200149536
+interpret specifications,interpret project documents,True,0.7856723070144653
+ventilation,air conditioning,True,0.7483006715774536
+management consulting,publishing,True,0.5313552618026733
+art,music,True,0.7242547273635864
+progress notes,treatment plans,True,0.5898596048355103
+switches),capacitors,True,0.6781524419784546
+IAS,CSW,True,0.5315108299255371
+clerical,receptionist,True,0.7251191139221191
+device drivers,embedded systems,True,0.6548480987548828
+repair of machines and tools,maintenance of machines and tools,True,0.9265320301055908
+JBoss,WebSphere,True,0.6200056076049805
+squatting,driving,True,0.5585806369781494
+consultants,architects,True,0.6404996514320374
+Advisory Circular E,SAE ARP 4754A,True,0.5624419450759888
+Cognitive Behavioral Therapy (CBT),Dialectical Behavior Therapy (DBT),True,0.8569480180740356
+machine learning (ML),artificial intelligence (AI),True,0.7647888660430908
+interaction design,SEMrush,False,0.4261093735694885
+MIG welding,RAPS,False,0.5226269364356995
+lithography,co-occurring disorders,False,0.4864393174648285
+executing projects,literature reviews,False,0.5087701082229614
+NIPR,PCI compliance,False,0.5078222751617432
+typography,detail oriented,False,0.7108088135719299
+photography,income statement,False,0.48717832565307617
+truck driving,soccer,False,0.5247375965118408
+commissions,Excel/Google Sheets,False,0.5296942591667175
+helpdesk best practices,collection,False,0.5243942737579346
+Reg E,data mesh,False,0.5260264873504639
+MySQL,records management,False,0.6832375526428223
+WSDL,PAM,False,0.5026192665100098
+uses,Microsoft Projects,False,0.538492739200592
+DDC,dSPACE,False,0.6404725909233093
+SKM,Westlaw,False,0.510998010635376
+Front Desk experience,X-ray diffraction,False,0.4916928708553314
+rheology,driving,False,0.5333523750305176
+receiving,AzureAD,False,0.544776439666748
+SAP Fiori,plating,False,0.5964388847351074
+dishwashers,issues management,False,0.521984338760376
+IQVIA,Kali,False,0.5043546557426453
+mechanical skills,diagnosis,False,0.49990490078926086
+roasting,coverage,False,0.538001537322998
+WinDbg,Apex code,False,0.5460681319236755
+Omron,coordination skills,False,0.535884439945221
+Blue Yonder,margins,False,0.4835216999053955
+charts,Teams,False,0.6243956685066223
+composites,public accounting experience,False,0.46744775772094727
+data analyst,Jenkins),False,0.5069761872291565
+COD,ITAM,False,0.5221523642539978
+daily living skills,production planning,False,0.5634307861328125
+OSHA regulations,mechanical design,False,0.5807884931564331
+debits,medical device,False,0.5538042187690735
+defibrillator,dividing,False,0.5247213840484619
+ZoomInfo,account management,False,0.5374506711959839
+tools,coaching employees,False,0.5458159446716309
+ACT,accounts payable,False,0.538727879524231
+power transmission,Material UI,False,0.518028974533081
+Prompts,staff development,False,0.6390655040740967
+Windows 7,Espresso,False,0.555678129196167
+criminal history check,NIST,False,0.5007178783416748
+hardware troubleshooting,virtual training,False,0.5374964475631714
+subcontract flow downs,integration capabilities,False,0.5797474384307861
+dollies,Grasshopper,False,0.5848564505577087
+network security groups,AWS Certified Solutions Architect,False,0.5607167482376099
+grammatical skills,Beyond Trust,False,0.45826178789138794
+schematic capture,speeches,False,0.5315009355545044
+Gantt charts,regression,False,0.57264244556427
+heating systems,Procure to Pay,False,0.5367367267608643
+regulatory experience,IHC,False,0.5343010425567627
+Control Plans,statistical methods,False,0.5018665194511414
+Cisco routing,intake,False,0.5205864906311035
+SLIDE,point of sale systems,False,0.559593915939331
+Hadoop,video recording,False,0.5618904829025269
+839,reach trucks,False,0.531261682510376
+SVM,cash handling,False,0.4619176983833313
+MM,dicing,False,0.5997577905654907
+PERT charts,networking protocols,False,0.5744973421096802
+algebra,model development,False,0.5642759799957275
+ASCE 7,empowerment,False,0.538865327835083
+process builders,equipment management,False,0.6157053112983704
+reaching,Accountant,False,0.5289754867553711
+cellular technologies,Rubrik,False,0.37407854199409485
+ADC,cleaning,False,0.5292211771011353
+5G NR,oscilloscopes,False,0.5321906805038452
+ITOM,explaining technologies,False,0.5878803730010986
+Sentinel,petrochemical,False,0.5159631967544556
+product features,compliance experience,False,0.5540479421615601
+Commscope,.NET Core,False,0.6019463539123535
+hand tools,thermography,False,0.5826731324195862
+PSCAD,catheter care,False,0.5346018671989441
+CodePipeline,Momentum,False,0.5928492546081543
+planning projects,Reg Z,False,0.44414710998535156
+Massive MIMO,corporate governance,False,0.3765486180782318
+Procure to Pay,state policies,False,0.5891895890235901
+print marketing,proficiency in US GAAP,False,0.5127745270729065
+Subpart F,outside sales,False,0.5067484378814697
+grilling,APIs,False,0.5447608828544617
+poaching,Inventor,False,0.4825661778450012
+CNNs,SIEMs,False,0.6157065629959106
+turning,castings,False,0.5446941256523132
+admissions,FHIR,False,0.5323629975318909
+Lambda,XDR,False,0.5517134666442871
+subcontract flow downs,hybrid environments,False,0.6359845399856567
+front-end frameworks (Angular,Kafka Streams,False,0.5043618083000183
+issuing,virtualization technologies,False,0.5481610298156738
+MIG welding,design engineering,False,0.5759531259536743
+CT scans,Guard Duty,False,0.41760602593421936
+RCRA,proficiency in Microsoft Office,False,0.5071611404418945
+vacuum cleaners,data technologies,False,0.5099102258682251
+building materials,Online Merchant,False,0.5648077726364136
+T&M,SciPy,False,0.5099796056747437
+motor control equipment,SAP BW,False,0.501392662525177
+cleaning procedures,SCC,False,0.5460656881332397
+system integration,manage multiple projects simultaneously,False,0.657685399055481
+software troubleshooting,middleware technologies,False,0.6558951735496521
+crimpers,accounting experience,False,0.4776955246925354
+Exchange Online,ESB,False,0.5553221702575684
+using JIRA,unstructured data,False,0.5543413162231445
+vision,family therapy,False,0.5150086283683777
+OPC UA,PMD,False,0.5447641611099243
+Linkerd,information gathering,False,0.6267547607421875
+summary reports,specification,False,0.6084882616996765
+hazard analysis,hammers,False,0.5043172240257263
+Fiori,network troubleshooting,False,0.46227943897247314
+food preparation,scissor lifts,False,0.5328582525253296
+subqueries,rehabilitation,False,0.47091585397720337
+TensorFlow,JDBC,False,0.5158544778823853
+RoHS,McAfee,False,0.4916672110557556
+MCSE,Elastic,False,0.5816431045532227
+machines,data entry,False,0.6305553913116455
+timeliness,OPC-UA,False,0.4924470782279968
+ADS,detection,False,0.6116800308227539
+add,HIPAA regulations,False,0.4645833671092987
+income statement,Newforma,False,0.5380532741546631
+Genetec,setting goals,False,0.483443945646286
+HLS,activities of daily living,False,0.5589375495910645
+PMA,data entry experience,False,0.5087043046951294
+mediations,observability,False,0.5672001242637634
+fertilizers,HRIS software,False,0.528746485710144
+story splitting,nursing assistant,False,0.48470598459243774
+initiating projects,Serial,False,0.5096970796585083
+FSA,Windows Server 2016/2019,False,0.5025914907455444
+state regulations,grant management,False,0.5778812170028687
+Application Designer,COBRA,False,0.5527744293212891
+BGP,Microsoft Office products (Word,False,0.46568384766578674
+Yara,plumbing,False,0.5137125849723816
+ONNX,profiles,False,0.5782588124275208
+Corning,food safety,False,0.5821604132652283
+Crucible,.NET 6,False,0.4887956380844116
+Dash,configuration management,False,0.5483777523040771
+Transmodeler,AngularJS,False,0.6149429082870483
+read,ICDs,False,0.4815518856048584
+systems analysis techniques,Life Sciences,False,0.5966373682022095
+cellular technologies,Maya,False,0.4578320384025574
+RS232,iPad,False,0.5079684853553772
+hybrid cloud,field support,False,0.5831774473190308
+designs of machines and tools,race,False,0.5050255656242371
+Articulate 360,Llama 2,False,0.4981236457824707
+Lustre,rules,False,0.5152663588523865
+ESXi,swaps,False,0.5660127401351929
+government agencies,leadership experience,False,0.5059460401535034
+proficiency in US GAAP,OSGi,False,0.4519033432006836
+write English,search engines,False,0.5220192670822144
+safety practices,appeals,False,0.547102689743042
+mechanical troubleshooting,correspondence,False,0.5365610718727112
+5G NR,air conditioning systems,False,0.5322387218475342
+mission,ECHO,False,0.5761928558349609
+Suricata,hardware management,False,0.4390181303024292
+CSS,working independently,False,0.6007184982299805
+wires,trade,False,0.6160014271736145
+SDLC regulations,Application Engine,False,0.5091726779937744
+fractions,SIEMs,False,0.5949826240539551
+user research,mergers and acquisitions,False,0.5418418645858765
+clustering,CosmosDB,False,0.6098676919937134
+appropriate judgment,LESS,False,0.5376526713371277
+FedEx,insurance products,False,0.6065395474433899
+routers,HRIS software,False,0.58369380235672
+CPT codes,user testing,False,0.5616743564605713
+fast food,website development,False,0.4557485282421112
+TRID,supervision,False,0.5146844387054443
+discounts,designing reports,False,0.4326801598072052
+cGMP,LNAs,False,0.46978896856307983
+Chef,Caseware,False,0.55906742811203
+DARPA,application architecture,False,0.5754362344741821
+spaCy,ITAM,False,0.4560953974723816
+lifting,curriculum development,False,0.524737536907196
+Modified Bitumen,PMBOK,False,0.5089578628540039
+futures,Google Maps,False,0.5349606871604919
+LAA,USDA,False,0.6645462512969971
+aluminum,lifecycle management,False,0.4961044192314148
+Inconel,project correspondence,False,0.5236158967018127
+reviewing contracts,schematics,False,0.5863528251647949
+linear regression,electronic mail,False,0.5033984184265137
+mission,automotive,False,0.5449655652046204
+hiking,source control management,False,0.4298469126224518
+plumbing repair,Azure Cosmos,False,0.456768274307251
+GRC,EDI,False,0.5167356729507446
+management consulting,operation of standard office equipment,False,0.5153448581695557
+problem definition,product support,False,0.5656641125679016
+collect data,motor controls,False,0.5223922729492188
+EPDM,components,False,0.5770781636238098
+SAN,machine repair,False,0.48870280385017395
+customer needs assessment,DOT regulations,False,0.5934915542602539
+preparation of payroll,inventory management software,False,0.6238141059875488
+GDPR,Paylocity,False,0.5073744654655457
+economic development,leave management,False,0.5725003480911255
+bathing,Infoblox,False,0.5271420478820801
+Application Engine,fraud risk management,False,0.5183177590370178
+AFSIM,VRF,False,0.5333579778671265
+backhoe operation,competitor's market positioning,False,0.48525333404541016
+API 510,ICD-10,False,0.6375072002410889
+surgeons,Outlook),False,0.4821203947067261
+Designer,petrochemical,False,0.531680166721344
+Azure SQL DB,V-Look Ups,False,0.5508490800857544
+warehouse,Mainframe,False,0.5866386890411377
+operating instructions,two-way radios,False,0.5683494806289673
+wines,Verint,False,0.577379584312439
+Online Merchant,databases,False,0.5957368612289429
+condensers,scientific advances,False,0.5824525356292725
+distributions,NX,False,0.5495546460151672
+Blue Yonder,LAN/WAN,False,0.4789985716342926
+cGMP,patients,False,0.5974982976913452
+Swift,vegetables,False,0.5699568390846252
+truck driving,Moz,False,0.47268280386924744
+XPS,nursing homes,False,0.5142644047737122
+Cloud SQL,SAP S/4 HANA,False,0.6241192817687988
+Service Cloud,vulnerability scanning,False,0.6176673769950867
+embedding,WECC,False,0.521480143070221
+dicing,authoring tools,False,0.5888466835021973
+IQVIA,recruiting,False,0.4770399332046509
+Spanish,read English,False,0.6818293333053589
+speaking,Connect,False,0.6847848892211914
+discounts,programmable logic controllers (PLCs),False,0.4951464831829071
+API Manager,FileMaker Pro,False,0.6305713057518005
+team exercises,web-browsers,False,0.4999789893627167
+load flow,technology tools,False,0.6110131144523621
+shock testing,cloud security posture management (CSPM),False,0.5074037909507751
+line chef,Azure Virtual Desktop,False,0.45162004232406616
+subcontractors,CPRA,False,0.5497363209724426
+interest,Synchro,False,0.5247927904129028
+Babel,Waterfall,False,0.5567560791969299
+Enercalc,construction projects,False,0.5372438430786133
+including annexes,voltage,False,0.4157745838165283
+multitasking,iPads,False,0.6653357148170471
+EnCase,Agile practices,False,0.5229572057723999
+mutual funds,serverless computing,False,0.5051259994506836
+lecture,payroll software,False,0.45434069633483887
+EAD,boating,False,0.5311551094055176
+BigCommerce,measurement,False,0.5108908414840698
+vacuuming,conceptualization,False,0.550613522529602
+dicing,personal care,False,0.5115228891372681
+Meditech,prep,False,0.5499220490455627
+time and material contracts,statistical analysis,False,0.5825928449630737
+battery systems,software programs,False,0.5739617943763733
+motor skills,Sanctions,False,0.4998142719268799
+Lambda,agencies,False,0.553148090839386
+SQR,FIFO,False,0.5783326625823975
+WooCommerce,email campaigns,False,0.5699806213378906
+interest,other scripting languages,False,0.46437445282936096
+Cost,Laborers,False,0.5128964185714722
+ceramics,infrastructure as code (IaC),False,0.4637754559516907
+hardware,EMS,False,0.532657265663147
+uses,creating project plans,False,0.5296282768249512
+Problem,Skai,False,0.5150010585784912
+CBRS,UFT,False,0.55476975440979
+EMR/Spark,subject lines,False,0.5687142610549927
+cGMP,data replication,False,0.48385098576545715
+alignment system,FINRA,False,0.5794153213500977
+managing files and records,firewall technologies,False,0.5496963858604431
+service techniques,Bomgar,False,0.4719052314758301
+OVM,contract review,False,0.5660358667373657
+mmWave,service planning,False,0.5358664989471436
+SNAP,IPAM,False,0.5921052694320679
+Lightning Components,performance monitoring,False,0.5621365308761597
+OWL Diodes,retrieval,False,0.5633717775344849
+civil design,tact,False,0.5280628800392151
+TDMA,subtraction,False,0.5055736899375916
+assisted living,proficiency in GAAS,False,0.4643414616584778
+HMO,Grocery Clerk,False,0.5664287805557251
+Component Interfaces,ControlNet,False,0.6310805082321167
+GXP,Amazon Web Services,False,0.5185668468475342
+business architecture,Catalyst,False,0.5906513333320618
+CNN,teamwork skills,False,0.49605315923690796
+ICH guidelines,monitoring budgets,False,0.6022547483444214
+managing resources,plumbing maintenance,False,0.6205583214759827
+deploying,simulations,False,0.6810593605041504
+posting,Dynamics,False,0.5730710029602051
+Webpack,Argo,False,0.5138685703277588
+OCT,Auth0,False,0.5926152467727661
+DevOps Engineer,technical writing,False,0.6218668222427368
+billing,administrative staff,False,0.5772829651832581
+basketball,SQF,False,0.49402663111686707
+SAP IBP,IPL,False,0.5288228988647461
+electrical skills,Huggingface,False,0.48151445388793945
+leading cross-functional teams,process analysis,False,0.6144937872886658
+Hadoop,fabrication techniques,False,0.5204647183418274
+Provenir,training skills,False,0.4964980483055115
+NASTRAN,Salesforce APIs,False,0.4039117693901062
+lead,IPL,False,0.5147489905357361
+MLFlow,autoscaling,False,0.6435107588768005
+MRI,Agile,False,0.5502719283103943
+Incident,SEM,False,0.5909719467163086
+scikitlearn,spreadsheet applications,False,0.6126895546913147
+Screaming Frog,management consulting,False,0.3913630247116089
+social media advertising,Adobe products,False,0.5228405594825745
+TCP,Adobe Captivate,False,0.47453683614730835
+Xero,Parquet,False,0.49792367219924927
+front-end development,ISO standards,False,0.5810953974723816
+IB,water softeners,False,0.5117236375808716
+acceptance,similar technologies,False,0.5013903379440308
+configuration management software,write reports,False,0.5248574018478394
+generating sales leads,elected officials,False,0.48077061772346497
+neuro,SQL Developer,False,0.5346090793609619
+equities,Investran,False,0.6987721920013428
+civil design,dscout,False,0.4779059886932373
+motor control equipment,P2P,False,0.4428498148918152
+code reviews,SLAM,False,0.4741658866405487
+Fortimanager,designs of machines and tools,False,0.5549901127815247
+surgery,fixtures,False,0.5770754218101501
+PeopleCode,technical lead,False,0.5192077159881592
+group therapy,generating documents,False,0.4750599265098572
+design documents,drivers,False,0.5753469467163086
+medical equipment,two-way radios,False,0.5996103286743164
+transmitters,EPA standards,False,0.5325875282287598
+UART,data architecture,False,0.5248550176620483
+Infiniband,service-oriented architecture,False,0.4984683096408844
+EnCase,leading project teams,False,0.45359113812446594
+qualitative research,Omron,False,0.43540626764297485
+tractor,keyboard,False,0.5924681425094604
+SIMS,simulation,False,0.733009397983551
+Continuous Testing,FCRA,False,0.5533677935600281
+Prometheus,IPL,False,0.4642217755317688
+courtesy,English usage,False,0.6118090748786926
+basic math,SNOMED,False,0.5593886375427246
+phone communication,calculator,False,0.5539021492004395
+plastics,talent attraction,False,0.41225484013557434
+CTAs,MODS,False,0.586274266242981
+NLB,negotiate,False,0.560606837272644
+MASINT,CNC programming,False,0.5223420262336731
+CCNP,Azure Logic Apps,False,0.47657445073127747
+communication skills,IoT,False,0.6055330038070679
+key referral sources,DNP3,False,0.49646812677383423
+Yardi,structured text,False,0.47905728220939636
+SAP ECC,graphing,False,0.5309928059577942
+remote computing,sound judgment,False,0.4159030616283417
+copiers,motor control equipment,False,0.6373282074928284
+iSCSI,Microsoft Office (Word,False,0.4843093156814575
+N2,wireless devices,False,0.5451267957687378
+BEAT,RAPS,False,0.6526566743850708
+Fire/Life Safety systems,BESS,False,0.5823342800140381
+printer,SOA,False,0.535628080368042
+JAWS,business development experience,False,0.42733481526374817
+Wi-Fi,Hypermesh,False,0.559881865978241
+Single Sign-On (SSO),finishing concrete,False,0.4376222491264343
+Front Desk experience,food safety,False,0.5217970609664917
+giving feedback,Thoughtspot,False,0.641720175743103
+federal regulations,archiving,False,0.5162519812583923
+IaaS,press releases,False,0.5670920014381409
+tools,problem solving skills,False,0.62284255027771
+SATA,PT,False,0.5794694423675537
+dial indicators,wound care,False,0.5747467279434204
+capacitors,Arena,False,0.5233513116836548
+RS232,D365,False,0.6042824387550354
+property,Directors,False,0.4796132445335388
+coding standards,Zoho,False,0.4443957805633545
+desktop communications software,SOC 2,False,0.5876871347427368
+helpdesk best practices,software upgrades,False,0.6831153631210327
+scientific advances,proficiency in Microsoft Word,False,0.49743765592575073
+materials inspection,SAPUI5,False,0.5330457091331482
+design documents,attention to detail,False,0.5921165943145752
+communicate,Falcon,False,0.5077170133590698
+IDAPro,OSX,False,0.574630856513977
+spectrum analyzers,networking technologies,False,0.6211646795272827
+IABP,ellipsometry,False,0.5278699398040771
+data technologies,QlikView,False,0.5848602056503296
+YouTube,Visual Management,False,0.5389617681503296
+SLT,signal processing,False,0.5690515041351318
+Search Engine Optimization,CDP,False,0.5019722580909729
+Spring,ULS Logs,False,0.558175802230835
+content of English language,multimeters,False,0.5658171772956848
+business architecture,data flows,False,0.6231026649475098
+TCP,electrical safety,False,0.5689178705215454
+pushing,Workday experience,False,0.5670920014381409
+regulatory environments,EPA,False,0.669945240020752
+BDD,negotiating skills,False,0.4857079088687897
+sales,cooling,False,0.5676045417785645
+simulations,e-mail applications,False,0.5808631181716919
+Windows Desktop operating systems,Responsys,False,0.47062626481056213
+business architecture,integration technologies,False,0.6018601655960083
+Problem,Discord,False,0.6373951435089111
+5G NR,site design,False,0.5081868171691895
+balance sheet analysis,EMT,False,0.47848594188690186
+AML,providers,False,0.5670428276062012
+DHCP,application tracing/debugging,False,0.575383186340332
+ANSA,HCSS Heavy Bid,False,0.5462104678153992
+GoSystems,excavator operation,False,0.5717779397964478
+Workshare Compare,ADCs,False,0.5301084518432617
+meeting quality standards for services,project execution,False,0.5690608024597168
+API Manager,Smartsheet,False,0.5962707996368408
+email marketing,source code management,False,0.47824567556381226
+HCS,feeding,False,0.5651384592056274
+water softeners,biopsies,False,0.5523557662963867
+production processes,mixers,False,0.6466541290283203
+Asynchronous messaging,FIPS,False,0.5358778238296509
+frying,telecom,False,0.5133126974105835
+Azure App Service,volunteers,False,0.5732786655426025
+human services,CI/CD pipelines,False,0.4843723773956299
+Allscripts,verbal skills,False,0.5914189219474792
+CICS,data dictionary,False,0.5213402509689331
+Naive Bayes,community relations,False,0.4820612668991089
+JEE,database programming,False,0.5523883104324341
+security protocols,circuit protection,False,0.6586147546768188
+User Interface,professional,False,0.593558669090271
+Solution Manager,product features,False,0.5612391233444214
+UDAAP,entertainment,False,0.5054486393928528
+Red Prairie,ArcSight,False,0.49751245975494385
+MSN,medical device,False,0.5222960114479065
+progress notes,Autosys,False,0.5567245483398438
+motor skills,dosing,False,0.5647198557853699
+RoHS,ArcMap,False,0.5878655910491943
+foods,InterQual,False,0.478108286857605
+transmission,confined spaces,False,0.6202739477157593
+oscilloscopes,Nebula,False,0.5997720956802368
+Project Superintendent,customer satisfaction,False,0.4750557541847229
+configuration management software,EIS,False,0.5263385772705078
+ETABS,STARS,False,0.5260801315307617
+Ethernet switches,MS-SQL,False,0.5227354764938354
+raw materials,Android Studio,False,0.5026413202285767
+Synchro,mammalian cell culture,False,0.5536003112792969
+beverages,interfaces,False,0.5809298157691956
+Server 2012,harvesting,False,0.5218778252601624
+linear algebra,crane operation,False,0.49710512161254883
+hiking,engineers,False,0.5285285711288452
+biostatistics,Illustrator),False,0.4638351798057556
+email communication,Ember,False,0.5347650647163391
+Big Data processing,Blackbaud,False,0.4518064260482788
+Ubuntu,Concierge experience,False,0.4556647539138794
+stamping,clerical experience,False,0.5993728041648865
+Bash,MFA,False,0.5688117742538452
+fishing,brazing,False,0.5758410692214966
+Apex,RTMP,False,0.5964400768280029
+explaining technical concepts,deep tissue massage,False,0.4645480215549469
+boring,LinkedIn,False,0.5080236196517944
+typing detailed reports,Azure Synapse Analytics,False,0.6055008769035339
+clerical,customer relationship management,False,0.49694180488586426
+decimals,Prompts,False,0.6361515522003174
+balance sheets,deposition,False,0.5269936323165894
+calendars,technical management,False,0.5254448652267456
+APQP,data flow diagrams,False,0.5500411987304688
+maintainability,ticketing,False,0.5348283052444458
+logarithms,metering,False,0.6197530031204224
+Discoverer,guides,False,0.688412070274353
+quantitative techniques,immunoassays,False,0.6077897548675537
+FDCPA,wiring,False,0.4600990116596222
+integration testing,PayPal,False,0.48677361011505127
+ArcGIS Pro,related technology,False,0.5655474662780762
+Urinalysis,renewable energy,False,0.5180899500846863
+group leadership,heavy equipment experience,False,0.5877871513366699
+Spring Security,coaching employees,False,0.5510084629058838
+Bazel,urban design,False,0.5015115737915039
+Barracuda,statistical process control (SPC),False,0.47269269824028015
+GEOINT,conservation,False,0.5108256340026855
+assessing,construction methods,False,0.6426100730895996
+HTML,Journey Builder,False,0.5622966289520264
+data imports,RF power meters,False,0.5150024890899658
+Core Data,DOM,False,0.5480397939682007
+AnyPoint Studio,multitasking,False,0.577239453792572
+vision,restaurants,False,0.5149445533752441
+seals,unit testing,False,0.5338904857635498
+Single Sign-On,memos,False,0.576299786567688
+CAP,vMotion,False,0.5708783268928528
+FAR,e-commerce,False,0.500497043132782
+SCRA,Lean principles,False,0.602335512638092
+Spirent,charge nurse,False,0.4685947299003601
+RS-485,Workday experience,False,0.5046894550323486
+ADT,Risk Management Framework (RMF),False,0.5225498676300049
+state laws,ISO 27002,False,0.5474860668182373
+FFP,star schema,False,0.5307360887527466
+squatting,Heat,False,0.586668074131012
+Account Executive,frameworks,False,0.534375786781311
+meeting quality standards,Amazon EMR,False,0.5917461514472961
+NUnit,PR,False,0.5627822875976562
+beer,revenue cycle,False,0.5286597013473511
+work plans,Microsoft CRM,False,0.5351871252059937
+compilers,site preparation,False,0.6160922646522522
+written communication,data profiling,False,0.5473189949989319
+fluid power,stakeholder communication,False,0.5347050428390503
+schedule control,coordinating activities,False,0.7265208959579468
+RTSP,safety rules,False,0.5349388122558594
+copier,managing stakeholders,False,0.5443644523620605
+FTK,retail,False,0.533621072769165
+vacuum cleaners,PC's,False,0.6115397214889526
+add,accounting procedures,False,0.5166037678718567
+Commvault,L-pile,False,0.4846878945827484
+CANalyzer,life skills,False,0.5085080862045288
+Fiori,technical product management,False,0.45187199115753174
+Ariba,ICP,False,0.46839064359664917
+LinkedIn,insurance billing,False,0.5054720640182495
+Jenkins,Infiniband,False,0.5319570302963257
+ESXi,relationship building,False,0.5231231451034546
+vCenter,OneSite,False,0.5224249362945557
+DDC,distillation,False,0.5551297664642334
+smartphones,wireless devices,False,0.7541162967681885
+Procure to Pay,web analytics,False,0.47296398878097534
+ventilation,OOP,False,0.5933268070220947
+written discovery,CBCT,False,0.5501503944396973
+router commands,SNOMED,False,0.5097617506980896
+DSPs,Aurora MySQL,False,0.5102537870407104
+deep tissue massage,threading,False,0.5512248873710632
+A+,process documentation,False,0.5347041487693787
+payment,cash flow,False,0.6427567005157471
+DFARS,S3,False,0.5424213409423828
+ICD-10 codes,versioning,False,0.4725126624107361
+construction inspection,HCI,False,0.5573087930679321
+Riverbed,SOPs,False,0.5281023979187012
+unit testing,charge nurse,False,0.5553981065750122
+BUR,CXL,False,0.48724448680877686
+cocktails,Wireguard,False,0.44165098667144775
+Product Owner,PIP,False,0.5259671807289124
+Servlets,thermal testing,False,0.5511038899421692
+cable tensiometers,use cases,False,0.5604202747344971
+First Aid,protein purification,False,0.5339453816413879
+mechanical engineering,Intune,False,0.5159404277801514
+waxing,Cisco IOS,False,0.47961464524269104
+Axis,learning management systems,False,0.509232223033905
+plumbing,Batch Records,False,0.49217063188552856
+CloudBase/Acumulo,navigation,False,0.5355076789855957
+needs determinants,EVPN,False,0.5694003701210022
+FDII,project managers,False,0.5118077993392944
+standing,highway design,False,0.5275578498840332
+HydroCAD,NetSuite,False,0.5542609691619873
+NASTRAN,proficiency in Word,False,0.5005834102630615
+daycare,aerospace,False,0.5406346321105957
+Biamp,report creation,False,0.6249651908874512
+electrical maintenance,schedule management,False,0.5854343175888062
+washing,ISO/IEC 27001,False,0.48137426376342773
+Ping Identity,chainsaws,False,0.42825818061828613
+TCP/IP,writing,False,0.49440068006515503
+role-playing,cooperative attitude,False,0.618506669998169
+Project Superintendent,data integrity,False,0.48663774132728577
+catering services,Spanner,False,0.460446834564209
+Profibus,electronic communication,False,0.5252720713615417
+crushers,C+,False,0.5316588878631592
+LAA,documents,False,0.5636532306671143
+FDII,Slate,False,0.5232086181640625
+structure of English language,NFPA 70E,False,0.5491524338722229
+ECC,backend technologies,False,0.5474633574485779
+operating instructions,Web APIs,False,0.5499475002288818
+ISO 13485,RNNs,False,0.5727710723876953
+806,RTDS,False,0.5252346396446228
+widgets,serverless computing,False,0.5446323156356812
+subtract,Zendesk,False,0.531063437461853
+fiber optics,Snowflake,False,0.4820200502872467
+VxWorks,wine service,False,0.5177814960479736
+authentication systems,potty training,False,0.5093861818313599
+Windows Server 2012,local laws,False,0.4805517792701721
+OQ,designing,False,0.5113056898117065
+test plans/cases,software testing,False,0.7459012269973755
+tokenization,credit analysis,False,0.5613529682159424
+data visualization tools (Tableau,commercial insurance,False,0.43008947372436523
+thermodynamics,RNNs,False,0.5208535194396973
+Hematology,technology management,False,0.554011344909668
+vSphere,Apache Hadoop,False,0.5834242105484009
+GPUs,AFM,False,0.509800910949707
+Excel,Jenkins,False,0.5733938217163086
+pub-sub messaging,Atlassian Jira,False,0.6053133010864258
+Commvault,CDEGS,False,0.5702871084213257
+paving,photocopier,False,0.5958660244941711
+UiPath,SSO,False,0.5265099406242371
+multiply,optimization techniques,False,0.521124005317688
+meeting quality standards,responsiveness,False,0.6492049694061279
+ControlNet,steel,False,0.5102206468582153
+NFPA 70,Cloud Build,False,0.5529330372810364
+diplomatic skills,solicitation,False,0.5948519110679626
+refrigerators,Canva,False,0.5184585452079773
+Subpart F,Amazon DynamoDB,False,0.5223058462142944
+media,Helm,False,0.5487061738967896
+prompt engineering,implementing,False,0.6549926400184631
+centrifuges,AED,False,0.5433291792869568
+foods,conversion,False,0.5501798391342163
+HUMINT,Drift,False,0.5494962930679321
+subject lines,office administration,False,0.6168373823165894
+MIL-STD-1553,ticketing,False,0.5718716382980347
+fall protection,supply chain management,False,0.46687018871307373
+safety practices,21CFR part 11,False,0.5547003149986267
+regression testing,camera,False,0.5515073537826538
+Sketch,ergonomics,False,0.5741969347000122
+tissue processing,listen actively,False,0.5345183610916138
+Tableau,ACI,False,0.5706367492675781
+fax machine operation,impact assessment,False,0.5043037533760071
+Adobe XD,tissue culture,False,0.51246178150177
+seeing,MDD,False,0.5244208574295044
+WAN/LAN,printers,False,0.5630747079849243
+INDs,XSLT,False,0.5139122009277344
+Paycom,management skills,False,0.5116128921508789
+dance,CPT coding,False,0.5043642520904541
+copiers,treatment,False,0.4612250328063965
+thin films,Manta,False,0.5087833404541016
+content of English language,SOX,False,0.5211856961250305
+CISSP,valves,False,0.5622247457504272
+HIPAA,pivot tables),False,0.49930480122566223
+electrical repair,CDNs,False,0.5245583057403564
+process optimization,Batch,False,0.7010377645492554
+addition,sales automation tools,False,0.5007333159446716
+strain gauges,LCMS,False,0.5201247930526733
+creating documents,managing multiple projects simultaneously,False,0.5871919393539429
+UIKit,responsive design principles,False,0.5887769460678101
+Fire/Life Safety systems,HTML/CSS,False,0.5577031970024109
+wireframes,MI,False,0.5737437605857849
+augmented reality,SIMS,False,0.6019048094749451
+Cloud Composer,TSO,False,0.5407173037528992
+CDISC,media relations,False,0.5013018250465393
+JavaScript frameworks (Angular,workflow Rules,False,0.580056369304657
+heating,plan projects,False,0.5588217973709106
+machine learning (ML),blogs,False,0.49435174465179443
+VHDL,recordkeeping,False,0.5708010196685791
+HAZOP,cataloging,False,0.4928041100502014
+HLS,Rhapsody,False,0.5160007476806641
+WinDbg,IPS,False,0.5409725904464722
+PC software,quality engineering,False,0.5262748003005981
+Massive MIMO,perception,False,0.4652025103569031
+routing,vector databases,False,0.5555036067962646
+k-NN,Apple iOS,False,0.5094024538993835
+schedule development,Caseware,False,0.5937256217002869
+compensation practices,Internet of Things (IoT),False,0.4666341543197632
+installing network equipment,band saws,False,0.5362250208854675
+snow blowers,web application firewalls,False,0.4651051163673401
+ITBM,commercial construction,False,0.48049938678741455
+components,building materials,False,0.7055903077125549
+SWG,Samba,False,0.5420641303062439
+EPDM,other programming languages,False,0.5279399752616882
+Vault,NFS,False,0.5974783897399902
+fax,presentation graphics,False,0.6304938197135925
+Blood Bank,data dictionaries,False,0.5979918241500854
+RTP,OPC UA,False,0.5912638306617737
+Agile,pivot table,False,0.5741733908653259
+strain gauges,online teaching,False,0.503016471862793
+objectives,interviewing skills,False,0.6036286950111389
+pneumatic troubleshooting,Life Sciences,False,0.4894901216030121
+Subpart F,Adobe Illustrator,False,0.5721852779388428
+gathering data,TEM,False,0.5791034698486328
+VISSIM,needs assessment,False,0.48018282651901245
+surveys,refrigeration systems,False,0.5053876638412476
+query optimization,technical management,False,0.5323901176452637
+PFD,Software as a Service (SaaS),False,0.4315672814846039
+Code V,process control equipment,False,0.5608225464820862
+interpret specifications,manage resources,False,0.5656276941299438
+ratios,oil and gas industry,False,0.5460548996925354
+drafting legal documents,performance monitoring,False,0.5083233118057251
+TikTok,intervention,False,0.5238549113273621
+spreadsheets,speakers,False,0.5422024726867676
+economic development,ANSA,False,0.5245512127876282
+speak English,community engagement,False,0.5073614120483398
+test plans/cases,maintenance experience,False,0.5903663039207458
+Amazon EC2,venture capital,False,0.4835679829120636
+T&M,minor electrical work,False,0.5111050009727478
+spectroscopic techniques,hours of operation,False,0.5015050768852234
+deep tissue massage,workshops,False,0.5949414372444153
+follow up,Greenplum,False,0.5789734721183777
+seeing,construction experience,False,0.5498967170715332
+air conditioning,hypothesis testing,False,0.44893965125083923
+VPN appliances,business model,False,0.49706143140792847
+Selenium,performance reviews,False,0.48760589957237244
+Pairing,Scan,False,0.6353133916854858
+GuardDuty,Intune,False,0.589397132396698
+EPA,Sensu,False,0.46022510528564453
+Application Engine,Smartview,False,0.6163462400436401
+USSTRATCOM,DBT,False,0.6411899924278259
+IDS,MOST,False,0.5864287614822388
+OSINT,Qlik Sense,False,0.5552118420600891
+client scripts,mills,False,0.5071402788162231
+ATDD,records management,False,0.5277277231216431
+handheld equipment,trusts,False,0.5020995140075684
+Paylocity,multi-touch attribution,False,0.5689047574996948
+dissemination methods,Veeva Vault,False,0.5261183977127075
+tracheostomy care,InDesign,False,0.43107685446739197
+loan administration,8-D,False,0.4500834047794342
+Buck,print media,False,0.5300333499908447
+forwards,human resources,False,0.533380389213562
+SwiftUI,financial statements,False,0.5124945044517517
+XML,Wireguard,False,0.5244102478027344
+CentOS,Visual Studio,False,0.5366527438163757
+baseball,web application development,False,0.43453317880630493
+writing pre-solicitation documents in compliance with NSA/CSS Policy 8-2,iptables,False,0.6059392094612122
+CDMA,heat treatment,False,0.4989880919456482
+USP,FedEx,False,0.5771201848983765
+dryers,GPC,False,0.4910867214202881
+RAPS,database programs,False,0.5567178130149841
+urban design,USP,False,0.49037832021713257
+raw materials,load cells,False,0.5991549491882324
+AML,Golang,False,0.5572452545166016
+Server 2012,Panels,False,0.5561012029647827
+white box testing,long-term care,False,0.4851919710636139
+beverage operations,AS2,False,0.5129694938659668
+logarithms,quote to cash,False,0.5476162433624268
+admissions,ManageEngine,False,0.495640367269516
+ATDD,Allen-Bradley,False,0.49308717250823975
+media production,ADFS,False,0.5097343921661377
+designs of machines and tools,App Engine,False,0.5905029773712158
+dental insurance,CRISC,False,0.515501856803894
+Metasploit,transportation,False,0.4961738586425781
+electrical troubleshooting,AWS Aurora,False,0.5173995494842529
+fillers,hydraulics,False,0.5945265889167786
+HVAC systems,autonomous vehicles,False,0.5694434642791748
+Solution Manager,Azure API Management,False,0.7079047560691833
+DACS,evaluation of nursing care,False,0.5241608619689941
+Linux system administration,mechanical seals,False,0.5526517629623413
+SPI,Retail Manager,False,0.48196250200271606
+EBS,A/P,False,0.55837482213974
+Corning,COUNTIF,False,0.49187153577804565
+alignment system,close-out,False,0.5916076898574829
+Adobe Audition,tax research,False,0.4849858283996582
+YouTube,BUR,False,0.5375654697418213
+PFD,IMS,False,0.49895569682121277
+BRD,Anaplan,False,0.5621868371963501
+OSGi,SCM,False,0.49263283610343933
+data structures,temperature transmitters,False,0.510481595993042
+PowerPoint,ThreadX,False,0.6161053776741028
+internal medicine,ETABS,False,0.5443465709686279
+serving,acquisition and resource management,False,0.554935872554779
+thermal testing,transmission,False,0.604045033454895
+taps,snowflake schema,False,0.5207341909408569
+reading English,Blood Bank,False,0.505730152130127
+fields,authoring tools,False,0.5599626302719116
+JAWS,work ethic,False,0.46340352296829224
+warranty,structural engineering,False,0.5152785181999207
+analog circuit design,analyze,False,0.5479775667190552
+IVR,XD,False,0.5563158988952637
+beer,EDR solutions,False,0.5001816153526306
+hydraulic skills,SVM,False,0.5417498350143433
+business rules,division of whole numbers,False,0.5514721870422363
+data scientists,Audacity,False,0.5152184367179871
+Housing First,Okta,False,0.4716418385505676
+designers,proficiency in GAAS,False,0.5357744693756104
+PeopleCode,CNC machines,False,0.5436552166938782
+interpret project documents,analytical chemistry,False,0.5730925798416138
+5S,industry standards,False,0.5395277738571167
+structure of English language,Iterable,False,0.6023633480072021
+MXNet,business,False,0.5056591629981995
+stocking,ergonomics,False,0.5552815198898315
+media production,Product Lifecycle Management (PLM),False,0.5831248760223389
+band saw,Spanning Tree,False,0.45689189434051514
+Copado,torque wrenches,False,0.47879844903945923
+GXP,pressure transducers,False,0.5288823843002319
+CodeBuild,drawings,False,0.5744006633758545
+CodeIgniter,web marketing,False,0.6149111986160278
+JSP,EAD,False,0.5094953179359436
+HDMI,MS-Outlook,False,0.562636137008667
+AR,Microsoft Office Suite (Word,False,0.44768616557121277
+MDX,Proofpoint,False,0.5699487328529358
+race,creating schedules,False,0.5073666572570801
+wills,keyword research,False,0.49531227350234985
+SQR,Hadoop Distributed File System (HDFS),False,0.5175355672836304
+stripping,MS Office (Word,False,0.4947349727153778
+knife skills,streaming,False,0.48853468894958496
+internal control of payroll,PHA,False,0.5304273366928101
+loops,Gherkin,False,0.4888547360897064
+dump truck operation,stocks,False,0.4572426378726959
+camera technology,TCPA,False,0.5298218131065369
+cherry picker,statistical data analysis,False,0.4916173219680786
+COBOL,K6,False,0.533349335193634
+seeing,IDC,False,0.5034023523330688
+HVAC design,Yocto,False,0.45506376028060913
+cGMP,tone,False,0.5304545164108276
+multiplication,Google Documents,False,0.5059441924095154
+clear communication,protein purification,False,0.6316648721694946
+IEC,orchestration tools,False,0.6121941804885864
+earthwork,volunteers,False,0.570692241191864
+Capital IQ,EPA regulations,False,0.4673592746257782
+design-build,options,False,0.6076943278312683
+stored procedures,Audacity,False,0.48507606983184814
+balance sheet analysis,mentorship,False,0.5199827551841736
+GRC,Contentful,False,0.5063765048980713
+IDA Pro,other applications,False,0.6206555366516113
+DRAM,UT,False,0.5413551330566406
+Amazon,decision-making,False,0.506267786026001
+VAE,print,False,0.5800504684448242
+Micronaut,RN,False,0.5058929920196533
+radio,Advisory Circular E,False,0.4765699505805969
+stainless steel welding,Amazon DynamoDB,False,0.5181441307067871
+ECOA,Manager,False,0.5168889760971069
+pressure transducers,Mirroring,False,0.5650159120559692
+switches,media production,False,0.5073327422142029
+personal care,interpersonal relations,False,0.6313042640686035
+HTML5,peers,False,0.5749071836471558
+spelling of words,digital oscilloscopes,False,0.47243809700012207
+Survey123,ITIL framework,False,0.5526906847953796
+Sales Cloud,project development,False,0.5801701545715332
+computer operation,proper grammar,False,0.5352520942687988
+working with diverse teams,OSI model,False,0.5514844059944153
+sheet metal brakes,strategic selling,False,0.4565044939517975
+FlowJo,language,False,0.5735837817192078
+Screaming Frog,IBM Cloud,False,0.38195955753326416
+ArcGIS Desktop,Ruby on Rails,False,0.5994207859039307
+ULS Logs,intrusion detection systems,False,0.5901547074317932
+process validation,PFD,False,0.534497082233429
+GRI,MPI,False,0.7289174795150757
+monitoring projects,hand trucks,False,0.4727168083190918
+Maya,containerization,False,0.4974857568740845
+relay control equipment,cell-based assays,False,0.5338611602783203
+requirements specifications,ICDs,False,0.6089911460876465
+resourcefulness,product owners,False,0.5708314180374146
+ACH,powertrain,False,0.5360681414604187
+OTDR,search engine marketing,False,0.49226659536361694
+fixed-price contracts,supplies,False,0.5432664752006531
+Server 2016,CFRA,False,0.4995715618133545
+router commands,interfaces,False,0.6495485305786133
+subtract,promotion,False,0.6272680759429932
+6Sense,Optos,False,0.5801455974578857
+PP,MCNP,False,0.6076145172119141
+star schema,budget preparation,False,0.5293291807174683
+new accounts,accounting,False,0.6704221367835999
+staff supervision,whole numbers,False,0.49280330538749695
+probability,gears,False,0.5245740413665771
+NumPy,Hanwha,False,0.4552117586135864
+construction specifications,employees,False,0.5931353569030762
+VA loans,data models,False,0.45172351598739624
+test equipment,technology trends,False,0.5828855037689209
+compensation practices,providing direction,False,0.6328462958335876
+CSW,stainless steel,False,0.5753198266029358
+potty training,Boto3,False,0.5186542868614197
+k-NN,mapping software,False,0.5055962800979614
+pneumatic systems,3D modeling,False,0.6131139993667603
+wheel and tire equipment,grammatical skills,False,0.5453728437423706
+Tomcat,Oracle DB,False,0.529389500617981
+web-based software,bartending,False,0.4940630793571472
+pressure transducers,meal prep,False,0.4713781476020813
+line cook,details,False,0.5587475895881653
+attenuation,sewer systems,False,0.588813841342926
+hydraulic brakes,repair skills,False,0.6392254829406738
+ACA,modems,False,0.4989434480667114
+SQF,dentistry,False,0.5105088949203491
+Westlaw,welding,False,0.4939382076263428
+Cisco,FSA,False,0.4570126235485077
+Server 2012,Oxygen,False,0.4864412844181061
+friendliness,CCNA,False,0.47693750262260437
+algebra,bearings,False,0.556196928024292
+HCS,automotive industry,False,0.51529461145401
+aluminum,development experience,False,0.4014713764190674
+wind,interior design,False,0.43071162700653076
+beverages,the public,False,0.5831143856048584
+LIHTC,audit experience,False,0.5018288493156433
+speak English fluently,engineering,False,0.514799952507019
+database programming,transaction services,False,0.6524175405502319
+casting,working groups,False,0.49795782566070557
+auditing skills,VueJS,False,0.48943430185317993
+centrifuges,service mesh,False,0.5340401530265808
+quadratic equations,hand tools,False,0.5316082239151001
+Palo Alto Firewalls,EKG,False,0.4447214603424072
+telephone communications,inventories,False,0.5505126714706421
+TeamViewer,adolescents,False,0.5991650223731995
+VFDs,persuasion,False,0.4270418882369995
+carpentry,managed care,False,0.4975886344909668
+adding,cultivation,False,0.5865525603294373
+ISO 9001,API integrations,False,0.5926216840744019
+Dell,profit/loss concepts,False,0.48748207092285156
+simulations,JMS,False,0.6073297262191772
+carrying,good documentation practices,False,0.5364125967025757
+hierarchy,HCPCS,False,0.596356213092804
+mopping,government regulations,False,0.5038067102432251
+oral communication,woodworking,False,0.5277904272079468
+Jira,month-end close,False,0.5040653944015503
+Spring-MVC,QuickBooks,False,0.48572027683258057
+JBoss,state codes,False,0.559807538986206
+ATDD,soldering,False,0.5224225521087646
+querying data,HVAC design,False,0.502860963344574
+machine repair,vibration analysis,False,0.6072419881820679
+SWG,Sales Cloud,False,0.5155753493309021
+boating,Wireshark,False,0.5122519731521606
+tact,structural steel,False,0.5085533261299133
+NAS,organizational diagnosis,False,0.5590102672576904
+define problems,E-Builder,False,0.43321627378463745
+federal laws,OneTrust,False,0.5035338997840881
+needs determinants,credits,False,0.6253915429115295
+document cameras,frying,False,0.5085139870643616
+RxNorm,WordPress,False,0.5069793462753296
+contract drawings,Pentaho,False,0.5162427425384521
+tools,operations,False,0.6328277587890625
+word processing,ERP experience,False,0.590587854385376
+Blood Bank,BeyondTrust,False,0.4874876141548157
+electronic mail,TaiTherm,False,0.48968759179115295
+DevOps Engineer,high voltage systems,False,0.45792463421821594
+role playing,pH meter,False,0.4486878514289856
+AWS,business glossaries,False,0.5748690962791443
+pressure transmitters,MCSA,False,0.524940013885498
+Magento,spectrophotometry,False,0.4928362965583801
+general ledger,big data technologies,False,0.5459641218185425
+Blood Bank,discipline,False,0.4748138189315796
+transcriptomics,Title VII,False,0.4369887709617615
+cardiology,executive leadership,False,0.5275731086730957
+forklift operation,machine learning techniques,False,0.5000194311141968
+MS Excel,testing,False,0.60562664270401
+area,Envoy,False,0.5512546300888062
+vibration testing,QAD,False,0.5253276228904724
+Software as a Service (SaaS),Mammography,False,0.4510864019393921
+bartending,Server 2012,False,0.5195962190628052
+SAST,CFS,False,0.5114571452140808
+manage timelines,sitting,False,0.5387739539146423
+SAS,Zenoss,False,0.5348072052001953
+cloud platforms (AWS,DMMs,False,0.5607337951660156
+Home Health,Visual Studio Code,False,0.4949715733528137
+primary care,Google Suite,False,0.5227648019790649
+ingredients,Oracle SQL,False,0.5767813920974731
+Adobe Premiere,videography,False,0.7055500745773315
+material handling equipment,ISO 14001,False,0.5656960010528564
+RFIs,mechanical codes,False,0.5678861141204834
+commercial lending,site analysis,False,0.5208817720413208
+communication techniques,change control,False,0.5569180846214294
+configuration management software,Git),False,0.6319951415061951
+titration,FedEx,False,0.539432168006897
+balancing payroll,CI/CD processes,False,0.5356632471084595
+sautéing,entering data,False,0.5423926711082458
+Docs,insurance collections,False,0.6169723272323608
+speak English fluently,Reddit,False,0.5454493761062622
+care management,paid social,False,0.5398240089416504
+add,pH meters,False,0.5361995697021484
+LIHTC,ovens,False,0.5262941122055054
+grill,threat detection,False,0.4379929304122925
+DDL,taking vital signs,False,0.4945160746574402
+REST/SOAP APIs,arts and crafts,False,0.5262249708175659
+profit/loss concepts,ergonomics,False,0.5586956143379211
+augmented reality (AR),Sybase,False,0.49008363485336304
+ETABS,AWS CLI,False,0.5795590877532959
+chemical hazards,PPM,False,0.5450965762138367
+story splitting,Slides,False,0.5943804979324341
+content filtering,hazardous materials,False,0.5434141755104065
+SMT,Orion,False,0.5380985736846924
+CS,CTA,False,0.501945436000824
+Waterfall,PC skills,False,0.5034530758857727
+Adobe Premiere Pro,BI tools,False,0.5485588908195496
+Spectre,SNS/SQS,False,0.5869653224945068
+commissions,quantitative research,False,0.4972182810306549
+test equipment,paid media,False,0.5181464552879333
+psychiatric nursing experience,financial software,False,0.49131882190704346
+Kafka,PACER,False,0.576399028301239
+Ansible,Solutions Architect,False,0.5988340973854065
+PeopleCode,Designer,False,0.6446818113327026
+explaining technical concepts,GoSystems,False,0.5585786700248718
+Server 2008,modeling and simulation,False,0.5413041114807129
+ICH guidelines,legal compliance,False,0.628838300704956
+sauté,math,False,0.5020320415496826
+Tomcat,GXP,False,0.5729423761367798
+Instagram,test execution,False,0.4471971392631531
+organizing information,procedures,False,0.6393367052078247
+knowledge engineering,routers,False,0.5028260946273804
+role-playing,wires,False,0.4906735420227051
+short circuit,Cisco IOS,False,0.5268832445144653
+social work,percentages,False,0.5152305960655212
+knives,Workato,False,0.5267121195793152
+Plant Layout,theories,False,0.5315729379653931
+class,visualizations,False,0.583134114742279
+CWA,Paramedic,False,0.48736488819122314
+Gluon,QuickBooks Online,False,0.45074349641799927
+cleaning equipment,project initiation,False,0.4790889620780945
+Retail Assistant,motion practice,False,0.5467946529388428
+GC-MS,business writing,False,0.5000352263450623
+managing stakeholders,infographics,False,0.5870310068130493
+internal medicine,focus groups,False,0.5597109794616699
+commissions,optics,False,0.6036362648010254
+ICD 503,taking depositions,False,0.5681270360946655
+Solutions Architect,fault tree analysis,False,0.6225001215934753
+lithography,heating systems,False,0.5532786250114441
+COBIT,FMCSA regulations,False,0.5124337673187256
+Embedded Linux,Hospice experience,False,0.41097491979599
+backup/recovery,Cognitive Behavioral Therapy (CBT),False,0.4556558132171631
+AFM,fertilization,False,0.58086097240448
+nurses,remediation,False,0.540427565574646
+SAML,21 CFR 820,False,0.5108477473258972
+Adobe Experience Platform,heat treat,False,0.5157308578491211
+fax machines,lifecycle management,False,0.5475153923034668
+multiply,VxWorks,False,0.5843733549118042
+transmitters,TravisCI,False,0.563909649848938
+pneumatic troubleshooting,PDCA,False,0.5516626238822937
+design validation,Alma,False,0.47932520508766174
+business analysts,BeyondTrust,False,0.5256164073944092
+EIBs,MD,False,0.5469660758972168
+copier,VPCs,False,0.5485151410102844
+DOT regulations,OOP,False,0.5595425963401794
+Windows 7,ConnectWise,False,0.6181722283363342
+AML,test automation,False,0.5002087354660034
+QM,ingestion,False,0.587119460105896
+biking,UML,False,0.48580652475357056
+functional testing,key referral sources,False,0.5500945448875427
+Spring Security,emergency department,False,0.5145871639251709
+project execution,leadership development,False,0.5627867579460144
+exercises,charts,False,0.6164089441299438
+waxing,torches,False,0.6566421389579773
+Adobe Target,SONET (OC3,False,0.5186291933059692
+major payer groups,Nexpose,False,0.4607594311237335
+percentages,sites,False,0.5482391119003296
+ASME,mobile devices,False,0.5590517520904541
+technical skills,Azure Service Bus,False,0.52357017993927
+DC systems,cellular technologies,False,0.6538032293319702
+HUMINT,setting priorities,False,0.5057715773582458
+grammatical skills,vendors,False,0.4337822496891022
+paid search,CSM,False,0.5305463075637817
+Bing,Facebook Ads,False,0.5720514059066772
+WiFi,aggregation,False,0.5198678970336914
+Foreman,DCS,False,0.5189090967178345
+Rhapsody,following instructions,False,0.5450901985168457
+subject lines,NXOS,False,0.5047307014465332
+test scripts,Microsoft Office Outlook,False,0.5348844528198242
+Siemens Teamcenter,interfaces,False,0.5670261383056641
+standing,parallel computing,False,0.5256301164627075
+web analytics,MS Outlook,False,0.5545205473899841
+Urinalysis,executing,False,0.5770217180252075
+Advisory Circular E,.NET development,False,0.5187207460403442
+BAPIs,establishing priorities,False,0.5105725526809692
+Accumulo,using JIRA,False,0.4864197075366974
+Modbus,chainsaws,False,0.5093889236450195
+food operations,external audit,False,0.5708341598510742
+AC medium voltage systems,resource management,False,0.5317794680595398
+Node JS,Change,False,0.6019425392150879
+roasting,preparing reports,False,0.5619102716445923
+QM,configuring,False,0.5937764644622803
+multiplying,web based applications,False,0.5279332399368286
+Reg B,policies,False,0.5925800800323486
+LC/MS,utilities,False,0.579542338848114

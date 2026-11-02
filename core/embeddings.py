@@ -23,6 +23,9 @@ class Embedder(ABC):
     skill_threshold: float = 0.8     # cosine above which two skills count as the same
     cos_low: float = 0.5             # cosine range stretched to 0-1 for profile similarity
     cos_high: float = 0.9
+    role_threshold: float = 0.8      # cosine above which a CV role counts toward a job (EXPERIENCE_FIT="roles")
+    # cosine range stretched to 0-1 for the other PROFILE_SIMILARITY modes (document uses cos_low/high)
+    sim_bands: dict[str, tuple[float, float]] = {}
 
     @abstractmethod
     def embed(self, texts: list[str]) -> np.ndarray:
@@ -30,7 +33,10 @@ class Embedder(ABC):
 
 
 class GeminiEmbedder(Embedder):
-    skill_threshold, cos_low, cos_high = 0.80, 0.5, 0.9
+    # Gemini cosines are high and compressed: at 0.80 every skill matched (eval/README.md, step 4);
+    # the document band is the p5-p95 of CV-job cosines (step 6; was 0.5-0.9).
+    skill_threshold, cos_low, cos_high = 0.925, 0.731, 0.795
+    sim_bands = {"summary": (0.783, 0.859), "chunks": (0.747, 0.810)}  # p5-p95, eval/README.md step 6
 
     def __init__(self, api_key: str, model: str, timeout_s: int = 60):
         self.client = make_client(api_key, timeout_s)
@@ -52,7 +58,8 @@ class GeminiEmbedder(Embedder):
 class LocalEmbedder(Embedder):
     """Small GGUF embedding model (bge-small, ~35 MB) run with llama-cpp-python. No API quota.
     Thresholds are starting points for bge-small: tune them with your evaluation set."""
-    skill_threshold, cos_low, cos_high = 0.85, 0.55, 0.9
+    skill_threshold, cos_low, cos_high = 0.85, 0.586, 0.740  # document band: p5-p95 (step 6; was 0.55-0.9)
+    sim_bands = {"summary": (0.560, 0.729), "chunks": (0.590, 0.697)}  # p5-p95, eval/README.md step 6
 
     def __init__(self, repo_id: str, filename: str, n_threads: int = 2):
         try:
