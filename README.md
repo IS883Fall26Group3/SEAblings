@@ -85,3 +85,13 @@ docs/                   architecture diagram, screenshots, report assets
 
 CVs are processed in memory and never written to disk or logs. Never commit real CVs or API keys.
 Note that content sent to the Gemini API free tier may be used by Google to improve its products.
+
+## [Oct 23, 2026] Comments from Professor
+- Basic Flow: Input CV+JD --> Calculate score --> Give text advise [reasonable]
+- Current Problems: score is inaccurate (do not have industry context)
+- To do:
+  1) Need to be more clear/be careful of using embedding
+  2) Explore co-sine similarity
+  3) Comparison about reasoning method e.g., one-shot, chain of thoughts
+  4) Add error handling and unhappy cases (need to show some explanation for users what to do next)
+  5) Need to define specific how to calculate and steps for success metric
