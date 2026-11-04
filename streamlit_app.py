@@ -31,6 +31,7 @@ from core.experience import relevant_years_by_roles, role_years  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience)
+from core.validation import looks_like_job_description, looks_like_resume  # noqa: E402
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -95,6 +96,12 @@ def model_chain(choice: str) -> list[str]:
 def remember_if_spent(key: str, e: Exception) -> None:
     if "daily quota" in str(e):
         st.session_state.setdefault("spent_models", set()).add(key)
+
+
+def stop_with_warning(status, message: str) -> None:
+    status.update(label="Please check your input", state="error")
+    st.warning(message)
+    st.stop()
 
 
 def label(key: str) -> str:
@@ -185,19 +192,28 @@ if run:
                 cv_text = clean_text(cv_paste, S.max_cv_chars)
             else:
                 cv_text = SAMPLE_CV.read_text(encoding="utf-8")
+            if (upload is not None or cv_paste.strip()) and not looks_like_resume(cv_text):
+                stop_with_warning(status, "What you entered as your CV doesn't look like a resume. "
+                                          "Please upload or paste your resume.")
             cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
+
+            # Check the job descriptions too before any model call, so a wrong file costs no quota.
+            if mode == MODE_JD:
+                st.write("Reading your job descriptions")
+                items = [(f.name, extract_text(f.getvalue(), f.name, S.max_jd_chars * 2, what="job description"))
+                         for f in jd_files]
+                if jd_text.strip():
+                    items.append(("Pasted job description", jd_text))
+                bad = [name for name, text in items if not looks_like_job_description(text)]
+                if bad:
+                    stop_with_warning(status, f"What you entered as a job description doesn't look like one: "
+                                              f"{', '.join(bad)}. Please upload or paste a job posting.")
+                raw_jobs = jobs_from_descriptions([(n.rsplit(".", 1)[0], t) for n, t in items])
 
             st.write("Extracting your skills")
             profile, used_p = with_fallback(model_chain(choice), lambda k: cached_profile(cv_hash, cv_text, k), notify)
 
-            if mode == MODE_JD:
-                st.write("Reading your job descriptions")
-                items = [(f.name.rsplit(".", 1)[0],
-                          extract_text(f.getvalue(), f.name, S.max_jd_chars * 2, what="job description"))
-                         for f in jd_files]
-                items.append(("Pasted job description", jd_text))
-                raw_jobs = jobs_from_descriptions(items)
-            else:
+            if mode == MODE_SEARCH:
                 st.write(f"Searching jobs for \"{query}\"")
                 raw_jobs = cached_search(S.job_source, query.strip(), location.strip(), limit)
             if not raw_jobs:
