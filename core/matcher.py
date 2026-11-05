@@ -59,7 +59,8 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
         return []
     embed = embed_fn or embedder.embed
     # Two embedding calls total: one for profile similarity (core/similarity.py), one for all skills.
-    sims = profile_cosines(s.profile_similarity, profile, cv_text, jobs, embed, s.max_jd_chars)
+    sims = profile_cosines(s.profile_similarity, profile, cv_text, jobs, embed,
+                           getattr(embedder, "max_chars", 7_000))
 
     all_skills = list(profile.skills)
     for j in jobs:

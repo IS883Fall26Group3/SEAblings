@@ -31,8 +31,10 @@ def _explain(e: Exception, model: str) -> LLMError:
             when = f" It resets in about {wait}." if wait else ""
             return LLMError(f"The free daily quota for {model} is used up.{when} "
                             "Pick another model in the sidebar.", try_other_model=True)
+        seconds = re.search(r"retry in (\d+(?:\.\d+)?)s", msg)
         return LLMError(f"{model} is rate-limited right now. Wait {wait or 'a minute'} or pick "
-                        "another model.", try_other_model=True)
+                        "another model.", try_other_model=True,
+                        retry_after_s=float(seconds[1]) if seconds else 60.0)
     if code in (500, 503):
         return LLMError(f"{model} is temporarily overloaded. Try again shortly or pick another model.",
                         try_other_model=True)

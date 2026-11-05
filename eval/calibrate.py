@@ -51,8 +51,8 @@ def load_labels(column: str) -> pd.DataFrame:
 def features(emb, kind: str, s, ex: dict, labels: pd.DataFrame) -> pd.DataFrame:
     """Per pair: document cosine, per required skill (exact match?, best CV-skill cosine), years."""
     cvs, jobs = load_cvs(), {j.id: j for j in load_jobs()}
-    docs = {f"cv:{c}": t[:s.max_jd_chars] for c, t in cvs.items()}
-    docs |= {f"job:{j}": jobs[j].description[:s.max_jd_chars] for j in labels.job_id.unique()}
+    docs = {f"cv:{c}": t[:emb.max_chars] for c, t in cvs.items()}
+    docs |= {f"job:{j}": jobs[j].description[:emb.max_chars] for j in labels.job_id.unique()}
     skills = {norm(x) for p in ex["cvs"].values() for x in p["skills"] if x.strip()}
     skills |= {norm(x) for r in ex["jobs"].values() for x in r["required_skills"] if x.strip()}
     vec = embed_cached(emb, kind, sorted(set(docs.values()) | skills))

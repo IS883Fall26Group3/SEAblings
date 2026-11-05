@@ -33,18 +33,30 @@ def build(kind: str):
     return GeminiEmbedder(s.gemini_api_key, s.gemini_embed_model, s.llm_timeout_s)
 
 
+def batches(texts: list[str], max_texts: int, max_chars: int | None = None) -> list[list[str]]:
+    """Consecutive batches of at most max_texts texts and (if given) max_chars characters in all."""
+    out, size = [], 0
+    for t in texts:
+        if not out or len(out[-1]) >= max_texts or (max_chars and size + len(t) > max_chars):
+            out.append([])
+            size = 0
+        out[-1].append(t)
+        size += len(t)
+    return out
+
+
 def embed_cached(emb, kind: str, texts: list[str], chunk: int = 100) -> dict[str, np.ndarray]:
     """One vector cache per embedder, shared by all eval scripts (keys are the raw strings)."""
     cache = OUT / f"vectors_{kind}.npz"
     vec = dict(np.load(cache, allow_pickle=True).items()) if cache.exists() else {}
     todo = [t for t in texts if t not in vec]
     gemini = isinstance(emb, GeminiEmbedder)
-    if gemini:  # free tier: 100 texts/minute, every text counts; stay under it instead of hitting it
-        chunk = min(chunk, 50)
-    for i in range(0, len(todo), chunk):
+    # Free tier: 100 texts and 30,000 tokens a minute, every text counts. 50 texts or 40,000 chars
+    # (~10,000 tokens) per batch, 31 s apart, stays under both; 50 CVs or postings would not.
+    parts = batches(todo, min(chunk, 50), 40_000) if gemini else batches(todo, chunk)
+    for i, part in enumerate(parts):
         if gemini and i:
             time.sleep(31)
-        part = todo[i:i + chunk]
         for attempt in range(6):  # free-tier Gemini: 100 texts/minute, sometimes overloaded
             try:
                 vectors = emb.embed(part)

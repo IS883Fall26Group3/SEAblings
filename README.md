@@ -29,9 +29,12 @@ jobs means faster results.
 
 Embeddings use Gemini (`gemini-embedding-001`) whenever `GEMINI_API_KEY` is set, and a small local
 model (bge-small, GGUF, via `llama-cpp-python`) otherwise; set `EMBEDDINGS = "local"` to force the
-local one. Gemini's free tier embeds about 100 texts per minute, and one search embeds the CV, each
-job, and every unique skill. Similarity thresholds differ per embedding model
-(`core/embeddings.py`); see `eval/README.md` for how they were checked.
+local one. Gemini's free tier embeds about 100 texts and 30,000 tokens per minute, and one search
+embeds the CV, each job, and every unique skill; at the limit the app waits (up to a minute, with a
+message) and tries once more. For profile similarity the CV and each posting are embedded up to
+7,000 characters with Gemini (3,000 with the local model); the LLM reads up to 10,000 characters of
+each posting. Similarity thresholds and bands differ per embedding model and per length
+(`core/embeddings.py`); see `eval/README.md` (step 6, revisited) for how they were checked.
 
 **Experience fit** (`EXPERIENCE_FIT`, `core/experience.py`) can count *relevant* years instead of
 all years: `"roles"` keeps CV roles whose embedding is close to the job; `"judge"` asks the LLM

@@ -26,17 +26,45 @@ class Embedder(ABC):
     role_threshold: float = 0.8      # cosine above which a CV role counts toward a job (EXPERIENCE_FIT="roles")
     # cosine range stretched to 0-1 for the other PROFILE_SIMILARITY modes (document uses cos_low/high)
     sim_bands: dict[str, tuple[float, float]] = {}
+    max_chars: int = 7_000           # CV and posting are cut to this before embedding (profile similarity)
 
     @abstractmethod
     def embed(self, texts: list[str]) -> np.ndarray:
         """Return L2-normalized vectors, shape (len(texts), dim)."""
 
 
+def embed_with_wait(embed, texts: list[str], on_wait=None, max_wait_s: float = 60) -> np.ndarray:
+    """Run embed(texts); on a per-minute rate limit, wait as long as Gemini asks (at most
+    max_wait_s), tell the user through on_wait(seconds), and try once more.
+    Embeddings have no other model to fall back to, so waiting beats failing."""
+    try:
+        return embed(texts)
+    except LLMError as e:
+        if e.retry_after_s is None:
+            raise
+        wait = min(max_wait_s, e.retry_after_s + 2)
+    if on_wait:
+        on_wait(round(wait))
+    time.sleep(wait)
+    try:
+        return embed(texts)
+    except LLMError as e:
+        if e.retry_after_s is None:
+            raise
+        raise LLMError("Still over Gemini's per-minute limit. Wait a minute and try again, "
+                       "or analyze fewer jobs.") from e
+
+
 class GeminiEmbedder(Embedder):
     # Gemini cosines are high and compressed: at 0.80 every skill matched (eval/README.md, step 4);
-    # the document band is the p5-p95 of CV-job cosines (step 6; was 0.5-0.9).
-    skill_threshold, cos_low, cos_high = 0.925, 0.731, 0.795
-    sim_bands = {"summary": (0.783, 0.859), "chunks": (0.747, 0.810)}  # p5-p95, eval/README.md step 6
+    # the document band is the p5-p95 of CV-job cosines over the 176 labeled pairs at 7,000 chars
+    # (eval/doc_band.py, step 6 revisited; it was 0.731-0.795 at 3,000 chars).
+    skill_threshold, cos_low, cos_high = 0.925, 0.709, 0.786
+    # summary compares short LLM summaries, so max_chars doesn't change it. chunks embeds the
+    # posting at max_chars and was measured at 3,000: re-run eval/similarity.py before using it.
+    sim_bands = {"summary": (0.783, 0.859), "chunks": (0.747, 0.810)}
+    # The model reads at most 2,048 tokens (~8,000 chars of English, fewer with numbers and bullets).
+    max_chars = 7_000
 
     def __init__(self, api_key: str, model: str, timeout_s: int = 60):
         self.client = make_client(api_key, timeout_s)
@@ -60,6 +88,9 @@ class LocalEmbedder(Embedder):
     Thresholds are starting points for bge-small: tune them with your evaluation set."""
     skill_threshold, cos_low, cos_high = 0.85, 0.586, 0.740  # document band: p5-p95 (step 6; was 0.55-0.9)
     sim_bands = {"summary": (0.560, 0.729), "chunks": (0.590, 0.697)}  # p5-p95, eval/README.md step 6
+    # The bands above were measured at 3,000 chars. bge-small reads only 512 tokens (n_ctx below),
+    # so a higher limit wouldn't add anything; a lower one would need the bands re-measured.
+    max_chars = 3_000
 
     def __init__(self, repo_id: str, filename: str, n_threads: int = 2):
         try:

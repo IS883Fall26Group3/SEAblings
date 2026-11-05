@@ -19,7 +19,7 @@ def extract_profile(llm: LLMProvider, cv_text: str) -> CandidateProfile:
                              what="extracting skills from your CV")
 
 
-def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 3_000,
+def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 10_000,
                          local_max_jd_chars: int = 1_500) -> list[Job]:
     if not jobs:
         return jobs

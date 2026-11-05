@@ -38,6 +38,24 @@ def test_seniority_fit():
     assert seniority_fit(1, None) == 1.0
 
 
+def test_similarity_texts_are_cut_at_the_embedders_limit():
+    seen = []
+
+    class SmallEmbedder(FakeEmbedder):
+        max_chars = 50
+
+        def embed(self, texts):
+            seen.extend(texts)
+            return fake_embed(texts)
+
+    profile = CandidateProfile(summary="", years_experience=1, seniority="mid", skills=[], job_titles=[])
+    [job] = SampleSource().search("", "", 1)
+    job.description = "x" * 500
+    score_jobs(profile, "y" * 500, [job], SmallEmbedder(), get_settings())
+    assert "x" * 50 in seen and "y" * 50 in seen
+    assert all(len(t) <= 50 for t in seen)
+
+
 def test_better_skill_overlap_ranks_higher():
     profile = CandidateProfile(summary="planning analyst", years_experience=4, seniority="mid",
                                skills=["Financial modeling", "Excel", "Budgeting", "SQL"], job_titles=[])

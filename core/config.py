@@ -32,7 +32,10 @@ class Settings:
     profile_similarity: str = "document"
     llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
-    max_jd_chars: int = 3_000
+    # What the LLM reads of each posting (skills, years). Covers ~95% of postings in full
+    # (eval/data/jobs: median 4,300 chars, p95 8,900). The embedding limit is set per embedder.
+    max_jd_chars: int = 10_000
+    max_jd_file_chars: int = 50_000  # text kept from an uploaded posting, before the limits above
     local_max_cv_chars: int = 8_000  # the offline model runs on 2 CPUs: shorter input = faster
     local_max_jd_chars: int = 1_500
     local_n_ctx: int = 8_192         # llama-cpp's default context (512 tokens) is too small for a CV
