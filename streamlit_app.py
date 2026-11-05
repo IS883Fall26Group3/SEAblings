@@ -98,9 +98,17 @@ def remember_if_spent(key: str, e: Exception) -> None:
         st.session_state.setdefault("spent_models", set()).add(key)
 
 
-def stop_with_warning(status, message: str) -> None:
+OK = "Looks good."
+NOT_CV = "This doesn't look like a resume. Please upload or paste your resume."
+NOT_JD = "This doesn't look like a job posting. Please upload or paste a job description."
+
+
+def stop_if_invalid(status, checks: list[tuple[str, bool, str]]) -> None:
+    """checks: (input name, passed, problem). Lists every input on its own line if any failed."""
+    if all(ok for _, ok, _ in checks):
+        return
     status.update(label="Please check your input", state="error")
-    st.warning(message)
+    st.warning("  \n".join(f"**{name}:** {OK if ok else problem}" for name, ok, problem in checks))
     st.stop()
 
 
@@ -192,10 +200,10 @@ if run:
                 cv_text = clean_text(cv_paste, S.max_cv_chars)
             else:
                 cv_text = SAMPLE_CV.read_text(encoding="utf-8")
-            if (upload is not None or cv_paste.strip()) and not looks_like_resume(cv_text):
-                stop_with_warning(status, "What you entered as your CV doesn't look like a resume. "
-                                          "Please upload or paste your resume.")
             cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
+            # The bundled sample CV is trusted; only check what the user gave us.
+            user_cv = upload is not None or bool(cv_paste.strip())
+            checks = [("CV", not user_cv or looks_like_resume(cv_text), NOT_CV)]
 
             # Check the job descriptions too before any model call, so a wrong file costs no quota.
             if mode == MODE_JD:
@@ -204,11 +212,10 @@ if run:
                          for f in jd_files]
                 if jd_text.strip():
                     items.append(("Pasted job description", jd_text))
-                bad = [name for name, text in items if not looks_like_job_description(text)]
-                if bad:
-                    stop_with_warning(status, f"What you entered as a job description doesn't look like one: "
-                                              f"{', '.join(bad)}. Please upload or paste a job posting.")
+                checks += [(name if name == "Pasted job description" else f"Job description ({name})",
+                            looks_like_job_description(text), NOT_JD) for name, text in items]
                 raw_jobs = jobs_from_descriptions([(n.rsplit(".", 1)[0], t) for n, t in items])
+            stop_if_invalid(status, checks)
 
             st.write("Extracting your skills")
             profile, used_p = with_fallback(model_chain(choice), lambda k: cached_profile(cv_hash, cv_text, k), notify)
