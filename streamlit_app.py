@@ -24,7 +24,7 @@ load_secrets_into_env()
 
 from core.config import get_settings  # noqa: E402
 from core.cv_parser import clean_text, extract_text  # noqa: E402
-from core.job_sources import get_job_source, jobs_from_descriptions  # noqa: E402
+from core.job_sources import get_job_source, jobs_from_descriptions, name_from_requirements  # noqa: E402
 from core.llm import (AUTO, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
 from core.experience import relevant_years_by_roles, role_years  # noqa: E402
@@ -208,6 +208,7 @@ if run:
             st.write("Reading the job descriptions")
             ids = tuple(j.id for j in raw_jobs)
             jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
+            jobs = name_from_requirements(jobs)
 
             emb = get_embedder()
             embed = lambda t: cached_embed(tuple(t), emb.name)  # noqa: E731

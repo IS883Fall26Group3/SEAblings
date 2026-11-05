@@ -31,6 +31,9 @@ class JobRequirements(BaseModel):
     min_years_experience: Optional[float] = None
     role_summary: str = Field(default="", description="2-3 sentences describing the ideal candidate the "
                               "way a CV summary would: main kind of work, domain, and seniority")
+    # Used to name jobs the user pastes or uploads (core/job_sources/manual.py)
+    job_title: str = Field(default="", description="The role's title as the posting states it")
+    company: str = Field(default="", description="The hiring company's name, or empty if not stated")
 
 
 class JobRequirementsBatch(BaseModel):
