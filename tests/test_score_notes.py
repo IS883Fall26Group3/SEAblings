@@ -1,0 +1,143 @@
+"""Score explanations: every text case, built from results the matcher would record. No API keys."""
+import numpy as np
+
+from core.config import get_settings
+from core.job_sources.sample import SampleSource
+from core.matcher import match_skills_detail, score_jobs
+from core.schemas import CandidateProfile, Job, JobRequirements, MatchResult, Role
+from core.score_notes import experience_note, role_line, similarity_note, skill_note
+from test_matcher import FakeEmbedder
+
+JOB = Job(id="j1", title="Data Analyst", company="ATC", location="", description="",
+          requirements=JobRequirements(required_skills=[], nice_to_have_skills=[], field="Technology consulting",
+                                       work_type="Data analysis", level="entry"))
+PROFILE = CandidateProfile(summary="", years_experience=8, seniority="senior", job_titles=[],
+                           skills=["SQL", "Statistical Analysis"], field="Retail technology",
+                           work_type="data analysis")
+
+
+def result(**kw) -> MatchResult:
+    base = dict(job=JOB, score=0, skill_coverage=0, semantic_similarity=0, seniority_fit=0,
+                matched_skills=[], missing_skills=[], total_years=8)
+    return MatchResult(**(base | kw))
+
+
+# ---------- skill coverage ----------
+
+def test_partial_coverage_names_close_matches_and_gives_the_tip():
+    r = result(matched_skills=["Data Analysis", "Power BI", "SQL"],
+               missing_skills=["Microsoft Excel", "Tableau", "Critical Thinking", "Communication"],
+               close_matches={"Data Analysis": "Statistical Analysis"})
+    n = skill_note(r, PROFILE)
+    assert n.label == "Some required skills"
+    assert n.text.startswith("You have 3 of the 7 skills this job requires.")
+    assert '"Data Analysis" counted because your CV lists "Statistical Analysis", a close match.' in n.text
+    assert 'If you have any of the 4 under "To build", name them in your CV' in n.text
+
+
+def test_most_skills_says_what_was_not_found():
+    r = result(matched_skills=["SQL", "Python", "Excel"], missing_skills=["Tableau"])
+    n = skill_note(r, PROFILE)
+    assert n.label == "Most required skills"
+    assert n.text == ('You have 3 of the 4 skills this job requires. The one under "To build" '
+                      "wasn't found in your CV.")
+
+
+def test_skill_edge_cases():
+    assert skill_note(result(matched_skills=["SQL", "Python"]), PROFILE).text == \
+        "You have all 2 skills this job requires."
+    none = skill_note(result(missing_skills=["A", "B"]), PROFILE)
+    assert none.label == "No required skills found" and none.text.startswith("None of the 2 skills")
+    assert "neutral 50%" in skill_note(result(), PROFILE).text
+    empty_cv = PROFILE.model_copy(update={"skills": []})
+    assert "couldn't read any skills from your CV" in skill_note(result(missing_skills=["A"]), empty_cv).text
+
+
+# ---------- profile similarity ----------
+
+def test_similarity_labels_by_score():
+    labels = {p: similarity_note(result(semantic_similarity=p / 100), PROFILE).label for p in (100, 80, 50, 10, 0)}
+    assert labels == {100: "Very strong match", 80: "Strong match", 50: "Partial match", 10: "Weak match",
+                      0: "No clear match"}
+    assert similarity_note(result(semantic_similarity=1), PROFILE).text == \
+        "Your CV and this posting describe very similar work."
+
+
+def test_similarity_table_shows_rows_both_sides_have():
+    rows = similarity_note(result(semantic_similarity=0.5), PROFILE).table
+    assert rows == [("Field", "Retail technology", "Technology consulting"),
+                    ("Type of work", "Data analysis", "Data analysis"), ("Level", "Senior", "Entry")]
+    bare = PROFILE.model_copy(update={"field": "", "work_type": ""})
+    assert similarity_note(result(), bare).table == []  # level alone isn't shown
+
+
+# ---------- experience fit ----------
+
+DATA = Role(title="Data Analyst", start="2023-01", end="present")
+CHEF = Role(title="Pastry Chef", duration_months=11)
+
+
+def test_partly_relevant_lists_the_roles_that_counted():
+    r = result(relevant_only=True, years_counted=3, min_years=5, seniority_fit=0.6, counted_roles=[DATA])
+    n = experience_note(r)
+    assert n.label == "Partly meets the requirement"
+    assert n.text == "This job asks for 5+ years; 3 of your 8 years count as relevant:"
+    assert n.bullets == ["Data Analyst (2023–present)"]
+    assert n.after == "Your other roles weren't counted as experience for this job."
+
+
+def test_meets_with_all_years_relevant():
+    r = result(relevant_only=True, years_counted=8, min_years=8, seniority_fit=1, counted_roles=[DATA])
+    n = experience_note(r)
+    assert n.label == "Meets the requirement" and n.after == ""
+    assert n.text == "This job asks for 8+ years; we counted 8 years of relevant experience:"
+
+
+def test_no_relevant_roles():
+    with_min = experience_note(result(relevant_only=True, min_years=3))
+    assert with_min.label == "No relevant experience"
+    assert with_min.text == "This job asks for 3+ years. None of your roles were counted as experience for this job."
+    no_min = experience_note(result(relevant_only=True))
+    assert no_min.text == ("This posting doesn't state a minimum, but none of your roles were counted as "
+                           "experience for this job.")
+
+
+def test_no_minimum_with_relevant_experience_and_total_years():
+    full = experience_note(result(relevant_only=True, years_counted=2, seniority_fit=1, counted_roles=[DATA]))
+    assert full.text.startswith("This posting doesn't state a minimum; you have relevant experience")
+    total = experience_note(result(years_counted=8, min_years=10, seniority_fit=0.8))
+    assert total.label == "Partly meets the requirement"
+    assert total.text == "This job asks for 10+ years; we counted all 8 years on your CV."
+    assert "any experience counts" in experience_note(result(years_counted=8, seniority_fit=1)).text
+
+
+def test_role_lines():
+    assert role_line(Role(title="Analyst", start="2020-01", end="2023-06")) == "Analyst (2020–2023)"
+    assert role_line(CHEF) == "Pastry Chef (11 months)"
+    assert role_line(Role(title="Lead", duration_months=32)) == "Lead (2.7 years)"
+    assert role_line(Role(title="Intern")) == "Intern"
+
+
+# ---------- what the matcher records for them ----------
+
+def test_matcher_records_close_matches_and_counted_roles():
+    vec = {"sql": np.array([1.0, 0]), "structured query language": np.array([0.99, 0.141]),
+           "tableau": np.array([0, 1.0])}
+    matched, missing, close = match_skills_detail(["SQL"], ["Structured Query Language", "Tableau"], vec, 0.9)
+    assert matched == ["Structured Query Language"] and missing == ["Tableau"]
+    assert close == {"Structured Query Language": "SQL"}
+
+    [job] = SampleSource().search("analyst", "", 1)
+    job.requirements = JobRequirements(required_skills=["sql"], nice_to_have_skills=[], min_years_experience=4)
+    profile = CandidateProfile(summary="", years_experience=10, seniority="senior", skills=["sql"], job_titles=[])
+    two_years = [Role(title="Analyst", start="2020-01", end="2021-12")]
+    [r] = score_jobs(profile, "cv", [job], FakeEmbedder(), get_settings(), relevant_roles={job.id: two_years})
+    assert r.relevant_only and r.counted_roles == two_years
+    assert (r.years_counted, r.total_years, r.min_years, r.seniority_fit) == (2.0, 10, 4, 0.5)
+
+
+def test_card_markdown_escapes_cv_text():
+    from ui.components import note_markdown
+    from core.score_notes import Note
+    md = note_markdown(Note("Strong match", "Grew sales to $11M", table=[("Field", "Oil | gas", "Energy")]))
+    assert "\\$11M" in md and "Oil \\| gas" in md

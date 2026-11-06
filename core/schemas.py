@@ -22,6 +22,9 @@ class CandidateProfile(BaseModel):
     job_titles: list[str] = Field(description="Past job titles, most recent first")
     roles: list[Role] = Field(default_factory=list, description="Every professional position, most recent "
                               "first; one entry per position, not per company")
+    # Shown beside the job's own labels to explain profile similarity; not used in any score
+    field: str = Field(default="", description="Industry or domain of the work, 2-5 words")
+    work_type: str = Field(default="", description="Main kind of work, 2-5 words")
 
 
 class JobRequirements(BaseModel):
@@ -34,6 +37,10 @@ class JobRequirements(BaseModel):
     # Used to name jobs the user pastes or uploads (core/job_sources/manual.py)
     job_title: str = Field(default="", description="The role's title as the posting states it")
     company: str = Field(default="", description="The hiring company's name, or empty if not stated")
+    # Shown beside the CV's labels to explain profile similarity; not used in any score
+    field: str = Field(default="", description="Industry or domain of the role, 2-5 words")
+    work_type: str = Field(default="", description="Main kind of work in the role, 2-5 words")
+    level: str = Field(default="", description="One of: entry, mid, senior, lead")
 
 
 class JobRequirementsBatch(BaseModel):
@@ -74,3 +81,10 @@ class MatchResult(BaseModel):
     seniority_fit: float      # 0-1
     matched_skills: list[str]
     missing_skills: list[str]
+    # What went into the scores, so the card can explain them (core/score_notes.py)
+    close_matches: dict[str, str] = {}  # job skill -> the CV skill that covered it, when not the same name
+    years_counted: float = 0.0          # years compared with the posting's minimum
+    total_years: float = 0.0
+    min_years: Optional[float] = None
+    relevant_only: bool = False         # True when only roles relevant to the job were counted
+    counted_roles: list[Role] = []      # those roles

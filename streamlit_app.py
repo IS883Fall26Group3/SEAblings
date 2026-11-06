@@ -28,7 +28,7 @@ from core.embeddings import embed_with_wait  # noqa: E402
 from core.job_sources import get_job_source, jobs_from_descriptions, name_from_requirements  # noqa: E402
 from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
-from core.experience import relevant_years_by_roles, role_years  # noqa: E402
+from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience)
@@ -218,19 +218,19 @@ if run:
                                    "then trying again…"))
             relevant, used_e = None, used_j
             if S.experience_fit == "roles":
-                relevant = relevant_years_by_roles(profile.roles, jobs, embed, emb.role_threshold)
+                relevant = relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
             elif S.experience_fit == "judge":
                 st.write("Judging your relevant experience")
                 try:
                     judged, used_e = with_fallback(
                         model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
-                    relevant = {jid: role_years(x.relevant_roles) for jid, x in judged.items()}
+                    relevant = {jid: x.relevant_roles for jid, x in judged.items()}
                 except LLMError as e:  # the rest of the match is ready: score with total years instead
                     st.write(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
                              "all your years instead.")
 
             st.write("Scoring each job")
-            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_years=relevant)
+            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=relevant)
             used = sorted({label(used_p), label(used_j), label(used_e)})
             st.session_state.update(profile=profile, results=results,
                                     models_used=", ".join(used), embedder_used=emb.name)
@@ -250,4 +250,5 @@ else:
                f"similarity by {st.session_state['embedder_used']}.")
     ui.profile_panel(st.session_state["profile"])
     for i, r in enumerate(results):
-        ui.match_card(r, i, handle_explain)
+        # results are sorted best first: the top 3 show their breakdown open
+        ui.match_card(r, i, handle_explain, st.session_state["profile"], show_breakdown=i < 3)

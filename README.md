@@ -12,6 +12,9 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
 5. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`,
    using embeddings (`core/embeddings.py`: Gemini, or local without a key). Deterministic, so the same inputs give the same score.
+   Each card explains its three scores (`core/score_notes.py`): matched and close-matched skills, the
+   field / type of work / level of the CV beside the job's, and the roles counted as experience. Built
+   from what the matcher recorded, with no extra calls, so the text always agrees with the numbers.
 6. **Explain** (on demand): Gemini writes short advice for a selected job.
 
 ## Choosing a model

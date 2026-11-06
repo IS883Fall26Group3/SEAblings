@@ -6,6 +6,8 @@ You are an experienced recruiter. From the job posting below, extract:
   kind of work, domain, seniority). Leave out the company pitch, benefits and legal text.
 - job_title: the role's title as the posting states it (not a page caption like "Company logo for")
 - company: the hiring company's name, or empty if not stated
+- field: the industry or domain of the role, 2-5 words; work_type: the main kind of work, 2-5
+  words; level: one of entry, mid, senior, lead
 
 Use standard skill names, 1-4 words each.
 

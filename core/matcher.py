@@ -5,9 +5,9 @@ from typing import Callable
 import numpy as np
 
 from .config import Settings
-from .experience import experience_fit
+from .experience import experience_fit, role_years
 from .similarity import profile_cosines
-from .schemas import CandidateProfile, Job, MatchResult
+from .schemas import CandidateProfile, Job, MatchResult, Role
 
 EmbedFn = Callable[[list[str]], np.ndarray]
 
@@ -16,19 +16,33 @@ def _norm(s: str) -> str:
     return s.strip().lower()
 
 
+def match_skills_detail(cv_skills: list[str], job_skills: list[str], vec: dict[str, np.ndarray],
+                        threshold: float) -> tuple[list[str], list[str], dict[str, str]]:
+    """match_skills, plus the closest CV skill for each job skill matched by meaning, not name."""
+    if not job_skills:
+        return [], [], {}
+    if not cv_skills:
+        return [], list(job_skills), {}
+    cv_norm = {_norm(s) for s in cv_skills}
+    cv_mat = np.stack([vec[_norm(s)] for s in cv_skills])
+    matched, missing, close = [], [], {}
+    for skill in job_skills:
+        if _norm(skill) in cv_norm:
+            matched.append(skill)
+            continue
+        sims = cv_mat @ vec[_norm(skill)]
+        if float(sims.max()) >= threshold:
+            matched.append(skill)
+            close[skill] = cv_skills[int(sims.argmax())]
+        else:
+            missing.append(skill)
+    return matched, missing, close
+
+
 def match_skills(cv_skills: list[str], job_skills: list[str],
                  vec: dict[str, np.ndarray], threshold: float) -> tuple[list[str], list[str]]:
     """A job skill is matched if it equals, or is semantically close to, any CV skill."""
-    if not job_skills:
-        return [], []
-    if not cv_skills:
-        return [], list(job_skills)
-    cv_norm = {_norm(s) for s in cv_skills}
-    cv_mat = np.stack([vec[_norm(s)] for s in cv_skills])
-    matched, missing = [], []
-    for skill in job_skills:
-        hit = _norm(skill) in cv_norm or float((cv_mat @ vec[_norm(skill)]).max()) >= threshold
-        (matched if hit else missing).append(skill)
+    matched, missing, _ = match_skills_detail(cv_skills, job_skills, vec, threshold)
     return matched, missing
 
 
@@ -51,10 +65,12 @@ def similarity_band(embedder, mode: str) -> tuple[float, float]:
 
 def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedder,
                s: Settings, embed_fn: EmbedFn | None = None,
-               relevant_years: dict[str, float] | None = None) -> list[MatchResult]:
+               relevant_years: dict[str, float] | None = None,
+               relevant_roles: dict[str, list[Role]] | None = None) -> list[MatchResult]:
     """embedder supplies thresholds (and embed() unless embed_fn, e.g. a cached version, is given).
-    relevant_years (job id -> years in relevant roles, see core/experience.py) replaces total years
-    in the experience fit; jobs missing from it fall back to total years."""
+    relevant_roles (job id -> CV roles relevant to it, see core/experience.py), or relevant_years
+    (job id -> their years), replaces total years in the experience fit; jobs missing from it fall
+    back to total years."""
     if not jobs:
         return []
     embed = embed_fn or embedder.embed
@@ -74,19 +90,29 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
         req = job.requirements
         required = [x for x in (req.required_skills if req else []) if x.strip()]
         cv_skills = [x for x in profile.skills if x.strip()]
-        matched, missing = match_skills(cv_skills, required, vec, embedder.skill_threshold)
+        matched, missing, close = match_skills_detail(cv_skills, required, vec, embedder.skill_threshold)
         coverage = len(matched) / len(required) if required else 0.5  # neutral if unknown
         semantic = rescale_cosine(cos, *similarity_band(embedder, mode))
         min_years = req.min_years_experience if req else None
-        if relevant_years and relevant_years.get(job.id) is not None:
+        counted, relevant = [], None
+        if relevant_roles and relevant_roles.get(job.id) is not None:
+            counted = relevant_roles[job.id]
+            relevant = role_years(counted)
+        elif relevant_years and relevant_years.get(job.id) is not None:
+            relevant = relevant_years[job.id]
+        if relevant is not None:
             # capped at total years: a role given both company dates and a duration can double count
-            senior = experience_fit(min(relevant_years[job.id], profile.years_experience), min_years)
+            years = min(relevant, profile.years_experience)
+            senior = experience_fit(years, min_years)
         else:
-            senior = seniority_fit(profile.years_experience, min_years)
+            years = profile.years_experience
+            senior = seniority_fit(years, min_years)
         score = 100 * (s.w_skill_coverage * coverage + s.w_semantic * semantic
                        + s.w_seniority * senior)
         results.append(MatchResult(
             job=job, score=round(score, 1), skill_coverage=coverage,
             semantic_similarity=semantic, seniority_fit=senior,
-            matched_skills=matched, missing_skills=missing))
+            matched_skills=matched, missing_skills=missing, close_matches=close,
+            years_counted=years, total_years=profile.years_experience, min_years=min_years,
+            relevant_only=relevant is not None, counted_roles=counted))
     return sorted(results, key=lambda r: r.score, reverse=True)
