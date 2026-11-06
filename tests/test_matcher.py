@@ -3,7 +3,7 @@ import numpy as np
 
 from core.config import get_settings
 from core.job_sources.sample import SampleSource
-from core.matcher import match_skills, score_jobs, seniority_fit
+from core.matcher import match_skills, match_skills_detail, score_jobs, seniority_fit
 from core.schemas import CandidateProfile, JobRequirements
 
 VOCAB = {}
@@ -30,6 +30,16 @@ def test_exact_and_missing_skills():
     vec = {s.lower(): fake_embed([s])[0] for s in ["sql", "python", "tableau"]}
     matched, missing = match_skills(["SQL", "Python"], ["sql", "Tableau"], vec, 0.8)
     assert matched == ["sql"] and missing == ["Tableau"]
+
+
+def test_same_standard_name_matches_and_shows_the_cv_wording():
+    names = ["ms excel", "excel", "communication skills", "communication", "aws", "amazon web services"]
+    vec = {s: fake_embed([s])[0] for s in names}
+    matched, missing, close = match_skills_detail(
+        ["MS Excel", "Communication Skills", "AWS"], ["Excel", "Communication", "Amazon Web Services"],
+        vec, 0.99)
+    assert matched == ["Excel", "Communication", "Amazon Web Services"] and not missing
+    assert close == {"Excel": "MS Excel", "Communication": "Communication Skills", "Amazon Web Services": "AWS"}
 
 
 def test_seniority_fit():

@@ -7,6 +7,7 @@ import numpy as np
 from .config import Settings
 from .experience import experience_fit, role_years
 from .similarity import profile_cosines
+from .skill_names import skill_key
 from .schemas import CandidateProfile, Job, MatchResult, Role
 
 EmbedFn = Callable[[list[str]], np.ndarray]
@@ -18,17 +19,23 @@ def _norm(s: str) -> str:
 
 def match_skills_detail(cv_skills: list[str], job_skills: list[str], vec: dict[str, np.ndarray],
                         threshold: float) -> tuple[list[str], list[str], dict[str, str]]:
-    """match_skills, plus the closest CV skill for each job skill matched by meaning, not name."""
+    """match_skills, plus the CV skill behind each job skill matched under another wording: the same
+    standard name ("MS Excel" for "Excel", core/skill_names.py) or a close meaning."""
     if not job_skills:
         return [], [], {}
     if not cv_skills:
         return [], list(job_skills), {}
-    cv_norm = {_norm(s) for s in cv_skills}
+    cv_by_key = {}
+    for s in cv_skills:
+        cv_by_key.setdefault(skill_key(s), s)
     cv_mat = np.stack([vec[_norm(s)] for s in cv_skills])
     matched, missing, close = [], [], {}
     for skill in job_skills:
-        if _norm(skill) in cv_norm:
+        same = cv_by_key.get(skill_key(skill))
+        if same is not None:
             matched.append(skill)
+            if _norm(same) != _norm(skill):
+                close[skill] = same
             continue
         sims = cv_mat @ vec[_norm(skill)]
         if float(sims.max()) >= threshold:
@@ -41,7 +48,7 @@ def match_skills_detail(cv_skills: list[str], job_skills: list[str], vec: dict[s
 
 def match_skills(cv_skills: list[str], job_skills: list[str],
                  vec: dict[str, np.ndarray], threshold: float) -> tuple[list[str], list[str]]:
-    """A job skill is matched if it equals, or is semantically close to, any CV skill."""
+    """A job skill is matched if it has the same standard name as, or is semantically close to, any CV skill."""
     matched, missing, _ = match_skills_detail(cv_skills, job_skills, vec, threshold)
     return matched, missing
 
