@@ -60,6 +60,14 @@ def test_per_minute_limit_carries_the_wait():
     assert _explain(e, "gemini-embedding-001").retry_after_s == 51.37
 
 
+def test_deadline_exceeded_moves_on_to_another_model():
+    class E(Exception):
+        code = 504
+    err = _explain(E("504 DEADLINE_EXCEEDED. Deadline expired before operation could complete."),
+                   "gemini-flash-latest")
+    assert err.try_other_model and "took too long" in str(err)
+
+
 def test_local_style_provider_extracts_one_job_at_a_time():
     from core.job_sources.sample import SampleSource
     from core.skill_extractor import extract_requirements

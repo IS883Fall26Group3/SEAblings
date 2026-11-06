@@ -38,6 +38,9 @@ def _explain(e: Exception, model: str) -> LLMError:
     if code in (500, 503):
         return LLMError(f"{model} is temporarily overloaded. Try again shortly or pick another model.",
                         try_other_model=True)
+    if code == 504:  # Google stopped the call at our deadline (llm_timeout_s): long prompts, slow model
+        return LLMError(f"{model} took too long to answer. Try again or pick a faster model "
+                        "(Flash Lite).", try_other_model=True)
     return LLMError(f"Gemini request failed ({code}): {msg[:300]}")
 
 

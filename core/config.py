@@ -55,8 +55,10 @@ def get_settings() -> Settings:
         rapidapi_key=env("RAPIDAPI_KEY", ""),
         job_source=env("JOB_SOURCE", "sample"),
         jsearch_url=env("JSEARCH_URL", "https://jsearch.p.rapidapi.com/search-v2"),
+        # Flash Lite first: every eval ran on it, and it answers in seconds. Flash thinks longer and,
+        # on 10 postings of 10,000 characters, often runs past the 60 s deadline (504).
         gemini_models=_list(env("GEMINI_MODELS", env("GEMINI_MODEL",
-                                "gemini-flash-latest,gemini-flash-lite-latest"))),
+                                "gemini-flash-lite-latest,gemini-flash-latest"))),
         gemini_embed_model=env("GEMINI_EMBED_MODEL", "gemini-embedding-001"),
         local_llm_repo=env("LOCAL_LLM_REPO", "bartowski/Llama-3.2-1B-Instruct-GGUF"),
         local_llm_file=env("LOCAL_LLM_FILE", "*Q4_K_M.gguf"),
