@@ -81,7 +81,7 @@ core/                   business logic, no Streamlit imports (testable)
 prompts/                prompt templates (version these like code)
 data/sample/            fictional CV and job listings for dev, tests, demo fallback
 data/skill_aliases.csv  skill name lookup table (built by scripts/build_skill_aliases.py)
-data/onet/, data/esco/  skill taxonomies the lookup table is built from (sources below)
+data/onet/              O*NET software names the lookup table is built from (source below)
 scripts/                one-off build scripts
 tests/                  pytest, no API keys needed
 eval/                   embedding threshold calibration (see eval/README.md)
@@ -89,14 +89,11 @@ notebooks/              experiments only; the app never imports from here
 docs/                   architecture diagram, screenshots, report assets
 ```
 
-**Skill data sources.** `data/onet/software_skills.csv` is from the O*NET 31.0 Database by the
+**Skill data source.** `data/onet/software_skills.csv` is from the O*NET 31.0 Database by the
 U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), used under the
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license; O*NET® is a trademark of USDOL/ETA
-([onetcenter.org](https://www.onetcenter.org/database.html)). `data/esco/skills_en.csv` is the English
-skill labels of ESCO, the European Skills, Competences, Qualifications and Occupations classification by
-the European Commission, reused under the Commission's reuse policy
-([esco.ec.europa.eu](https://esco.ec.europa.eu)). The ESCO file was collected through the ESCO API (13,479 of 13,485
-skills; 6 the API failed to return are missing). `data/skill_aliases.csv` is derived from both.
+([onetcenter.org](https://www.onetcenter.org/database.html)). `data/skill_aliases.csv` is derived from it
+and a short hand-made list.
 
 ## Team ownership
 

@@ -1,6 +1,6 @@
 """Standard skill names, so the same skill written two ways ("MS Excel", "Excel", "Phyton") compares
 as one. data/skill_aliases.csv maps a cleaned variant to its standard name; it is built from a short
-hand-made list, O*NET 31.0 software names and ESCO skill labels by scripts/build_skill_aliases.py.
+hand-made list and O*NET 31.0 software names by scripts/build_skill_aliases.py.
 A plain lookup: no LLM or embedding call. Names not in the table are only cleaned."""
 import csv
 import re

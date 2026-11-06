@@ -5,7 +5,7 @@ from pathlib import Path
 from core.skill_names import normalize, skill_key, standard_name
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from build_skill_aliases import acronym_variants, esco_alternatives, layer, onet_variants  # noqa: E402
+from build_skill_aliases import acronym_variants, layer, onet_variants  # noqa: E402
 
 TABLE = {"phyton": "Python", "ms excel": "Excel", "microsoft excel": "Excel", "contract management": "manage contracts"}
 
@@ -38,14 +38,6 @@ def test_onet_variants():
     assert "Access" not in onet_variants("Microsoft Access")  # an everyday word alone
     assert "Business Intelligence" not in onet_variants("SAP Business Intelligence")  # a general idea
     assert "Digital Analytics" not in onet_variants("IBM Digital Analytics")
-
-
-def test_esco_alternatives_keep_wordings_not_neighbours():
-    alts = ["managing contracts", "contract management", "contract law", "data analysis"]
-    assert esco_alternatives("manage contracts", alts) == ["managing contracts", "contract management"]
-    assert esco_alternatives("statistics", ["data analysis", "statistical analysis", "statistic"]) == ["statistic"]
-    assert esco_alternatives("think analytically", ["analytical thinking"]) == ["analytical thinking"]
-    assert esco_alternatives("Microsoft Access", ["Access", "MS Access"]) == ["MS Access"]
 
 
 def test_layer_drops_variants_claimed_twice():

@@ -1,13 +1,13 @@
-"""Build data/skill_aliases.csv (variant -> standard skill name) from three layers, first match wins:
+"""Build data/skill_aliases.csv (variant -> standard skill name) from two layers, first match wins:
   1. MANUAL: typos and everyday names for common tools ("Phyton", "MS Excel" -> "Excel")
   2. O*NET 31.0 software skills (data/onet/software_skills.csv): named tools and software
-  3. ESCO skills (data/esco/skills_en.csv): preferred and alternative names of functional skills
 A variant that one layer maps to two different names is ambiguous there and left to the next layer.
+(An ESCO layer of general-skill wordings was tried and dropped: on the 11 eval CVs and 80 postings
+it renamed 3 of 413 skills and created no match.)
 Only names a CV or posting would use as a skill (at most 6 words) are kept.
 
 usage (from the repo root): python scripts/build_skill_aliases.py
-Sources: O*NET 31.0 Database, U.S. Department of Labor/ETA, CC BY 4.0 (onetcenter.org);
-ESCO, European Commission (esco.ec.europa.eu), reused under its terms of use."""
+Source: O*NET 31.0 Database, U.S. Department of Labor/ETA, CC BY 4.0 (onetcenter.org)."""
 import csv
 import re
 import sys
@@ -19,7 +19,6 @@ sys.path.insert(0, str(ROOT))
 from core.skill_names import ALIASES, normalize  # noqa: E402
 
 ONET = ROOT / "data" / "onet" / "software_skills.csv"
-ESCO = ROOT / "data" / "esco" / "skills_en.csv"
 MAX_WORDS = 6
 
 MANUAL = {  # standard name: variants (typos, vendor prefixes, everyday short names)
@@ -97,26 +96,6 @@ def onet_variants(name: str) -> list[str]:
     return out
 
 
-STOP = {"and", "or", "of", "the", "a", "an", "in", "on", "for", "to", "with", "by", "use", "using", "apply",
-        "perform", "manage", "managing", "management", "skills", "skill", "techniques", "principles",
-        "microsoft", "ms"}
-
-
-def _roots(text: str) -> set[str]:
-    """Crude word roots: the first 5 letters of each content word ('negotiation' ~ 'negotiate')."""
-    return {w[:5] for w in normalize(text).split() if w not in STOP and len(w) >= 3}
-
-
-def esco_alternatives(preferred: str, alts: list[str]) -> list[str]:
-    """ESCO's alternative names that are wordings of the same skill. Some are broader or neighbouring
-    ideas filed under it ('data analysis' under 'statistics', 'contract law' under 'manage contracts'),
-    so both must have the same word roots ('contract management' ~ 'manage contracts'); one everyday
-    word alone ('access') is never kept."""
-    roots = _roots(preferred)
-    return [a for a in alts if (r := _roots(a)) and r == roots
-            and not (len(normalize(a).split()) == 1 and normalize(a) in GENERIC | {"access"})]
-
-
 def layer(pairs) -> dict[str, str]:
     """variant -> name for (variant, name) pairs; variants claimed by two names are dropped."""
     seen = defaultdict(set)
@@ -132,14 +111,9 @@ def main():
     with open(ONET, encoding="utf-8") as f:
         tools = sorted({row["Workplace Example"].strip() for row in csv.DictReader(f)})
     onet = layer((v, t) for t in tools for v in onet_variants(t))
-    with open(ESCO, encoding="utf-8") as f:
-        esco_rows = list(csv.DictReader(f))
-    esco = layer((v, r["preferredLabel"]) for r in esco_rows
-                 for v in [r["preferredLabel"], re.sub(r"\s*\([^)]*\)", "", r["preferredLabel"])]
-                 + esco_alternatives(r["preferredLabel"], [a for a in r["altLabels"].split("\n") if a]))
 
     table = {}
-    for source, d in (("manual", manual), ("onet", onet), ("esco", esco)):
+    for source, d in (("manual", manual), ("onet", onet)):
         for k, v in d.items():
             table.setdefault(k, (v, source))
     rows = sorted((k, v, s) for k, (v, s) in table.items() if k != normalize(v) or s == "manual")
@@ -147,9 +121,9 @@ def main():
         w = csv.writer(f)
         w.writerow(["variant", "canonical", "source"])
         w.writerows(rows)
-    counts = {s: sum(r[2] == s for r in rows) for s in ("manual", "onet", "esco")}
+    counts = {s: sum(r[2] == s for r in rows) for s in ("manual", "onet")}
     print(f"{len(rows)} variants -> {ALIASES.relative_to(ROOT)} {counts} "
-          f"(from {len(tools)} O*NET tools, {len(esco_rows)} ESCO skills)")
+          f"(from {len(tools)} O*NET tools)")
 
 
 if __name__ == "__main__":
