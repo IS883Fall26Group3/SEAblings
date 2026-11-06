@@ -82,7 +82,7 @@ def cached_embed(texts: tuple[str, ...], embedder_name: str):
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def cached_judgment(cv_hash: str, job_ids: tuple[str, ...], model_key: str, _cv_text, _jobs):
-    return judge_experience(get_provider(model_key), _cv_text, _jobs, S.local_max_jd_chars)
+    return judge_experience(get_provider(model_key), _cv_text, _jobs, S.max_jd_chars, S.local_max_jd_chars)
 
 
 def model_chain(choice: str) -> list[str]:

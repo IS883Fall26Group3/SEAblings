@@ -333,9 +333,10 @@ slightly different copies of the CVs).
   LLM extractions at 10,000 characters (`extract.py`, then `calibrate.py`); the chunks band, which
   embeds postings at the new length (the summary band compares short LLM summaries, so it holds);
   and bge-small, unchanged at 3,000 characters.
-- **Not changed:** `EXPERIENCE_FIT = "judge"` still reads only the first 1,500 characters of each
-  posting (`streamlit_app.py` passes `local_max_jd_chars`), as in step 5. It isn't the default; if
-  the team switches to it, raise the limit for Gemini and re-run step 5.
+- **The judge reads more too:** `EXPERIENCE_FIT = "judge"` read only the first 1,500 characters
+  of each posting in step 5, mostly page text and company pitch on LinkedIn copies. It now reads
+  10,000 with Gemini, like requirement extraction, and still 1,500 with the local model. Step 5's
+  judge results were measured at 1,500: re-run `experience.py` (about 11 LLM calls) to update them.
 - **In the app:** one search now embeds up to about 19,000 tokens (a CV and 10 postings) of the free
   tier's 30,000 a minute, so two quick searches can reach the limit. The app then waits as long as
   Gemini asks (at most a minute), says so in the progress panel, and tries once more
