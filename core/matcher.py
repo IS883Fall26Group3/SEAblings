@@ -58,6 +58,9 @@ def rescale_cosine(cos: float, low: float = 0.5, high: float = 0.9) -> float:
     return float(np.clip((cos - low) / (high - low), 0.0, 1.0))
 
 
+# Best of 6 factor sets on the 175 rated labeled pairs (eval/background.py, eval/README.md step 7):
+# similarity alone vs labels, Spearman 0.288 -> 0.459, NDCG@5 0.577 -> 0.710; picked on every
+# leave-one-CV-out split.
 BACKGROUND_VALUES = {"same": 1.0, "related": 0.5, "different": 0.0}
 BACKGROUND_COMBINE = "mean"
 

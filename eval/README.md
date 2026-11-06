@@ -50,6 +50,9 @@ characters: 50 of them in one batch is far over it), so `embed_cached` limits ea
    Revisited (`doc_band.py`): the document band re-measured once the app embedded 7,000
    characters instead of 3,000; embeddings only, no LLM calls.
 
+7. **Background rating** (`background.py`): profile similarity scaled by the judge's same / related
+   / different rating of the field and kind of work. `python eval/background.py gemini:gemini-flash-lite-latest`
+
 ## Labeling guide
 
 **`labels/cv_job.csv`**: 176 pairs, 16 jobs per CV (the 6 most similar by document cosine plus 10
@@ -344,6 +347,59 @@ slightly different copies of the CVs).
   (`embed_with_wait` in `core/embeddings.py`).
 - **Changed:** Gemini `cos_low`/`cos_high` 0.709/0.786 (was 0.731/0.795). Per-pair cosines at both
   lengths: `results/doc_band_gemini.csv`.
+
+### Step 7: profile similarity adjusted by the judge's field and kind-of-work rating
+
+**Why.** The embedding rates two career documents as alike when they share generic wording
+(management, operations, team, Boston). In the app, a data analyst CV against a café head chef
+posting got 36% profile similarity although nothing about the two is alike. The judge (the default
+experience fit) already reads the CV and every posting in one call, so it now also rates each job's
+**field** and **kind of work** against the CV: same, related or different (`field_match`,
+`work_match`). Profile similarity = banded embedding score × a factor from that rating, which can
+only lower it. No extra call.
+
+**How it was measured.** `background.py`: the real judge prompt on the 176 labeled pairs (one call
+per CV; 175 pairs rated, one job missing from a reply), with requirements not extracted (the judge
+saw "Required skills: not extracted"). Embedding scores at 7,000 characters from `doc_band.py`. Six
+factor sets compared, on similarity alone.
+
+| Judge's rating (field, work) | Pairs | Mean label |
+|---|---|---|
+| different, different | 95 | 1.41 |
+| different, related | 20 | 1.65 |
+| related, different | 3 | 1.33 |
+| related, related | 27 | 1.78 |
+| related, same | 5 | 2.00 |
+| same, related | 3 | 2.50 |
+| same, same | 22 | 3.14 |
+
+| Profile similarity (similarity alone vs labels) | Spearman | NDCG@5 | Mean on pairs rated 1-1.5 | Share of those at 0% |
+|---|---|---|---|---|
+| Embedding only (before) | 0.288 | 0.577 | 43% | 5% |
+| **Embedding × average, same 1 / related 0.5 / different 0 (now)** | **0.459** | **0.710** | 7% | 71% |
+| Embedding × average, related 0.75 | 0.448 | 0.682 | 9% | 71% |
+| Embedding × average, only "different" lowers | 0.431 | 0.659 | 12% | 71% |
+| Embedding × 0 only when both are different | 0.437 | 0.641 | 15% | 71% |
+| Embedding × 0 when either is different | 0.380 | 0.640 | 7% | 84% |
+| Rating alone, no embedding | 0.465 | 0.674 | | |
+
+- **The rating tracks the labels closely:** mean label 1.41 for "different, different" up to 3.14
+  for "same, same".
+- **Adjusting by the rating is the biggest gain in the eval so far:** Spearman 0.288 to 0.459,
+  NDCG@5 0.577 to 0.710. Pairs the team rated as wrong field drop from 43% to 7% on average.
+- **The embedding still earns its place:** the rating alone ranks about as well overall (0.465) but
+  worse at the top (NDCG@5 0.674 vs 0.710), because it gives the many "same, same" jobs one value.
+- **Not tuned to the labels:** the chosen set was picked first on every leave-one-CV-out split, and
+  the held-out mean equals the in-sample 0.459. Per CV it beats the embedding on 6 of 11, so the
+  gain is concentrated in CVs with clearly off-field jobs.
+- **Misses:** ADW's best-labeled job (j022, label 3.0) was rated "different, different" and drops
+  from 61% to 0%. CVs whose fit is transferable rather than same-field lose most.
+- **Caveats:** the labels are mostly Claude's drafts, and the judge is an LLM, so part of the
+  agreement may be shared LLM judgment (as in step 5). The full score wasn't re-measured (it needs
+  new skill extractions). Rerun stability wasn't measured.
+- **In the app:** applied whenever the judge runs (the default experience fit). With
+  `EXPERIENCE_FIT = "total"` or `"roles"`, or when the judge call fails, profile similarity is the
+  embedding score alone. Per-pair ratings and scores: `results/background_gemini-flash-lite-latest.csv`.
 
 ## Data
 

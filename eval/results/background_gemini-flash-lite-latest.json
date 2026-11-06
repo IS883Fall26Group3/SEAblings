@@ -1665,5 +1665,211 @@
    "relevant_roles": []
   },
   "_seconds": 27.4
+ },
+ "ZW": {
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The role requires management consulting, operating model design, and AI strategy experience. The candidate's data specialist and engineering roles involved building AI, knowledge graphs, and data architectures, but do not represent management consulting or advisory engagements.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j031": {
+   "job_id": "j031",
+   "reasoning": "The role demands data engineering, Databricks, Spark, and ETL pipeline development. The candidate's role as a Data Specialist involved designing and deploying client-centric data models, ETL pipelines, and high-performance data transfer modules.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Designed data models, automated file transfers, and built ETL pipelines for asset management data.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j064": {
+   "job_id": "j064",
+   "reasoning": "The role requires P&C insurance product analysis and product management support. The candidate's background is in quantitative data analysis, statistics, and engineering without P&C insurance experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j001": {
+   "job_id": "j001",
+   "reasoning": "The role requires AI model building, Azure data engineering, and analytics. The candidate's roles include building knowledge graphs, risk assessment algorithms, ETL pipelines, and deploying LLM solutions.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Engineered automated data transfers, ETL pipelines, and secure LLM solutions for data retrieval.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Constructed knowledge graphs, financial risk assessment algorithms, and web crawlers.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j005": {
+   "job_id": "j005",
+   "reasoning": "The role requires extensive finance transformation leadership, global business services, and financial planning management. The candidate's background focuses on technical data engineering, AI, and statistics rather than senior finance leadership.",
+   "field_match": "related",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The role requires FP&A experience, variance analysis, headcount analytics, and SaaS reporting. The candidate's experience is entirely technical in data engineering and algorithmic research.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j024": {
+   "job_id": "j024",
+   "reasoning": "The role requires machine learning engineering, model training, and Python. The candidate's engineering experience includes building machine learning risk assessment algorithms and deploying LLM solutions.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Architected secure LLM solutions and automated report generation.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Applied GBDT/RF benchmarks to research AI risk assessment algorithms.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j019": {
+   "job_id": "j019",
+   "reasoning": "The role requires management consulting or strategy experience in life sciences or biotech. The candidate has an academic background in statistics and mathematics and technical data engineering experience, but no life sciences consulting experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j059": {
+   "job_id": "j059",
+   "reasoning": "The role requires business intelligence development, report writing, SQL, and database management. The candidate's role as a Data Specialist included automating client portfolio reports, creating data models, and building ETL pipelines.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Automated customized client reports and designed data models and ETL pipelines.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "The role requires AI, data science, and machine learning engineering experience focused on Databricks and production deployment. The candidate has built advanced machine learning algorithms, knowledge graphs, and LLM solutions.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Architected secure LLM solutions and data models for asset management.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Constructed company knowledge graphs and applied GBDT/RF benchmarks for AI risk assessment.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j050": {
+   "job_id": "j050",
+   "reasoning": "The role requires product analysis experience with PowerApps or RPA in an Agile environment. The candidate's background is in data engineering and algorithmic development rather than product management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j077": {
+   "job_id": "j077",
+   "reasoning": "The role requires alternative asset class project management and alternatives product experience. The candidate's experience is technical and engineering-focused rather than alternative product management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j016": {
+   "job_id": "j016",
+   "reasoning": "The role requires data analysis, document review, and data quality assurance for datasets. The candidate's roles involved extensive data collection, ETL processing, and data quality validation.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Processed client records and executed reports with high stability and data quality.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Collected open-source intelligence and delivered robust web crawlers for multi-GB data.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j010": {
+   "job_id": "j010",
+   "reasoning": "The role requires machine learning engineering experience in a big data ecosystem, building MLOps stacks, and deploying enterprise ML models. The candidate's past engineering roles directly match machine learning development and data pipeline building.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Built data pipelines, LLM solutions, and automated data workflows.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Constructed company knowledge graphs and researched AI risk assessment algorithms.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j017": {
+   "job_id": "j017",
+   "reasoning": "The role requires P&C claims analytics experience and business intelligence. While the candidate has data analysis and BI experience, they lack P&C claims background.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j048": {
+   "job_id": "j048",
+   "reasoning": "The role requires senior strategy consulting experience in market entry and operating model design to evaluate language models. The candidate has a technical background in data science and engineering rather than strategy consulting.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 19.0
  }
 }
