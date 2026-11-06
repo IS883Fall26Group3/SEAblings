@@ -24,9 +24,10 @@ class Settings:
     local_embed_repo: str
     local_embed_file: str
     embeddings: str              # "auto" (Gemini if a key is set, else local), "local", or "gemini"
-    # Experience fit: "total" (all years), "roles" (years in roles similar to the job, by embedding)
-    # or "judge" (years in roles the LLM judges relevant; one extra LLM call per search).
-    experience_fit: str = "total"
+    # Experience fit: "judge" (years in roles the LLM judges relevant; one extra LLM call per search,
+    # best in eval/README.md step 5), "roles" (years in roles similar to the job, by embedding)
+    # or "total" (all years). Any other value counts all years, like "total".
+    experience_fit: str = "judge"
     # Profile similarity: "document" (whole CV vs whole posting), "summary" (CV summary vs the job's
     # role_summary) or "chunks" (best CV chunks per job). See core/similarity.py, eval/README.md step 6.
     profile_similarity: str = "document"
@@ -62,6 +63,6 @@ def get_settings() -> Settings:
         local_embed_repo=env("LOCAL_EMBED_REPO", "CompendiumLabs/bge-small-en-v1.5-gguf"),
         local_embed_file=env("LOCAL_EMBED_FILE", "*q8_0.gguf"),
         embeddings=env("EMBEDDINGS", "auto"),
-        experience_fit=env("EXPERIENCE_FIT", "total"),
+        experience_fit=env("EXPERIENCE_FIT", "judge"),
         profile_similarity=env("PROFILE_SIMILARITY", "document"),
     )

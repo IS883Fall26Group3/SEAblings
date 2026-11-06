@@ -232,7 +232,8 @@ re-extracted with the new `roles` field (3.8 per CV); the judge ran once per CV 
 - **Caveat on the judge's win:** the labels are mostly Claude's drafts, and the judge is also an
   LLM deciding "is this relevant experience"; part of the agreement may be shared LLM judgment.
   Its stability across reruns (temperature 0.1) wasn't measured. Confirm with independent human
-  labels before making `EXPERIENCE_FIT = "judge"` the default.
+  labels before making `EXPERIENCE_FIT = "judge"` the default. (Made the default in November 2026,
+  before that confirmation; set `EXPERIENCE_FIT = "total"` to go back.)
 - Per-pair years and fits: `results/experience_gemini.csv`.
 
 ### Step 6: profile similarity, document vs summary vs chunks

@@ -39,7 +39,8 @@ each posting. Similarity thresholds and bands differ per embedding model and per
 **Experience fit** (`EXPERIENCE_FIT`, `core/experience.py`) can count *relevant* years instead of
 all years: `"roles"` keeps CV roles whose embedding is close to the job; `"judge"` asks the LLM
 which roles count (one extra call per search, guided steps, CV only). Either way the years are
-added up in Python from the roles' dates. Default `"total"`; see `eval/README.md` for the comparison.
+added up in Python from the roles' dates. Default `"judge"` (best in `eval/README.md` step 5); if
+the judge call fails, that search falls back to all years. `"total"` counts every year on the CV.
 
 **Profile similarity** (`PROFILE_SIMILARITY`, `core/similarity.py`): `"document"` (default)
 compares the whole CV with the whole posting; `"summary"` compares the CV summary with a 2-3

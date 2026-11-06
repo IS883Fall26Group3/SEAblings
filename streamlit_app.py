@@ -26,7 +26,7 @@ from core.config import get_settings  # noqa: E402
 from core.cv_parser import clean_text, extract_text  # noqa: E402
 from core.embeddings import embed_with_wait  # noqa: E402
 from core.job_sources import get_job_source, jobs_from_descriptions, name_from_requirements  # noqa: E402
-from core.llm import (AUTO, auto_chain, build_embedder, build_provider,  # noqa: E402
+from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
 from core.experience import relevant_years_by_roles, role_years  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
@@ -221,9 +221,13 @@ if run:
                 relevant = relevant_years_by_roles(profile.roles, jobs, embed, emb.role_threshold)
             elif S.experience_fit == "judge":
                 st.write("Judging your relevant experience")
-                judged, used_e = with_fallback(
-                    model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
-                relevant = {jid: role_years(x.relevant_roles) for jid, x in judged.items()}
+                try:
+                    judged, used_e = with_fallback(
+                        model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
+                    relevant = {jid: role_years(x.relevant_roles) for jid, x in judged.items()}
+                except LLMError as e:  # the rest of the match is ready: score with total years instead
+                    st.write(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
+                             "all your years instead.")
 
             st.write("Scoring each job")
             results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_years=relevant)
