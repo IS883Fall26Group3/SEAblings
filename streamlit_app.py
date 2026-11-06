@@ -24,10 +24,11 @@ load_secrets_into_env()
 
 from core.config import get_settings  # noqa: E402
 from core.cv_parser import clean_text, extract_text  # noqa: E402
-from core.job_sources import get_job_source, jobs_from_descriptions  # noqa: E402
-from core.llm import (AUTO, auto_chain, build_embedder, build_provider,  # noqa: E402
+from core.embeddings import embed_with_wait  # noqa: E402
+from core.job_sources import get_job_source, jobs_from_descriptions, name_from_requirements  # noqa: E402
+from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
                       model_options, with_fallback)
-from core.experience import relevant_years_by_roles, role_years  # noqa: E402
+from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience)
@@ -81,7 +82,7 @@ def cached_embed(texts: tuple[str, ...], embedder_name: str):
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def cached_judgment(cv_hash: str, job_ids: tuple[str, ...], model_key: str, _cv_text, _jobs):
-    return judge_experience(get_provider(model_key), _cv_text, _jobs, S.local_max_jd_chars)
+    return judge_experience(get_provider(model_key), _cv_text, _jobs, S.max_jd_chars, S.local_max_jd_chars)
 
 
 def model_chain(choice: str) -> list[str]:
@@ -193,7 +194,7 @@ if run:
             if mode == MODE_JD:
                 st.write("Reading your job descriptions")
                 items = [(f.name.rsplit(".", 1)[0],
-                          extract_text(f.getvalue(), f.name, S.max_jd_chars * 2, what="job description"))
+                          extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
                          for f in jd_files]
                 items.append(("Pasted job description", jd_text))
                 raw_jobs = jobs_from_descriptions(items)
@@ -208,20 +209,30 @@ if run:
             st.write("Reading the job descriptions")
             ids = tuple(j.id for j in raw_jobs)
             jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
+            jobs = name_from_requirements(jobs)
 
             emb = get_embedder()
-            embed = lambda t: cached_embed(tuple(t), emb.name)  # noqa: E731
-            relevant, used_e = None, used_j
+            embed = lambda t: embed_with_wait(  # noqa: E731
+                lambda x: cached_embed(tuple(x), emb.name), t,
+                lambda s: st.write(f"Gemini's per-minute limit is reached. Waiting {s} seconds, "
+                                   "then trying again…"))
+            relevant, background, used_e = None, None, used_j
             if S.experience_fit == "roles":
-                relevant = relevant_years_by_roles(profile.roles, jobs, embed, emb.role_threshold)
+                relevant = relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
             elif S.experience_fit == "judge":
                 st.write("Judging your relevant experience")
-                judged, used_e = with_fallback(
-                    model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
-                relevant = {jid: role_years(x.relevant_roles) for jid, x in judged.items()}
+                try:
+                    judged, used_e = with_fallback(
+                        model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
+                    relevant = {jid: x.relevant_roles for jid, x in judged.items()}
+                    background = {jid: (x.field_match, x.work_match) for jid, x in judged.items()}
+                except LLMError as e:  # the rest of the match is ready: score with total years instead
+                    st.write(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
+                             "all your years instead.")
 
             st.write("Scoring each job")
-            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_years=relevant)
+            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=relevant,
+                                 background=background)
             used = sorted({label(used_p), label(used_j), label(used_e)})
             st.session_state.update(profile=profile, results=results,
                                     models_used=", ".join(used), embedder_used=emb.name)
@@ -241,4 +252,5 @@ else:
                f"similarity by {st.session_state['embedder_used']}.")
     ui.profile_panel(st.session_state["profile"])
     for i, r in enumerate(results):
-        ui.match_card(r, i, handle_explain)
+        # results are sorted best first: the top 3 show their breakdown open
+        ui.match_card(r, i, handle_explain, st.session_state["profile"], show_breakdown=i < 3)

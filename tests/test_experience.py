@@ -53,6 +53,26 @@ def test_judge_technique_returns_roles_per_job():
     assert judged[jobs[1].id].relevant_roles == []
 
 
+def test_judge_reads_the_posting_like_extraction_does():
+    class Recording(Scripted):
+        def complete(self, prompt, **kw):
+            self.prompts.append(prompt)
+            return super().complete(prompt, **kw)
+
+    [job] = SampleSource().search("analyst", "", 1)
+    job.description = "x" * 9_000 + " REQUIREMENTS"
+    reply = '{"items": [{"job_id": "%s", "reasoning": "", "relevant_roles": []}]}' % job.id
+    gemini_like = Recording([reply])
+    gemini_like.prompts = []
+    judge_experience(gemini_like, "cv", [job])
+    assert "REQUIREMENTS" in gemini_like.prompts[0]  # 10,000 chars: the end of the posting is read
+
+    local_like = Recording([reply])
+    local_like.prompts, local_like.batch_jobs = [], False
+    judge_experience(local_like, "cv", [job])
+    assert "REQUIREMENTS" not in local_like.prompts[0] and "x" * 1_500 in local_like.prompts[0]
+
+
 def test_score_jobs_uses_relevant_years_when_given():
     jobs = SampleSource().search("analyst", "", 1)
     jobs[0].requirements = JobRequirements(required_skills=["sql"], nice_to_have_skills=[], min_years_experience=4)

@@ -4,6 +4,7 @@ from pathlib import Path
 
 import streamlit as st
 
+from core import score_notes as notes
 from core.schemas import CandidateProfile, MatchResult
 
 CSS = Path(__file__).with_name("styles.css")
@@ -74,7 +75,42 @@ def profile_panel(profile: CandidateProfile) -> None:
         st.markdown(chips(profile.skills, "have"), unsafe_allow_html=True)
 
 
-def match_card(r: MatchResult, idx: int, on_explain) -> None:
+def _md(text: str) -> str:
+    """Escape CV and posting text (skill names, role titles) so it shows as written in st.markdown:
+    '$' would start a formula and '|' would break the labels table."""
+    for ch in "\\`*_[]|$#":
+        text = text.replace(ch, "\\" + ch)
+    return text
+
+
+def note_markdown(note: notes.Note) -> str:
+    parts = [f"**{_md(note.label)}.** {_md(note.text)}"]
+    if note.bullets:
+        parts.append("\n".join(f"- {_md(b)}" for b in note.bullets))
+    if note.table:
+        head = ["", "Your CV", "This job"] + (["Match"] if len(note.table[0]) > 3 else [])
+        parts.append("| " + " | ".join(head) + " |\n|" + "---|" * len(head) + "\n"
+                     + "\n".join("| " + " | ".join(_md(c) for c in row) + " |" for row in note.table))
+    if note.after:
+        parts.append(_md(note.after))
+    return "\n\n".join(parts)
+
+
+def score_breakdown(r: MatchResult, profile: CandidateProfile) -> None:
+    """The three scores, each with the reason for it (core/score_notes.py) and a how-it's-measured tooltip."""
+    rows = [("Skill coverage", r.skill_coverage, notes.SKILL_HELP, notes.skill_note(r, profile)),
+            ("Profile similarity", r.semantic_similarity, notes.SIMILARITY_HELP,
+             notes.similarity_note(r, profile)),
+            ("Experience fit", r.seniority_fit,
+             notes.EXPERIENCE_HELP if r.relevant_only else notes.TOTAL_HELP, notes.experience_note(r))]
+    for name, value, help_text, note in rows:
+        num, why = st.columns([1, 3])
+        num.metric(name, f"{value:.0%}", help=help_text)
+        why.markdown(note_markdown(note))
+
+
+def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
+               show_breakdown: bool = True) -> None:
     job = r.job
     with st.container(border=True):
         left, right = st.columns([1, 6], vertical_alignment="center")
@@ -90,20 +126,23 @@ def match_card(r: MatchResult, idx: int, on_explain) -> None:
         if r.missing_skills:
             right.markdown("**To build**  " + chips(r.missing_skills, "gap"), unsafe_allow_html=True)
 
-        with st.expander("Score breakdown and advice"):
-            a, b, c = st.columns(3)
-            a.metric("Skill coverage", f"{r.skill_coverage:.0%}")
-            b.metric("Profile similarity", f"{r.semantic_similarity:.0%}")
-            c.metric("Experience fit", f"{r.seniority_fit:.0%}")
-            explanation = st.session_state.get("explanations", {}).get(job.id)
-            error = st.session_state.get("explain_errors", {}).get(job.id)
-            if explanation:
-                st.markdown(explanation)
-            else:
-                if error:
-                    st.warning(error)
-                if st.button("Get advice for this role", key=f"explain_{idx}"):
-                    on_explain(r)
-                    st.rerun()
-            if job.url:
-                st.link_button("Open job posting", job.url)
+        # The breakdown needs no LLM call, only the advice does. Shown open on the top matches;
+        # folded on the rest so a long list stays easy to scroll.
+        if show_breakdown:
+            score_breakdown(r, profile)
+        else:
+            with st.expander("Score breakdown"):
+                score_breakdown(r, profile)
+
+        explanation = st.session_state.get("explanations", {}).get(job.id)
+        error = st.session_state.get("explain_errors", {}).get(job.id)
+        if explanation:
+            st.markdown("**Advice for this role**\n\n" + explanation)
+        elif error:
+            st.warning(error)
+        advice, posting = st.columns(2)
+        if not explanation and advice.button("Get advice for this role", key=f"explain_{idx}"):
+            on_explain(r)
+            st.rerun()
+        if job.url:
+            posting.link_button("Open job posting", job.url)

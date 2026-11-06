@@ -12,6 +12,9 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
 5. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`,
    using embeddings (`core/embeddings.py`: Gemini, or local without a key). Deterministic, so the same inputs give the same score.
+   Each card explains its three scores (`core/score_notes.py`): matched and close-matched skills, the
+   field / type of work / level of the CV beside the job's, and the roles counted as experience. Built
+   from what the matcher recorded, with no extra calls, so the text always agrees with the numbers.
 6. **Explain** (on demand): Gemini writes short advice for a selected job.
 
 ## Choosing a model
@@ -29,14 +32,18 @@ jobs means faster results.
 
 Embeddings use Gemini (`gemini-embedding-001`) whenever `GEMINI_API_KEY` is set, and a small local
 model (bge-small, GGUF, via `llama-cpp-python`) otherwise; set `EMBEDDINGS = "local"` to force the
-local one. Gemini's free tier embeds about 100 texts per minute, and one search embeds the CV, each
-job, and every unique skill. Similarity thresholds differ per embedding model
-(`core/embeddings.py`); see `eval/README.md` for how they were checked.
+local one. Gemini's free tier embeds about 100 texts and 30,000 tokens per minute, and one search
+embeds the CV, each job, and every unique skill; at the limit the app waits (up to a minute, with a
+message) and tries once more. For profile similarity the CV and each posting are embedded up to
+7,000 characters with Gemini (3,000 with the local model); the LLM reads up to 10,000 characters of
+each posting. Similarity thresholds and bands differ per embedding model and per length
+(`core/embeddings.py`); see `eval/README.md` (step 6, revisited) for how they were checked.
 
 **Experience fit** (`EXPERIENCE_FIT`, `core/experience.py`) can count *relevant* years instead of
 all years: `"roles"` keeps CV roles whose embedding is close to the job; `"judge"` asks the LLM
 which roles count (one extra call per search, guided steps, CV only). Either way the years are
-added up in Python from the roles' dates. Default `"total"`; see `eval/README.md` for the comparison.
+added up in Python from the roles' dates. Default `"judge"` (best in `eval/README.md` step 5); if
+the judge call fails, that search falls back to all years. `"total"` counts every year on the CV.
 
 **Profile similarity** (`PROFILE_SIMILARITY`, `core/similarity.py`): `"document"` (default)
 compares the whole CV with the whole posting; `"summary"` compares the CV summary with a 2-3
@@ -73,11 +80,20 @@ core/                   business logic, no Streamlit imports (testable)
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
 data/sample/            fictional CV and job listings for dev, tests, demo fallback
+data/skill_aliases.csv  skill name lookup table (built by scripts/build_skill_aliases.py)
+data/onet/              O*NET software names the lookup table is built from (source below)
+scripts/                one-off build scripts
 tests/                  pytest, no API keys needed
 eval/                   embedding threshold calibration (see eval/README.md)
 notebooks/              experiments only; the app never imports from here
 docs/                   architecture diagram, screenshots, report assets
 ```
+
+**Skill data source.** `data/onet/software_skills.csv` is from the O*NET 31.0 Database by the
+U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), used under the
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license; O*NET® is a trademark of USDOL/ETA
+([onetcenter.org](https://www.onetcenter.org/database.html)). `data/skill_aliases.csv` is derived from it
+and a short hand-made list.
 
 ## Team ownership
 

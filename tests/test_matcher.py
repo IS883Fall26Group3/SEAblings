@@ -3,7 +3,7 @@ import numpy as np
 
 from core.config import get_settings
 from core.job_sources.sample import SampleSource
-from core.matcher import match_skills, score_jobs, seniority_fit
+from core.matcher import match_skills, match_skills_detail, score_jobs, seniority_fit
 from core.schemas import CandidateProfile, JobRequirements
 
 VOCAB = {}
@@ -32,10 +32,38 @@ def test_exact_and_missing_skills():
     assert matched == ["sql"] and missing == ["Tableau"]
 
 
+def test_same_standard_name_matches_and_shows_the_cv_wording():
+    names = ["ms excel", "excel", "communication skills", "communication", "aws", "amazon web services"]
+    vec = {s: fake_embed([s])[0] for s in names}
+    matched, missing, close = match_skills_detail(
+        ["MS Excel", "Communication Skills", "AWS"], ["Excel", "Communication", "Amazon Web Services"],
+        vec, 0.99)
+    assert matched == ["Excel", "Communication", "Amazon Web Services"] and not missing
+    assert close == {"Excel": "MS Excel", "Communication": "Communication Skills", "Amazon Web Services": "AWS"}
+
+
 def test_seniority_fit():
     assert seniority_fit(4, 2) == 1.0
     assert seniority_fit(2, 4) == 0.5
     assert seniority_fit(1, None) == 1.0
+
+
+def test_similarity_texts_are_cut_at_the_embedders_limit():
+    seen = []
+
+    class SmallEmbedder(FakeEmbedder):
+        max_chars = 50
+
+        def embed(self, texts):
+            seen.extend(texts)
+            return fake_embed(texts)
+
+    profile = CandidateProfile(summary="", years_experience=1, seniority="mid", skills=[], job_titles=[])
+    [job] = SampleSource().search("", "", 1)
+    job.description = "x" * 500
+    score_jobs(profile, "y" * 500, [job], SmallEmbedder(), get_settings())
+    assert "x" * 50 in seen and "y" * 50 in seen
+    assert all(len(t) <= 50 for t in seen)
 
 
 def test_better_skill_overlap_ranks_higher():

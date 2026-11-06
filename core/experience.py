@@ -61,8 +61,8 @@ def job_text(j: Job) -> str:
     return f"{j.title}: {skills}".strip(": ")
 
 
-def relevant_years_by_roles(roles: list[Role], jobs: list[Job], embed: EmbedFn, threshold: float,
-                            today: date | None = None) -> dict[str, float]:
+def relevant_roles_by_roles(roles: list[Role], jobs: list[Job], embed: EmbedFn,
+                            threshold: float) -> dict[str, list[Role]]:
     """Technique A: one embedding call for all roles and jobs; a role counts toward a job
     when cosine(role title + summary, job title + required skills) >= threshold."""
     roles = [r for r in roles if r.title.strip()]
@@ -70,5 +70,11 @@ def relevant_years_by_roles(roles: list[Role], jobs: list[Job], embed: EmbedFn, 
         return {}  # nothing to judge by: score_jobs falls back to total years
     vecs = embed([role_text(r) for r in roles] + [job_text(j) for j in jobs])
     sims = vecs[len(roles):] @ vecs[:len(roles)].T  # (jobs, roles)
-    return {j.id: role_years([r for r, s in zip(roles, row) if s >= threshold], today)
-            for j, row in zip(jobs, sims)}
+    return {j.id: [r for r, s in zip(roles, row) if s >= threshold] for j, row in zip(jobs, sims)}
+
+
+def relevant_years_by_roles(roles: list[Role], jobs: list[Job], embed: EmbedFn, threshold: float,
+                            today: date | None = None) -> dict[str, float]:
+    """Years in the roles relevant_roles_by_roles keeps, per job."""
+    return {jid: role_years(rs, today)
+            for jid, rs in relevant_roles_by_roles(roles, jobs, embed, threshold).items()}

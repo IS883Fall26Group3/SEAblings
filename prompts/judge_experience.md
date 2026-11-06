@@ -11,6 +11,10 @@ For each job, follow these steps:
    title and dates exactly from the CV as YYYY-MM ("present" if current; empty if the CV has no
    date; duration_months only if the CV states a duration instead of dates). Do not add up years.
 4. If no role is relevant, return an empty list.
+5. Compare the candidate's whole background with the job, as a recruiter would at a glance:
+   field_match is the industry or domain, work_match the kind of day-to-day work. Answer each
+   with exactly one word: "same", "related" (adjacent, the experience partly transfers) or
+   "different". Wording both documents share (management, teamwork, operations) is not a match.
 
 Return one item per job and copy job_id exactly.
 

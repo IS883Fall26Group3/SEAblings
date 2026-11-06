@@ -1,0 +1,1875 @@
+{
+ "ADW": {
+  "j033": {
+   "job_id": "j033",
+   "reasoning": "The job requires senior strategic research and leadership experience, while the candidate's background is in sales branch management and energy distribution operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The job requires management consulting or strategy experience leading digital or AI engagements, whereas the candidate's experience is in sales branch management and operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The job requires FP&A or accounting experience focusing on SaaS metrics and financial statements, while the candidate's roles are focused on sales branch management, revenue generation, and distribution operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j024": {
+   "job_id": "j024",
+   "reasoning": "The job requires machine learning engineering experience, while the candidate's background is entirely in sales branch management and commercial operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j059": {
+   "job_id": "j059",
+   "reasoning": "The job requires IT development and business intelligence report writing experience, whereas the candidate's experience is in sales management and commercial operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j034": {
+   "job_id": "j034",
+   "reasoning": "The job requires 3+ years as a strategy consultant at a top strategy firm like McKinsey, BCG, or Bain, which the candidate lacks.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j017": {
+   "job_id": "j017",
+   "reasoning": "The job requires property and casualty claims experience and business intelligence analysis, while the candidate's background is in retail sales and energy distribution management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j073": {
+   "job_id": "j073",
+   "reasoning": "The job requires senior business intelligence analysis experience in an investment environment, whereas the candidate's experience is in sales branch management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j077": {
+   "job_id": "j077",
+   "reasoning": "The job requires alternative asset industry experience and technical program management, while the candidate's background is in fuel and LPG sales branch management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j044": {
+   "job_id": "j044",
+   "reasoning": "The job requires data and reporting analysis experience in fuel revenue management, which aligns closely with the candidate's experience managing sales, revenue, and distribution data across multiple sales branch management roles.",
+   "field_match": "same",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Sales Branch Manager Gas Sales Semarang",
+     "summary": "Managed LPG operations and monthly revenue in a regulated environment.",
+     "start": "",
+     "end": "",
+     "duration_months": 11.0
+    },
+    {
+     "title": "Sales Branch Manager, Pati Grobogan",
+     "summary": "Managed fuel stations and LPG distributors, growing sales and revenue.",
+     "start": "",
+     "end": "",
+     "duration_months": 27.0
+    },
+    {
+     "title": "Sales Branch Manager, South East Sulawesi",
+     "summary": "Oversaw fuel stations and doubled non-subsidized fuel and LPG sales.",
+     "start": "",
+     "end": "",
+     "duration_months": 8.0
+    },
+    {
+     "title": "Sales Branch Manager, Central Sulawesi",
+     "summary": "Organized energy distribution and increased monthly sales.",
+     "start": "",
+     "end": "",
+     "duration_months": 32.0
+    },
+    {
+     "title": "Junior Sales Executive LPG, Karesidenan Kedu",
+     "summary": "Controlled retail LPG distributors and filling stations, driving adoption and sales growth.",
+     "start": "",
+     "end": "",
+     "duration_months": 24.0
+    }
+   ]
+  },
+  "j051": {
+   "job_id": "j051",
+   "reasoning": "The job requires software engineering experience in AI and machine learning, while the candidate's background is in sales and operational management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j026": {
+   "job_id": "j026",
+   "reasoning": "The job requires legal financial analysis and pricing experience, whereas the candidate's background is in energy and fuel sales management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j042": {
+   "job_id": "j042",
+   "reasoning": "The job requires product management experience in transformer services, while the candidate's background is in sales branch and energy distribution management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j022": {
+   "job_id": "j022",
+   "reasoning": "The job requires junior product analysis and Agile requirements experience, whereas the candidate's experience is in sales management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j069": {
+   "job_id": "j069",
+   "reasoning": "The job requires product management experience in robotics or intralogistics, while the candidate's experience is in sales branch and energy distribution management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j079": {
+   "job_id": "j079",
+   "reasoning": "The job requires a head of AI engineering role, while the candidate's background is in sales branch management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 87.7
+ },
+ "AS": {
+  "j025": {
+   "job_id": "j025",
+   "reasoning": "The job requires progressive FP&A leadership experience including financial planning, budgeting, forecasting, and cost accounting. The candidate's role as Internal Audit Consultant involved cost analysis comparisons, strategic revision of contract terms, inventory management, and financial controls, which provides relevant financial analysis experience.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j001": {
+   "job_id": "j001",
+   "reasoning": "The job requires Python, data engineering, AI model building, and analytics. The candidate's Accounting Specialist Intern role involved developing a financial statements comparability system by integrating generative AI and Python/data tools.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Accounting Specialist Intern",
+     "summary": "Developed a financial statements comparability system using generative AI.",
+     "start": "2024-08",
+     "end": "2024-11",
+     "duration_months": null
+    }
+   ]
+  },
+  "j040": {
+   "job_id": "j040",
+   "reasoning": "The role requires financial planning, budgeting, forecasting, and variance analysis. The candidate's Internal Audit Consultant role included cost analysis, budgeting support, and financial process controls.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j064": {
+   "job_id": "j064",
+   "reasoning": "The job is a junior product analyst role in P&C insurance involving product strategy, research, and documentation. The candidate's background is in accounting, auditing, and financial consulting, so no roles are directly relevant.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j006": {
+   "job_id": "j006",
+   "reasoning": "The job requires prior experience at a top management consulting firm. The candidate worked as an Internal Audit Consultant and Audit Associate at PwC, which is related to advisory and consulting functions.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    },
+    {
+     "title": "Audit Associate",
+     "summary": "Examined audit evidence, performed control testing, and collaborated with audit teams across various industries at PwC.",
+     "start": "2020-08",
+     "end": "2021-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j039": {
+   "job_id": "j039",
+   "reasoning": "The role requires financial analysis, budgeting, financial reporting, and a strong understanding of finance tools with a CPA preferred. The candidate's Internal Audit Consultant role involved budgeting support, cost analysis, and financial reporting.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j068": {
+   "job_id": "j068",
+   "reasoning": "The position requires reviewing financial statements, preparing financial reports, expense budgeting, and financial analysis, with a CPA preferred. The candidate's Internal Audit Consultant and Audit Associate roles involved financial statement examination, audit procedures, and budgeting support.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    },
+    {
+     "title": "Audit Associate",
+     "summary": "Examined audit evidence, performed control testing, and collaborated with audit teams across various industries at PwC.",
+     "start": "2020-08",
+     "end": "2021-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j036": {
+   "job_id": "j036",
+   "reasoning": "The job requires data analytics, SQL, Python, QA processes, and working with complex datasets. The candidate's Accounting Specialist Intern role involved developing data pipelines using generative AI and Python to process financial statements.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Accounting Specialist Intern",
+     "summary": "Developed a financial statements comparability system using generative AI.",
+     "start": "2024-08",
+     "end": "2024-11",
+     "duration_months": null
+    }
+   ]
+  },
+  "j045": {
+   "job_id": "j045",
+   "reasoning": "The job requires SQL, BI reporting, data warehousing, and financial systems administration in a legal or professional services environment. The candidate's background is in accounting, auditing, and financial consulting rather than software engineering or Aderant development.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The job requires management consulting or strategy experience, including leading client engagements and operating model projects. The candidate's consulting roles at Mitraparp Memorial Hospital and PwC involve internal audit and accounting advisory rather than broad management or strategy consulting strategy engagements.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The role requires FP&A experience, variance analysis, expense forecasting, and advanced Excel modeling. The candidate's Internal Audit Consultant role involved cost analysis, budget support, and financial reporting.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j049": {
+   "job_id": "j049",
+   "reasoning": "The job requires experience in alternative asset classes, hedge middle office operations, and project management. The candidate's experience is in accounting, internal audit, and financial statement analysis.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j060": {
+   "job_id": "j060",
+   "reasoning": "The position requires advanced SQL, BI development, ETL processes, and data warehousing. The candidate's experience is in accounting and audit rather than BI engineering.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j080": {
+   "job_id": "j080",
+   "reasoning": "The job is for a Senior Machine Learning Engineer with cloud and Python experience. The candidate has general accounting and audit experience with a short AI internship, but lacks software engineering experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j009": {
+   "job_id": "j009",
+   "reasoning": "The job requires 7+ years of professional software engineering and machine learning experience. The candidate's background is primarily in accounting and auditing.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j054": {
+   "job_id": "j054",
+   "reasoning": "The role requires financial analysis, forecasting, quality assurance validations of financials, and pricing support. The candidate's Internal Audit Consultant role included cost analysis comparison, pricing/contract review, and financial process controls.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Internal Audit Consultant",
+     "summary": "Conducted cost analysis, financial process controls, and inventory management for hospital operations.",
+     "start": "2022-01",
+     "end": "2025-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "_seconds": 19.8
+ },
+ "AYP": {
+  "j046": {
+   "job_id": "j046",
+   "reasoning": "The job requires business intelligence development and data visualization in AWS or cloud environments, whereas the candidate's background is in supply chain engineering, strategic sourcing, and credit business analytics.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j077": {
+   "job_id": "j077",
+   "reasoning": "The job requires project management and business analysis in alternative asset classes and real assets, which is unrelated to the candidate's core background in upstream oil and gas engineering, strategic sourcing, and retail banking analytics.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j015": {
+   "job_id": "j015",
+   "reasoning": "The job requires advanced data analytics and insights generation using Python, SQL, and Tableau within a digital assets finance environment. The candidate's banking analyst role involved credit card portfolio analytics, customer segmentation, and data-driven process improvements.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager — Card Business Analytics and Planning",
+     "summary": "Managed credit card portfolio analytics, customer segmentation, and operational process improvements.",
+     "start": "2010-07",
+     "end": "2012-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j016": {
+   "job_id": "j016",
+   "reasoning": "The job requires business data analysis, document review, and quality assurance. The candidate performed rigorous data analysis, document review, and quality assurance during their financial and engineering contract roles.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Contract Engineer — Drilling & Well Intervention Division",
+     "summary": "Managed strategic sourcing contracts, supplier performance, and supply chain data analysis.",
+     "start": "2012-12",
+     "end": "2022-08",
+     "duration_months": null
+    },
+    {
+     "title": "Assistant Manager — Card Business Analytics and Planning",
+     "summary": "Managed credit card portfolio analytics, customer segmentation, and operational process improvements.",
+     "start": "2010-07",
+     "end": "2012-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j043": {
+   "job_id": "j043",
+   "reasoning": "The job requires market data and security master leadership within financial services and investment management, whereas the candidate's experience is in oil and gas engineering/sourcing and retail bank analytics.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j061": {
+   "job_id": "j061",
+   "reasoning": "The job is a generalist management consulting senior consultant role requiring strategy consulting experience. The candidate has extensive operational, sourcing, and strategic background in oil and gas and banking, plus ongoing MBA studies, but lacks formal strategy consulting firm experience.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j026": {
+   "job_id": "j026",
+   "reasoning": "The job is a financial analyst role within a law firm requiring financial modeling and pricing analysis. The candidate's financial planning and credit card analytics experience provides a related background in financial analysis and portfolio management.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager — Card Business Analytics and Planning",
+     "summary": "Managed credit card portfolio analytics, customer segmentation, and operational process improvements.",
+     "start": "2010-07",
+     "end": "2012-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j052": {
+   "job_id": "j052",
+   "reasoning": "The job requires an AI engineer to build, train, and evaluate machine learning models and reinforcement learning systems. The candidate's background is in supply chain engineering, contracts, and business analytics, lacking dedicated AI/ML engineering work experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j037": {
+   "job_id": "j037",
+   "reasoning": "This is a training and placement program description rather than a job vacancy, so no specific candidate roles directly apply as professional employment.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j032": {
+   "job_id": "j032",
+   "reasoning": "The job requires senior Epic business intelligence development in a healthcare environment, which is completely outside the candidate's oil and gas engineering and consumer banking background.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The job requires management consulting strategy engagements in data and semantic layers. The candidate has industry leadership experience and is pursuing a management science MBA, but lacks management consulting firm background.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The job is an FP&A analyst role requiring expense variance analysis, financial modeling, and headcount forecasting in a SaaS company. The candidate's financial and business analytics experience in banking provides a related analytical foundation.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager — Card Business Analytics and Planning",
+     "summary": "Managed credit card portfolio analytics, customer segmentation, and operational process improvements.",
+     "start": "2010-07",
+     "end": "2012-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j048": {
+   "job_id": "j048",
+   "reasoning": "The job is a remote strategy consultant contractor role evaluating advanced language models on strategy consulting topics. The candidate's extensive strategic sourcing, operational leadership, and MBA studies provide a relevant background.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Contract Engineer — Drilling & Well Intervention Division",
+     "summary": "Led strategic sourcing and category management for high-value contracts and supply chain practices.",
+     "start": "2012-12",
+     "end": "2022-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j035": {
+   "job_id": "j035",
+   "reasoning": "The job is a lead product analyst role in P&C insurance requiring pricing, underwriting, and rating plan analytics. The candidate's financial and credit card analytics experience offers related analytical skills, but is in a different domain.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager — Card Business Analytics and Planning",
+     "summary": "Managed credit card portfolio analytics, customer segmentation, and operational process improvements.",
+     "start": "2010-07",
+     "end": "2012-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j049": {
+   "job_id": "j049",
+   "reasoning": "The job requires alternatives project and product management within a hedge middle office. The candidate's background is in oil and gas engineering/sourcing and banking analytics, which does not match hedge fund middle office operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j073": {
+   "job_id": "j073",
+   "reasoning": "The job requires designing and delivering business intelligence reports and dashboards using SQL and visualization tools. The candidate's card business analytics and planning role involved data-driven segmentation and reporting.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager — Card Business Analytics and Planning",
+     "summary": "Managed credit card portfolio analytics, customer segmentation, and operational process improvements.",
+     "start": "2010-07",
+     "end": "2012-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "_seconds": 18.9
+ },
+ "CYL": {
+  "j079": {
+   "job_id": "j079",
+   "reasoning": "The Head of AI Engineering role requires hands-on software engineering and AI architecture experience building LLM and agentic applications. None of the candidate's roles provide software engineering experience, as their background is in product management and strategy consulting.",
+   "field_match": "related",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j068": {
+   "job_id": "j068",
+   "reasoning": "This Senior Financial Analyst position requires accounting and corporate financial planning and analysis experience. The candidate has no experience in financial analysis, budgeting, or accounting roles.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j032": {
+   "job_id": "j032",
+   "reasoning": "This role requires database development and Epic Business Intelligence reporting in healthcare. The candidate's experience lacks healthcare IT, data engineering, and Epic platform development.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j022": {
+   "job_id": "j022",
+   "reasoning": "The Junior Product Analyst role requires business analysis and product development fundamentals. The candidate's Product Manager and Consultant roles provide the necessary product development and requirements experience.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Product Manager",
+     "summary": "Designed product roadmaps and features for an AI companion application.",
+     "start": "2026-07",
+     "end": "2026-09",
+     "duration_months": null
+    },
+    {
+     "title": "MBA Strategy & Analytics Consultant",
+     "summary": "Designed query frameworks and scoring systems to audit AI search visibility.",
+     "start": "2026-05",
+     "end": "2026-08",
+     "duration_months": null
+    },
+    {
+     "title": "Product Manager",
+     "summary": "Led gaming department and designed core game systems and features.",
+     "start": "2021-05",
+     "end": "2024-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j006": {
+   "job_id": "j006",
+   "reasoning": "This contractor role requires experience as a management consultant to evaluate business strategy problems. The candidate's experience as an MBA Strategy & Analytics Consultant directly fulfills this requirement.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "MBA Strategy & Analytics Consultant",
+     "summary": "Conducted strategic analysis, designed query frameworks, and codified methodologies.",
+     "start": "2026-05",
+     "end": "2026-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j007": {
+   "job_id": "j007",
+   "reasoning": "The Product Analyst position requires product performance monitoring, root cause analysis, and competitive intelligence. The candidate's product management and consulting roles provide directly transferable analytical and product evaluation experience.",
+   "field_match": "related",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Product Manager",
+     "summary": "Designed product roadmaps and features for an AI companion application.",
+     "start": "2026-07",
+     "end": "2026-09",
+     "duration_months": null
+    },
+    {
+     "title": "MBA Strategy & Analytics Consultant",
+     "summary": "Analyzed AI responses and cited sources to benchmark against category leaders.",
+     "start": "2026-05",
+     "end": "2026-08",
+     "duration_months": null
+    },
+    {
+     "title": "Product Manager",
+     "summary": "Analyzed in-game sales data and managed product departments.",
+     "start": "2021-05",
+     "end": "2024-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j065": {
+   "job_id": "j065",
+   "reasoning": "This role requires building VoIP infrastructure and operating distributed systems on Kubernetes using Go, Java, or Python. The candidate has no background in VoIP engineering, telecommunications, or DevOps infrastructure.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j053": {
+   "job_id": "j053",
+   "reasoning": "This FP&A Manager role requires extensive experience in financial planning, budgeting, and month-end accounting processes. The candidate has no professional accounting or FP&A work experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j003": {
+   "job_id": "j003",
+   "reasoning": "The BI Developer role requires building dashboards and semantic models using Power BI. The candidate has no professional experience as a dedicated Business Intelligence Developer.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j001": {
+   "job_id": "j001",
+   "reasoning": "This role requires Azure data engineering, AI model building, and Microsoft Power Platform development. The candidate has no professional data engineering or software development experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j034": {
+   "job_id": "j034",
+   "reasoning": "This opportunity requires strategy consultants from top firms like McKinsey, BCG, or Bain. The candidate has general consulting and product management experience but lacks the required multi-year tenure at a top-tier strategy firm.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "This role requires 5-7 years of management consulting or strategy experience leading client engagements. The candidate has only a brief stint as a Consulting Lab student consultant, falling short of the experience requirement.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": []
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "This role requires 6-10 years of professional experience in data science, machine learning, and building production solutions on Databricks. The candidate lacks the necessary technical engineering background.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j033": {
+   "job_id": "j033",
+   "reasoning": "This position requires a minimum of ten years of professional experience in research, competitive intelligence, or corporate strategy. The candidate does not meet the senior experience threshold.",
+   "field_match": "related",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j013": {
+   "job_id": "j013",
+   "reasoning": "This Platform Product Manager role requires experience owning knowledge and semantic platform capabilities, such as ontologies and knowledge graphs. The candidate's product management and consulting roles involve defining functional specifications and frameworks.",
+   "field_match": "related",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Product Manager",
+     "summary": "Defined requirements for real-time voice/video calls with long-term memory.",
+     "start": "2026-07",
+     "end": "2026-09",
+     "duration_months": null
+    },
+    {
+     "title": "MBA Strategy & Analytics Consultant",
+     "summary": "Designed decision-scenario query frameworks and codified methodology into SOPs.",
+     "start": "2026-05",
+     "end": "2026-08",
+     "duration_months": null
+    },
+    {
+     "title": "Product Manager",
+     "summary": "Structured player stats databases and maintained card inventories.",
+     "start": "2021-05",
+     "end": "2024-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j077": {
+   "job_id": "j077",
+   "reasoning": "This role requires 5-8 years of experience within the alternative asset industry managing real assets development programs. The candidate lacks a background in alternative asset management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 38.8
+ },
+ "KF": {
+  "j057": {
+   "job_id": "j057",
+   "reasoning": "The job requires data analytics and quality systems experience in the pharmaceutical or healthcare industry. The candidate's role at Serum Detect involved operations and inventory workflows in a computational cancer diagnostics startup, which relates to quality data and operations.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Procurement Lead and Research Associate II",
+     "summary": "Managed procurement and operational workflows for a computational cancer diagnostics startup.",
+     "start": "2022-02",
+     "end": "2024-12",
+     "duration_months": null
+    }
+   ]
+  },
+  "j006": {
+   "job_id": "j006",
+   "reasoning": "The job requires management consulting experience to evaluate AI model reasoning on business problems. The candidate completed a strategy consulting project in the Questrom Consulting Lab.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Research Assistant, Strategy Consulting Project",
+     "summary": "Conducted stakeholder research and developed retention recommendations on a strategy consulting team.",
+     "start": "2026-06",
+     "end": "2026-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j075": {
+   "job_id": "j075",
+   "reasoning": "The job is for a consulting role involving research and data analysis in the TMT sector. The candidate's strategy consulting project provides relevant consulting experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Research Assistant, Strategy Consulting Project",
+     "summary": "Conducted stakeholder research and developed retention recommendations on a strategy consulting team.",
+     "start": "2026-06",
+     "end": "2026-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j030": {
+   "job_id": "j030",
+   "reasoning": "The job requires extensive data analytics, customer experience analytics, and Python/SQL skills. The candidate has marketing analytics and e-commerce experience utilizing GA4 and Shopify analytics, but lacks the required years and core data science engineering depth.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j029": {
+   "job_id": "j029",
+   "reasoning": "The job requires a Director of Data Analytics to lead teams and partner with marketing and product functions. The candidate has marketing analytics and e-commerce experience but lacks leadership experience directing a core data analytics function.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j072": {
+   "job_id": "j072",
+   "reasoning": "The job requires consulting experience in the life sciences sector covering operations and marketing. The candidate worked as a marketing associate intern at a life sciences company.",
+   "field_match": "same",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Marketing Associate Intern",
+     "summary": "Managed digital marketing content and competitor research for life-science brands.",
+     "start": "2026-08",
+     "end": "present",
+     "duration_months": null
+    }
+   ]
+  },
+  "j022": {
+   "job_id": "j022",
+   "reasoning": "The job requires junior product analysis and business analysis experience. The candidate's internships in brand marketing and e-commerce involve digital product management and analytics.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Brand & eCommerce Marketing Intern",
+     "summary": "Managed e-commerce platforms, brand strategy, and web analytics.",
+     "start": "2026-04",
+     "end": "2026-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j048": {
+   "job_id": "j048",
+   "reasoning": "The job requires senior strategy consulting experience for evaluating AI models. The candidate's experience is limited to an internship-level strategy consulting project and marketing roles.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j043": {
+   "job_id": "j043",
+   "reasoning": "The job requires extensive experience in market data and reference data within financial services. The candidate has no background in financial market data or security master functions.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j038": {
+   "job_id": "j038",
+   "reasoning": "The job requires an AI/ML engineer with years of experience building machine learning models and pipelines. The candidate's background is in marketing and operations with no professional software engineering or machine learning development roles.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The job requires 5-7 years of management consulting or strategy experience leading engagements. The candidate has only brief internship-level consulting and marketing experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "The job requires 6-10 years of experience in AI, Data Science, and Machine Learning with specific expertise in Databricks. The candidate does not have engineering or data science professional roles.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j066": {
+   "job_id": "j066",
+   "reasoning": "The job requires an ML engineer with an MSc or PhD and professional experience developing machine learning models and pipelines. The candidate's education is a B.S. in Biology and an ongoing MBA, with no machine learning engineering roles.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j009": {
+   "job_id": "j009",
+   "reasoning": "The job requires 7+ years of professional experience as a machine learning engineer in production environments. The candidate lacks software and machine learning engineering employment history.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j059": {
+   "job_id": "j059",
+   "reasoning": "The job requires at least five years of IT experience supporting enterprise applications and developing SQL queries and reports. The candidate's background lacks enterprise IT reporting development roles.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 17.8
+ },
+ "LB": {
+  "j013": {
+   "job_id": "j013",
+   "reasoning": "The candidate has extensive experience in business transformation, consulting, and stakeholder management, but lacks direct technical product management experience in ontology and knowledge graphs.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j080": {
+   "job_id": "j080",
+   "reasoning": "The job requires a Senior Machine Learning Engineer with cloud and ML implementation skills, whereas the candidate's background is in business consulting and strategy.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The candidate's management consulting and business transformation experience at EY and Deloitte directly aligns with leading strategy, operating model, and executive workshop engagements.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Manager, Business Transformation Consulting",
+     "summary": "Managed transformation projects, commercial analyses, and stakeholder workshops at Ernst & Young.",
+     "start": "2020-02",
+     "end": "2025-01",
+     "duration_months": null
+    },
+    {
+     "title": "Consultant, Business Consulting",
+     "summary": "Enhanced operational efficiency and strategic planning for SMEs at Deloitte.",
+     "start": "2018-09",
+     "end": "2020-01",
+     "duration_months": null
+    }
+   ]
+  },
+  "j040": {
+   "job_id": "j040",
+   "reasoning": "The candidate has financial and commercial analysis experience within consulting roles, but lacks dedicated, full-time FP&A operational experience required for a corporate financial analyst role.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "The job requires hands-on AI and machine learning engineering on Databricks, whereas the candidate's consulting background focuses on business transformation and management rather than technical ML engineering.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j068": {
+   "job_id": "j068",
+   "reasoning": "The role requires dedicated corporate FP&A experience, whereas the candidate's background is in management consulting rather than corporate financial planning and analysis.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j071": {
+   "job_id": "j071",
+   "reasoning": "The job requires IT application support and database administration for enterprise tools, which does not match the candidate's background in business consulting and transformation.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j033": {
+   "job_id": "j033",
+   "reasoning": "The candidate's extensive management consulting experience in business transformation and market analysis matches the requirement for senior leadership and growth strategy research.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Manager, Business Transformation Consulting",
+     "summary": "Managed transformation projects and delivered market and financial analyses at Ernst & Young.",
+     "start": "2020-02",
+     "end": "2025-01",
+     "duration_months": null
+    },
+    {
+     "title": "Consultant, Business Consulting",
+     "summary": "Enhanced operational efficiency and strategic planning for SMEs at Deloitte.",
+     "start": "2018-09",
+     "end": "2020-01",
+     "duration_months": null
+    }
+   ]
+  },
+  "j056": {
+   "job_id": "j056",
+   "reasoning": "The job requires a product manager with dedicated B2B product management experience, whereas the candidate's experience is in business consulting rather than product development.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j005": {
+   "job_id": "j005",
+   "reasoning": "The job requires extensive leadership in finance transformation and Anaplan implementations, whereas the candidate's consulting background focuses on general business transformation rather than dedicated finance systems.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j034": {
+   "job_id": "j034",
+   "reasoning": "The candidate has extensive top-tier management consulting experience, matching the requirement for strategy consultants to evaluate and refine structured presentations and business strategy.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Manager, Business Transformation Consulting",
+     "summary": "Managed strategic transformation projects and designed client presentations at Ernst & Young.",
+     "start": "2020-02",
+     "end": "2025-01",
+     "duration_months": null
+    },
+    {
+     "title": "Consultant, Business Consulting",
+     "summary": "Improved operational efficiency and strategic planning frameworks at Deloitte.",
+     "start": "2018-09",
+     "end": "2020-01",
+     "duration_months": null
+    }
+   ]
+  },
+  "j032": {
+   "job_id": "j032",
+   "reasoning": "The job requires technical Epic business intelligence development in healthcare, which does not align with the candidate's business consulting background.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j006": {
+   "job_id": "j006",
+   "reasoning": "The candidate's management consulting experience at EY and Deloitte provides the exact strategic problem-solving background needed for this strategy consulting contractor role.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Manager, Business Transformation Consulting",
+     "summary": "Managed strategic initiatives and commercial analyses at Ernst & Young.",
+     "start": "2020-02",
+     "end": "2025-01",
+     "duration_months": null
+    },
+    {
+     "title": "Consultant, Business Consulting",
+     "summary": "Enhanced strategic planning and operational efficiency for SMEs at Deloitte.",
+     "start": "2018-09",
+     "end": "2020-01",
+     "duration_months": null
+    }
+   ]
+  },
+  "j019": {
+   "job_id": "j019",
+   "reasoning": "The candidate's consulting experience involves transformation and strategic advisory, but lacks the specific life sciences or biotech domain focus required for this role.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j049": {
+   "job_id": "j049",
+   "reasoning": "The job requires alternative asset industry operations and middle office project management, whereas the candidate's background is in general management consulting.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j025": {
+   "job_id": "j025",
+   "reasoning": "The job requires dedicated corporate FP&A leadership, whereas the candidate's background is in management consulting and advisory rather than internal corporate finance functions.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "_seconds": 18.2
+ },
+ "MS": {
+  "j049": {
+   "job_id": "j049",
+   "reasoning": "The job requires experience in product management, program management, or business analysis within alternative asset classes or financial services. The candidate's background is in product research and development within the biotechnology and consumer goods sector, which involves a different industry and function.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j029": {
+   "job_id": "j029",
+   "reasoning": "The job requires a Director of Data Analytics to lead an analytics team and drive data-driven decision-making across product, growth, and finance. The candidate has extensive product development and R&D experience involving cross-functional leadership and data-driven optimization, but lacks direct experience leading a dedicated data analytics function.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j075": {
+   "job_id": "j075",
+   "reasoning": "The job requires a strategy and analytics consultant to conduct research and data analysis in the TMT sector. The candidate has strong quantitative analysis and cost optimization experience from consumer product R&D, but does not have consulting or TMT sector experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j008": {
+   "job_id": "j008",
+   "reasoning": "The job requires a Product Analyst in the commercial transportation insurance industry to develop products, conduct market research, and collaborate with underwriting. The candidate's product experience is strictly in consumer goods R&D and product formulation, lacking insurance or underwriting domain experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j017": {
+   "job_id": "j017",
+   "reasoning": "The job requires an experienced claims professional in Property & Casualty insurance with strong analytics and SQL skills to turn data into business decisions. The candidate has general quantitative and analytical skills from product R&D, but no background in insurance claims or P&C operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j077": {
+   "job_id": "j077",
+   "reasoning": "The job requires an Alternatives Product Business Analyst with experience in alternative asset classes, real assets, and program management within financial services. The candidate's background is in product research and development within consumer goods and biotech.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j044": {
+   "job_id": "j044",
+   "reasoning": "The job requires a Data Analyst/Reporting Analyst to maintain functional databases, cleanse data, and build KPI reports for a revenue management team. The candidate's experience includes data-driven decision-making and performance metric tracking within product R&D, but lacks dedicated data engineering or BI reporting analyst experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j079": {
+   "job_id": "j079",
+   "reasoning": "The job requires a Head of AI Engineering to design and build production-grade AI systems using LLMs and agentic architectures. The candidate's technical background is in biotechnology and product formulation R&D, with no professional software or AI engineering experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j019": {
+   "job_id": "j019",
+   "reasoning": "The job requires an Associate Consultant in Discovery Strategy & Transformation with life sciences or biotech research experience to help organizations solve complex challenges at the intersection of science and business. The candidate holds a BSc in Biotechnology and has extensive R&D and laboratory leadership experience in the biotech and consumer goods sector, directly translating to scientific R&D transformation consulting.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Senior Supervisor of Product Research and Development",
+     "summary": "Led end-to-end product execution, assessing technical, regulatory, and operational requirements in product R&D.",
+     "start": "2018-08",
+     "end": "2026-06",
+     "duration_months": null
+    },
+    {
+     "title": "Supervisor of Product Research and Development",
+     "summary": "Pioneered product launches, evaluated requirements, and managed cross-functional R&D initiatives.",
+     "start": "2018-08",
+     "end": "2026-06",
+     "duration_months": null
+    },
+    {
+     "title": "Staff of Product Research and Development",
+     "summary": "Led product development and established technical testing protocols and formulation workflows.",
+     "start": "2018-08",
+     "end": "2026-06",
+     "duration_months": null
+    }
+   ]
+  },
+  "j053": {
+   "job_id": "j053",
+   "reasoning": "The job requires a Financial Planning & Analysis Manager with 7+ years of FP&A experience to manage month-end processes, budgeting, and financial reporting. The candidate's experience is in product R&D cost optimization and project management rather than corporate finance or FP&A.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j007": {
+   "job_id": "j007",
+   "reasoning": "The job requires a Product Analyst in insurance to deliver state-level performance monitoring, competitive intelligence, and pricing recommendations. The candidate has product development and optimization experience, but lacks insurance product and underwriting experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j074": {
+   "job_id": "j074",
+   "reasoning": "The job requires a Business Intelligence Developer to design, develop, and maintain Power BI dashboards and data models. The candidate's background is in product R&D and laboratory leadership rather than dedicated BI development and data engineering.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j059": {
+   "job_id": "j059",
+   "reasoning": "The job requires a Business Intelligence Developer/Report Writer to design reporting solutions, create complex SQL statements, and build BI dashboards for enterprise applications. The candidate has quantitative analysis and workflow optimization skills from product R&D, but lacks professional IT BI development experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j041": {
+   "job_id": "j041",
+   "reasoning": "The job requires a Senior Product Manager for advertising products to own roadmaps for in-stream video and native advertising brand outcomes. The candidate has product development experience in consumer goods, but no background in advertising technology or media products.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The job requires a Knowledge, Data, and AI Strategy Lead Consultant with 5–7 years of management consulting or strategy experience. The candidate has strong analytical and cross-functional leadership skills from product R&D, but lacks management consulting experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j055": {
+   "job_id": "j055",
+   "reasoning": "The job requires a Product Manager II in an Advertising, Marketing & Commerce consulting practice with 7+ years of product management experience. The candidate has extensive product development experience leading end-to-end product launches and cross-functional teams, which maps well to product management execution.",
+   "field_match": "related",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Senior Supervisor of Product Research and Development",
+     "summary": "Led end-to-end execution of product launches and managed technical and operational requirements.",
+     "start": "2018-08",
+     "end": "2026-06",
+     "duration_months": null
+    },
+    {
+     "title": "Supervisor of Product Research and Development",
+     "summary": "Managed product innovation, feature execution, and cross-functional teams to deliver multiple product launches.",
+     "start": "2018-08",
+     "end": "2026-06",
+     "duration_months": null
+    }
+   ]
+  },
+  "_seconds": 18.8
+ },
+ "SA": {
+  "j021": {
+   "job_id": "j021",
+   "reasoning": "The competitive intelligence product analyst role requires insurance product design, underwriting concepts, and market trends research. None of the candidate's core credit underwriting and risk management roles match this function.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j078": {
+   "job_id": "j078",
+   "reasoning": "The technical product analyst role requires technical product analysis, requirements translation, and test planning. The candidate's experience is entirely in financial credit underwriting, risk management, and credit analysis rather than technical product management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j008": {
+   "job_id": "j008",
+   "reasoning": "The product analyst role requires insurance underwriting, product design, and risk management experience. The candidate's roles at Genpact and Barclays provide extensive direct experience in credit underwriting, financial statement analysis, and risk assessment.",
+   "field_match": "related",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager",
+     "summary": "Managed credit portfolio, underwriting, and credit limits for corporate receivables at Genpact.",
+     "start": "2022-09",
+     "end": "2025-06",
+     "duration_months": null
+    },
+    {
+     "title": "Senior Credit Analyst (MT)",
+     "summary": "Underwrote credit applications and performed financial statement analysis for pharmaceutical distribution units at Genpact.",
+     "start": "2020-05",
+     "end": "2022-09",
+     "duration_months": null
+    },
+    {
+     "title": "Credit Analyst – Credit Risk",
+     "summary": "Monitored corporate borrower portfolios, performed covenant tests, and prepared credit appraisals at Barclays.",
+     "start": "2017-09",
+     "end": "2020-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The FP&A analyst role requires financial planning and analysis, budgeting, expense variance analysis, and SaaS metrics reporting. The candidate's background is in credit risk and underwriting rather than corporate FP&A.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j029": {
+   "job_id": "j029",
+   "reasoning": "The director of data analytics role requires building and leading analytics teams and partnering across product and finance functions. The candidate's experience is in credit underwriting operations rather than data analytics leadership.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j022": {
+   "job_id": "j022",
+   "reasoning": "The junior product analyst role requires Agile requirements documentation and business analysis. The candidate has no product analysis experience, focusing instead on credit risk management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j015": {
+   "job_id": "j015",
+   "reasoning": "The manager of advanced data analytics role requires generating analytical insights using SQL, Python, and BI tools to support digital assets. The candidate's roles are primarily business-side credit underwriting and portfolio monitoring rather than dedicated data analytics engineering.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j057": {
+   "job_id": "j057",
+   "reasoning": "The senior analyst for R&D quality data analytics requires building BI reports and data pipelines within pharmaceutical quality systems. The candidate's background is in financial credit underwriting rather than pharmaceutical quality compliance and analytics.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j031": {
+   "job_id": "j031",
+   "reasoning": "The senior BI data engineer role requires enterprise-scale data engineering using Databricks, Apache Spark, and Python pipelines. The candidate's roles are in financial credit analysis rather than dedicated data engineering.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j032": {
+   "job_id": "j032",
+   "reasoning": "The senior Epic BI developer role requires healthcare data structures, Epic Caboodle/Clarity platforms, and database development. The candidate has no healthcare IT or BI development experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j052": {
+   "job_id": "j052",
+   "reasoning": "The AI engineer role requires hands-on machine learning, reinforcement learning, and language model fine-tuning with Python and PyTorch. The candidate's work experience is strictly in credit analysis and risk management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j026": {
+   "job_id": "j026",
+   "reasoning": "The law firm financial analyst role requires legal pricing, alternative fee arrangements, profitability analysis, and financial modeling. The candidate's background is in corporate credit underwriting and portfolio risk management rather than legal finance and pricing.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j054": {
+   "job_id": "j054",
+   "reasoning": "The financial analyst role requires corporate financial analysis, forecasting, variance analysis, and profitability reporting. The candidate's background is in credit risk and underwriting rather than corporate FP&A.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j020": {
+   "job_id": "j020",
+   "reasoning": "The remote AI strategy consultant role requires applying consulting tools and prompt evaluation to assess AI model reasoning. The candidate's experience is in financial credit analysis.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j025": {
+   "job_id": "j025",
+   "reasoning": "The senior manager of FP&A role requires leadership in budgeting, forecasting, cost accounting, and financial planning. The candidate's background is in credit management and underwriting.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j043": {
+   "job_id": "j043",
+   "reasoning": "The senior market data analyst role requires managing reference data, security master functions, and market data feeds for financial institutions. The candidate's experience in credit analysis, fixed income, and financial reporting provides direct familiarity with financial instruments and reference data.",
+   "field_match": "same",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Assistant Manager",
+     "summary": "Managed credit portfolios and financial reviews for corporate accounts at Genpact.",
+     "start": "2022-09",
+     "end": "2025-06",
+     "duration_months": null
+    },
+    {
+     "title": "Senior Credit Analyst (MT)",
+     "summary": "Underwrote credit applications and analyzed financial statements and ratings reports at Genpact.",
+     "start": "2020-05",
+     "end": "2022-09",
+     "duration_months": null
+    },
+    {
+     "title": "Credit Analyst – Credit Risk",
+     "summary": "Monitored corporate borrower portfolios, performed covenant and borrowing-base tests at Barclays.",
+     "start": "2017-09",
+     "end": "2020-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "_seconds": 18.1
+ },
+ "SU": {
+  "j048": {
+   "job_id": "j048",
+   "reasoning": "The role requires strategy consulting and international business strategy experience, which aligns with the candidate's strategic supply chain and business operations background.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Customer Supply Chain Specialist",
+     "summary": "Led ERP implementation, cross-functional teams, and operational productivity projects at Canon Middle East.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    },
+    {
+     "title": "Supply Chain Planner",
+     "summary": "Managed outbound logistics, strategic shipping optimization, and S&OP processes across the MENA region.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    }
+   ]
+  },
+  "j069": {
+   "job_id": "j069",
+   "reasoning": "The job requires product management, commercial strategy, and quantitative modeling, which is related to the candidate's business operations and supply chain planning experience.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Supply Chain Planner",
+     "summary": "Managed outbound logistics, strategic shipping optimization, and S&OP processes across the MENA region.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    },
+    {
+     "title": "Business Operations Intern",
+     "summary": "Sourced suppliers, managed relationships, and partnered on pricing and promotional strategy at Swan.",
+     "start": "2020-12",
+     "end": "2021-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j057": {
+   "job_id": "j057",
+   "reasoning": "The job requires data analytics, quality systems, and BI reporting experience, which only matches generic data tools rather than domain-specific R&D quality processes.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "The job requires extensive full-time experience in AI, Data Science, and Machine Learning on Databricks, which goes beyond the candidate's business operations and supply chain focus.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j006": {
+   "job_id": "j006",
+   "reasoning": "The position requires experience at a top management consulting firm, which the candidate does not possess despite having business operations and supply chain experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j064": {
+   "job_id": "j064",
+   "reasoning": "The job requires P&C insurance product analysis and underwriting support, which differs from the candidate's supply chain and business operations background.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j007": {
+   "job_id": "j007",
+   "reasoning": "The role requires insurance product analysis and underwriting concepts, which are unrelated to the candidate's supply chain and logistics experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j046": {
+   "job_id": "j046",
+   "reasoning": "The job requires mid-level Business Intelligence development and AWS administration, which does not match the candidate's supply chain and operations background.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The job requires financial planning and analysis (FP&A) in a SaaS environment, which only partly overlaps with the candidate's supply chain cost optimization and forecasting experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Supply Chain Planner",
+     "summary": "Managed outbound logistics, strategic shipping optimization, and S&OP processes across the MENA region.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    }
+   ]
+  },
+  "j070": {
+   "job_id": "j070",
+   "reasoning": "The job requires senior product management experience in fintech and payment infrastructure, which is different from the candidate's supply chain and operations experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j080": {
+   "job_id": "j080",
+   "reasoning": "The job requires senior machine learning engineering and AWS cloud production experience, which is outside the candidate's supply chain and operations profile.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j072": {
+   "job_id": "j072",
+   "reasoning": "The job requires consulting to biotech companies regarding operations, marketing, pricing, and forecasting, which aligns with the candidate's MBA background and operational analysis skills.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Customer Supply Chain Specialist",
+     "summary": "Led ERP implementation, cross-functional teams, and operational productivity projects at Canon Middle East.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    },
+    {
+     "title": "Commodity Management Intern",
+     "summary": "Evaluated suppliers and conducted cost-breakdown analysis for sourcing business plans at Siemens Energy.",
+     "start": "2020-01",
+     "end": "2020-07",
+     "duration_months": null
+    }
+   ]
+  },
+  "j054": {
+   "job_id": "j054",
+   "reasoning": "The job requires financial analysis, budgeting, and variance analysis, which relates to the candidate's supply chain cost reduction and forecasting experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Supply Chain Planner",
+     "summary": "Managed outbound logistics, strategic shipping optimization, and S&OP processes across the MENA region.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    }
+   ]
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The job requires management consulting and data/AI strategy leadership, which shares analytical problem-solving with the candidate's business operations leadership roles.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": [
+    {
+     "title": "Customer Supply Chain Specialist",
+     "summary": "Led ERP implementation, cross-functional teams, and operational productivity projects at Canon Middle East.",
+     "start": "2021-05",
+     "end": "2025-06",
+     "duration_months": null
+    }
+   ]
+  },
+  "j024": {
+   "job_id": "j024",
+   "reasoning": "The job requires dedicated machine learning engineering experience, which is outside the candidate's core functional domain of supply chain management and business operations.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j032": {
+   "job_id": "j032",
+   "reasoning": "The job requires senior Epic Business Intelligence development with healthcare industry experience, which does not match the candidate's background.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 27.0
+ },
+ "VV": {
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The candidate's background is in social impact, program management, and data analytics rather than financial planning and analysis. None of the past roles involve corporate finance or FP&A.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j014": {
+   "job_id": "j014",
+   "reasoning": "The candidate has extensive experience in program management, operations rollout, and stakeholder coordination, but lacks the required 10+ years of dedicated product management experience building B2B/B2C software products.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The role requires management consulting or strategy experience leading AI and data strategy engagements. The candidate's roles as Project Associate and Consultant involve data-driven program strategy, operational rollout, and analytics.",
+   "field_match": "related",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Consultant",
+     "summary": "Developed and implemented data-driven program improvement and behavior change strategies for UNICEF.",
+     "start": "2024-02",
+     "end": "2025-07",
+     "duration_months": null
+    },
+    {
+     "title": "Project Associate",
+     "summary": "Directed operational rollout across districts, leveraging analytics to monitor performance and produce actionable reports.",
+     "start": "2023-07",
+     "end": "2024-02",
+     "duration_months": null
+    }
+   ]
+  },
+  "j017": {
+   "job_id": "j017",
+   "reasoning": "The job requires Property & Casualty Claims experience and advanced analytics. The candidate has data analytics and reporting experience but lacks insurance claims industry experience.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j067": {
+   "job_id": "j067",
+   "reasoning": "The job requires wealth management and financial planning experience supporting advisors. The candidate's background is in international development, social impact, and program coordination.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j030": {
+   "job_id": "j030",
+   "reasoning": "The job requires 8+ years of data analytics or data science experience. The candidate's experience is primarily in program management and consulting with some data analytics components, falling short of the required senior duration.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j022": {
+   "job_id": "j022",
+   "reasoning": "The job is a Junior Product Analyst role requiring Agile requirements and product development. The candidate's project coordination and consulting roles involve operations and program rollout.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j064": {
+   "job_id": "j064",
+   "reasoning": "The job requires supporting P&C insurance product management. The candidate has no insurance industry experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j059": {
+   "job_id": "j059",
+   "reasoning": "The job requires 5 years of IT experience including 3 years of IT development supporting enterprise applications like Maximo or SAP. The candidate's data work is analytical and consultative rather than core IT enterprise software development.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j033": {
+   "job_id": "j033",
+   "reasoning": "The job requires 10+ years of professional experience in research, market intelligence, or corporate strategy. The candidate does not meet the 10-year requirement.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j032": {
+   "job_id": "j032",
+   "reasoning": "The job requires 7+ years of database development and BI reporting specifically in healthcare environments using Epic. The candidate lacks healthcare IT and Epic experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "The job requires 6-10 years of full-time working experience in AI, Data Science, and Machine Learning with specific Databricks certifications. The candidate has general data analytics skills but lacks specialized engineering experience on Databricks.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j050": {
+   "job_id": "j050",
+   "reasoning": "The job requires experience with PowerApps or Robotic Process Automation in an Agile product analyst capacity. The candidate's background does not feature PowerApps or RPA development.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j003": {
+   "job_id": "j003",
+   "reasoning": "The job requires dedicated BI development experience focusing on Power BI semantic models and dashboards. The candidate has general analytics skills but no dedicated Power BI developer role.",
+   "field_match": "different",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j057": {
+   "job_id": "j057",
+   "reasoning": "The job requires 3+ years of experience in quality systems and data visualization within the pharmaceutical industry. The candidate lacks pharmaceutical quality systems experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j043": {
+   "job_id": "j043",
+   "reasoning": "The job requires 7-10 years of experience in market data and reference data within financial services. The candidate's background is in social impact, consulting, and data analytics without financial market data experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 27.4
+ },
+ "ZW": {
+  "j062": {
+   "job_id": "j062",
+   "reasoning": "The role requires management consulting, operating model design, and AI strategy experience. The candidate's data specialist and engineering roles involved building AI, knowledge graphs, and data architectures, but do not represent management consulting or advisory engagements.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j031": {
+   "job_id": "j031",
+   "reasoning": "The role demands data engineering, Databricks, Spark, and ETL pipeline development. The candidate's role as a Data Specialist involved designing and deploying client-centric data models, ETL pipelines, and high-performance data transfer modules.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Designed data models, automated file transfers, and built ETL pipelines for asset management data.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j064": {
+   "job_id": "j064",
+   "reasoning": "The role requires P&C insurance product analysis and product management support. The candidate's background is in quantitative data analysis, statistics, and engineering without P&C insurance experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j001": {
+   "job_id": "j001",
+   "reasoning": "The role requires AI model building, Azure data engineering, and analytics. The candidate's roles include building knowledge graphs, risk assessment algorithms, ETL pipelines, and deploying LLM solutions.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Engineered automated data transfers, ETL pipelines, and secure LLM solutions for data retrieval.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Constructed knowledge graphs, financial risk assessment algorithms, and web crawlers.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j005": {
+   "job_id": "j005",
+   "reasoning": "The role requires extensive finance transformation leadership, global business services, and financial planning management. The candidate's background focuses on technical data engineering, AI, and statistics rather than senior finance leadership.",
+   "field_match": "related",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j012": {
+   "job_id": "j012",
+   "reasoning": "The role requires FP&A experience, variance analysis, headcount analytics, and SaaS reporting. The candidate's experience is entirely technical in data engineering and algorithmic research.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j024": {
+   "job_id": "j024",
+   "reasoning": "The role requires machine learning engineering, model training, and Python. The candidate's engineering experience includes building machine learning risk assessment algorithms and deploying LLM solutions.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Architected secure LLM solutions and automated report generation.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Applied GBDT/RF benchmarks to research AI risk assessment algorithms.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j019": {
+   "job_id": "j019",
+   "reasoning": "The role requires management consulting or strategy experience in life sciences or biotech. The candidate has an academic background in statistics and mathematics and technical data engineering experience, but no life sciences consulting experience.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j059": {
+   "job_id": "j059",
+   "reasoning": "The role requires business intelligence development, report writing, SQL, and database management. The candidate's role as a Data Specialist included automating client portfolio reports, creating data models, and building ETL pipelines.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Automated customized client reports and designed data models and ETL pipelines.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    }
+   ]
+  },
+  "j023": {
+   "job_id": "j023",
+   "reasoning": "The role requires AI, data science, and machine learning engineering experience focused on Databricks and production deployment. The candidate has built advanced machine learning algorithms, knowledge graphs, and LLM solutions.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Architected secure LLM solutions and data models for asset management.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Constructed company knowledge graphs and applied GBDT/RF benchmarks for AI risk assessment.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j050": {
+   "job_id": "j050",
+   "reasoning": "The role requires product analysis experience with PowerApps or RPA in an Agile environment. The candidate's background is in data engineering and algorithmic development rather than product management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j077": {
+   "job_id": "j077",
+   "reasoning": "The role requires alternative asset class project management and alternatives product experience. The candidate's experience is technical and engineering-focused rather than alternative product management.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "j016": {
+   "job_id": "j016",
+   "reasoning": "The role requires data analysis, document review, and data quality assurance for datasets. The candidate's roles involved extensive data collection, ETL processing, and data quality validation.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Processed client records and executed reports with high stability and data quality.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Collected open-source intelligence and delivered robust web crawlers for multi-GB data.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j010": {
+   "job_id": "j010",
+   "reasoning": "The role requires machine learning engineering experience in a big data ecosystem, building MLOps stacks, and deploying enterprise ML models. The candidate's past engineering roles directly match machine learning development and data pipeline building.",
+   "field_match": "same",
+   "work_match": "same",
+   "relevant_roles": [
+    {
+     "title": "Data Specialist",
+     "summary": "Built data pipelines, LLM solutions, and automated data workflows.",
+     "start": "2022-05",
+     "end": "2025-08",
+     "duration_months": null
+    },
+    {
+     "title": "Engineer",
+     "summary": "Constructed company knowledge graphs and researched AI risk assessment algorithms.",
+     "start": "2018-07",
+     "end": "2022-05",
+     "duration_months": null
+    }
+   ]
+  },
+  "j017": {
+   "job_id": "j017",
+   "reasoning": "The role requires P&C claims analytics experience and business intelligence. While the candidate has data analysis and BI experience, they lack P&C claims background.",
+   "field_match": "related",
+   "work_match": "related",
+   "relevant_roles": []
+  },
+  "j048": {
+   "job_id": "j048",
+   "reasoning": "The role requires senior strategy consulting experience in market entry and operating model design to evaluate language models. The candidate has a technical background in data science and engineering rather than strategy consulting.",
+   "field_match": "different",
+   "work_match": "different",
+   "relevant_roles": []
+  },
+  "_seconds": 19.0
+ }
+}
