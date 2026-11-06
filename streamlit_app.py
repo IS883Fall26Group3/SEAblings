@@ -216,7 +216,7 @@ if run:
                 lambda x: cached_embed(tuple(x), emb.name), t,
                 lambda s: st.write(f"Gemini's per-minute limit is reached. Waiting {s} seconds, "
                                    "then trying again…"))
-            relevant, used_e = None, used_j
+            relevant, background, used_e = None, None, used_j
             if S.experience_fit == "roles":
                 relevant = relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
             elif S.experience_fit == "judge":
@@ -225,12 +225,14 @@ if run:
                     judged, used_e = with_fallback(
                         model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
                     relevant = {jid: x.relevant_roles for jid, x in judged.items()}
+                    background = {jid: (x.field_match, x.work_match) for jid, x in judged.items()}
                 except LLMError as e:  # the rest of the match is ready: score with total years instead
                     st.write(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
                              "all your years instead.")
 
             st.write("Scoring each job")
-            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=relevant)
+            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=relevant,
+                                 background=background)
             used = sorted({label(used_p), label(used_j), label(used_e)})
             st.session_state.update(profile=profile, results=results,
                                     models_used=", ".join(used), embedder_used=emb.name)

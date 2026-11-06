@@ -88,8 +88,9 @@ def note_markdown(note: notes.Note) -> str:
     if note.bullets:
         parts.append("\n".join(f"- {_md(b)}" for b in note.bullets))
     if note.table:
-        parts.append("| | Your CV | This job |\n|---|---|---|\n"
-                     + "\n".join(f"| {_md(a)} | {_md(b)} | {_md(c)} |" for a, b, c in note.table))
+        head = ["", "Your CV", "This job"] + (["Match"] if len(note.table[0]) > 3 else [])
+        parts.append("| " + " | ".join(head) + " |\n|" + "---|" * len(head) + "\n"
+                     + "\n".join("| " + " | ".join(_md(c) for c in row) + " |" for row in note.table))
     if note.after:
         parts.append(_md(note.after))
     return "\n\n".join(parts)

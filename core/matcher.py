@@ -58,6 +58,22 @@ def rescale_cosine(cos: float, low: float = 0.5, high: float = 0.9) -> float:
     return float(np.clip((cos - low) / (high - low), 0.0, 1.0))
 
 
+BACKGROUND_VALUES = {"same": 1.0, "related": 0.5, "different": 0.0}
+BACKGROUND_COMBINE = "mean"
+
+
+def background_factor(field_match: str, work_match: str, values: dict[str, float] | None = None,
+                      combine: str | None = None) -> float:
+    """Multiplier for profile similarity from the judge's same / related / different rating of the
+    field and the kind of work. The embedding sees two career documents sharing generic wording
+    ("management", "operations") as alike even across fields; this rating can only lower the score.
+    An unrated dimension counts as no evidence (1.0)."""
+    values = values or BACKGROUND_VALUES
+    v = [values.get(x.strip().lower(), 1.0) for x in (field_match, work_match)]
+    how = combine or BACKGROUND_COMBINE
+    return float(min(v) if how == "min" else max(v) if how == "max" else sum(v) / 2)
+
+
 def similarity_band(embedder, mode: str) -> tuple[float, float]:
     """Each PROFILE_SIMILARITY mode has its own cosine range; 'document' uses cos_low/cos_high."""
     return getattr(embedder, "sim_bands", {}).get(mode, (embedder.cos_low, embedder.cos_high))
@@ -66,11 +82,13 @@ def similarity_band(embedder, mode: str) -> tuple[float, float]:
 def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedder,
                s: Settings, embed_fn: EmbedFn | None = None,
                relevant_years: dict[str, float] | None = None,
-               relevant_roles: dict[str, list[Role]] | None = None) -> list[MatchResult]:
+               relevant_roles: dict[str, list[Role]] | None = None,
+               background: dict[str, tuple[str, str]] | None = None) -> list[MatchResult]:
     """embedder supplies thresholds (and embed() unless embed_fn, e.g. a cached version, is given).
     relevant_roles (job id -> CV roles relevant to it, see core/experience.py), or relevant_years
     (job id -> their years), replaces total years in the experience fit; jobs missing from it fall
-    back to total years."""
+    back to total years. background (job id -> the judge's field and kind-of-work rating) scales
+    profile similarity down (background_factor); jobs missing from it keep the embedding score."""
     if not jobs:
         return []
     embed = embed_fn or embedder.embed
@@ -92,7 +110,9 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
         cv_skills = [x for x in profile.skills if x.strip()]
         matched, missing, close = match_skills_detail(cv_skills, required, vec, embedder.skill_threshold)
         coverage = len(matched) / len(required) if required else 0.5  # neutral if unknown
-        semantic = rescale_cosine(cos, *similarity_band(embedder, mode))
+        embedded = rescale_cosine(cos, *similarity_band(embedder, mode))
+        field_match, work_match = (background or {}).get(job.id, ("", ""))
+        semantic = embedded * background_factor(field_match, work_match)
         min_years = req.min_years_experience if req else None
         counted, relevant = [], None
         if relevant_roles and relevant_roles.get(job.id) is not None:
@@ -114,5 +134,6 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
             semantic_similarity=semantic, seniority_fit=senior,
             matched_skills=matched, missing_skills=missing, close_matches=close,
             years_counted=years, total_years=profile.years_experience, min_years=min_years,
-            relevant_only=relevant is not None, counted_roles=counted))
+            relevant_only=relevant is not None, counted_roles=counted, embedding_similarity=embedded,
+            field_match=field_match.strip().lower(), work_match=work_match.strip().lower()))
     return sorted(results, key=lambda r: r.score, reverse=True)

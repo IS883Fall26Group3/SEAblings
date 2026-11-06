@@ -3,7 +3,7 @@ import numpy as np
 
 from core.config import get_settings
 from core.job_sources.sample import SampleSource
-from core.matcher import match_skills_detail, score_jobs
+from core.matcher import background_factor, match_skills_detail, score_jobs
 from core.schemas import CandidateProfile, Job, JobRequirements, MatchResult, Role
 from core.score_notes import experience_note, role_line, similarity_note, skill_note
 from test_matcher import FakeEmbedder
@@ -71,6 +71,23 @@ def test_similarity_table_shows_rows_both_sides_have():
     assert similarity_note(result(), bare).table == []  # level alone isn't shown
 
 
+def test_rating_that_lowers_the_score_is_explained():
+    r = result(semantic_similarity=0, embedding_similarity=0.36, field_match="different", work_match="different")
+    n = similarity_note(r, PROFILE)
+    assert n.label == "No clear match"
+    assert n.text == ("The wording of your CV and this posting overlaps (36%), but the field and type of "
+                      "work are different, so this counts as 0%.")
+    assert n.table[0] == ("Field", "Retail technology", "Technology consulting", "Different")
+    assert n.table[2] == ("Level", "Senior", "Entry", "")  # level isn't rated
+
+
+def test_rating_that_keeps_the_score_uses_the_usual_sentence():
+    r = result(semantic_similarity=1, embedding_similarity=1, field_match="same", work_match="same")
+    assert similarity_note(r, PROFILE).text == "Your CV and this posting describe very similar work."
+    mixed = result(semantic_similarity=0.75, embedding_similarity=1, field_match="same", work_match="related")
+    assert "but the type of work is only related, so this counts as 75%." in similarity_note(mixed, PROFILE).text
+
+
 # ---------- experience fit ----------
 
 DATA = Role(title="Data Analyst", start="2023-01", end="present")
@@ -134,6 +151,25 @@ def test_matcher_records_close_matches_and_counted_roles():
     [r] = score_jobs(profile, "cv", [job], FakeEmbedder(), get_settings(), relevant_roles={job.id: two_years})
     assert r.relevant_only and r.counted_roles == two_years
     assert (r.years_counted, r.total_years, r.min_years, r.seniority_fit) == (2.0, 10, 4, 0.5)
+
+
+def test_background_factor_and_its_effect_on_the_score():
+    assert background_factor("same", "same") == 1.0
+    assert background_factor("different", "different") == 0.0
+    assert background_factor("", "") == 1.0  # not rated: no evidence, no change
+    assert background_factor("Different", " related ", {"same": 1, "related": 0.5, "different": 0}, "max") == 0.5
+    assert background_factor("same", "different", {"same": 1, "related": 1, "different": 0}, "min") == 0.0
+
+    [job] = SampleSource().search("analyst", "", 1)
+    job.requirements = JobRequirements(required_skills=[], nice_to_have_skills=[])
+    profile = CandidateProfile(summary="", years_experience=1, seniority="mid", skills=[], job_titles=[])
+    plain = score_jobs(profile, job.description, [job], FakeEmbedder(), get_settings())[0]
+    rated = score_jobs(profile, job.description, [job], FakeEmbedder(), get_settings(),
+                       background={job.id: ("different", "different")})[0]
+    assert plain.semantic_similarity == plain.embedding_similarity > 0
+    assert rated.semantic_similarity == 0 and rated.embedding_similarity == plain.embedding_similarity
+    assert (rated.field_match, rated.work_match) == ("different", "different")
+    assert rated.score < plain.score
 
 
 def test_card_markdown_escapes_cv_text():

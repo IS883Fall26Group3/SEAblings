@@ -27,7 +27,7 @@ class Note:
     label: str
     text: str
     bullets: list[str] = field(default_factory=list)
-    table: list[tuple[str, str, str]] = field(default_factory=list)  # (row, your CV, this job)
+    table: list[tuple[str, ...]] = field(default_factory=list)  # (row, your CV, this job[, match])
     after: str = ""
 
 
@@ -92,20 +92,48 @@ def skill_note(r: MatchResult, profile: CandidateProfile) -> Note:
     return Note(label, " ".join(parts))
 
 
+def _cap(s: str) -> str:
+    s = s.strip()
+    return s[:1].upper() + s[1:]
+
+
+def _adjustment(r: MatchResult, pct: int) -> str:
+    """Why the rating lowered the embedding score, e.g. 'The wording overlaps (36%), but the field
+    and type of work are different, so this counts as 0%.' Empty when nothing was lowered."""
+    before = _pct(r.embedding_similarity)
+    if before <= pct:
+        return ""
+    reasons = {"different": [], "related": []}
+    for name, match in (("field", r.field_match), ("type of work", r.work_match)):
+        if match in reasons:
+            reasons[match].append(name)
+    parts = []
+    for match, names in reasons.items():
+        if names:
+            what = " and ".join(names)
+            verb = "are" if len(names) > 1 else "is"
+            parts.append(f"the {what} {verb} {'different' if match == 'different' else 'only related'}")
+    return (f"The wording of your CV and this posting overlaps ({before}%), but {' and '.join(parts)}, "
+            f"so this counts as {pct}%.")
+
+
 def similarity_note(r: MatchResult, profile: CandidateProfile) -> Note:
     pct = _pct(r.semantic_similarity)
     label, sentence = next((lab, s) for low, lab, s in SIMILARITY_LEVELS if pct >= low)
     req = r.job.requirements
+    rated = {"Field": r.field_match, "Type of work": r.work_match}
+    show_match = any(rated.values())
     rows = []
     if req:
         for name, cv, job in [("Field", profile.field, req.field),
                               ("Type of work", profile.work_type, req.work_type),
                               ("Level", profile.seniority, req.level)]:
             if cv.strip() and job.strip():  # a row only when both sides have it
-                rows.append((name, cv.strip()[:1].upper() + cv.strip()[1:], job.strip()[:1].upper() + job.strip()[1:]))
+                row = (name, _cap(cv), _cap(job))
+                rows.append(row + (_cap(rated.get(name, "")),) if show_match else row)
     if len(rows) == 1 and rows[0][0] == "Level":
         rows = []  # level alone says too little: show it only beside field or type of work
-    return Note(label, sentence, table=rows)
+    return Note(label, _adjustment(r, pct) or sentence, table=rows)
 
 
 def experience_note(r: MatchResult) -> Note:

@@ -52,6 +52,9 @@ class RelevantExperience(BaseModel):
     job_id: str = ""
     reasoning: str = Field(default="", description="One or two sentences: what experience the job needs and "
                                                    "which of the candidate's roles provide it")
+    # The candidate's whole background vs the job; adjusts profile similarity (core/matcher.py)
+    field_match: str = Field(default="", description="Industry or domain: same, related or different")
+    work_match: str = Field(default="", description="Kind of work: same, related or different")
     relevant_roles: list[Role] = Field(default_factory=list, description="The candidate's roles that count "
                                        "toward this job's required experience, dates copied from the CV")
 
@@ -88,3 +91,6 @@ class MatchResult(BaseModel):
     min_years: Optional[float] = None
     relevant_only: bool = False         # True when only roles relevant to the job were counted
     counted_roles: list[Role] = []      # those roles
+    embedding_similarity: float = 0.0   # profile similarity from the embedding alone, before the rating
+    field_match: str = ""               # the judge's same / related / different, empty when not rated
+    work_match: str = ""
