@@ -22,6 +22,11 @@ SIMILARITY_LEVELS = [  # (lowest percent, label, sentence)
 ]
 
 
+# The judge's rating as shown in the Match column. "same" reads as "100%" beside a lower profile
+# similarity (the similarity also depends on wording), so it is shown as "Closely related".
+MATCH_LABELS = {"same": "Closely related", "related": "Related", "different": "Different"}
+
+
 @dataclass
 class Note:
     label: str
@@ -130,7 +135,7 @@ def similarity_note(r: MatchResult, profile: CandidateProfile) -> Note:
                               ("Level", profile.seniority, req.level)]:
             if cv.strip() and job.strip():  # a row only when both sides have it
                 row = (name, _cap(cv), _cap(job))
-                rows.append(row + (_cap(rated.get(name, "")),) if show_match else row)
+                rows.append(row + (MATCH_LABELS.get(rated.get(name, ""), ""),) if show_match else row)
     if len(rows) == 1 and rows[0][0] == "Level":
         rows = []  # level alone says too little: show it only beside field or type of work
     return Note(label, _adjustment(r, pct) or sentence, table=rows)

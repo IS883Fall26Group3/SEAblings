@@ -84,6 +84,7 @@ def test_rating_that_lowers_the_score_is_explained():
 def test_rating_that_keeps_the_score_uses_the_usual_sentence():
     r = result(semantic_similarity=1, embedding_similarity=1, field_match="same", work_match="same")
     assert similarity_note(r, PROFILE).text == "Your CV and this posting describe very similar work."
+    assert similarity_note(r, PROFILE).table[0][3] == "Closely related"  # "same" is shown this way
     mixed = result(semantic_similarity=0.75, embedding_similarity=1, field_match="same", work_match="related")
     assert "but the type of work is only related, so this counts as 75%." in similarity_note(mixed, PROFILE).text
 
