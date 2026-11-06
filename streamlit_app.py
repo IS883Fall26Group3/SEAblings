@@ -104,7 +104,7 @@ NOT_JD = "This doesn't look like a job posting. Please upload or paste a job des
 
 
 class RunStopped(Exception):
-    """Ends a run early with a message to show once the inputs are enabled again."""
+    """Ends a run early with a message: a "warning" for an input problem, otherwise an "error"."""
 
     def __init__(self, kind: str, message: str):
         super().__init__(message)
@@ -178,6 +178,20 @@ def start_run() -> None:
     st.session_state["running"] = True
 
 
+def new_search() -> None:
+    """Clear the page, keeping the CV. A new version in their keys empties the job inputs."""
+    for k in RUN_KEYS:
+        st.session_state.pop(k, None)
+    st.session_state["jobs_version"] = st.session_state.get("jobs_version", 0) + 1
+
+
+def show_notice() -> None:
+    kind, message = st.session_state["notice"]
+    (st.error if kind == "error" else st.warning)(message)
+    for note in st.session_state.get("notes", []):
+        st.caption(note)
+
+
 def show_progress() -> None:
     """What's finished so far, during a run and after one that stopped early."""
     if profile := st.session_state.get("profile"):
@@ -210,30 +224,41 @@ def handle_explain(result) -> None:
 ui.inject_css()
 ui.app_header()
 
+version = st.session_state.get("jobs_version", 0)
+
 with st.sidebar:
-    st.subheader("Your search")
-    upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
-    cv_paste = "" if upload is not None else st.text_area(
-        "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
-    if upload is None and not cv_paste.strip():
-        st.caption("No CV yet? We'll use a fictional sample CV so you can try the app.")
-    mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
-                    help="Use job descriptions you already have, or search current openings online.")
-    query = location = ""
-    limit = S.default_num_jobs
-    jd_files, jd_text = [], ""
-    if mode == MODE_JD:
-        jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
-                                    accept_multiple_files=True)
-        jd_text = st.text_area("Or paste a job description", height=150,
-                               placeholder="Paste the full posting. Put the job title on the first line.")
-    else:
-        query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst")
-        location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote")
-        limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs)
-    st.selectbox("AI model", list(OPTIONS), format_func=label, key="model_choice",
-                 help="Each Gemini model has its own free daily quota. Auto tries them in order "
-                      "and uses the offline model (if installed) as a last resort.")
+    with st.container(border=True, key="cv_section"):
+        st.subheader("1. Your CV", anchor=False)
+        upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
+        cv_paste = "" if upload is not None else st.text_area(
+            "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
+        if upload is None and not cv_paste.strip():
+            st.caption("No CV yet? We'll use a fictional sample CV so you can try the app.")
+    with st.container(border=True, key="jobs_section"):
+        st.subheader("2. Jobs to match", anchor=False)
+        mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
+                        help="Use job descriptions you already have, or search current openings online.")
+        query = location = ""
+        limit = S.default_num_jobs
+        jd_files, jd_text = [], ""
+        if mode == MODE_JD:
+            jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
+                                        accept_multiple_files=True, key=f"jd_files_{version}")
+            jd_text = st.text_area("Or paste a job description", height=150, key=f"jd_text_{version}",
+                                   placeholder="Paste the full posting. Put the job title on the first line.")
+        else:
+            query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst",
+                                  key=f"query_{version}")
+            location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote",
+                                     key=f"location_{version}")
+            limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs, key=f"limit_{version}")
+            if S.job_source == "sample":
+                st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
+    with st.container(border=True, key="model_section"):
+        st.subheader("3. AI model", anchor=False)
+        st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
+                     help="Each Gemini model has its own free daily quota. Auto tries them in order "
+                          "and uses the offline model (if installed) as a last resort.")
     st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
               type="primary", width="stretch", on_click=start_run)
     if input_error := st.session_state.get("input_error"):
@@ -254,8 +279,10 @@ with st.sidebar:
                     st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
                 except Exception as e:
                     st.error(f"{label(k)}: {e}")
-    if mode == MODE_SEARCH and S.job_source == "sample":
-        st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
+
+# Separate slots: the results slot stays empty during a run, which blanks the last page at once.
+progress_slot = st.empty()
+results_slot = st.empty()
 
 if st.session_state.get("running"):
     missing = ("Enter the role you're looking for." if mode == MODE_SEARCH and not query.strip()
@@ -265,10 +292,11 @@ if st.session_state.get("running"):
         st.session_state.update(input_error=missing, running=False)
         st.rerun()
 
-    ui.lock_page_during_run()
+    ui.grey_out_sidebar()
+    main = progress_slot.container()
     choice = st.session_state["model_choice"]
-    status = st.status("Getting started", expanded=True)
-    live = st.empty()
+    status = main.status("Getting started", expanded=True)
+    live = main.empty()
     log = StageLog(status, 4 + (mode == MODE_SEARCH) + (S.experience_fit == "judge"))
 
     def notify(k, e):
@@ -343,23 +371,26 @@ if st.session_state.get("running"):
     except Exception as e:  # show a clear next step instead of a stack trace
         st.session_state.update(notice=("error", str(e)), notes=log.notes)
     st.session_state["running"] = False
-    st.rerun()  # redraw with the inputs enabled; what the run finished is in session_state
+    st.rerun()  # redraw the finished page; what the run finished is in session_state
 
 notice = st.session_state.get("notice")
-results = st.session_state.get("results")
-if notice:
-    kind, message = notice
-    (st.error if kind == "error" else st.warning)(message)
-    for note in st.session_state.get("notes", []):
-        st.caption(note)
-if results:
-    st.markdown("## Your matches")
-    st.caption(f"{st.session_state['run_summary']}. Analyzed with {st.session_state['models_used']}; "
-               f"similarity by {st.session_state['embedder_used']}.")
-    ui.profile_panel(st.session_state["profile"])
-    for i, r in enumerate(results):
-        ui.match_card(r, i, handle_explain)
-elif st.session_state.get("profile") or st.session_state.get("jobs"):
-    show_progress()
-elif not notice:
-    ui.hero()
+with results_slot.container():
+    if results := st.session_state.get("results"):
+        title, button = st.columns([5, 1], vertical_alignment="center")
+        title.markdown("## Your matches")
+        button.button("New search", on_click=new_search, width="stretch")
+        st.caption(f"{st.session_state['run_summary']}. Analyzed with {st.session_state['models_used']}; "
+                   f"similarity by {st.session_state['embedder_used']}.")
+        ui.profile_panel(st.session_state["profile"])
+        for i, r in enumerate(results):
+            ui.match_card(r, i, handle_explain)
+    elif notice and notice[0] == "error":
+        show_notice()
+        retry, new, _ = st.columns([1, 1, 3])
+        retry.button("Try again", type="primary", on_click=start_run, width="stretch")
+        new.button("New search", on_click=new_search, width="stretch")
+        show_progress()
+    else:
+        if notice:
+            show_notice()
+        ui.hero()

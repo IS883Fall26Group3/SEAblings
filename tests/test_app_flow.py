@@ -7,11 +7,14 @@ import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
 
+import core.job_sources
 import core.llm
+from core.job_sources.sample import SampleSource
 from core.llm.base import LLMError, LLMProvider
 
 APP = str(Path(__file__).resolve().parents[1] / "streamlit_app.py")
 JD = "Data Analyst\n\nWe are looking for an analyst. Requirements: SQL. 2 years of experience."
+CV = (Path(APP).parent / "data" / "sample" / "sample_cv.txt").read_text(encoding="utf-8")
 RECIPE = "Chocolate chip cookies. Preheat the oven to 180C. Mix butter and sugar, then add flour. " * 5
 
 
@@ -44,16 +47,21 @@ def app(monkeypatch):
     monkeypatch.setattr(core.llm, "build_provider", lambda key, s: FakeProvider())
     monkeypatch.setattr(core.llm, "build_embedder", lambda s: FakeEmbedder())
     monkeypatch.setattr(FakeEmbedder, "error", None)
+    monkeypatch.setattr(core.job_sources, "get_job_source", lambda s: SampleSource())  # whatever secrets say
     st.cache_data.clear()
     st.cache_resource.clear()
     return AppTest.from_file(APP, default_timeout=30).run()
 
 
-def analyze(app, jd=JD):
-    app.text_area[1].set_value(jd)  # same request as the click, as with a quick click after typing
-    next(b for b in app.button if b.label == "Analyze my match").click().run()
+def click(app, label):
+    next(b for b in app.button if b.label == label).click().run()
     assert not app.exception
     return app
+
+
+def analyze(app, jd=JD):
+    app.text_area[1].set_value(jd)  # same request as the click, as with a quick click after typing
+    return click(app, "Analyze my match")
 
 
 def text(elements):
@@ -72,8 +80,7 @@ def test_full_run_shows_ranked_results_and_unlocks_the_page(app):
 
 def test_advice_button_works_on_the_results_page(app):
     analyze(app)
-    next(b for b in app.button if b.label == "Get advice for this role").click().run()
-    assert not app.exception
+    click(app, "Get advice for this role")
     assert "Some advice." in text(app.markdown)
     assert len(app.session_state["results"]) == 1
 
@@ -81,8 +88,7 @@ def test_advice_button_works_on_the_results_page(app):
 def test_search_mode_ranks_the_jobs_it_finds(app):
     app.radio[0].set_value("Search live jobs").run()
     app.text_input[0].set_value("analyst")
-    next(b for b in app.button if b.label == "Find matching jobs").click().run()
-    assert not app.exception
+    click(app, "Find matching jobs")
     assert not app.session_state["running"]
     assert len(app.session_state["results"]) >= 3
     assert "Ranked" in text(app.caption)
@@ -121,9 +127,19 @@ def test_retry_after_scoring_failure_succeeds(app):
     FakeEmbedder.error = LLMError("overloaded", try_other_model=True)
     analyze(app)
     FakeEmbedder.error = None
-    analyze(app)
+    click(app, "Try again")
     assert len(app.session_state["results"]) == 1
     assert not app.error
+
+
+def test_new_search_keeps_the_cv_and_empties_the_job_inputs(app):
+    app.text_area[0].set_value(CV)
+    analyze(app)
+    click(app, "New search")
+    assert "results" not in app.session_state
+    assert "See how well your CV fits the job" in text(app.markdown)
+    assert app.text_area[0].value == CV
+    assert app.text_area[1].value == ""
 
 
 def test_invalid_job_description_warns_and_unlocks_the_page(app):
@@ -131,6 +147,8 @@ def test_invalid_job_description_warns_and_unlocks_the_page(app):
     assert not app.session_state["running"]
     assert "doesn't look like a job posting" in app.warning[0].value
     assert "profile" not in app.session_state
+    assert not any(b.label == "Try again" for b in app.button)
+    assert app.text_area[1].value == RECIPE
 
 
 def test_empty_job_description_asks_for_one(app):

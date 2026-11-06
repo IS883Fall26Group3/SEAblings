@@ -13,12 +13,11 @@ def inject_css() -> None:
     st.markdown(f"<style>{CSS.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 
-def lock_page_during_run() -> None:
-    """Grey out the sidebar, since clicking an input would stop the run partway, and hide the last
-    page, which Streamlit keeps on screen until the run ends. Uses CSS because disabled=True drops
-    text typed just before the click (Streamlit 1.66)."""
-    st.markdown('<style>[data-testid="stSidebar"] { opacity: .5; pointer-events: none; }'
-                '[data-stale="true"] { display: none; }</style>', unsafe_allow_html=True)
+def grey_out_sidebar() -> None:
+    """Clicking an input would stop the run partway. Uses CSS because disabled=True drops text
+    typed just before the click (Streamlit 1.66)."""
+    st.markdown('<style>[data-testid="stSidebar"] { opacity: .5; pointer-events: none; }</style>',
+                unsafe_allow_html=True)
 
 
 def app_header() -> None:
