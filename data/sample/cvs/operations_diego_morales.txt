@@ -1,0 +1,24 @@
+DIEGO MORALES (fictional sample CV for testing)
+
+SUMMARY
+Operations and supply chain professional with 4 years in manufacturing, completing an MBA in operations management.
+
+EXPERIENCE
+Supply Chain Planner, Crestline Manufacturing (sample) (2021 - 2025)
+- Ran demand and supply planning for 300 products across two plants in SAP
+- Cut excess inventory by 18% with new safety stock rules and a weekly S&OP review
+- Built Tableau dashboards for on-time delivery, fill rate and supplier lead times
+- Negotiated delivery terms with 15 suppliers and managed corrective actions for late shipments
+
+Production Supervisor, Crestline Manufacturing (sample) (2019 - 2021)
+- Supervised a 25-person shift and led a lean project that reduced changeover time by 30%
+
+EDUCATION
+MBA, Operations Management (expected 2027), Sample University
+B.S. Mechanical Engineering, 2019
+
+CERTIFICATIONS
+Lean Six Sigma Green Belt
+
+SKILLS
+Demand planning, supply planning, inventory management, S&OP, SAP, Excel, Tableau, lean manufacturing, supplier management, team leadership

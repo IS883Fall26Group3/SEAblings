@@ -15,6 +15,9 @@ class Role(BaseModel):
 
 
 class CandidateProfile(BaseModel):
+    # Checked before matching (core/input_checks.py): a recipe or a letter is not scored as a CV
+    document_type: str = Field(default="cv", description="'cv' if the text is a CV or resume; "
+                               "otherwise 2-4 words on what it is, e.g. 'recipe' or 'cover letter'")
     summary: str = Field(description="2-3 sentence professional summary")
     years_experience: float = Field(description="Total years of professional experience")
     seniority: str = Field(description="One of: entry, mid, senior, lead")
@@ -29,6 +32,10 @@ class CandidateProfile(BaseModel):
 
 class JobRequirements(BaseModel):
     job_id: str = ""
+    # Checked before matching (core/input_checks.py): a news item is not scored as a job
+    document_type: str = Field(default="job posting", description="'job posting' if the text is a job "
+                               "posting or job description; otherwise 2-4 words on what it is, e.g. "
+                               "'news article'")
     required_skills: list[str]
     nice_to_have_skills: list[str]
     min_years_experience: Optional[float] = None

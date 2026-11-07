@@ -5,16 +5,24 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 
 ## How it works
 
-1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only.
-2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON.
+1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. Without a CV, the user
+   picks one of 5 fictional sample CVs (`core/samples.py`, `data/sample/`).
+2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON,
+   and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
+   stops (`core/input_checks.py`).
 3. **Search jobs** (`core/job_sources/`): JSearch API (aggregates Google for Jobs, incl. Indeed listings),
-   or offline sample data.
+   or offline sample data. Without a job description, the 10 fictional sample postings are used.
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
+   A text that isn't a job posting, or has no requirements at all, is skipped with a message and
+   never scored.
 5. **Judge relevant experience** (`prompts/judge_experience.md`): which CV roles count toward each job,
    and how close the field and kind of work are.
 6. **Check each requirement** (retrieval, `core/requirements.py`):
-   - For every required skill, the 3 closest CV lines and the 2 closest families in the skills
-     knowledge base (`data/skill_kb.csv`, `core/knowledge.py`) are retrieved by embeddings.
+   - For every required skill, the 2 closest families in the skills knowledge base
+     (`data/skill_kb.csv`, `core/knowledge.py`) are retrieved by embeddings, and so are CV lines:
+     up to 2 that name the skill word for word, 1 that names a related skill from those families,
+     then the 3 closest by embeddings. The word match comes first because embeddings alone miss a
+     short name like "Python" inside a long skills line.
    - The LLM labels the skill met, partial or missing from that text alone, with a quote
      (`prompts/label_requirements.md`).
    - Code keeps a quote only if it appears word for word in the CV.
@@ -107,9 +115,11 @@ core/                   business logic, no Streamlit imports (testable)
   requirements.py       retrieval for the met / partial / missing labels, and the quote check
   knowledge.py          skills knowledge base: loading, saved vectors, search
   advisor.py            tools the advice model calls (compute_match_score, search_cv)
+  input_checks.py       stops a non-CV or a non-posting before it is scored
+  samples.py            the fictional sample CVs offered in the sidebar
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
-data/sample/            fictional CV and job listings for dev, tests, demo fallback
+data/sample/            fictional CVs (5) and job postings (10) for dev, tests and the demo
 data/skill_aliases.csv  skill name lookup table (built by scripts/build_skill_aliases.py)
 data/skill_kb.csv       skills knowledge base, the retrieval corpus (built by scripts/build_skill_kb.py)
 data/skill_kb_vectors/  its embeddings, saved per embedding model
@@ -181,7 +191,8 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
   - **Skills knowledge base** (`data/skill_kb.csv`): 30 business-skill families written by the
     team, plus the O\*NET software categories. It is our retrieval corpus.
   - **Offline fallback models from Hugging Face:** Llama 3.2 1B Instruct and bge-small embeddings.
-  - **Fictional sample CV and jobs** in `data/sample/`.
+  - **Fictional sample CVs and job postings** in `data/sample/` (5 MBA CVs and 10 postings, all
+    people and companies made up).
 
 ### 2. WHAT CHANGED SINCE THE PROPOSAL
 - **What we changed, and why:**
@@ -211,8 +222,9 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
       business-skill families written by the team, such as "Data analysis and business
       intelligence: Tableau, Power BI, Looker…", and 134 O\*NET software categories). It is built
       by `scripts/build_skill_kb.py` and embedded ahead of time.
-    - For each job requirement, the app retrieves the 2 closest families and the 3 closest CV
-      lines by embeddings (`core/requirements.py`, `core/knowledge.py`). It puts them in the
+    - For each job requirement, the app retrieves the 2 closest families by embeddings, and CV
+      lines that name the requirement or a related skill, plus the 3 closest CV lines by embeddings
+      (`core/requirements.py`, `core/knowledge.py`). It puts them in the
       prompt that labels the requirement met / partial / missing (`prompts/label_requirements.md`),
       so a related skill such as Tableau for Power BI becomes "partial".
     - A separate lookup table (`data/skill_aliases.csv`, about 1,500 names) still maps different
@@ -239,8 +251,12 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
 
 ### 3. WHERE THE BUILD STANDS
 - **What a user can do on the deployed app today:**
-  - Upload or paste a CV, or try the fictional sample CV.
-  - Match it against uploaded or pasted job descriptions, or search live jobs by role and location.
+  - Upload or paste a CV, or pick one of 5 fictional MBA sample CVs (finance, marketing and
+    consulting, operations, product analytics, corporate planning).
+  - Match it against uploaded or pasted job descriptions, the 10 fictional sample postings, or a
+    live job search by role and location.
+  - A document that isn't a CV, or a text that isn't a job posting, gets a clear message instead of
+    a score.
   - See the jobs ranked with a score and its breakdown, and each required skill labeled you have /
     partly / to build, with the CV line that shows it.
   - Ask for advice on any job.
@@ -252,7 +268,7 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
   |---|---|---|
   | Structured prompting | Templates in `prompts/`, versioned in git. Each sets a recruiter or coach role and rules. The experience judge (`judge_experience.md`) and the requirement labels (`label_requirements.md`) work through numbered steps and write a reason before the answer; the labels prompt has two worked examples. The advice step sets its role and rules in Gemini's system instruction (`advice_system.md`). | Working |
   | Structured output | Every extraction, the judge and the requirement labels return JSON checked against Pydantic schemas (`core/schemas.py`). A reply that doesn't parse is retried once, then the next model is tried. If the judge fails, experience fit uses total years; if the labels fail, skills are matched by name and embedding. | Working |
-  | Retrieval over our own sources | For each requirement, the 3 closest CV lines and the 2 closest families in our skills knowledge base (`data/skill_kb.csv`) are retrieved by embedding similarity and put in the labeling prompt, which returns met / partial / missing with a quote (`core/requirements.py`). Code then checks each quote word for word against the CV and drops it if it isn't there. | Working |
+  | Retrieval over our own sources | For each requirement, the 2 closest families in our skills knowledge base (`data/skill_kb.csv`) are retrieved by embedding similarity; so are CV lines: those that name the requirement or a related skill, then the 3 closest by embeddings. They go in the labeling prompt, which returns met / partial / missing with a quote (`core/requirements.py`). Code then checks each quote word for word against the CV and drops it if it isn't there. | Working |
   | Tool calling | Advice: Gemini calls `compute_match_score` (the app's formula) and `search_cv` (CV lines closest to a phrase); our loop runs them and returns the results (`core/advisor.py`, `core/llm/gemini.py`). The offline model can't call tools, so the app calls the score tool for it. | Working |
 
 - **A first sketch of our architecture diagram (§5.2):**
@@ -263,10 +279,14 @@ flowchart TD
     S["JSearch API or sample jobs"] --> P
     P --> A["LLM: extract CV profile<br/>(structured prompt, JSON schema)"]
     P --> B["LLM: extract each posting's requirements<br/>(batched, JSON schema)"]
+    A -. "not a CV" .-> NO["Message: this doesn't look like a CV; nothing scored"]
+    B -. "not a posting, or no requirements" .-> SK["Job skipped with a message"]
     A --> J["LLM: judge relevant roles, field and work match<br/>(guided steps, JSON schema)"]
     B --> J
     B --> R["Retrieval: closest CV lines + skills knowledge base<br/>families for each requirement (embeddings)"]
     KB[("Skills knowledge base<br/>data/skill_kb.csv")] --> R
+    B --> R2["Python: CV lines that name the requirement<br/>or a related skill (word match)"]
+    R2 --> L
     R --> L["LLM: label each requirement met / partial / missing<br/>with a quote (JSON schema)"]
     L --> V["Python: check each quote word for word in the CV"]
     A --> M["Python + embeddings: score<br/>skills 50% · similarity 30% · experience 20%"]
@@ -279,6 +299,22 @@ flowchart TD
     J -. "judge fails" .-> T["Experience fit uses total years"]
     L -. "labels fail" .-> SM["Skills matched by name and embedding"]
 ```
+
+- **Cost of one search** (Gemini Flash Lite, measured with `eval/measure_cost.py`):
+
+  | | LLM calls | Tokens in / out | Texts embedded | Time |
+  |---|---|---|---|---|
+  | 1 CV vs 1 posting | 4 | 3,441 / 1,117 | 25 | 13 s |
+  | 1 CV vs 10 postings | 4 | 13,374 / 5,566 | 70 | 29-33 s |
+  | Advice for one job (tool calling) | 2 | 1,804 / 129 | 0 | 5 s |
+
+  - The number of LLM calls stays at 4 however many jobs there are, because every step batches all
+    jobs into one call.
+  - The requirement check is three quarters of the input tokens, since it carries the retrieved CV
+    lines for every requirement.
+  - The tightest free-tier limit is embeddings: 1,000 texts a day per Google project, so about 14
+    ten-job searches. Texts already embedded in a session are reused, and the skills knowledge base
+    is embedded ahead of time.
 
 ### 4. SUCCESS METRIC (§5.5)
 - **The one number that says whether our app is doing its job:** **requirement classification
@@ -301,6 +337,32 @@ flowchart TD
     different field.
   - Each pair's requirements are fixed first; then a teammate labels each one met / partial /
     missing from the CV **before** the app is run on that pair.
+  - **Built:** 16 CV-job pairs (9 CVs, 12 postings, 110 requirements: 38 met, 31 partial, 41
+    missing), 2 of them confusing pairs, plus the 4 awkward inputs: 20 test inputs. Details in
+    `eval/README.md` ("Success metric").
+- **Results** (`eval/requirement_accuracy.py`; the app's labels vary between runs, so it ran 3 times):
+
+  | | Accuracy | Met right | Partial right | Missing right |
+  |---|---|---|---|---|
+  | Keyword baseline | 50.9% | 39% | 0% | 100% |
+  | **App, mean of 3 runs** | **70.0%** (66.4-76.4%) | 88% | 31% | 83% |
+
+  - The app beats the baseline by 19 points but is below our 75% target. One run of three reached it.
+  - **Partial is the weak spot:** the app gets 31% of the team's partial labels right. People find
+    it hard too: two teammates labeling the same 25 requirements agreed on 88% (Cohen's kappa 0.82),
+    and all 3 disagreements were met vs partial.
+  - **Confusing pairs:** 90% right on average, so a wrong-field job that shares skills doesn't fool
+    the labels.
+  - **Quotes:** 170 of 171 quotes the app gave were found word for word in the CV; the check
+    dropped the one that wasn't.
+  - **How we got here:** the first version scored 63.3% on the test set. Its errors showed that
+    retrieval missed short skill names (Python, SQL, ETL) inside long CV lines, so we added the word
+    match described in slot 3. We then tuned the labeling prompt only on a separate practice set (8
+    pairs on CVs and postings outside the test set) to follow our labeling guide, and ran the test
+    set once more.
+  - **Awkward inputs:** all 4 pass. A recipe uploaded as a CV and a news item pasted as a job were
+    first scored like real inputs, so we added the checks in `core/input_checks.py`; now each gets a
+    clear message and no score.
 
 ### 5. PROOF OF CONCEPT — TWO TEST INPUTS
 Both use the fictional sample CV (`data/sample/sample_cv.txt`: corporate planning analyst at an
@@ -360,16 +422,19 @@ over repeated runs.
 ### 6. THE PLAN TO OUR PRESENTATION
 - **What is left to build, and who owns each piece:**
 
-  | Work | Owner |
-  |---|---|
-  | Labeling guide for met / partial / missing, with examples | _(team to assign)_ |
-  | Choose the 20 test pairs, fix their requirement lists, label them before running | _(team to assign)_ |
-  | Fictional MBA sample CVs and job descriptions, chosen from a menu | _(team to assign)_ |
-  | Simpler interface: model settings under "Advanced", shorter job cards | _(team to assign)_ |
-  | Approximate result without the LLM when the API fails or times out | _(team to assign)_ |
-  | Evaluation script: app vs keyword baseline, accuracy per label, quotes found | _(team to assign)_ |
-  | Architecture diagram, cost per run, confusing examples for the presentation | _(team to assign)_ |
-  | A comment at the top of each section naming who wrote it | Each member |
+  | Work | Status | Owner |
+  |---|---|---|
+  | Labeling guide for met / partial / missing, with examples | Done (`eval/labeling_guide.md`) | _(team to assign)_ |
+  | Choose the 20 test inputs, fix their requirement lists, label them before running | Done | Each member |
+  | Check each posting's requirement list for missed or invented requirements | Not yet (`*_extraction.csv`) | Each member |
+  | Fictional MBA sample CVs and job descriptions, chosen from a menu | Done | _(team to assign)_ |
+  | Checks that stop a non-CV or a non-posting | Done | _(team to assign)_ |
+  | Evaluation script: app vs keyword baseline, accuracy per label, quotes found | Done (slot 4) | _(team to assign)_ |
+  | Cost per search | Measured (slot 3); cost model not yet | _(team to assign)_ |
+  | Simpler interface: model settings under "Advanced", shorter job cards | Not yet | _(team to assign)_ |
+  | Approximate result without the LLM when the API fails or times out | Partly: fallbacks for the judge, the labels and daily embedding quota | _(team to assign)_ |
+  | Confusing examples and a failure our metric can't catch, for the presentation | Not yet | _(team to assign)_ |
+  | A comment at the top of each section naming who wrote it | Not yet | Each member |
 
   Already built: per-requirement labels (met / partial / missing) from retrieved CV lines and the
   skills knowledge base, the word-for-word quote check, and tool-calling advice.

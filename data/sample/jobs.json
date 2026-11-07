@@ -58,5 +58,45 @@
     "employment_type": "Full-time",
     "url": "",
     "description": "Support annual planning and budgeting for downstream operations. Required: financial modeling, budgeting, Excel, scenario analysis, oil and gas industry. 3+ years experience. Preferred: MBA, SAP."
+  },
+  {
+    "id": "s7",
+    "title": "FP&A Analyst",
+    "company": "Summitview SaaS (sample)",
+    "description": "Join our finance team to own forecasting and reporting. Required: FP&A, financial modeling, forecasting, variance analysis, Excel, ERP systems such as NetSuite. 2+ years of experience in FP&A or corporate finance. Nice to have: SQL, SaaS metrics, Power BI.",
+    "url": "",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time"
+  },
+  {
+    "id": "s8",
+    "title": "Clinical Data Analyst",
+    "company": "Riverbend Medical Center (sample)",
+    "description": "Analyze clinical trial and patient outcome data for our research institute. Required: SQL, SAS, clinical trial data, CDISC standards, biostatistics, healthcare data privacy (HIPAA). 3+ years of experience in clinical research or healthcare analytics. Nice to have: Python, Tableau.",
+    "url": "",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time"
+  },
+  {
+    "id": "s9",
+    "title": "Marketing Insights Manager",
+    "company": "Golden Orchard Foods (sample)",
+    "description": "Lead consumer research for our snack and beverage brands. Required: market research, consumer insights, survey design, brand strategy, data storytelling, stakeholder management. 4+ years in marketing, insights or consulting. Nice to have: Nielsen data, pricing strategy.",
+    "url": "",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time"
+  },
+  {
+    "id": "s10",
+    "title": "Supply Chain Planning Analyst",
+    "company": "Ironwood Industrial (sample)",
+    "description": "Plan supply for our manufacturing network. Required: demand planning, inventory management, S&OP, SAP, Excel, supplier management. 3+ years in supply chain planning or operations. Nice to have: Tableau, Lean Six Sigma.",
+    "url": "",
+    "location": "Boston, MA",
+    "source": "Sample",
+    "employment_type": "Full-time"
   }
 ]

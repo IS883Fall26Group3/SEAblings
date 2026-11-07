@@ -4,7 +4,6 @@ import time
 import logging
 import os
 from dataclasses import replace
-from pathlib import Path
 
 import streamlit as st
 
@@ -28,19 +27,20 @@ from core.cv_parser import clean_text, extract_text  # noqa: E402
 from core.advisor import match_tools  # noqa: E402
 from core.embeddings import EmbeddingQuotaError, embed_with_wait, memo_embed  # noqa: E402
 from core.job_sources import get_job_source, jobs_from_descriptions, name_from_requirements  # noqa: E402
+from core.input_checks import cv_problem, posting_problem  # noqa: E402
 from core.knowledge import SkillKB  # noqa: E402
 from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
                       local_available, model_options, with_fallback)
 from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.requirements import retrieve_evidence  # noqa: E402
+from core.samples import SAMPLE_CVS, sample_cv, sample_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience, label_requirements)
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
 OPTIONS = model_options(S)
-SAMPLE_CV = Path(__file__).parent / "data" / "sample" / "sample_cv.txt"
 MODE_JD, MODE_SEARCH = "My job descriptions", "Search live jobs"
 
 
@@ -153,7 +153,7 @@ with st.sidebar:
     cv_paste = "" if upload is not None else st.text_area(
         "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
     if upload is None and not cv_paste.strip():
-        st.caption("No CV yet? We'll use a fictional sample CV so you can try the app.")
+        st.selectbox("No CV yet? Try a fictional sample CV", list(SAMPLE_CVS), key="sample_cv")
     mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
                     help="Use job descriptions you already have, or search current openings online.")
     query = location = ""
@@ -164,6 +164,8 @@ with st.sidebar:
                                     accept_multiple_files=True)
         jd_text = st.text_area("Or paste a job description", height=150,
                                placeholder="Paste the full posting. Put the job title on the first line.")
+        if not jd_files and not jd_text.strip():
+            st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} fictional sample postings.")
     else:
         query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst")
         location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote")
@@ -196,9 +198,6 @@ if run:
     if mode == MODE_SEARCH and not query.strip():
         st.sidebar.error("Enter the role you're looking for.")
         st.stop()
-    if mode == MODE_JD and not jd_files and not jd_text.strip():
-        st.sidebar.error("Upload or paste at least one job description.")
-        st.stop()
     for k in ("explanations", "explain_errors", "tool_calls"):
         st.session_state.pop(k, None)
     choice = st.session_state["model_choice"]
@@ -213,13 +212,20 @@ if run:
             elif cv_paste.strip():
                 cv_text = clean_text(cv_paste, S.max_cv_chars)
             else:
-                cv_text = SAMPLE_CV.read_text(encoding="utf-8")
+                cv_text = sample_cv(st.session_state.get("sample_cv", ""))
             cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
 
             st.write("Extracting your skills")
             profile, used_p = with_fallback(model_chain(choice), lambda k: cached_profile(cv_hash, cv_text, k), notify)
+            if problem := cv_problem(profile):
+                status.update(label="This doesn't look like a CV", state="error")
+                st.error(f"{problem} Upload or paste your CV, or clear the CV box to try a sample CV.")
+                st.stop()
 
-            if mode == MODE_JD:
+            if mode == MODE_JD and not jd_files and not jd_text.strip():
+                st.write("Using the fictional sample job postings")
+                raw_jobs = sample_jobs()
+            elif mode == MODE_JD:
                 st.write("Reading your job descriptions")
                 items = [(f.name.rsplit(".", 1)[0],
                           extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
@@ -238,6 +244,16 @@ if run:
             ids = tuple(j.id for j in raw_jobs)
             jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
             jobs = name_from_requirements(jobs)
+            skipped = [(j, why) for j in jobs if (why := posting_problem(j))]
+            for j, why in skipped:  # never score a news item or an empty posting as a job
+                st.write(f"Skipped \"{j.title}\": {why}.")
+            jobs = [j for j in jobs if not posting_problem(j)]
+            if not jobs:
+                status.update(label="No job requirements found", state="error")
+                st.warning("No job requirements were found in what you gave, so there is nothing to "
+                           "match. Paste the full job posting, including its requirements.")
+                st.stop()
+            ids = tuple(j.id for j in jobs)
 
             relevant, background, used_e = None, None, used_j
             if S.experience_fit == "judge":
@@ -293,6 +309,8 @@ if run:
             st.session_state.update(profile=profile, results=results, cv_text=cv_text,
                                     models_used=", ".join(used), embedder_used=emb.name)
             done = "Analyzed 1 job" if len(results) == 1 else f"Ranked {len(results)} jobs"
+            if skipped:
+                done += f" (skipped {len(skipped)} that isn't a job posting)"
             status.update(label=done, state="complete", expanded=False)
         except Exception as e:  # show a clear next step instead of a stack trace
             status.update(label="Something went wrong", state="error")

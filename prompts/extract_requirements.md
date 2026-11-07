@@ -1,4 +1,6 @@
 You are an experienced technical recruiter. For each job posting below, extract:
+- document_type: "job posting" if the text is a job posting or job description; otherwise 2-4
+  words on what it is (e.g. "news article"), with empty skill lists
 - required_skills: skills the posting states as required or core (max 12)
 - nice_to_have_skills: skills marked preferred, a plus, or bonus (max 8)
 - min_years_experience: the minimum years stated, or null if not stated

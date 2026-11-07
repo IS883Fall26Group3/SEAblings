@@ -1,0 +1,21 @@
+MEI CHEN (fictional sample CV for testing)
+
+SUMMARY
+Product analyst with 3 years at a consumer finance app, completing an MBA with a focus on technology and analytics.
+
+EXPERIENCE
+Product Analyst, Pocketwise (sample) (2022 - 2025)
+- Designed and analyzed A/B tests on onboarding and savings features, raising activation by 9%
+- Wrote SQL queries and Python notebooks to build weekly product metrics for 2M users
+- Built Looker dashboards for funnel, retention and feature adoption used by product managers
+- Wrote requirements with engineers and designers for three feature launches
+
+Data Analyst Intern, Cobalt Insurance (sample) (2021)
+- Cleaned claims data and built Excel reports on claim turnaround times
+
+EDUCATION
+MBA, Technology and Analytics (expected 2027), Sample University
+B.S. Statistics, 2021
+
+SKILLS
+SQL, Python, A/B testing, product analytics, Looker, Tableau, Excel, statistics, stakeholder communication, requirements writing

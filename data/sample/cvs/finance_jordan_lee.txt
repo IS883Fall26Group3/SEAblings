@@ -1,0 +1,21 @@
+JORDAN LEE (fictional sample CV for testing)
+
+SUMMARY
+Finance professional with 3 years in FP&A at a software company, now completing an MBA with a finance concentration.
+
+EXPERIENCE
+FP&A Analyst, Brightloop Software (sample) (2022 - 2025)
+- Owned the monthly forecast and budget-versus-actual variance analysis for a $120M revenue business
+- Built a three-statement financial model used for the annual operating plan and board reporting
+- Automated revenue and headcount reports in Excel and NetSuite, saving 2 days each month-end close
+- Presented quarterly results and forecast changes to the CFO and department heads
+
+Financial Analyst Intern, Harborview Bank (sample) (2021)
+- Prepared credit memos and reconciled loan data for the commercial lending team
+
+EDUCATION
+MBA, Finance concentration (expected 2027), Sample University
+B.S. Accounting, 2021
+
+SKILLS
+Financial modeling, FP&A, forecasting, budgeting, variance analysis, Excel (advanced), NetSuite, SQL (basic), PowerPoint, financial statements
