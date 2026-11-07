@@ -1,35 +1,35 @@
-﻿pair,kind,cv,job_id,job_title,type,requirement,role,label,note
-P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Financial Planning,main,,
-P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Budgeting,main,,
-P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Forecasting,main,,
-P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Financial Modeling,main,,
-P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Performance Analysis,main,,
-P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Management Consulting,second,,
-P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Operating Model Design,second,,
-P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Stakeholder Engagement,second,,
-P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Executive Presentations,second,,
-P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Workshop Facilitation,second,,
-P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",years,5+ years of relevant experience,second,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Analysis,main,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Forecasting,main,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Excel,main,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,PowerPoint,main,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Modeling,main,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Data Analysis,main,,
-P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),years,2+ years of relevant experience,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Biotech Consulting,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Data Analysis,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Market Access,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Pricing,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Forecasting,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Excel,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,PowerPoint,main,,
-P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,years,3+ years of relevant experience,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Database Development,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Business Intelligence,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,SQL,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Tableau,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Power BI,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,ETL,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Epic Clarity,main,,
-P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,years,7+ years of relevant experience,main,,
+pair,kind,cv,job_id,job_title,type,requirement,role,label,note
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Financial Planning,main,partial,"cost analysis and club VP of Finance role, no corporate FP&A"
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Budgeting,main,missing,
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Forecasting,main,missing,
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Financial Modeling,main,missing,
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Performance Analysis,main,partial,evaluated cost savings and profitability in internal audit role
+P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Management Consulting,second,met,
+P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Operating Model Design,second,met,implemented management frameworks and led 20+ transformation projects
+P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Stakeholder Engagement,second,met,
+P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Executive Presentations,second,met,
+P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",skill,Workshop Facilitation,second,met,
+P04,regular,LB,j062,"Knowledge, Data, and AI Strategy Lead Consultant",years,5+ years of relevant experience,second,met,6.4 yrs: two business consulting roles
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Analysis,main,met,
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Forecasting,main,partial,used projected financials for covenant tests and built DCF models
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Excel,main,met,
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,PowerPoint,main,missing,
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Modeling,main,met,
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),skill,Data Analysis,main,partial,SKU pricing project and SQL/Python/Power BI in skills
+P07,regular,SA,j054,Financial Analyst (2026-8076) Remote (United States),years,2+ years of relevant experience,main,met,7.8 yrs: three credit and financial analyst roles
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Biotech Consulting,main,partial,"biotech industry roles and 2-mo consulting project, not biotech consulting"
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Data Analysis,main,partial,donor segmentation project and marketing/web analytics only
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Market Access,main,missing,
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Pricing,main,missing,
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Forecasting,main,missing,
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,Excel,main,met,
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,skill,PowerPoint,main,met,
+P11,regular,KF,j072,[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute,years,3+ years of relevant experience,main,partial,2.8 yrs biotech procurement/ops plus short consulting and marketing internships
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Database Development,main,missing,
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Business Intelligence,main,partial,"Tableau and Power BI listed in skills only, no BI development role"
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,SQL,main,missing,
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Tableau,main,met,
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Power BI,main,met,
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,ETL,main,missing,
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,skill,Epic Clarity,main,missing,
+P15,confusing,SU,j032,Sr. Epic Business Intelligence Developer,years,7+ years of relevant experience,main,missing,0 yrs in BI/database development; 4.1 yrs in supply chain

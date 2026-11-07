@@ -1,37 +1,37 @@
-﻿pair,kind,cv,job_id,job_title,type,requirement,role,label,note
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Analysis,main,,
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Forecasting,main,,
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Excel,main,,
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,PowerPoint,main,,
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Modeling,main,,
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Data Analysis,main,,
-P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),years,2+ years of relevant experience,main,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,FP&A,second,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Financial Modeling,second,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Excel,second,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Variance Analysis,second,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Headcount Analytics,second,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,P&L,second,,
-P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,years,1+ years of relevant experience,second,,
-P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Management Consulting,main,,
-P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Business Strategy,main,,
-P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Structured Problem Solving,main,,
-P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Business Analysis,main,,
-P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Written Communication,main,,
-P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),years,1+ years of relevant experience,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Data Engineering,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Databricks,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Apache Spark,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Delta Lake,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,SQL,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Python,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Azure,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,skill,ETL,main,,
-P09,regular,ZW,j031,Sr. BI Data Engineer,years,7+ years of relevant experience,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Management Consulting,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Life Sciences,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Structured Problem Solving,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Biotech,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Change Management,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Data Analysis,main,,
-P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,years,2.5+ years of relevant experience,main,,
+pair,kind,cv,job_id,job_title,type,requirement,role,label,note
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Analysis,main,met,cost comparison and profitability analysis in audit role
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Forecasting,main,missing,
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Excel,main,missing,
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,PowerPoint,main,missing,
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Financial Modeling,main,missing,
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),skill,Data Analysis,main,partial,"account balance and cost analysis only, no dedicated data role"
+P01,regular,AS,j054,Financial Analyst (2026-8076) Remote (United States),years,2+ years of relevant experience,main,met,5 yrs: internal and external audit roles
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,FP&A,second,partial,"audit and cost analysis experience, no direct FP&A role"
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Financial Modeling,second,missing,
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Excel,second,missing,
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Variance Analysis,second,partial,analyzed account balance changes in external audit
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Headcount Analytics,second,missing,
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,P&L,second,met,audited financial statements and drove profitability improvements
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,years,1+ years of relevant experience,second,met,5 yrs: accounting and audit roles
+P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Management Consulting,main,met,6.4 yrs across two management consulting roles
+P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Business Strategy,main,met,
+P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Structured Problem Solving,main,partial,implied via consulting frameworks and process improvements
+P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Business Analysis,main,met,
+P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),skill,Written Communication,main,partial,implied through client deliverables and executive briefings
+P05,regular,LB,j006,Strategy Consultant (Remote | $150–$350/hr),years,1+ years of relevant experience,main,met,6.4 yrs: business transformation and consulting roles
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Data Engineering,main,met,
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Databricks,main,partial,"Spark experience listed in skills, no Databricks"
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Apache Spark,main,partial,listed as familiar with Hadoop/Spark stack only
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Delta Lake,main,missing,
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,SQL,main,met,
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Python,main,met,
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,Azure,main,missing,
+P09,regular,ZW,j031,Sr. BI Data Engineer,skill,ETL,main,met,
+P09,regular,ZW,j031,Sr. BI Data Engineer,years,7+ years of relevant experience,main,met,7.1 yrs: data specialist and research engineer roles
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Management Consulting,main,missing,
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Life Sciences,main,partial,"biotech degree and consumer care R&D, no life sciences role"
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Structured Problem Solving,main,met,problem solving in skills and workflow bottleneck analysis
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Biotech,main,partial,BSc in Biotechnology only; work experience in consumer goods R&D
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Change Management,main,partial,led workflow improvements and regional benchmark adoption
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,skill,Data Analysis,main,partial,quantitative analysis in skills and R&D cost/workflow analysis
+P13,regular,MS,j019,Associate Consultant - Discovery Strategy & Transformation,years,2.5+ years of relevant experience,main,partial,"7.8 yrs in consumer product R&D, no consulting or life sciences role"
