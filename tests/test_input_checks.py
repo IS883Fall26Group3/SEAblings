@@ -30,3 +30,14 @@ def test_posting_check():
     assert "no job requirements" in posting_problem(job(skills=()))
     j = job(); j.requirements = None
     assert posting_problem(j) is None                            # not extracted: matcher decides
+
+
+def test_objects_cached_before_the_field_existed_still_pass():
+    """Streamlit's cache can return a profile or posting saved before document_type was added."""
+    import pickle
+    p, j = profile("cv"), job()
+    del p.__dict__["document_type"]
+    del j.requirements.__dict__["document_type"]
+    p, j = pickle.loads(pickle.dumps(p)), pickle.loads(pickle.dumps(j))
+    assert cv_problem(p) is None
+    assert posting_problem(j) is None

@@ -10,7 +10,8 @@ _POSTING_WORDS = ("job", "posting", "vacancy", "position", "role", "opening")
 
 def cv_problem(profile: CandidateProfile) -> str | None:
     """Why this doesn't look like a CV, or None if it does."""
-    kind = profile.document_type.strip().lower()
+    # getattr: a profile cached by the app before this field existed comes back without it
+    kind = (getattr(profile, "document_type", "") or "").strip().lower()
     if not kind or any(w in kind for w in _CV_WORDS):
         return None
     return f"This doesn't look like a CV (it reads like a {kind})."
@@ -22,7 +23,7 @@ def posting_problem(job: Job) -> str | None:
     req = job.requirements
     if req is None:
         return None
-    kind = req.document_type.strip().lower()
+    kind = (getattr(req, "document_type", "") or "").strip().lower()
     if kind and not any(w in kind for w in _POSTING_WORDS):
         return f"it doesn't read like a job posting (it reads like a {kind})"
     if not any(s.strip() for s in req.required_skills) and not req.min_years_experience:
