@@ -49,3 +49,29 @@ def test_other_errors_are_not_retried(no_sleep):
     with pytest.raises(LLMError, match="daily quota"):
         embed_with_wait(scripted(LLMError("daily quota used up")), ["cv"])
     assert no_sleep == []
+
+
+def test_daily_embedding_quota_becomes_its_own_error(monkeypatch):
+    """The app switches to the local embedder on this error, so it must not say to pick another model."""
+    def spent(fn, what, model):
+        raise LLMError("The free daily quota for gemini-embedding-001 is used up. It resets in about "
+                       "4h43m31s. Pick another model in the sidebar.", try_other_model=True)
+    monkeypatch.setattr(embeddings, "call_gemini", spent)
+    emb = embeddings.GeminiEmbedder.__new__(embeddings.GeminiEmbedder)
+    emb.client, emb.model = None, "gemini-embedding-001"
+    with pytest.raises(embeddings.EmbeddingQuotaError) as e:
+        emb.embed(["sql"])
+    assert "4h43m31s" in str(e.value) and "sidebar" not in str(e.value)
+
+
+def test_memo_embed_embeds_each_text_once():
+    seen = []
+
+    def embed(texts):
+        seen.extend(texts)
+        return np.eye(3)[:len(texts)]
+
+    run = embeddings.memo_embed(embed)
+    run(["a", "b"])
+    out = run(["b", "c", "a"])
+    assert seen == ["a", "b", "c"] and out.shape == (3, 3)

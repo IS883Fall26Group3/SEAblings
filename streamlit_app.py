@@ -3,6 +3,7 @@ import hashlib
 import time
 import logging
 import os
+from dataclasses import replace
 from pathlib import Path
 
 import streamlit as st
@@ -25,11 +26,11 @@ load_secrets_into_env()
 from core.config import get_settings  # noqa: E402
 from core.cv_parser import clean_text, extract_text  # noqa: E402
 from core.advisor import match_tools  # noqa: E402
-from core.embeddings import embed_with_wait, memo_embed  # noqa: E402
+from core.embeddings import EmbeddingQuotaError, embed_with_wait, memo_embed  # noqa: E402
 from core.job_sources import get_job_source, jobs_from_descriptions, name_from_requirements  # noqa: E402
 from core.knowledge import SkillKB  # noqa: E402
 from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
-                      model_options, with_fallback)
+                      local_available, model_options, with_fallback)
 from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.requirements import retrieve_evidence  # noqa: E402
@@ -56,11 +57,12 @@ def get_provider(key: str):
 
 @st.cache_resource(show_spinner="Loading the embedding model...")
 def _embedder(mode: str, api_key: str):
-    return build_embedder(S)
+    return build_embedder(replace(S, embeddings=mode))
 
 
 def get_embedder():
-    return _embedder(S.embeddings, S.gemini_api_key)
+    # "local" once Gemini's daily embedding quota ran out in this session (see run below)
+    return _embedder("local" if st.session_state.get("embed_local") else S.embeddings, S.gemini_api_key)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -89,9 +91,9 @@ def cached_judgment(cv_hash: str, job_ids: tuple[str, ...], model_key: str, _cv_
 
 
 @st.cache_resource(show_spinner="Loading the skills knowledge base...")
-def get_kb(embedder_name: str) -> SkillKB:
+def get_kb(embedder_name: str, _emb) -> SkillKB:
     # Saved vectors are used when they match this embedder; otherwise the entries are embedded once.
-    return SkillKB.build(embedder_name, lambda t: embed_with_wait(get_embedder().embed, t))
+    return SkillKB.build(embedder_name, lambda t: embed_with_wait(_emb.embed, t))
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -237,13 +239,8 @@ if run:
             jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
             jobs = name_from_requirements(jobs)
 
-            emb = get_embedder()
-            embed = search_embed(emb, lambda s: st.write(
-                f"Gemini's per-minute limit is reached. Waiting {s} seconds, then trying again…"))
-            relevant, background, checks, used_e, used_r = None, None, None, used_j, used_j
-            if S.experience_fit == "roles":
-                relevant = relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
-            elif S.experience_fit == "judge":
+            relevant, background, used_e = None, None, used_j
+            if S.experience_fit == "judge":
                 st.write("Judging your relevant experience")
                 try:
                     judged, used_e = with_fallback(
@@ -254,22 +251,43 @@ if run:
                     st.write(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
                              "all your years instead.")
 
-            if S.requirement_labels == "llm":
-                # Retrieval: the CV lines and knowledge-base families closest to each requirement go
-                # to the LLM, which labels it met / partial / missing with a quote (core/requirements.py).
-                st.write("Checking each requirement against your CV")
-                try:
-                    retrieved = retrieve_evidence(jobs, cv_text, embed, get_kb(emb.name))
-                    checks, used_r = with_fallback(
-                        model_chain(choice),
-                        lambda k: cached_labels(cv_hash, ids, k, emb.name, jobs, retrieved, cv_text), notify)
-                except LLMError as e:  # the rest of the match is ready: match skills by name instead
-                    st.write(f"Couldn't check each requirement ({e}) Skills are matched by name and "
-                             "meaning instead.")
+            def embedding_steps(emb):
+                """Everything that needs embeddings, so it can run again on the local model."""
+                embed = search_embed(emb, lambda s: st.write(
+                    f"Gemini's per-minute limit is reached. Waiting {s} seconds, then trying again…"))
+                roles = (relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
+                         if S.experience_fit == "roles" else relevant)
+                checks, used_r = None, used_j
+                if S.requirement_labels == "llm":
+                    # Retrieval: the CV lines and knowledge-base families closest to each requirement
+                    # go to the LLM, which labels it met / partial / missing with a quote.
+                    st.write("Checking each requirement against your CV")
+                    try:
+                        retrieved = retrieve_evidence(jobs, cv_text, embed, get_kb(emb.name, emb))
+                        checks, used_r = with_fallback(
+                            model_chain(choice),
+                            lambda k: cached_labels(cv_hash, ids, k, emb.name, jobs, retrieved, cv_text), notify)
+                    except EmbeddingQuotaError:
+                        raise
+                    except LLMError as e:  # the rest of the match is ready: match skills by name instead
+                        st.write(f"Couldn't check each requirement ({e}) Skills are matched by name and "
+                                 "meaning instead.")
+                st.write("Scoring each job")
+                return score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=roles,
+                                  background=background, requirement_checks=checks), used_r
 
-            st.write("Scoring each job")
-            results = score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=relevant,
-                                 background=background, requirement_checks=checks)
+            emb = get_embedder()
+            try:
+                results, used_r = embedding_steps(emb)
+            except EmbeddingQuotaError as e:
+                if not local_available():
+                    raise LLMError(f"{e} Try again after it resets, or set EMBEDDINGS = \"local\" in "
+                                   "Secrets with llama-cpp-python installed.") from e
+                st.write(f"{e} Switching to the offline embedding model for this session (it loads in "
+                         "about a minute the first time).")
+                st.session_state["embed_local"] = True
+                emb = get_embedder()
+                results, used_r = embedding_steps(emb)
             used = sorted({label(used_p), label(used_j), label(used_e), label(used_r)})
             # The CV text stays in this session's memory only, for the advice tools (search_cv).
             st.session_state.update(profile=profile, results=results, cv_text=cv_text,
