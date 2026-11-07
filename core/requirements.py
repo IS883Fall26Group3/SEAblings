@@ -68,22 +68,47 @@ def required_skills(job: Job) -> list[str]:
     return [s for s in (req.required_skills if req else []) if s.strip()]
 
 
+def _words(text: str) -> str:
+    """Lowercase words with spaces around them, for whole-word matching ("r" doesn't match "rigs")."""
+    return " " + re.sub(r"[^a-z0-9+#]+", " ", text.lower()).strip() + " "
+
+
+def _terms(requirement: str) -> list[str]:
+    """The names a requirement goes by: "GenAI / LLMs" -> ["genai / llms", "genai", "llms"]."""
+    parts = re.split(r"\s*(?:/|,|;|\band\b|\bor\b)\s*", requirement, flags=re.I)
+    return [t for t in dict.fromkeys([requirement, *parts]) if _words(t).strip()]
+
+
+def _naming(lines_w: list[str], terms: list[str]) -> list[int]:
+    """Indexes of the CV lines that name any of the terms as whole words."""
+    tw = [_words(t) for t in terms]
+    return [i for i, lw in enumerate(lines_w) if any(t in lw for t in tw)]
+
+
 def retrieve_evidence(jobs: list[Job], cv_text: str, embed: EmbedFn, kb: SkillKB | None,
                       k_lines: int = 3, k_kb: int = 2) -> dict[str, list[Retrieved]]:
-    """One embedding call for the CV lines and every distinct requirement, then a nearest-neighbour
-    search for each requirement in the CV lines and in the knowledge base."""
+    """One embedding call for the CV lines and every distinct requirement, then, for each requirement:
+    the closest knowledge-base families, and the CV lines to show the LLM. Those are, in order: up to
+    2 lines that name the requirement itself, 1 line that names a related skill from those families,
+    then the k_lines closest lines by embedding. The word matches come first because embedding search
+    alone misses short names: a long skills line that lists "Python" among ten tools is often not
+    among the closest lines to "Python"."""
     queries = list(dict.fromkeys(norm(s) for j in jobs for s in required_skills(j)))
     if not queries:
         return {j.id: [] for j in jobs}
     lines = cv_lines(cv_text)
     vecs = embed(lines + queries)
     line_vecs, q_vecs = vecs[:len(lines)], vecs[len(lines):]
-    if lines:
-        order = np.argsort(-(q_vecs @ line_vecs.T), axis=1)[:, :k_lines]
-        near_lines = [[lines[i] for i in row] for row in order]
-    else:
-        near_lines = [[] for _ in queries]
     near_kb = kb.search(q_vecs, k_kb) if kb else [[] for _ in queries]
+    near_lines = [[] for _ in queries]
+    if lines:
+        lines_w = [_words(x) for x in lines]
+        order = np.argsort(-(q_vecs @ line_vecs.T), axis=1)[:, :k_lines]
+        for qi, q in enumerate(queries):
+            named = _naming(lines_w, _terms(q))[:2]
+            related = [s for e in near_kb[qi] for s in e.skills if norm(s) != q]
+            near = [i for i in _naming(lines_w, related) if i not in named][:1]
+            near_lines[qi] = [lines[i] for i in dict.fromkeys([*named, *near, *order[qi]])]
     found = {q: (ln, kbe) for q, ln, kbe in zip(queries, near_lines, near_kb)}
     return {j.id: [Retrieved(s, *found[norm(s)]) for s in required_skills(j)] for j in jobs}
 

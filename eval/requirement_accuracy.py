@@ -12,7 +12,11 @@ found word for word in the CV (the deterministic check).
 usage (from the repo root):
   python eval/requirement_accuracy.py           # answer key checks, labeler agreement, keyword baseline
   python eval/requirement_accuracy.py --app 3   # also the app's labels, 3 runs (needs GEMINI_API_KEY)
-Writes results/requirement_accuracy.csv (labels only, no CV text)."""
+  python eval/requirement_accuracy.py --set practice --app 1   # the practice set (practice_set.py),
+                                                               # where changes are tuned
+Writes results/requirement_accuracy.csv or results/practice_accuracy.csv (labels only, no CV text).
+The app's labels are cached per run and per VERSION; bump VERSION whenever the labeling code or prompt
+changes, so labels from older code are never reused."""
 import csv
 import json
 import re
@@ -22,6 +26,7 @@ from collections import Counter, defaultdict
 import numpy as np
 
 from requirement_set import HERE, LABELS, PAIRS, PEOPLE  # noqa: F401  (also loads secrets)
+import practice_set
 
 from core.config import get_settings  # noqa: E402
 from core.knowledge import SkillKB  # noqa: E402
@@ -36,15 +41,23 @@ from skillmatch import embed_cached  # noqa: E402
 OUT = HERE / "results"
 LABELS3 = ("met", "partial", "missing")
 MODEL = "gemini-flash-lite-latest"
+VERSION = "v2"  # v1: as first committed. v2: word-match retrieval, prompt aligned with labeling_guide.md
+
+# name: (pairs as (pair, CV, job, kind), answer-key files, frozen requirement lists, cache prefix, output)
+SETS = {
+    "test": ([p[:4] for p in PAIRS], lambda: sorted(f for f in PEOPLE.glob("*.csv")
+                                                   if not f.stem.endswith("_extraction")),
+             LABELS / "requirements_frozen.json", "reqset", "requirement_accuracy.csv"),
+    "practice": (practice_set.PRACTICE, lambda: [practice_set.KEY], practice_set.FROZEN, "practice",
+                 "practice_accuracy.csv"),
+}
 
 
 # ---------- the answer key ----------
-def load_key():
+def load_key(files):
     """main[(pair, requirement)] = row with the label; second[(pair, requirement)] = second label."""
     main, second, problems = {}, {}, []
-    for f in sorted(PEOPLE.glob("*.csv")):
-        if f.stem.endswith("_extraction"):
-            continue
+    for f in files:
         for i, row in enumerate(csv.DictReader(f.open(encoding="utf-8-sig")), start=2):
             label = row["label"].strip().lower()
             if label not in LABELS3:
@@ -74,8 +87,8 @@ def keyword_label(requirement: str, cv_text: str) -> str:
 
 
 # ---------- the app ----------
-def frozen_jobs() -> dict[str, Job]:
-    frozen = json.loads((LABELS / "requirements_frozen.json").read_text(encoding="utf-8"))["jobs"]
+def frozen_jobs(path) -> dict[str, Job]:
+    frozen = json.loads(path.read_text(encoding="utf-8"))["jobs"]
     raw = {j["id"]: j for j in json.loads((HERE / "data" / "jobs" / "jobs_jsearch.json").read_text(encoding="utf-8"))}
     return {jid: Job(**raw[jid], requirements=JobRequirements(
         job_id=jid, required_skills=fz["required_skills"], nice_to_have_skills=[],
@@ -94,7 +107,7 @@ def cached(path, key, fn, label):
     return done[key]
 
 
-def app_labels(runs: int) -> list[dict]:
+def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MODEL) -> list[dict]:
     """One dict per run: (pair, requirement) -> (label, quote verified or None)."""
     s = get_settings()
     emb = build_embedder(s)
@@ -104,16 +117,17 @@ def app_labels(runs: int) -> list[dict]:
 
     kb = SkillKB.build(emb.name, embed)
     llm = build_provider(f"gemini:{MODEL}", s)
-    cvs, jobs = load_cvs(), frozen_jobs()
+    labeler = build_provider(f"gemini:{label_model}", s)
+    cvs, jobs = load_cvs(), frozen_jobs(frozen_path)
     profiles = json.loads((OUT / f"extracted_{MODEL}.json").read_text(encoding="utf-8"))["cvs"]
     by_cv = defaultdict(list)
-    for pid, cv, jid, *_ in PAIRS:
+    for pid, cv, jid, *_ in pairs:
         by_cv[cv].append((pid, jid))
 
-    judge_file = OUT / f"reqset_judge_{MODEL}.json"  # judged once: it only feeds the years rows
+    judge_file = OUT / f"{prefix}_judge_{MODEL}.json"  # judged once: it only feeds the years rows
     out = []
     for run in range(1, runs + 1):
-        run_file = OUT / f"reqset_labels_{MODEL}_run{run}.json"
+        run_file = OUT / f"{prefix}_labels_{label_model}_{VERSION}_run{run}.json"
         labels = {}
         for cv, items in sorted(by_cv.items()):
             cv_jobs = [jobs[jid].model_copy(deep=True) for _, jid in items]
@@ -121,7 +135,7 @@ def app_labels(runs: int) -> list[dict]:
                 llm, cvs[cv], cv_jobs, s.max_jd_chars, s.local_max_jd_chars).items()}, f"judge {cv}")
             retrieved = retrieve_evidence(cv_jobs, cvs[cv], embed, kb)
             checks = cached(run_file, cv, lambda: {jid: [c.model_dump() for c in cs] for jid, cs in
-                                                   label_requirements(llm, cv_jobs, retrieved, cvs[cv]).items()},
+                                                   label_requirements(labeler, cv_jobs, retrieved, cvs[cv]).items()},
                             f"run {run} labels {cv}")
             results = score_jobs(
                 CandidateProfile(**profiles[cv]), cvs[cv], cv_jobs, emb, s, embed_fn=embed,
@@ -171,7 +185,10 @@ def report(name: str, key: dict, pred: dict[tuple, str]) -> dict:
 
 
 def main() -> None:
-    main_key, second, problems = load_key()
+    name = sys.argv[sys.argv.index("--set") + 1] if "--set" in sys.argv else "test"
+    pairs, key_files, frozen_path, prefix, out_name = SETS[name]
+    print(f"set: {name}, labeling code version {VERSION}")
+    main_key, second, problems = load_key(key_files())
     expected = sum(1 for _ in main_key) + len(problems)
     print(f"answer key: {len(main_key)} labeled requirements in {len({k[0] for k in main_key})} pairs "
           f"({dict(Counter(v['label'] for v in main_key.values()))})")
@@ -180,25 +197,27 @@ def main() -> None:
     if not main_key or expected == 0:
         raise SystemExit("No labels yet.")
 
-    pairs = [k for k in second if k in main_key]
-    if pairs:
-        a = [main_key[k]["label"] for k in pairs]
-        b = [second[k]["label"] for k in pairs]
-        agree = sum(x == y for x, y in zip(a, b)) / len(pairs)
-        print(f"\nlabeler agreement on {len({k[0] for k in pairs})} double-labeled pairs ({len(pairs)} "
+    both = [k for k in second if k in main_key]
+    if both:
+        a = [main_key[k]["label"] for k in both]
+        b = [second[k]["label"] for k in both]
+        agree = sum(x == y for x, y in zip(a, b)) / len(both)
+        print(f"\nlabeler agreement on {len({k[0] for k in both})} double-labeled pairs ({len(both)} "
               f"requirements): {agree:.0%} the same label, Cohen's kappa {kappa(a, b):.2f}")
-        for k in pairs:
+        for k in both:
             if main_key[k]["label"] != second[k]["label"]:
                 print(f"  {k[0]} {k[1]}: {main_key[k]['labeler']} {main_key[k]['label']}, "
                       f"{second[k]['labeler']} {second[k]['label']}")
 
     cvs = load_cvs()
-    cv_of = {p[0]: p[1] for p in PAIRS}
+    cv_of = {p[0]: p[1] for p in pairs}
     keyword = {k: keyword_label(k[1], cvs[cv_of[k[0]]]) for k in main_key}
     report("keyword baseline", main_key, keyword)
 
     runs = int(sys.argv[sys.argv.index("--app") + 1]) if "--app" in sys.argv else 0
-    app_runs = app_labels(runs) if runs else []
+    label_model = sys.argv[sys.argv.index("--label-model") + 1] if "--label-model" in sys.argv else MODEL
+    print("labels by", label_model)
+    app_runs = app_labels(runs, pairs, frozen_path, prefix, label_model) if runs else []
     scores = [report(f"app, run {i}", main_key, {k: v[0] for k, v in run.items()})
               for i, run in enumerate(app_runs, 1)]
     if scores:
@@ -209,7 +228,7 @@ def main() -> None:
         print(f"quotes found word for word in the CV: {sum(q)}/{len(q)} ({sum(q) / len(q):.0%}) of the app's "
               "met / partial labels that came with a quote check")
 
-    with (OUT / "requirement_accuracy.csv").open("w", encoding="utf-8", newline="") as f:
+    with (OUT / out_name).open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow(["pair", "kind", "cv", "job_id", "type", "requirement", "team", "keyword"]
                    + [f"app_run{i}" for i in range(1, len(app_runs) + 1)])

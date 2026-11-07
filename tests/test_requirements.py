@@ -59,6 +59,17 @@ def test_retrieval_finds_the_closest_cv_lines_and_knowledge_base_family():
     assert got[1].lines == ["Managed inventory for three warehouses"]
 
 
+def test_retrieval_always_includes_lines_that_name_the_requirement_or_a_related_skill():
+    cv = "Led ten projects for clients\nTools: Excel, PowerPoint, Python, R, Tableau\nR&D budget review"
+    job = job_with(["Python / SQL", "power bi"])
+    # The fake embedding reads "Python," (with the comma) as another word, so only the word match finds it.
+    got = retrieve_evidence([job], cv, fake_embed, kb(), k_lines=1, k_kb=1)[job.id]
+    tools = "Tools: Excel, PowerPoint, Python, R, Tableau"
+    assert got[0].lines[0] == tools           # names Python (one part of "Python / SQL")
+    assert got[1].lines[0] == tools           # names Tableau, related to Power BI in the knowledge base
+    assert len(got[0].lines) <= 2             # word matches, then the k_lines=1 closest by embedding
+
+
 def test_checks_keep_only_verified_quotes_and_known_statuses():
     retrieved = retrieve_evidence([job := job_with(["sql", "power bi", "python", "rust"])], CV, fake_embed, kb())
     labels = [RequirementLabel(requirement="SQL", status="met", quote="Wrote SQL queries"),

@@ -21,6 +21,8 @@ eval/results/extracted_*.json
 eval/results/profiles_roles_*.json
 eval/results/judge_*.json
 eval/results/skill_judge_*.json
+eval/results/reqset_*.json
+eval/results/practice_*.json
 eval/results/calibration_grid_*.csv
 
 # Never commit real CVs

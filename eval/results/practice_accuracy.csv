@@ -1,0 +1,65 @@
+pair,kind,cv,job_id,type,requirement,team,keyword,app_run1,app_run2,app_run3
+D01,regular,AYP,j061,skill,Strategy Consulting,missing,missing,partial,partial,partial
+D01,regular,AYP,j061,skill,Quantitative Analysis,met,missing,met,met,met
+D01,regular,AYP,j061,skill,Problem Solving,met,missing,met,met,met
+D01,regular,AYP,j061,skill,Written Communication,partial,missing,missing,missing,missing
+D01,regular,AYP,j061,skill,Verbal Communication,partial,missing,met,partial,partial
+D01,regular,AYP,j061,skill,Stakeholder Management,met,met,met,met,met
+D01,regular,AYP,j061,skill,Team Collaboration,met,missing,met,met,met
+D01,regular,AYP,j061,skill,Project Management,met,missing,met,partial,partial
+D01,regular,AYP,j061,years,2+ years of relevant experience,missing,missing,missing,missing,missing
+D02,regular,AYP,j048,skill,Strategy Consulting,missing,missing,partial,partial,partial
+D02,regular,AYP,j048,skill,Market Analysis,met,missing,met,met,met
+D02,regular,AYP,j048,skill,Competitive Positioning,missing,missing,missing,partial,missing
+D02,regular,AYP,j048,skill,Operating Model Design,partial,missing,met,partial,partial
+D02,regular,AYP,j048,skill,International Strategy,missing,missing,partial,missing,missing
+D02,regular,AYP,j048,skill,Problem Solving,met,missing,met,met,met
+D02,regular,AYP,j048,skill,Executive Communication,partial,missing,met,met,met
+D02,regular,AYP,j048,years,4+ years of relevant experience,missing,missing,missing,missing,missing
+D03,regular,AYP,j035,skill,Insurance Products,missing,missing,partial,missing,missing
+D03,regular,AYP,j035,skill,Underwriting,partial,missing,partial,partial,partial
+D03,regular,AYP,j035,skill,Claims,missing,missing,missing,missing,missing
+D03,regular,AYP,j035,skill,Pricing,partial,met,met,met,met
+D03,regular,AYP,j035,skill,Relational Database Tools,missing,missing,missing,missing,missing
+D03,regular,AYP,j035,skill,SQL,missing,missing,missing,missing,missing
+D03,regular,AYP,j035,skill,Python,met,met,met,met,met
+D03,regular,AYP,j035,skill,Problem Solving,met,missing,met,met,met
+D03,regular,AYP,j035,years,2+ years of relevant experience,met,missing,missing,missing,missing
+D04,regular,AYP,j037,skill,Python,met,met,met,met,met
+D04,regular,AYP,j037,skill,SQL,missing,missing,missing,missing,missing
+D04,regular,AYP,j037,skill,Tableau,missing,missing,missing,missing,missing
+D04,regular,AYP,j037,skill,Power BI,missing,missing,missing,missing,missing
+D04,regular,AYP,j037,skill,Databricks,missing,missing,missing,missing,missing
+D04,regular,AYP,j037,skill,Snowflake,missing,missing,missing,missing,missing
+D04,regular,AYP,j037,skill,Machine Learning,partial,met,partial,partial,partial
+D04,regular,AYP,j037,skill,GenAI / LLMs,missing,missing,partial,partial,missing
+D05,regular,VV,j003,skill,Power BI,partial,missing,partial,partial,partial
+D05,regular,VV,j003,skill,Data Modeling,missing,missing,missing,missing,missing
+D05,regular,VV,j003,skill,Dashboard Development,met,missing,met,met,met
+D05,regular,VV,j003,skill,Reporting,met,missing,met,met,met
+D05,regular,VV,j003,skill,Self-Service Analytics,missing,missing,missing,missing,missing
+D06,regular,VV,j030,skill,Data Analytics,met,met,met,met,met
+D06,regular,VV,j030,skill,SQL,met,met,met,met,met
+D06,regular,VV,j030,skill,Python,met,met,met,met,met
+D06,regular,VV,j030,skill,R,met,met,met,met,met
+D06,regular,VV,j030,skill,Statistical Modeling,missing,missing,missing,missing,missing
+D06,regular,VV,j030,skill,Predictive Analytics,missing,missing,missing,missing,missing
+D06,regular,VV,j030,skill,Generative AI,missing,missing,missing,missing,missing
+D06,regular,VV,j030,skill,Customer Insights Analytics,partial,missing,missing,missing,missing
+D06,regular,VV,j030,years,8+ years of relevant experience,missing,missing,missing,missing,missing
+D07,regular,VV,j057,skill,Quality Systems,missing,missing,missing,missing,missing
+D07,regular,VV,j057,skill,Data Visualization,met,missing,met,met,met
+D07,regular,VV,j057,skill,Business Intelligence,partial,missing,met,partial,met
+D07,regular,VV,j057,skill,Power BI,partial,missing,partial,partial,partial
+D07,regular,VV,j057,skill,SQL,met,met,met,met,met
+D07,regular,VV,j057,skill,Python,met,met,met,met,met
+D07,regular,VV,j057,skill,Databricks,missing,missing,missing,missing,missing
+D07,regular,VV,j057,years,3+ years of relevant experience,partial,missing,missing,missing,missing
+D08,regular,VV,j059,skill,Business Intelligence,partial,missing,met,partial,met
+D08,regular,VV,j059,skill,Report Development,met,missing,met,met,met
+D08,regular,VV,j059,skill,SQL,met,met,met,met,met
+D08,regular,VV,j059,skill,ETL,missing,missing,missing,missing,missing
+D08,regular,VV,j059,skill,Relational Databases,partial,missing,met,partial,met
+D08,regular,VV,j059,skill,Crystal Reports,partial,missing,missing,missing,missing
+D08,regular,VV,j059,skill,ITIL Foundation,missing,missing,missing,missing,missing
+D08,regular,VV,j059,years,5+ years of relevant experience,missing,missing,missing,missing,missing

@@ -1,0 +1,127 @@
+{
+ "model": "gemini:gemini-flash-lite-latest",
+ "jobs": {
+  "j061": {
+   "title": "Oliver Wyman - Senior Consultant (Generalist)",
+   "company": "Oliver Wyman Group",
+   "url": "https://careers.marsh.com/global/en/job/MAMCGLOBALR366852EXTERNALENGLOBAL/Oliver-Wyman-Senior-Consultant-Generalist",
+   "required_skills": [
+    "Strategy Consulting",
+    "Quantitative Analysis",
+    "Problem Solving",
+    "Written Communication",
+    "Verbal Communication",
+    "Stakeholder Management",
+    "Team Collaboration",
+    "Project Management"
+   ],
+   "min_years_experience": 2.0
+  },
+  "j048": {
+   "title": "Strategy Consultant / Sr Strategy Consultant – Remote",
+   "company": "remote quest jobs",
+   "url": "https://us.remotejobs.dedyn.io/job/2429311",
+   "required_skills": [
+    "Strategy Consulting",
+    "Market Analysis",
+    "Competitive Positioning",
+    "Operating Model Design",
+    "International Strategy",
+    "Problem Solving",
+    "Executive Communication"
+   ],
+   "min_years_experience": 4.0
+  },
+  "j035": {
+   "title": "Lead Product Analyst",
+   "company": "Plymouth Rock Assurance Corporation",
+   "url": "https://www.indeed.com/viewjob?jk=ce4b48b51b300399",
+   "required_skills": [
+    "Insurance Products",
+    "Underwriting",
+    "Claims",
+    "Pricing",
+    "Relational Database Tools",
+    "SQL",
+    "Python",
+    "Problem Solving"
+   ],
+   "min_years_experience": 2.0
+  },
+  "j037": {
+   "title": "Junior Machine Learning Engineer-remote/Data Scientist",
+   "company": "SynergisticIT",
+   "url": "https://www.ziprecruiter.com/c/synergisticit/Job/Junior-Machine-Learning-Engineer-remote-Data-Scientist/-in-Boston,MA?jid=37e2d9bf7c980876",
+   "required_skills": [
+    "Python",
+    "SQL",
+    "Tableau",
+    "Power BI",
+    "Databricks",
+    "Snowflake",
+    "Machine Learning",
+    "GenAI / LLMs"
+   ],
+   "min_years_experience": null
+  },
+  "j003": {
+   "title": "BI Developer II: Power BI Insights & Data Modeling",
+   "company": "Boston Beer Corporation",
+   "url": "https://www.jobleads.com/us/job/bi-developer-ii-power-bi-insights-data-modeling--boston--e910f95bd2d1068e62314c567b1bc63a7",
+   "required_skills": [
+    "Power BI",
+    "Data Modeling",
+    "Dashboard Development",
+    "Reporting",
+    "Self-Service Analytics"
+   ],
+   "min_years_experience": null
+  },
+  "j030": {
+   "title": "Remote Data Analyst V (6347)",
+   "company": "Itd Tech",
+   "url": "https://www.talent.com/view?id=641977745851810986",
+   "required_skills": [
+    "Data Analytics",
+    "SQL",
+    "Python",
+    "R",
+    "Statistical Modeling",
+    "Predictive Analytics",
+    "Generative AI",
+    "Customer Insights Analytics"
+   ],
+   "min_years_experience": 8.0
+  },
+  "j057": {
+   "title": "Senior Analyst, R&D Quality Data Analytics",
+   "company": "Takeda Pharmaceutical",
+   "url": "https://jobs.takeda.com/job/boston/senior-analyst-r-and-d-quality-data-analytics/1113/102184689712",
+   "required_skills": [
+    "Quality Systems",
+    "Data Visualization",
+    "Business Intelligence",
+    "Power BI",
+    "SQL",
+    "Python",
+    "Databricks"
+   ],
+   "min_years_experience": 3.0
+  },
+  "j059": {
+   "title": "Business Intelligence Developer/Report Writer",
+   "company": "Massachusetts Water Resources Authority",
+   "url": "https://www.indeed.com/viewjob?jk=454fb119044baf75",
+   "required_skills": [
+    "Business Intelligence",
+    "Report Development",
+    "SQL",
+    "ETL",
+    "Relational Databases",
+    "Crystal Reports",
+    "ITIL Foundation"
+   ],
+   "min_years_experience": 5.0
+  }
+ }
+}
