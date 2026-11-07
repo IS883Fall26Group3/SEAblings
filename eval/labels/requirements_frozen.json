@@ -1,0 +1,173 @@
+{
+ "model": "gemini:gemini-flash-lite-latest",
+ "jobs": {
+  "j054": {
+   "title": "Financial Analyst (2026-8076) Remote (United States)",
+   "company": "Dover",
+   "url": "https://www.jobleads.com/us/job/financial-analyst-2026-8076-remote-united-states--northern--eb0a91597914da578cadce8c29fbb1585",
+   "required_skills": [
+    "Financial Analysis",
+    "Financial Forecasting",
+    "Excel",
+    "PowerPoint",
+    "Financial Modeling",
+    "Data Analysis"
+   ],
+   "min_years_experience": 2.0
+  },
+  "j012": {
+   "title": "Financial Planning & Analysis Analyst | Fully Remote US",
+   "company": "HireVue",
+   "url": "https://www.theladders.com/job/financial-planning-analysis-analyst-fully-remote-us-hirevue-virtual-travel_89565945",
+   "required_skills": [
+    "FP&A",
+    "Financial Modeling",
+    "Excel",
+    "Variance Analysis",
+    "Headcount Analytics",
+    "P&L"
+   ],
+   "min_years_experience": 1.0
+  },
+  "j040": {
+   "title": "Remote FP&A Analyst | 4-Day Week, Equity & Growth",
+   "company": "7Seventy",
+   "url": "https://www.jobleads.com/us/job/remote-fp-a-analyst-4-day-week-equity-growth--united-states--e0ee6a6a817701e4204f929f6d810a082",
+   "required_skills": [
+    "Financial Planning",
+    "Budgeting",
+    "Forecasting",
+    "Financial Modeling",
+    "Performance Analysis"
+   ],
+   "min_years_experience": null
+  },
+  "j062": {
+   "title": "Knowledge, Data, and AI Strategy Lead Consultant",
+   "company": "Enterprise Knowledge, LLC",
+   "url": "https://www.remoterocketship.com/us/company/enterprise-knowledge-llc/jobs/knowledge-data-and-ai-strategy-lead-consultant-united-states-remote/",
+   "required_skills": [
+    "Management Consulting",
+    "Operating Model Design",
+    "Stakeholder Engagement",
+    "Executive Presentations",
+    "Workshop Facilitation"
+   ],
+   "min_years_experience": 5.0
+  },
+  "j006": {
+   "title": "Strategy Consultant (Remote | $150–$350/hr)",
+   "company": "Synthires",
+   "url": "https://www.linkedin.com/jobs/view/strategy-consultant-remote-%24150%E2%80%93%24350-hr-at-synthires-4481852349",
+   "required_skills": [
+    "Management Consulting",
+    "Business Strategy",
+    "Structured Problem Solving",
+    "Business Analysis",
+    "Written Communication"
+   ],
+   "min_years_experience": 1.0
+  },
+  "j024": {
+   "title": "Remote Machine Learning Engineer",
+   "company": "Spotter",
+   "url": "https://www.glassdoor.com/job-listing/remote-machine-learning-engineer-spotter-JV_IC1128896_KO0,32_KE33,40.htm?jl=1010212397037",
+   "required_skills": [
+    "Machine Learning",
+    "Python",
+    "PyTorch",
+    "TensorFlow",
+    "scikit-learn",
+    "Git"
+   ],
+   "min_years_experience": 1.0
+  },
+  "j031": {
+   "title": "Sr. BI Data Engineer",
+   "company": "The Boston Beer Company",
+   "url": "https://www.theladders.com/job/sr-bi-data-engineer-the-boston-beer-company-boston-ma_89570056",
+   "required_skills": [
+    "Data Engineering",
+    "Databricks",
+    "Apache Spark",
+    "Delta Lake",
+    "SQL",
+    "Python",
+    "Azure",
+    "ETL"
+   ],
+   "min_years_experience": 7.0
+  },
+  "j069": {
+   "title": "Product Manager III - Vaux Smart Autonomy",
+   "company": "ArcBest",
+   "url": "https://www.ziprecruiter.com/c/arcbest/Job/Product-Manager-III-Vaux-Smart-Autonomy/-in-Boston,MA?jid=8fba8590c8b33d54",
+   "required_skills": [
+    "Product Management",
+    "Roadmap Strategy",
+    "Voice of Customer",
+    "Pricing Models",
+    "SQL",
+    "Data Analytics"
+   ],
+   "min_years_experience": 4.0
+  },
+  "j072": {
+   "title": "[Remote] Data Analyst (Life Sciences Specialist) (Direct hire $125-210k) telecommute",
+   "company": "Walter Bacon, Inc.",
+   "url": "https://jobright.ai/jobs/info/6a6987132baf19558c924088",
+   "required_skills": [
+    "Biotech Consulting",
+    "Data Analysis",
+    "Market Access",
+    "Pricing",
+    "Forecasting",
+    "Excel",
+    "PowerPoint"
+   ],
+   "min_years_experience": 3.0
+  },
+  "j022": {
+   "title": "Remote Junior Product Analyst: Agile Requirements",
+   "company": "JMD Technologies Inc.",
+   "url": "https://www.jobleads.com/us/job/remote-junior-product-analyst-agile-requirements--united-states--e163efc86116f09bba0ed27519c31a833",
+   "required_skills": [
+    "Business Analysis",
+    "Agile Methodologies",
+    "Requirements Documentation",
+    "Product Development",
+    "Testing"
+   ],
+   "min_years_experience": 0.0
+  },
+  "j019": {
+   "title": "Associate Consultant - Discovery Strategy & Transformation",
+   "company": "ZS",
+   "url": "https://www.builtinboston.com/job/associate-consultant-discovery-strategy-transformation/11737817",
+   "required_skills": [
+    "Management Consulting",
+    "Life Sciences",
+    "Structured Problem Solving",
+    "Biotech",
+    "Change Management",
+    "Data Analysis"
+   ],
+   "min_years_experience": 2.5
+  },
+  "j032": {
+   "title": "Sr. Epic Business Intelligence Developer",
+   "company": "Montage Health",
+   "url": "https://jobs.montagehealth.org/sr-business-intelligence-developer/job/7C088F180BFEBB12B58FF8DC3AEE1CB7",
+   "required_skills": [
+    "Database Development",
+    "Business Intelligence",
+    "SQL",
+    "Tableau",
+    "Power BI",
+    "ETL",
+    "Epic Clarity"
+   ],
+   "min_years_experience": 7.0
+  }
+ }
+}

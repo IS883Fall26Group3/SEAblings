@@ -401,6 +401,23 @@ factor sets compared, on similarity alone.
   `EXPERIENCE_FIT = "total"` or `"roles"`, or when the judge call fails, profile similarity is the
   embedding score alone. Per-pair ratings and scores: `results/background_gemini-flash-lite-latest.csv`.
 
+### Success metric: requirement accuracy test set
+
+The metric fixed in the workshop checkpoint is **requirement classification accuracy**: the share of
+requirements where the app's label (met / partial / missing) matches the team's answer key.
+`requirement_set.py` builds the test set once:
+
+| File | What it holds |
+|---|---|
+| `labels/requirements_frozen.json` | The 12 test postings' requirements (97 skills + 13 minimum-years rows), extracted once by the app's prompt with gemini-flash-lite and kept fixed. |
+| `labels/requirements/<name>.csv` | The answer key, one file per labeler. 16 CV-job pairs: 14 good or stretch fits from `cv_job_reviewed.csv` and 2 confusing pairs (poor fits that share several skills). 4 of the pairs are labeled twice, to measure agreement. |
+| `labels/requirements/<name>_extraction.csv` | Requirements the extraction missed or invented, for each posting. |
+| `labels/awkward_inputs.csv` | 4 behavior checks (empty CV, a recipe, a news item, a two-line posting), with the expected behavior written in advance. |
+| `labels/requirement_postings.md` | The test postings in full, for reading while labeling. |
+
+How to label is in `labeling_guide.md`. The team labels **before** the app's labels are run on these
+pairs, and commits the files; the commit history shows the order.
+
 ## Data
 
 | File | Source | License | In git |

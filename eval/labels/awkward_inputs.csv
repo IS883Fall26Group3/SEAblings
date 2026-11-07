@@ -1,0 +1,5 @@
+﻿id,cv,posting,expected,actual,pass
+A1,"Empty CV: no file, nothing pasted",data/sample/jobs.json: s6,"The sidebar says the fictional sample CV will be used; the app analyzes the sample CV and shows results for it, with no error.",,
+A2,A document that isn't a CV: eval/data/awkward/not_a_cv.txt (a recipe),jobs_jsearch.json: j012,"The app tells the user the file doesn't look like a CV and asks for one, instead of scoring it.",,
+A3,data/sample/sample_cv.txt,Not a job posting: eval/data/awkward/not_a_posting.txt (company news),The app says it found no requirements in that text and doesn't give it a match score as if it were a job.,,
+A4,data/sample/sample_cv.txt,A very short posting: eval/data/awkward/short_posting.txt,"Requirements SQL and Excel are both labeled met, each with a quote from the CV; no minimum years, so experience fit is full.",,
