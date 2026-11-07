@@ -18,10 +18,12 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 6. **Advice** (on demand, `core/advice.py`): three bullets for a selected job: strongest match, main
    gap, most useful next step. The LLM lists the posting's requirements (structured extraction), each
    one retrieves its 3 closest CV chunks (RAG), and the LLM rates it strong, weak or not shown, with the
-   full CV to check before calling something a gap. Python then checks each quote against the CV and
-   notes any "To build" chip the CV contradicts. Two LLM calls per click; scores and chips don't change.
-   CV chunks are up to 40 words of whole lines, never mixing roles or sections; a role that has to split
-   repeats its last line (about 10 words of overlap).
+   full CV to check before calling something a gap. Python then checks each quote against the CV, keeps
+   "strong" for real work (not a summary or skills list alone), and notes any "To build" chip the CV
+   contradicts. A job rated different in both field and work gets a step toward closer roles. Two LLM
+   calls per click; scores and chips don't change. CV chunks are up to 40 words of whole lines (wrapped
+   lines rejoined), never mixing roles or sections; a role that has to split repeats its last line (about
+   10 words of overlap).
 
 ## Choosing a model
 
