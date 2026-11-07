@@ -1,21 +1,45 @@
 # SEAblings: CV-to-job matching
 
-IS883 Fall 2026, Group 3. Upload a CV, enter a target role and location, and get current job
-openings ranked by how well your skills match, with matched skills, gaps, and advice per role.
+IS883 Fall 2026, Group 3. Upload or paste a CV, then match it against job descriptions you already
+have or search current openings by role (location optional). Jobs are ranked by how well your skills
+match, with matched skills, gaps, and advice per role.
 
 ## How it works
 
-1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only.
-2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON.
-3. **Search jobs** (`core/job_sources/`): JSearch API (aggregates Google for Jobs, incl. Indeed listings),
-   or offline sample data.
-4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
-5. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`,
+1. **Read the inputs** (`core/cv_parser.py`): CV and any job descriptions as PDF, DOCX or TXT, or pasted, in
+   memory only. With no CV, the app uses a fictional sample so you can try it.
+2. **Check the inputs** (`core/validation.py`): simple rules, no LLM call, so a wrong input costs no quota.
+   A CV scores points for section headings, date ranges, contact details and a degree; a job description for
+   job-posting phrases; each must score enough and read more like its own type than the other. A role is
+   rejected with fewer than 2 different letters or over 80 characters. Each input shows its result on its own line.
+3. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON.
+4. **Find jobs** (`core/job_sources/`): the job descriptions you gave, or a search by role: JSearch API
+   (aggregates Google for Jobs, incl. Indeed listings) or offline sample data. With no location, it
+   searches across the US.
+5. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
+6. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`,
    using embeddings (`core/embeddings.py`: Gemini, or local without a key). Deterministic, so the same inputs give the same score.
    Each card explains its three scores (`core/score_notes.py`): matched and close-matched skills, the
    field / type of work / level of the CV beside the job's, and the roles counted as experience. Built
    from what the matcher recorded, with no extra calls, so the text always agrees with the numbers.
-6. **Explain** (on demand): Gemini writes short advice for a selected job.
+7. **Advice** (on demand, `core/advice.py`): bullets for a selected job: strongest match, main gap, up to
+   three "May not be a real gap" items, and the most useful next step. The LLM lists the posting's
+   requirements (structured extraction), each one retrieves its 3 closest CV chunks (RAG), and the LLM rates
+   it strong, weak or not shown, with the full CV to check before calling something a gap. Python then checks
+   each quote against the CV, keeps "strong" for real work (not a summary or skills list alone), and adds a
+   "May not be a real gap" bullet for a "To build" chip the CV contradicts. Job duties come before basic
+   conditions such as a license or schedule, and years of experience are left to Experience fit. A next step
+   must name the gap; a job rated different in both field and work gets a step toward closer roles instead.
+   Two LLM calls per click; scores and chips don't change. CV chunks are up to 40 words of whole lines (wrapped
+   lines rejoined), never mixing roles or sections; a role that has to split repeats its last line (about
+   10 words of overlap).
+
+## Using the app
+
+The sidebar has three sections: **1. Your CV**, **2. Jobs to match** and **3. AI model**. During a run, numbered
+steps show what's finished, and your profile and the jobs appear as soon as they're ready. If a later step fails,
+that work stays on the page with **Try again** and **New search** buttons. **New search** clears the results and
+job inputs but keeps your CV.
 
 ## Choosing a model
 
@@ -78,12 +102,14 @@ core/                   business logic, no Streamlit imports (testable)
   llm/                  model providers (Gemini, offline Hugging Face) and Auto fallback
   embeddings.py         Gemini or local embeddings, each with its own thresholds
   job_sources/          one class per provider, same interface
+  validation.py         rule-based checks on the CV, job descriptions and role, before any LLM call
+  advice.py             on-demand advice: CV chunking, retrieval, and checks on the LLM's ratings
 prompts/                prompt templates (version these like code)
 data/sample/            fictional CV and job listings for dev, tests, demo fallback
 data/skill_aliases.csv  skill name lookup table (built by scripts/build_skill_aliases.py)
 data/onet/              O*NET software names the lookup table is built from (source below)
 scripts/                one-off build scripts
-tests/                  pytest, no API keys needed
+tests/                  pytest, no API keys needed (tests/data/ holds a dummy resume)
 eval/                   embedding threshold calibration (see eval/README.md)
 notebooks/              experiments only; the app never imports from here
 docs/                   architecture diagram, screenshots, report assets
@@ -100,7 +126,7 @@ and a short hand-made list.
 | Area | Files | Owner |
 |---|---|---|
 | Job data | `core/job_sources/`, `data/sample/` | TBD |
-| LLM and extraction | `core/llm/`, `core/embeddings.py`, `core/skill_extractor.py`, `core/cv_parser.py`, `prompts/` | TBD |
+| LLM and extraction | `core/llm/`, `core/embeddings.py`, `core/skill_extractor.py`, `core/advice.py`, `core/cv_parser.py`, `core/validation.py`, `prompts/` | TBD |
 | Scoring and evaluation | `core/matcher.py`, `tests/`, evaluation notebook | TBD |
 | UI and deployment | `streamlit_app.py`, `ui/`, `.streamlit/`, README | TBD |
 
@@ -112,7 +138,8 @@ and a short hand-made list.
 
 ## Privacy
 
-CVs are processed in memory and never written to disk or logs. Never commit real CVs or API keys.
+CVs are processed in memory and never written to disk or logs. The CV text stays in the session's
+memory until the next run or "New search", for the advice button. Never commit real CVs or API keys.
 Note that content sent to the Gemini API free tier may be used by Google to improve its products.
 
 ## [Oct 23, 2026] Comments from Professor

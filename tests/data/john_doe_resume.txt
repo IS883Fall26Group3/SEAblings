@@ -1,0 +1,41 @@
+JOHN DOE
+Boston, MA | john.doe@example.com | (617) 555-0147 | linkedin.com/in/johndoe
+PROFESSIONAL SUMMARY
+Data analytics professional and former software engineer with 10 years of experience across software development, business intelligence, data
+analysis, and cross-functional technology projects. Skilled in SQL, Python, Power BI, data visualization, process automation, and stakeholder
+management. Recently completed an MBA with a concentration in Business Analytics and seeking full-time data, analytics, or technology
+strategy roles.
+CORE SKILLS
+Analytics: SQL, Python, Pandas, Excel, Statistical Analysis, Data Cleaning, Data Validation BI: Power BI, DAX, KPI Reporting, Data Visualization
+Development: Java, REST APIs, Git, JSON, Agile Databases: MySQL, PostgreSQL, SQL Server Business: Stakeholder Management,
+Requirements Analysis, Process Improvement, Project Coordination
+PROFESSIONAL EXPERIENCE
+NORTHSTAR RETAIL TECHNOLOGIES - Boston, MA | Senior Data Analyst | Jan 2023 - Aug 2026
+• Analyzed transactional and operational data from 1,500+ retail locations using SQL and Python to identify sales trends, operational issues, and
+performance opportunities.
+• Built and maintained Power BI dashboards used by senior management to monitor revenue, customer behavior, operational performance, and key
+business metrics.
+• Automated recurring reporting with Python and SQL, reducing monthly preparation time by approximately 40%.
+• Partnered with Finance, Operations, Sales, and Technology teams to translate business questions into analytical solutions and define reporting
+requirements.
+• Conducted data quality assessments, resolved source-system inconsistencies with engineering teams, and mentored two junior analysts.
+BLUEWAVE FINANCIAL SERVICES - New York, NY | Software Engineer / Data Analyst | Jul 2020 - Dec 2022
+• Developed internal applications, data-processing tools, and automated pipelines using Python, Java, SQL, and REST APIs.
+• Created SQL reports and Power BI dashboards for Finance and Operations teams; automated validation tasks and investigated cross-system data
+discrepancies.
+• Worked with business analysts and stakeholders to convert user needs into technical specifications and supported junior developers through code
+reviews.
+BLUEWAVE FINANCIAL SERVICES - New York, NY | Software Engineer | Jun 2018 - Jun 2020
+• Designed backend functionality for enterprise applications using Java and SQL; created REST APIs, database queries, and stored procedures.
+• Participated in Agile delivery, peer code reviews, testing, production support, and root-cause analysis for application incidents.
+INNOVATECH SOLUTIONS - Chicago, IL | Junior Software Engineer | Jun 2016 - May 2018
+• Developed and tested features for web-based enterprise applications using Java and SQL; supported debugging, maintenance, documentation,
+and defect resolution.
+EDUCATION
+Master of Business Administration (MBA), Business Analytics - Boston School of Management, Boston, MA | May 2026
+Bachelor of Science in Computer Science - University of Illinois at Chicago, Chicago, IL | May 2016
+SELECTED PROJECTS & TECHNICAL PROFICIENCIES
+Customer Behavior Analytics: Used Python and SQL to analyze transaction data, identify customer segments, and communicate recommendations
+through Power BI dashboards.
+Technical: Python, Java, SQL, Pandas, Power BI, DAX, Excel, MySQL, PostgreSQL, SQL Server, Git, GitHub, Jira, Postman, Visual Studio Code,
+Agile/Scrum.

@@ -71,16 +71,3 @@ def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_cha
             items[0].job_id = group[0].id  # small models sometimes garble the id of a single job
         out |= {i.job_id: i for i in items}
     return out
-
-
-def explain_match(llm: LLMProvider, profile: CandidateProfile, result) -> str:
-    """Optional per-job explanation, generated only when the user asks (saves quota)."""
-    return llm.generate_text(_prompt(
-        "explain_match.md",
-        summary=profile.summary,
-        skills=", ".join(profile.skills),
-        title=result.job.title,
-        company=result.job.company,
-        matched=", ".join(result.matched_skills) or "none",
-        missing=", ".join(result.missing_skills) or "none",
-    ))
