@@ -275,28 +275,29 @@ def _is_about(step: str, requirement: str) -> bool:
     return any(w in step.lower() for w in words)
 
 
-def _chip_notes(items: list[ListedRequirement], checked: dict[int, CheckedRating], gap: int | None) -> list[str]:
-    """Where the CV disagrees with a 'To build' chip. Only real work can call it not a real gap; a weak link
-    earns a note only if the CV names the chip, since the words could otherwise be unrelated (Java, JavaScript)."""
+def _chip_notes(items: list[ListedRequirement], checked: dict[int, CheckedRating], match: int | None,
+                gap: int | None) -> list[str]:
+    """Where the CV disagrees with a 'To build' chip, unless a bullet already covers that requirement. Real work
+    earns a note; a weak link only if the CV names the chip, since the words could be unrelated (Java, JavaScript)."""
     notes = []
     for i, item in enumerate(items, 1):
         found = checked.get(i)
-        if not item.chip or not found or i == gap:
+        if not item.chip or not found or i in (match, gap):
             continue
         if found.rating == "strong":
-            notes.append(f'"To build" lists {item.chip}, but your CV shows "{_short(found.quote)}", '
-                         "so this may not be a real gap.")
+            notes.append(f'{item.chip} is listed under "To build", but your CV shows "{_short(found.quote)}"')
         elif found.rating == "weak" and _names(found.quote, item.chip):
-            notes.append(f'"To build" lists {item.chip}. Your CV mentions it, so add a specific example of using it.')
+            notes.append(f'{item.chip} is listed under "To build", and your CV mentions it. '
+                         "Add a specific example of using it.")
     extra = len(notes) - MAX_NOTES
-    return notes[:MAX_NOTES] + ([f'{extra} more "To build" {"item looks" if extra == 1 else "items look"} '
-                                 "at least partly covered by your CV."] if extra > 0 else [])
+    return notes[:MAX_NOTES] + ([f'{extra} more "To build" {"item" if extra == 1 else "items"} '
+                                 "may also be covered by your CV."] if extra > 0 else [])
 
 
 def build_advice(items: list[ListedRequirement], reply: AdviceReply, cv_text: str,
                  roles: list[Role] | None = None, poor_fit: bool = False) -> str:
-    """Three bullets, then a note on any 'To build' chip the CV disagrees with. The requirement and the quote
-    are filled in by Python, so the text can't claim what the checks rejected."""
+    """Strongest match, main gap, any 'To build' chip the CV disagrees with, then the next step. The requirement
+    and the quote are filled in by Python, so the text can't claim what the checks rejected."""
     checked = _checked_ratings(items, reply, cv_text, roles)
     match = _pick_match(items, checked, reply.match_id)
     gap = _pick_gap(items, checked, reply.gap_id)
@@ -322,9 +323,9 @@ def build_advice(items: list[ListedRequirement], reply: AdviceReply, cv_text: st
         step = "This role is far from your background, so focus on roles closer to your field."
     step = step or "Lead your application with your strongest match, using a specific result from your CV."
 
-    text = f"- **Strongest match:** {first}\n- **Main gap:** {second}\n- **Most useful next step:** {step}"
-    if notes := _chip_notes(items, checked, gap):
-        text += "\n\n" + "  \n".join(notes)
+    notes = [f"- **May not be a real gap:** {note}" for note in _chip_notes(items, checked, match, gap)]
+    text = "\n".join([f"- **Strongest match:** {first}", f"- **Main gap:** {second}", *notes,
+                      f"- **Most useful next step:** {step}"])
     return text.replace("$", r"\$")  # a pair of dollar signs would render as a math formula
 
 

@@ -261,17 +261,29 @@ def test_years_are_left_to_the_cards_experience_fit():
 
 
 # ---------- option C: "To build" chips ----------
-def test_a_chip_the_cv_contradicts_is_explained():
+def test_a_chip_the_cv_contradicts_gets_its_own_bullet_between_the_gap_and_the_step():
+    items = reqs("Build dashboards") + reqs("Write queries for reporting", chip="Reporting") + reqs("Lead a team")
+    reply = AdviceReply(ratings=[rate(1, "strong", "Power BI and Excel"), rate(2, "strong", "Wrote SQL queries"),
+                                 rate(3, "not_shown")], match_id=1, gap_id=3, next_step="Practise leading a team.")
+    lines = build_advice(items, reply, CV).splitlines()
+    assert lines[0].startswith("- **Strongest match:**")
+    assert lines[1].startswith("- **Main gap:**")
+    assert lines[2] == '- **May not be a real gap:** Reporting is listed under "To build", but your CV shows "Wrote SQL queries"'
+    assert lines[3] == "- **Most useful next step:** Practise leading a team."
+
+
+def test_a_chip_already_shown_as_the_strongest_match_is_not_repeated():
     reply = AdviceReply(ratings=[rate(1, "strong", "Wrote SQL queries")], match_id=1)
-    text = build_advice(reqs("Write queries for reporting", chip="Reporting"), reply, CV)
-    assert '"To build" lists Reporting, but your CV shows "Wrote SQL queries", so this may not be a real gap.' in text
+    text = build_advice(reqs("Knowledge of relational databases", chip="Relational Databases"), reply, CV)
+    assert "**Strongest match:** Knowledge of relational databases" in text
+    assert "May not be a real gap" not in text
 
 
 def test_a_confirmed_chip_gets_no_note():
     reply = AdviceReply(ratings=[rate(1, "not_shown")], gap_id=1)
     text = build_advice(reqs("Use Tableau", chip="Tableau"), reply, CV)
     assert "**Main gap:** Use Tableau" in text
-    assert "may not be a real gap" not in text
+    assert "May not be a real gap" not in text
 
 
 def test_a_weak_link_never_says_it_is_not_a_real_gap():
@@ -286,8 +298,8 @@ def test_a_chip_named_in_the_cv_can_not_be_called_not_shown():
     reply = AdviceReply(ratings=[rate(1, "not_shown"), rate(2, "not_shown")], gap_id=2)
     text = build_advice(items, reply, CV)
     assert "**Main gap:** Lead a team" in text
-    assert '"To build" lists SAP. Your CV mentions it' in text
-    assert "may not be a real gap" not in text
+    assert '**May not be a real gap:** SAP is listed under "To build", and your CV mentions it.' in text
+    assert "but your CV shows" not in text
 
 
 def test_chip_check_needs_a_whole_word():
@@ -297,11 +309,11 @@ def test_chip_check_needs_a_whole_word():
 
 
 def test_notes_are_capped_so_they_do_not_outweigh_the_bullets():
-    items = [ListedRequirement(text=f"Requirement {i}", chip=f"Chip {i}") for i in range(5)]
-    reply = AdviceReply(ratings=[rate(i, "strong", "Wrote SQL queries") for i in range(1, 6)], match_id=1)
-    text = build_advice(items, reply, CV)
-    assert text.count("may not be a real gap") == 3
-    assert '2 more "To build" items look at least partly covered' in text
+    items = [ListedRequirement(text=f"Requirement {i}", chip=f"Chip {i}") for i in range(6)]
+    reply = AdviceReply(ratings=[rate(i, "strong", "Wrote SQL queries") for i in range(1, 7)], match_id=1)
+    text = build_advice(items, reply, CV)  # the first is the strongest match, so five notes are left
+    assert text.count('is listed under "To build"') == 3
+    assert '**May not be a real gap:** 2 more "To build" items may also be covered by your CV.' in text
 
 
 # ---------- next step and basic conditions ----------
@@ -384,7 +396,7 @@ def test_harvard_software_engineer_for_a_former_engineer():
     assert "**Strongest match:** Use web services" in text
     assert "**Main gap:** Experience designing interactive Oracle APEX applications" in text
     assert "JavaScript" not in text  # Java doesn't show JavaScript
-    assert '"To build" lists Web Services, but your CV shows' in text
+    assert "May not be a real gap" not in text  # Web Services is already the strongest match
     assert "Software Development Lifecycle" not in text  # a skills line can't call it not a real gap
 
 
