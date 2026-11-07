@@ -1,9 +1,12 @@
 """LLM-based extraction of skills from the CV and from job descriptions."""
+import json
 from pathlib import Path
+from typing import Callable
 
 from .llm.base import LLMProvider
+from .requirements import Retrieved, job_block, to_checks
 from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBatch, RelevantExperience,
-                      RelevantExperienceBatch)
+                      RelevantExperienceBatch, RequirementCheck, RequirementLabelBatch, ToolCall)
 
 PROMPTS = Path(__file__).resolve().parent.parent / "prompts"
 
@@ -73,14 +76,45 @@ def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_cha
     return out
 
 
-def explain_match(llm: LLMProvider, profile: CandidateProfile, result) -> str:
-    """Optional per-job explanation, generated only when the user asks (saves quota)."""
-    return llm.generate_text(_prompt(
-        "explain_match.md",
-        summary=profile.summary,
-        skills=", ".join(profile.skills),
-        title=result.job.title,
-        company=result.job.company,
-        matched=", ".join(result.matched_skills) or "none",
-        missing=", ".join(result.missing_skills) or "none",
-    ))
+def label_requirements(llm: LLMProvider, jobs: list[Job], retrieved: dict[str, list[Retrieved]],
+                       cv_text: str) -> dict[str, list[RequirementCheck]]:
+    """Label each required skill met / partial / missing from the CV lines and knowledge-base
+    families retrieved for it (core/requirements.py), then verify every quote against the CV.
+    One call for all jobs on Gemini; one per job on small local models."""
+    todo = [j for j in jobs if retrieved.get(j.id)]
+    groups = [todo] if llm.batch_jobs else [[j] for j in todo]
+    by_id = {j.id: j for j in todo}
+    out: dict[str, list[RequirementCheck]] = {}
+    for group in groups:
+        if not group:
+            continue
+        batch = llm.generate_json(
+            _prompt("label_requirements.md", jobs="\n\n".join(job_block(j, retrieved[j.id]) for j in group)),
+            # temperature 0: the same CV and posting should get the same labels as often as possible
+            RequirementLabelBatch, what="checking each requirement against your CV", temperature=0.0)
+        items = batch.items
+        if len(group) == 1 and len(items) == 1:
+            items[0].job_id = group[0].id  # small models sometimes garble the id of a single job
+        for item in items:
+            if item.job_id in by_id:
+                out[item.job_id] = to_checks(retrieved[item.job_id], item.labels, cv_text)
+    return out
+
+
+def explain_match(llm: LLMProvider, profile: CandidateProfile, result,
+                  tools: dict[str, Callable]) -> tuple[str, list[ToolCall]]:
+    """Advice for one job, written only when the user asks (saves quota). The prompt holds no score
+    or skill lists: the model calls compute_match_score for them, and search_cv to check what the CV
+    already shows (core/advisor.py), so it can't invent a number or experience. Returns the advice
+    and the tools the model called."""
+    system = _prompt("advice_system.md")
+    user = _prompt("explain_match.md", job_id=result.job.id, title=result.job.title,
+                   company=result.job.company or "the company", summary=profile.summary)
+    if llm.supports_tools:
+        return llm.run_with_tools(system, user, tools, what="writing advice")
+    # Models without tool calling (the offline one): the app calls the score tool itself and
+    # passes its result in the prompt.
+    breakdown = json.dumps(tools["compute_match_score"](result.job.id), indent=1)
+    text = llm.generate_text(f"{system}\n\n{user}\n\nYou can't call tools here. The app already called "
+                             f"compute_match_score; its result:\n{breakdown}")
+    return text, [ToolCall(name="compute_match_score", args={"job_id": result.job.id, "by": "app"})]

@@ -6,7 +6,8 @@ from dataclasses import dataclass, field
 
 from .schemas import CandidateProfile, MatchResult, Role
 
-SKILL_HELP = "Share of the job's required skills found in your CV, by the same name or a close match."
+SKILL_HELP = ("Share of the job's required skills your CV shows. Each skill is checked against the CV "
+              "lines closest to it; a partly met skill (a related tool or a lower level) counts half.")
 SIMILARITY_HELP = ("Compares your whole CV with the whole posting. The field, type of work, level and "
                    "tools all count together.")
 EXPERIENCE_HELP = ("Years in your roles that are relevant to this job, compared with the minimum the "
@@ -65,12 +66,42 @@ def role_line(r: Role) -> str:
     return f"{r.title} ({span})" if span else r.title
 
 
+def evidence_bullets(r: MatchResult, limit: int = 6) -> list[str]:
+    """'SQL: "Wrote SQL queries to consolidate sales data"', for each met or partly met requirement
+    whose quote was found word for word in the CV."""
+    out = [f'{c.requirement}{" (partly)" if c.status == "partial" else ""}: "{c.quote}"'
+           for c in r.requirement_checks if c.quote_verified and c.status in ("met", "partial")]
+    return out[:limit] + ([f"{len(out) - limit} more."] if len(out) > limit else [])
+
+
 def skill_note(r: MatchResult, profile: CandidateProfile) -> Note:
-    m, k = len(r.matched_skills), len(r.missing_skills)
-    n = m + k
+    m, p, k = len(r.matched_skills), len(r.partial_skills), len(r.missing_skills)
+    n = m + p + k
     if n == 0:
         return Note("No clear requirements", "This posting doesn't list clear required skills, so this "
                     "part is set to a neutral 50%.")
+    if p:
+        note = _skill_note_with_partial(r, m, p, k, n)
+        note.bullets = evidence_bullets(r)
+        return note
+    note = _skill_note(r, profile, m, k, n)
+    note.bullets = evidence_bullets(r)
+    return note
+
+
+def _skill_note_with_partial(r: MatchResult, m: int, p: int, k: int, n: int) -> Note:
+    pct = _pct(r.skill_coverage)
+    label = "Most required skills" if pct >= 50 else "Some required skills"
+    parts = [f"You have {m} of the {n} skills this job requires, and {p} more partly." if m
+             else f"You partly have {p} of the {n} skills this job requires."]
+    parts.append("A partly met skill (a related tool, a lower level or a nearby industry) counts half.")
+    if k:
+        parts.append('The ones under "To build" weren\'t found in your CV.' if k > 1
+                     else 'The one under "To build" wasn\'t found in your CV.')
+    return Note(label, " ".join(parts))
+
+
+def _skill_note(r: MatchResult, profile: CandidateProfile, m: int, k: int, n: int) -> Note:
     pct = _pct(m / n)
     label = ("All required skills" if pct == 100 else "Most required skills" if pct >= 50
              else "Some required skills" if pct > 0 else "No required skills found")

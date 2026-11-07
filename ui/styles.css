@@ -63,5 +63,6 @@ h1, h2, h3, .sea-title { font-family: 'Bricolage Grotesque', system-ui, sans-ser
 }
 .sea-chip.have { background: var(--glass); color: var(--ink); }
 .sea-chip.gap  { border: 1px dashed var(--mist); color: #5A6E73; }
+.sea-chip.part { border: 1px solid var(--buoy); color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

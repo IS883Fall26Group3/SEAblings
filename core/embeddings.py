@@ -55,6 +55,20 @@ def embed_with_wait(embed, texts: list[str], on_wait=None, max_wait_s: float = 6
                        "or analyze fewer jobs.") from e
 
 
+def memo_embed(embed):
+    """Wrap an embed function so each distinct text is embedded once: retrieval and scoring embed the
+    same skills, and Gemini's free tier allows about 100 texts a minute."""
+    cache: dict[str, np.ndarray] = {}
+
+    def run(texts: list[str]) -> np.ndarray:
+        todo = list(dict.fromkeys(t for t in texts if t not in cache))
+        if todo:
+            cache.update(zip(todo, embed(todo)))
+        return np.stack([cache[t] for t in texts]) if texts else np.zeros((0, 1), dtype=np.float32)
+
+    return run
+
+
 class GeminiEmbedder(Embedder):
     # Gemini cosines are high and compressed: at 0.80 every skill matched (eval/README.md, step 4);
     # the document band is the p5-p95 of CV-job cosines over the 176 labeled pairs at 7,000 chars

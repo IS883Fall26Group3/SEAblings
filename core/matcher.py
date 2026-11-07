@@ -8,7 +8,7 @@ from .config import Settings
 from .experience import experience_fit, role_years
 from .similarity import profile_cosines
 from .skill_names import skill_key
-from .schemas import CandidateProfile, Job, MatchResult, Role
+from .schemas import CandidateProfile, Job, MatchResult, RequirementCheck, Role
 
 EmbedFn = Callable[[list[str]], np.ndarray]
 
@@ -84,6 +84,29 @@ def background_factor(field_match: str, work_match: str, values: dict[str, float
     return float(min(v) if how == "min" else max(v) if how == "max" else sum(v) / 2)
 
 
+PARTIAL_CREDIT = 0.5  # a requirement labeled partial counts half toward skill coverage
+
+
+def combine_score(coverage: float, semantic: float, experience: float, s: Settings) -> float:
+    """The match score, 0-100. Also the advice model's compute_match_score tool (core/advisor.py)."""
+    return round(100 * (s.w_skill_coverage * coverage + s.w_semantic * semantic
+                        + s.w_seniority * experience), 1)
+
+
+def apply_checks(required: list[str], checks: list[RequirementCheck], matched: list[str],
+                 close: dict[str, str]) -> tuple[list[str], list[str], list[str], dict[str, str]]:
+    """Use the per-requirement labels (met / partial / missing) where there is one; the skill
+    matcher's verdict for any requirement the labels skipped. Returns met, partial, missing and the
+    matcher's close matches that still apply."""
+    by_req = {_norm(c.requirement): c.status for c in checks}
+    met, partial, missing = [], [], []
+    for skill in required:
+        status = by_req.get(_norm(skill)) or ("met" if skill in matched else "missing")
+        {"met": met, "partial": partial}.get(status, missing).append(skill)
+    close = {k: v for k, v in close.items() if k in met and _norm(k) not in by_req}
+    return met, partial, missing, close
+
+
 def similarity_band(embedder, mode: str) -> tuple[float, float]:
     """Each PROFILE_SIMILARITY mode has its own cosine range; 'document' uses cos_low/cos_high."""
     return getattr(embedder, "sim_bands", {}).get(mode, (embedder.cos_low, embedder.cos_high))
@@ -93,12 +116,16 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
                s: Settings, embed_fn: EmbedFn | None = None,
                relevant_years: dict[str, float] | None = None,
                relevant_roles: dict[str, list[Role]] | None = None,
-               background: dict[str, tuple[str, str]] | None = None) -> list[MatchResult]:
+               background: dict[str, tuple[str, str]] | None = None,
+               requirement_checks: dict[str, list[RequirementCheck]] | None = None) -> list[MatchResult]:
     """embedder supplies thresholds (and embed() unless embed_fn, e.g. a cached version, is given).
     relevant_roles (job id -> CV roles relevant to it, see core/experience.py), or relevant_years
     (job id -> their years), replaces total years in the experience fit; jobs missing from it fall
     back to total years. background (job id -> the judge's field and kind-of-work rating) scales
-    profile similarity down (background_factor); jobs missing from it keep the embedding score."""
+    profile similarity down (background_factor); jobs missing from it keep the embedding score.
+    requirement_checks (job id -> met / partial / missing labels from retrieval + LLM,
+    core/requirements.py) decide skill coverage, a partial counting half; without them, or for a
+    requirement they skip, the skill matcher decides by name and embedding."""
     if not jobs:
         return []
     embed = embed_fn or embedder.embed
@@ -119,7 +146,12 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
         required = [x for x in (req.required_skills if req else []) if x.strip()]
         cv_skills = [x for x in profile.skills if x.strip()]
         matched, missing, close = match_skills_detail(cv_skills, required, vec, embedder.skill_threshold)
-        coverage = len(matched) / len(required) if required else 0.5  # neutral if unknown
+        checks = (requirement_checks or {}).get(job.id) or []
+        partial = []
+        if checks:
+            matched, partial, missing, close = apply_checks(required, checks, matched, close)
+        coverage = ((len(matched) + PARTIAL_CREDIT * len(partial)) / len(required)
+                    if required else 0.5)  # neutral if unknown
         embedded = rescale_cosine(cos, *similarity_band(embedder, mode))
         field_match, work_match = (background or {}).get(job.id, ("", ""))
         semantic = embedded * background_factor(field_match, work_match)
@@ -137,13 +169,12 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
         else:
             years = profile.years_experience
             senior = seniority_fit(years, min_years)
-        score = 100 * (s.w_skill_coverage * coverage + s.w_semantic * semantic
-                       + s.w_seniority * senior)
         results.append(MatchResult(
-            job=job, score=round(score, 1), skill_coverage=coverage,
+            job=job, score=combine_score(coverage, semantic, senior, s), skill_coverage=coverage,
             semantic_similarity=semantic, seniority_fit=senior,
             matched_skills=matched, missing_skills=missing, close_matches=close,
             years_counted=years, total_years=profile.years_experience, min_years=min_years,
             relevant_only=relevant is not None, counted_roles=counted, embedding_similarity=embedded,
-            field_match=field_match.strip().lower(), work_match=work_match.strip().lower()))
+            field_match=field_match.strip().lower(), work_match=work_match.strip().lower(),
+            partial_skills=partial, requirement_checks=checks))
     return sorted(results, key=lambda r: r.score, reverse=True)
