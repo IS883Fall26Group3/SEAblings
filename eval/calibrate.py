@@ -27,6 +27,7 @@ sys.path.insert(0, str(HERE.parent))
 from core.config import get_settings  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.schemas import CandidateProfile, JobRequirements  # noqa: E402
+from core.skill_names import skill_key  # noqa: E402
 
 THRESHOLDS = np.round(np.arange(0.70, 0.976, 0.025), 3)
 WEIGHTS = [w for w in itertools.product(np.round(np.arange(0, 1.01, 0.1), 1), repeat=2) if w[0] + w[1] <= 1.0001]
@@ -51,8 +52,8 @@ def load_labels(column: str) -> pd.DataFrame:
 def features(emb, kind: str, s, ex: dict, labels: pd.DataFrame) -> pd.DataFrame:
     """Per pair: document cosine, per required skill (exact match?, best CV-skill cosine), years."""
     cvs, jobs = load_cvs(), {j.id: j for j in load_jobs()}
-    docs = {f"cv:{c}": t[:s.max_jd_chars] for c, t in cvs.items()}
-    docs |= {f"job:{j}": jobs[j].description[:s.max_jd_chars] for j in labels.job_id.unique()}
+    docs = {f"cv:{c}": t[:emb.max_chars] for c, t in cvs.items()}
+    docs |= {f"job:{j}": jobs[j].description[:emb.max_chars] for j in labels.job_id.unique()}
     skills = {norm(x) for p in ex["cvs"].values() for x in p["skills"] if x.strip()}
     skills |= {norm(x) for r in ex["jobs"].values() for x in r["required_skills"] if x.strip()}
     vec = embed_cached(emb, kind, sorted(set(docs.values()) | skills))
@@ -65,7 +66,8 @@ def features(emb, kind: str, s, ex: dict, labels: pd.DataFrame) -> pd.DataFrame:
         cv_sk = [norm(x) for x in prof["skills"] if x.strip()]
         need = [norm(x) for x in (req["required_skills"] if req else []) if x.strip()]
         M = np.stack([vec[x] for x in cv_sk]) if cv_sk else None
-        exact = np.array([x in set(cv_sk) for x in need], dtype=bool)
+        cv_keys = {skill_key(x) for x in cv_sk}  # same standard name, as core.matcher
+        exact = np.array([skill_key(x) in cv_keys for x in need], dtype=bool)
         best = np.array([float((M @ vec[x]).max()) if M is not None else -1.0 for x in need])
         rows.append(dict(cv=r.cv, job_id=r.job_id, label=r.label, exact=exact, best=best,
                          doc_cos=float(vec[docs[f"cv:{r.cv}"]] @ vec[docs[f"job:{r.job_id}"]]),
@@ -156,7 +158,11 @@ def skill_threshold_report(emb, kind: str):
     y = (df.label.str.lower() == "yes").values
     vec = embed_cached(emb, kind, sorted(set(df.job_skill) | set(df.cv_skill)))
     c = np.array([float(vec[a] @ vec[b]) for a, b in zip(df.job_skill, df.cv_skill)])
-    print(f"\nskill_threshold vs labels/skill_pairs.csv ({len(df)} pairs, {y.sum()} yes; labels: {col})")
+    # Pairs with the same standard name match by name in the app (core/skill_names.py), whatever the cosine
+    same = np.array([skill_key(a) == skill_key(b) for a, b in zip(df.job_skill, df.cv_skill)])
+    c = np.where(same, 1.0, c)
+    print(f"\nskill_threshold vs labels/skill_pairs.csv ({len(df)} pairs, {y.sum()} yes; labels: {col}; "
+          f"{same.sum()} pairs match by standard name)")
     print(f"  cosine of 'yes' pairs: median {np.median(c[y]):.3f}  min {c[y].min():.3f} | "
           f"'no' pairs: median {np.median(c[~y]):.3f}  max {c[~y].max():.3f}")
     for th in THRESHOLDS:

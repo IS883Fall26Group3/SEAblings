@@ -11,11 +11,13 @@ T = TypeVar("T", bound=BaseModel)
 
 class LLMError(RuntimeError):
     """User-facing error. try_other_model=True means another model may still work
-    (quota, rate limit, temporary outage), so Auto mode moves to the next model."""
+    (quota, rate limit, temporary outage), so Auto mode moves to the next model.
+    retry_after_s is set for a per-minute rate limit: waiting that long should be enough."""
 
-    def __init__(self, message: str, try_other_model: bool = False):
+    def __init__(self, message: str, try_other_model: bool = False, retry_after_s: float | None = None):
         super().__init__(message)
         self.try_other_model = try_other_model
+        self.retry_after_s = retry_after_s
 
 
 def _skeleton(tp):

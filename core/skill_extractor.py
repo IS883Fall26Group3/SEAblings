@@ -19,7 +19,7 @@ def extract_profile(llm: LLMProvider, cv_text: str) -> CandidateProfile:
                              what="extracting skills from your CV")
 
 
-def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 3_000,
+def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 10_000,
                          local_max_jd_chars: int = 1_500) -> list[Job]:
     if not jobs:
         return jobs
@@ -43,12 +43,15 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
     return jobs
 
 
-def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job],
-                     max_jd_chars: int = 1_500) -> dict[str, RelevantExperience]:
+def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_chars: int = 10_000,
+                     local_max_jd_chars: int = 1_500) -> dict[str, RelevantExperience]:
     """Technique B: the LLM picks the CV roles relevant to each job, following guided steps and
-    using only the CV. One call for all jobs on Gemini; one per job on small local models."""
+    using only the CV. One call for all jobs on Gemini; one per job on small local models.
+    Reads as much of each posting as extract_requirements, so it sees the requirements section."""
     if llm.max_cv_chars:
         cv_text = cv_text[:llm.max_cv_chars]
+    if not llm.batch_jobs:
+        max_jd_chars = local_max_jd_chars  # small local models: shorter input, more reliable
 
     def block(j: Job) -> str:
         req = j.requirements

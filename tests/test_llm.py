@@ -50,6 +50,22 @@ def test_daily_quota_message_names_model_and_wait():
           "Please retry in 1h20m8.889822866s.")
     err = _explain(e, "gemini-flash-latest")
     assert err.try_other_model and "1h20m8s" in str(err) and "daily quota" in str(err)
+    assert err.retry_after_s is None  # waiting won't help with a daily quota
+
+
+def test_per_minute_limit_carries_the_wait():
+    class E(Exception):
+        code = 429
+    e = E("Quota exceeded for metric: embed_content_free_tier_tokens ... Please retry in 51.37s.")
+    assert _explain(e, "gemini-embedding-001").retry_after_s == 51.37
+
+
+def test_deadline_exceeded_moves_on_to_another_model():
+    class E(Exception):
+        code = 504
+    err = _explain(E("504 DEADLINE_EXCEEDED. Deadline expired before operation could complete."),
+                   "gemini-flash-latest")
+    assert err.try_other_model and "took too long" in str(err)
 
 
 def test_local_style_provider_extracts_one_job_at_a_time():

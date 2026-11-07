@@ -45,9 +45,9 @@ def merge_labels(new: pd.DataFrame, path, keys: list[str]) -> pd.DataFrame:
 
 def doc_cosines(emb, s) -> pd.DataFrame:
     cvs, jobs = load_cvs(), load_jobs()
-    texts = [t[:s.max_jd_chars] for t in cvs.values()] + [j.description[:s.max_jd_chars] for j in jobs]
+    texts = [t[:emb.max_chars] for t in cvs.values()] + [j.description[:emb.max_chars] for j in jobs]
     vec = embed_cached(emb, "local", texts)
-    rows = [(cv, j.id, j.title, j.company, j.url, float(vec[ct[:s.max_jd_chars]] @ vec[j.description[:s.max_jd_chars]]))
+    rows = [(cv, j.id, j.title, j.company, j.url, float(vec[ct[:emb.max_chars]] @ vec[j.description[:emb.max_chars]]))
             for cv, ct in cvs.items() for j in jobs]
     return pd.DataFrame(rows, columns=["cv", "job_id", "job_title", "company", "url", "cosine"])
 

@@ -10,6 +10,7 @@ python eval/esco_pairs.py local|gemini     # step 2
 python eval/extract.py gemini:gemini-flash-lite-latest   # step 3: skills from data/jobs, data/resume
 python eval/label_sets.py extracted_gemini-flash-lite-latest.json   # step 3: build/refresh labels/
 python eval/calibrate.py local extracted_gemini-flash-lite-latest.json   # step 4
+python eval/doc_band.py gemini   # step 6 revisited: document band at the app's embedding length
 ```
 
 `GEMINI_API_KEY` is read from the environment or, failing that, from `.streamlit/secrets.toml`
@@ -19,7 +20,10 @@ python eval/calibrate.py local extracted_gemini-flash-lite-latest.json   # step 
 Free-tier limits met while running this (October 2026): 5 requests/minute and a small daily cap
 for each flash model (overloaded "503" attempts and their retries count too), and 100 texts per
 minute for `gemini-embedding-001`, where every text in a batch counts. `extract.py` spaces calls
-13 s apart and stops at a daily cap; embeddings wait and retry.
+13 s apart and stops at a daily cap; embeddings wait and retry. Embeddings are also capped at
+30,000 tokens a minute (met in November 2026, once CVs and postings were embedded at 7,000
+characters: 50 of them in one batch is far over it), so `embed_cached` limits each Gemini batch to
+50 texts and 40,000 characters (about 10,000 tokens), 31 s apart.
 
 ## Plan
 
@@ -43,6 +47,11 @@ minute for `gemini-embedding-001`, where every text in a batch counts. `extract.
 6. **Profile similarity** (`similarity.py`): whole document ("document", the app default) vs
    summaries ("summary") vs best CV chunks per job ("chunks"); everything else unchanged.
    `python eval/similarity.py gemini:gemini-flash-lite-latest extracted_gemini-flash-lite-latest.json gemini local`
+   Revisited (`doc_band.py`): the document band re-measured once the app embedded 7,000
+   characters instead of 3,000; embeddings only, no LLM calls.
+
+7. **Background rating** (`background.py`): profile similarity scaled by the judge's same / related
+   / different rating of the field and kind of work. `python eval/background.py gemini:gemini-flash-lite-latest`
 
 ## Labeling guide
 
@@ -226,10 +235,15 @@ re-extracted with the new `roles` field (3.8 per CV); the judge ran once per CV 
 - **Caveat on the judge's win:** the labels are mostly Claude's drafts, and the judge is also an
   LLM deciding "is this relevant experience"; part of the agreement may be shared LLM judgment.
   Its stability across reruns (temperature 0.1) wasn't measured. Confirm with independent human
-  labels before making `EXPERIENCE_FIT = "judge"` the default.
+  labels before making `EXPERIENCE_FIT = "judge"` the default. (Made the default in November 2026,
+  before that confirmation; set `EXPERIENCE_FIT = "total"` to go back.)
 - Per-pair years and fits: `results/experience_gemini.csv`.
 
 ### Step 6: profile similarity, document vs summary vs chunks
+
+Measured with CVs and postings cut to 3,000 characters. The app now embeds 7,000, so the Gemini
+document band below is replaced by the one in "Step 6, revisited"; the comparison of the three
+modes is unchanged.
 
 Same 176 pairs and labels (same caveat). CV summaries from the latest CV extraction;
 `role_summary` extracted for the 70 labeled jobs (7 calls). Skills (threshold per embedder),
@@ -272,7 +286,120 @@ cosines (spread only, not labels); "chunks" = mean of each job's 3 closest 40-wo
 - **Changed:** the app default is `"document"` with the p5-p95 band: Gemini `cos_low`/`cos_high`
   0.731/0.795 (was 0.5/0.9), bge-small 0.586/0.740 (was 0.55/0.9). `sim_bands` hold the summary and
   chunks bands above for when those modes are chosen. Per-pair cosines:
-  `results/similarity_<embedder>.csv`.
+  `results/similarity_<embedder>.csv`. (Gemini's document band is now 0.709/0.786: see below.)
+
+### Step 6, revisited: the document band at 7,000 characters
+
+**Why.** Every text was cut to 3,000 characters before embedding, and the LLM read only the first
+3,000 characters of each posting. That's too short for real postings: only 35% of the 80 in
+`data/jobs/` fit (median 4,295 characters, p95 8,912). Among the labeled pairs, 8 of 11 CVs and 50 of
+70 postings were cut. A posting's requirements (minimum years, required skills) usually come last,
+so they were often the part dropped. For example, a LinkedIn posting tested in the app spent ~1,500
+of its 3,000 characters on page text, company pitch and pay, and its "8+ years" line was never read,
+so experience fit scored it against no minimum at all.
+
+**What changed in the app.**
+
+| Limit | Before | Now | Where |
+|---|---|---|---|
+| LLM reading a posting (skills, years, title) | 3,000 | 10,000 (98% of postings in full) | `Settings.max_jd_chars` |
+| Embedding, Gemini | 3,000 | 7,000 (85% in full; the model reads at most 2,048 tokens) | `GeminiEmbedder.max_chars` |
+| Embedding, bge-small | 3,000 | 3,000 (it reads 512 tokens anyway) | `LocalEmbedder.max_chars` |
+| Text kept from an uploaded posting | 6,000 | 50,000 | `Settings.max_jd_file_chars` |
+
+The embedding limit now belongs to each embedder, because it depends on the model, and the eval
+scripts use the same limit as the app.
+
+**How it was measured.** `doc_band.py`: the same 176 labeled pairs, embedded with
+`gemini-embedding-001` at 3,000 and at 7,000 characters; the band is the p5-p95 of the cosines, as
+before (spread only, not labels). Embeddings only: skills, experience fit and weights aren't
+involved. The 3,000-character run reproduced the original step 6 (band 0.733-0.798 vs 0.731-0.795,
+the same 0.315 Spearman; per-pair cosines within 0.01, correlation 0.992; the small gaps come from
+slightly different copies of the CVs).
+
+| Gemini, document mode | 3,000 characters (before) | 7,000 characters (now) |
+|---|---|---|
+| Texts cut | 8/11 CVs, 50/70 postings | 0/11 CVs, 11/70 postings |
+| Band (p5-p95) | 0.731-0.795 | **0.709-0.786** |
+| Median cosine | 0.766 | 0.748 |
+| Similarity alone: Spearman / NDCG@5 | 0.315 / 0.542 | 0.291 / **0.581** |
+| Pairs at 0% / 100%, old band 0.731-0.795 | 5% / 5% | **24%** / 4% |
+| Pairs at 0% / 100%, new band 0.709-0.786 | | 5% / 5% |
+
+- **Longer texts score lower.** The extra text is more of each posting, but also more benefits, pay
+  and legal wording that no CV shares, so every cosine drops a little (median 0.766 to 0.748).
+- **The band had to move with the length.** Kept at 0.731-0.795, a quarter of the pairs would show
+  0% profile similarity and lose all 30 of its points; the new band gives the intended 5% / 5%.
+- **Ranking: no clear change.** Whole-ranking Spearman dropped (0.315 to 0.291) and the top-5
+  NDCG@5 rose (0.542 to 0.581). With 11 CVs, both differences are within noise. The case for 7,000
+  is that the LLM and the embedding now see the whole posting, not a better ranking.
+- **Not re-measured:** the full score (skills + similarity + experience, steps 4 and 5) needs new
+  LLM extractions at 10,000 characters (`extract.py`, then `calibrate.py`); the chunks band, which
+  embeds postings at the new length (the summary band compares short LLM summaries, so it holds);
+  and bge-small, unchanged at 3,000 characters.
+- **The judge reads more too:** `EXPERIENCE_FIT = "judge"` read only the first 1,500 characters
+  of each posting in step 5, mostly page text and company pitch on LinkedIn copies. It now reads
+  10,000 with Gemini, like requirement extraction, and still 1,500 with the local model. Step 5's
+  judge results were measured at 1,500: re-run `experience.py` (about 11 LLM calls) to update them.
+- **In the app:** one search now embeds up to about 19,000 tokens (a CV and 10 postings) of the free
+  tier's 30,000 a minute, so two quick searches can reach the limit. The app then waits as long as
+  Gemini asks (at most a minute), says so in the progress panel, and tries once more
+  (`embed_with_wait` in `core/embeddings.py`).
+- **Changed:** Gemini `cos_low`/`cos_high` 0.709/0.786 (was 0.731/0.795). Per-pair cosines at both
+  lengths: `results/doc_band_gemini.csv`.
+
+### Step 7: profile similarity adjusted by the judge's field and kind-of-work rating
+
+**Why.** The embedding rates two career documents as alike when they share generic wording
+(management, operations, team, Boston). In the app, a data analyst CV against a café head chef
+posting got 36% profile similarity although nothing about the two is alike. The judge (the default
+experience fit) already reads the CV and every posting in one call, so it now also rates each job's
+**field** and **kind of work** against the CV: same, related or different (`field_match`,
+`work_match`). Profile similarity = banded embedding score × a factor from that rating, which can
+only lower it. No extra call.
+
+**How it was measured.** `background.py`: the real judge prompt on the 176 labeled pairs (one call
+per CV; 175 pairs rated, one job missing from a reply), with requirements not extracted (the judge
+saw "Required skills: not extracted"). Embedding scores at 7,000 characters from `doc_band.py`. Six
+factor sets compared, on similarity alone.
+
+| Judge's rating (field, work) | Pairs | Mean label |
+|---|---|---|
+| different, different | 95 | 1.41 |
+| different, related | 20 | 1.65 |
+| related, different | 3 | 1.33 |
+| related, related | 27 | 1.78 |
+| related, same | 5 | 2.00 |
+| same, related | 3 | 2.50 |
+| same, same | 22 | 3.14 |
+
+| Profile similarity (similarity alone vs labels) | Spearman | NDCG@5 | Mean on pairs rated 1-1.5 | Share of those at 0% |
+|---|---|---|---|---|
+| Embedding only (before) | 0.288 | 0.577 | 43% | 5% |
+| **Embedding × average, same 1 / related 0.5 / different 0 (now)** | **0.459** | **0.710** | 7% | 71% |
+| Embedding × average, related 0.75 | 0.448 | 0.682 | 9% | 71% |
+| Embedding × average, only "different" lowers | 0.431 | 0.659 | 12% | 71% |
+| Embedding × 0 only when both are different | 0.437 | 0.641 | 15% | 71% |
+| Embedding × 0 when either is different | 0.380 | 0.640 | 7% | 84% |
+| Rating alone, no embedding | 0.465 | 0.674 | | |
+
+- **The rating tracks the labels closely:** mean label 1.41 for "different, different" up to 3.14
+  for "same, same".
+- **Adjusting by the rating is the biggest gain in the eval so far:** Spearman 0.288 to 0.459,
+  NDCG@5 0.577 to 0.710. Pairs the team rated as wrong field drop from 43% to 7% on average.
+- **The embedding still earns its place:** the rating alone ranks about as well overall (0.465) but
+  worse at the top (NDCG@5 0.674 vs 0.710), because it gives the many "same, same" jobs one value.
+- **Not tuned to the labels:** the chosen set was picked first on every leave-one-CV-out split, and
+  the held-out mean equals the in-sample 0.459. Per CV it beats the embedding on 6 of 11, so the
+  gain is concentrated in CVs with clearly off-field jobs.
+- **Misses:** ADW's best-labeled job (j022, label 3.0) was rated "different, different" and drops
+  from 61% to 0%. CVs whose fit is transferable rather than same-field lose most.
+- **Caveats:** the labels are mostly Claude's drafts, and the judge is an LLM, so part of the
+  agreement may be shared LLM judgment (as in step 5). The full score wasn't re-measured (it needs
+  new skill extractions). Rerun stability wasn't measured.
+- **In the app:** applied whenever the judge runs (the default experience fit). With
+  `EXPERIENCE_FIT = "total"` or `"roles"`, or when the judge call fails, profile similarity is the
+  embedding score alone. Per-pair ratings and scores: `results/background_gemini-flash-lite-latest.csv`.
 
 ## Data
 

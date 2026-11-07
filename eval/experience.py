@@ -64,7 +64,8 @@ def main(kind: str, model: str, extracted: str):
     pairs = labels.groupby("cv").job_id.apply(list).to_dict()
     judged = cached_llm(OUT / f"judge_{tag}.json", sorted(pairs),
                         lambda cv: {jid: x.model_dump() for jid, x in judge_experience(
-                            llm, cvs[cv], [jobs[j] for j in pairs[cv]]).items()}, "judge")
+                            llm, cvs[cv], [jobs[j] for j in pairs[cv]], s.max_jd_chars,
+                            s.local_max_jd_chars).items()}, "judge")
     missing = [cv for cv in cvs if cv not in profiles or cv not in judged]
     if missing:
         sys.exit(f"LLM results missing for {missing}: rerun after the quota resets")

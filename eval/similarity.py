@@ -72,14 +72,14 @@ def main(model: str, extracted: str, kinds: list[str]):
             vals = {}
             for cv in cvl:
                 js = [jobs[j] for j in f.job_id[f.cv == cv]]
-                for j, (c, m) in zip(js, profile_cosines(mode, profiles[cv], cvs[cv], js, embed, s.max_jd_chars, k)):
+                for j, (c, m) in zip(js, profile_cosines(mode, profiles[cv], cvs[cv], js, embed, emb.max_chars, k)):
                     vals[(cv, j.id)] = (c, m)
             raw[name] = np.array([vals[(cv, j)][0] for cv, j in zip(f.cv, f.job_id)])
             used[name] = [vals[(cv, j)][1] for cv, j in zip(f.cv, f.job_id)]
 
         print(f"\n===== {emb.name} | skills from {ex['model']} | {len(f)} pairs, {len(cvl)} CVs")
         print(f"summary mode fell back to document on {used['summary'].count('document')} pairs | "
-              f"CV chunks per CV: {np.mean([len(chunk_text(cvs[c][:4 * s.max_jd_chars])) for c in cvl]):.1f}")
+              f"CV chunks per CV: {np.mean([len(chunk_text(cvs[c][:4 * emb.max_chars])) for c in cvl]):.1f}")
         rows, bands = [], {}
         for name, _, _ in VARIANTS:
             lo, hi = np.quantile(raw[name], [.05, .95])

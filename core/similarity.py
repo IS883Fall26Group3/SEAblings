@@ -23,7 +23,7 @@ def chunk_text(text: str, words_per_chunk: int = 40, overlap: int = 10) -> list[
 
 
 def profile_cosines(mode: str, profile: CandidateProfile, cv_text: str, jobs: list[Job], embed: EmbedFn,
-                    max_chars: int = 3_000, top_k: int = 3) -> list[tuple[float, str]]:
+                    max_chars: int = 7_000, top_k: int = 3) -> list[tuple[float, str]]:
     """Raw cosine per job and the mode actually used for it. 'summary' falls back to 'document'
     for a job without a role_summary (or a CV without a summary), so it never scores blank text."""
     if mode not in MODES:
