@@ -22,8 +22,11 @@ class FakeProvider(LLMProvider):
     name = "fake"
 
     def complete(self, prompt, *, json_mode, temperature, what, schema=None):
-        if not json_mode:
-            return "Some advice."
+        if what == "listing the job's requirements":
+            return json.dumps({"items": [{"text": "SQL for reporting", "chip": ""}]})
+        if what == "writing advice":
+            return json.dumps({"ratings": [{"id": 1, "rating": "strong", "quote": "Wrote SQL queries"}],
+                               "match_id": 1, "next_step": "Some advice."})
         if what == "extracting skills from your CV":
             return json.dumps({"summary": "An analyst.", "years_experience": 4, "seniority": "mid",
                                "skills": ["SQL", "Python"], "job_titles": ["Analyst"]})
@@ -81,8 +84,24 @@ def test_full_run_shows_ranked_results_and_unlocks_the_page(app):
 def test_advice_button_works_on_the_results_page(app):
     analyze(app)
     click(app, "Get advice for this role")
-    assert "Some advice." in text(app.markdown)
+    assert 'SQL for reporting. Your CV shows: "Wrote SQL queries"' in text(app.markdown)
+    assert "No clear gap found" in text(app.markdown)
     assert len(app.session_state["results"]) == 1
+
+
+def test_advice_still_works_when_retrieval_fails(app):
+    analyze(app)
+    FakeEmbedder.error = LLMError("overloaded", try_other_model=True)
+    click(app, "Get advice for this role")
+    assert 'Your CV shows: "Wrote SQL queries"' in text(app.markdown)
+    assert not app.warning
+
+
+def test_new_search_clears_the_stored_cv_text(app):
+    analyze(app)
+    assert "cv_text" in app.session_state
+    click(app, "New search")
+    assert "cv_text" not in app.session_state
 
 
 def test_search_mode_ranks_the_jobs_it_finds(app):

@@ -22,6 +22,7 @@ def load_secrets_into_env() -> None:
 
 load_secrets_into_env()
 
+from core.advice import generate_advice  # noqa: E402
 from core.config import get_settings  # noqa: E402
 from core.cv_parser import clean_text, extract_text  # noqa: E402
 from core.embeddings import embed_with_wait  # noqa: E402
@@ -30,8 +31,7 @@ from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider
                       model_options, with_fallback)
 from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
-from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
-                                  judge_experience)
+from core.skill_extractor import extract_profile, extract_requirements, judge_experience  # noqa: E402
 from core.validation import looks_like_job_description, looks_like_resume, looks_like_role  # noqa: E402
 from ui import components as ui  # noqa: E402
 
@@ -170,7 +170,7 @@ class StageLog:
 
 
 # Everything one run produces. Cleared when a run starts, so old results can't come back after a failure.
-RUN_KEYS = ("profile", "jobs", "results", "models_used", "embedder_used", "run_summary",
+RUN_KEYS = ("cv_text", "profile", "jobs", "results", "models_used", "embedder_used", "run_summary",
             "notice", "notes", "input_error", "explanations", "explain_errors")
 
 
@@ -211,11 +211,16 @@ def publish(live, **finished) -> None:
 
 def handle_explain(result) -> None:
     errs = st.session_state.setdefault("explain_errors", {})
+    embed = lambda t: embed_with_wait(  # noqa: E731
+        lambda x: cached_embed(tuple(x), get_embedder().name), t,
+        lambda s: st.caption(f"Gemini's per-minute limit is reached. Waiting {s} seconds, then trying again…"))
     try:
-        text, _ = with_fallback(
-            model_chain(st.session_state["model_choice"]),
-            lambda k: explain_match(get_provider(k), st.session_state["profile"], result),
-            remember_if_spent)
+        with st.spinner("Comparing your CV with this job's requirements…"):
+            text, _ = with_fallback(
+                model_chain(st.session_state["model_choice"]),
+                lambda k: generate_advice(get_provider(k), st.session_state["cv_text"], st.session_state["profile"],
+                                          result, embed, S.max_jd_chars, S.local_max_jd_chars),
+                remember_if_spent)
         st.session_state.setdefault("explanations", {})[result.job.id] = text
         errs.pop(result.job.id, None)
     except Exception as e:
@@ -314,6 +319,7 @@ if st.session_state.get("running"):
         else:
             cv_text = SAMPLE_CV.read_text(encoding="utf-8")
         cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
+        st.session_state["cv_text"] = cv_text  # in memory only; the advice button needs it after the run
         # The bundled sample CV is trusted; only check what the user gave us.
         user_cv = upload is not None or bool(cv_paste.strip())
         checks = [("CV", not user_cv or looks_like_resume(cv_text), NOT_CV)]

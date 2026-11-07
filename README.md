@@ -15,7 +15,13 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    Each card explains its three scores (`core/score_notes.py`): matched and close-matched skills, the
    field / type of work / level of the CV beside the job's, and the roles counted as experience. Built
    from what the matcher recorded, with no extra calls, so the text always agrees with the numbers.
-6. **Explain** (on demand): Gemini writes short advice for a selected job.
+6. **Advice** (on demand, `core/advice.py`): three bullets for a selected job: strongest match, main
+   gap, most useful next step. The LLM lists the posting's requirements (structured extraction), each
+   one retrieves its 3 closest CV chunks (RAG), and the LLM rates it strong, weak or not shown, with the
+   full CV to check before calling something a gap. Python then checks each quote against the CV and
+   notes any "To build" chip the CV contradicts. Two LLM calls per click; scores and chips don't change.
+   CV chunks are up to 40 words of whole lines, never mixing roles or sections; a role that has to split
+   repeats its last line (about 10 words of overlap).
 
 ## Choosing a model
 
@@ -112,7 +118,8 @@ and a short hand-made list.
 
 ## Privacy
 
-CVs are processed in memory and never written to disk or logs. Never commit real CVs or API keys.
+CVs are processed in memory and never written to disk or logs. The CV text stays in the session's
+memory until the next run or "New search", for the advice button. Never commit real CVs or API keys.
 Note that content sent to the Gemini API free tier may be used by Google to improve its products.
 
 ## [Oct 23, 2026] Comments from Professor
