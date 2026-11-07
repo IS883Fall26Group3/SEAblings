@@ -1,5 +1,5 @@
-"""Check that an input looks like a resume or a job description, using keywords only (no LLM call),
-so the wrong file is caught before any model quota is spent."""
+"""Check that an input looks like a resume, a job description or a job role, using simple rules only
+(no LLM call), so a wrong input is caught before any model quota is spent."""
 import re
 
 # Section headings: a short line holding just the heading, optionally followed by a colon.
@@ -24,6 +24,7 @@ _JD_PHRASES = re.compile(
 
 MIN_CV_SCORE = 3
 MIN_JD_SCORE = 2
+MAX_ROLE_CHARS = 80
 
 
 def resume_score(text: str) -> int:
@@ -48,3 +49,10 @@ def looks_like_resume(text: str) -> bool:
 def looks_like_job_description(text: str) -> bool:
     j = job_description_score(text)
     return j >= MIN_JD_SCORE and j >= resume_score(text)
+
+
+# A role is too short to judge by keywords, so this only rejects obvious junk: no or one distinct
+# letter ("123", "???", "aaaa") or a pasted paragraph. "teddy bear" passes; the search decides.
+def looks_like_role(text: str) -> bool:
+    role = text.strip()
+    return len(role) <= MAX_ROLE_CHARS and len({c.lower() for c in role if c.isalpha()}) >= 2

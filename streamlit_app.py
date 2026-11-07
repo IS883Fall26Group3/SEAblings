@@ -32,7 +32,7 @@ from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience)
-from core.validation import looks_like_job_description, looks_like_resume  # noqa: E402
+from core.validation import looks_like_job_description, looks_like_resume, looks_like_role  # noqa: E402
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -102,6 +102,7 @@ def remember_if_spent(key: str, e: Exception) -> None:
 OK = "Looks good."
 NOT_CV = "This doesn't look like a resume. Please upload or paste your resume."
 NOT_JD = "This doesn't look like a job posting. Please upload or paste a job description."
+NOT_ROLE = "Enter a job role, such as Data analyst."
 
 
 class RunStopped(Exception):
@@ -250,8 +251,9 @@ with st.sidebar:
         else:
             query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst",
                                   key=f"query_{version}")
-            location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote",
-                                     key=f"location_{version}")
+            location = st.text_input("Location (optional)", placeholder="e.g. Boston, MA or Remote",
+                                     key=f"location_{version}",
+                                     help="If left empty, we search for this role across the US.")
             limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs, key=f"limit_{version}")
             if S.job_source == "sample":
                 st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
@@ -325,6 +327,8 @@ if st.session_state.get("running"):
             checks += [(name if name == "Pasted job description" else f"Job description ({name})",
                         looks_like_job_description(text), NOT_JD) for name, text in items]
             raw_jobs = jobs_from_descriptions([(n.rsplit(".", 1)[0], t) for n, t in items])
+        else:
+            checks.append(("Role", looks_like_role(query), NOT_ROLE))
         stop_if_invalid(checks)
         log.done("Read your CV" if mode == MODE_SEARCH else "Read your CV and job descriptions")
 

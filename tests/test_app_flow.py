@@ -94,6 +94,26 @@ def test_search_mode_ranks_the_jobs_it_finds(app):
     assert "Ranked" in text(app.caption)
 
 
+def test_junk_role_warns_like_the_other_inputs_before_any_model_call(app):
+    app.radio[0].set_value("Search live jobs").run()
+    app.text_input[0].set_value("???")
+    click(app, "Find matching jobs")
+    assert app.warning[0].value == "**CV:** Looks good.  \n**Role:** Enter a job role, such as Data analyst."
+    assert "profile" not in app.session_state
+    assert not app.session_state["running"]
+
+
+def test_search_runs_without_a_location_and_explains_the_default(app):
+    app.radio[0].set_value("Search live jobs").run()
+    location = app.text_input[1]
+    assert location.label == "Location (optional)"
+    assert location.help == "If left empty, we search for this role across the US."
+    app.text_input[0].set_value("teddy bear")
+    click(app, "Find matching jobs")
+    assert not app.warning
+    assert app.session_state["results"]
+
+
 def test_scoring_failure_keeps_earlier_stages_and_says_try_again(app):
     FakeEmbedder.error = LLMError("embed-model is temporarily overloaded. Pick another model.", try_other_model=True)
     analyze(app)
