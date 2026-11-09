@@ -103,3 +103,40 @@ class GeminiProvider(LLMProvider):
             self.schema_unsupported = True
             return self.complete(prompt, json_mode=json_mode, temperature=temperature, what=what)
         return resp.text or ""
+
+    supports_tools = True
+
+    def run_with_tools(self, system: str, prompt: str, tools: dict, what: str = "writing advice",
+                       temperature: float = 0.4, max_steps: int = 6):
+        """Tool calling as in the course's ReAct loop (Session 5): Gemini sees each Python function's
+        name, arguments and docstring, decides which to call, we run it and send back the result,
+        until it answers in text. The last step allows no more calls, so the loop always ends."""
+        from ..schemas import ToolCall
+        base = dict(system_instruction=system, temperature=temperature, tools=list(tools.values()),
+                    # we run the functions ourselves, so each call can be checked and shown
+                    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True))
+        contents = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
+        made: list[ToolCall] = []
+        for step in range(max_steps):
+            last = step == max_steps - 1
+            config = types.GenerateContentConfig(**base, tool_config=types.ToolConfig(
+                function_calling_config=types.FunctionCallingConfig(mode="NONE" if last else "AUTO")))
+            resp = call_gemini(lambda: self.client.models.generate_content(
+                model=self.model, contents=contents, config=config), what, self.model)
+            calls = resp.function_calls or []
+            if not calls:
+                return resp.text or "", made
+            contents.append(resp.candidates[0].content)  # the model's request, kept in the conversation
+            parts = []
+            for call in calls:
+                args = dict(call.args or {})
+                fn = tools.get(call.name)
+                try:
+                    result = fn(**args) if fn else {"error": f"There is no tool named {call.name}."}
+                except Exception as e:  # a bad argument: tell the model instead of failing the advice
+                    result = {"error": str(e)}
+                log.info("tool %s(%s) called while %s", call.name, args, what)
+                made.append(ToolCall(name=call.name, args=args))
+                parts.append(types.Part.from_function_response(name=call.name, response={"result": result}))
+            contents.append(types.Content(role="user", parts=parts))
+        return "", made

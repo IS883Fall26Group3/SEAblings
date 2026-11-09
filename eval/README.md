@@ -401,6 +401,94 @@ factor sets compared, on similarity alone.
   `EXPERIENCE_FIT = "total"` or `"roles"`, or when the judge call fails, profile similarity is the
   embedding score alone. Per-pair ratings and scores: `results/background_gemini-flash-lite-latest.csv`.
 
+### Success metric: requirement accuracy test set
+
+The metric fixed in the workshop checkpoint is **requirement classification accuracy**: the share of
+requirements where the app's label (met / partial / missing) matches the team's answer key.
+`requirement_set.py` builds the test set once:
+
+| File | What it holds |
+|---|---|
+| `labels/requirements_frozen.json` | The 12 test postings' requirements (97 skills + 13 minimum-years rows), extracted once by the app's prompt with gemini-flash-lite and kept fixed. |
+| `labels/requirements/<name>.csv` | The answer key, one file per labeler. 16 CV-job pairs: 14 good or stretch fits from `cv_job_reviewed.csv` and 2 confusing pairs (poor fits that share several skills). 4 of the pairs are labeled twice, to measure agreement. |
+| `labels/requirements/<name>_extraction.csv` | Requirements the extraction missed or invented, for each posting. |
+| `labels/awkward_inputs.csv` | 4 behavior checks (empty CV, a recipe, a news item, a two-line posting), with the expected behavior written in advance. |
+| `labels/requirement_postings.md` | The test postings in full, for reading while labeling. |
+
+How to label is in `labeling_guide.md`. The team labels **before** the app's labels are run on these
+pairs, and commits the files; the commit history shows the order.
+
+**Results** (`python eval/requirement_accuracy.py --app 3`, gemini-flash-lite for every LLM step,
+per-requirement rows in `results/requirement_accuracy.csv`):
+
+| | Accuracy | Balanced | Met right | Partial right | Missing right |
+|---|---|---|---|---|---|
+| Keyword baseline (met only if the requirement's words are in the CV) | 50.9% (56/110) | 46.5% | 39% | 0% | 100% |
+| App, run 1 | 67.3% (74/110) | 64.4% | 87% | 26% | 80% |
+| App, run 2 | 66.4% (73/110) | 63.6% | 87% | 26% | 78% |
+| App, run 3 | 76.4% (84/110) | 73.9% | 89% | 42% | 90% |
+| **App, mean** | **70.0%** | 67.3% | 88% | 31% | 83% |
+
+- **Target ≥ 75%: not reached on average.** The runs differ because the LLM's labels differ even at
+  temperature 0: 93 of the 110 requirements got the same label in all 3 runs; the other 17 flipped,
+  almost all between met and partial or between partial and missing.
+- **By part (mean):** skills 70% (n=97), minimum years 69% (n=13), confusing pairs 90% (n=17),
+  regular pairs 66% (n=93).
+- **Labeler agreement:** 88% on the 4 double-labeled pairs (25 requirements), Cohen's kappa 0.82. All
+  3 disagreements were met vs partial, the same boundary where the app errs most.
+- **Quotes:** 170 of 171 quotes on met or partial labels were found word for word in the CV; the
+  check dropped the other.
+
+**How the labeler was improved without tuning on the test set.**
+- **First version: 63.3%** mean over 3 runs (61.8-65.5%), with partial labels 6% right. Looking at
+  its errors showed one bug: on one CV, SQL, Python and ETL were labeled missing in every run although
+  the CV names them. Embedding search ranked the line naming them 4th to 8th of 28, behind lines
+  about general technical work, so it never reached the model. Retrieval now adds CV lines that name
+  the requirement (or a related skill from the knowledge base) word for word
+  (`core/requirements.py: retrieve_evidence`).
+- **Prompt changes were tuned on a practice set only** (`practice_set.py`): 8 pairs on the 2 CVs that
+  are in no test pair (AYP, VV) and 8 postings that aren't test postings, 64 requirements. Its answer
+  key was labeled by Claude (an AI assistant) by `labeling_guide.md`, before the app ran on those
+  pairs; it is for tuning only and never reported as the metric. The labeling prompt now follows the
+  guide's rules (study only = partial, soft skills shown in action, broad areas, same-kind tools).
+  Practice accuracy: 75.8% before, 78.1% after (mean of 2 and 3 runs).
+- Then the test set was run once with the new version (`VERSION = "v2"` in
+  `requirement_accuracy.py`): the table above. Tried and dropped: majority vote over 3 labeling
+  calls (same accuracy as the mean, 3 times the calls); gemini-flash for labeling (overloaded, 503).
+
+**Awkward inputs** (`labels/awkward_inputs.csv`, run through the real app): all 4 pass. A2 (a recipe
+as the CV) and A3 (a news item as the posting) first got match scores of 0 and 25 as if they were
+real; `core/input_checks.py` now stops both with a clear message. The extraction step says what
+kind of document it read (no extra call), and a posting with no requirements is never scored.
+
+### Efficiency: calls, tokens and time per search
+
+`python eval/measure_cost.py one` and `... ten` drive the real app headlessly and record every Gemini
+call (rows in `results/cost_per_search.csv`). Gemini Flash Lite, a fresh session each time:
+
+| Step | 1 CV vs 1 posting: tokens in / out | 1 CV vs 10 postings: tokens in / out | Seconds (10 postings) |
+|---|---|---|---|
+| Extract the CV profile | 618 / 325 | 645 / 349 | 3.4 |
+| Extract the postings' requirements | 459 / 233 | 1,000 / 2,150 | 7.5 |
+| Judge relevant experience | 744 / 173 | 1,549 / 955 | 3.8 |
+| Label each requirement (retrieval) | 1,620 / 386 | 10,180 / 2,112 | 5.2 |
+| **Search total: 4 LLM calls** | **3,441 / 1,117** | **13,374 / 5,566** | **29-33 s** wall |
+| Texts embedded (3 calls) | 25 | 70 | 1.7-11.8 |
+| Advice on one job: 2 calls (tool calling) | | 1,804 / 129 | 5 s |
+
+- **LLM calls don't grow with the number of jobs:** each step sends all jobs in one call (4 calls a
+  search; the offline model makes one call per job instead).
+- **Tokens grow with jobs, mostly in the requirement check** (76% of input tokens at 10 jobs): each
+  requirement carries its retrieved CV lines and knowledge-base families.
+- **The binding free-tier limit is embeddings**, 1,000 texts a day per Google project: about 40
+  one-job or 14 ten-job searches a day. Repeated texts are embedded once per session; the knowledge
+  base is embedded ahead of time.
+- **Ways to cut:** send each distinct requirement once when several jobs share it; drop CV lines
+  retrieved for more than one requirement of the same job; use a separate Google project (its own
+  quota) for the demo.
+- **Advice** in this run called `compute_match_score` only, since the top job had no gaps to search
+  for; `search_cv` runs when a gap needs checking.
+
 ## Data
 
 | File | Source | License | In git |

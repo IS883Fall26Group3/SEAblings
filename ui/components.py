@@ -109,6 +109,19 @@ def score_breakdown(r: MatchResult, profile: CandidateProfile) -> None:
         why.markdown(note_markdown(note))
 
 
+TOOL_NAMES = {"compute_match_score": "computed the match score",
+              "search_cv": "searched your CV"}
+
+
+def tool_label(call) -> str:
+    """'searched your CV for "Tableau"', so the user sees which tools the advice relied on."""
+    text = TOOL_NAMES.get(call.name, call.name)
+    if call.args.get("by") == "app":
+        text += " (done by the app)"
+    phrase = call.args.get("phrase")
+    return f'{text} for "{phrase}"' if phrase else text
+
+
 def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
                show_breakdown: bool = True) -> None:
     job = r.job
@@ -123,6 +136,8 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
 
         if r.matched_skills:
             right.markdown("**You have**  " + chips(r.matched_skills, "have"), unsafe_allow_html=True)
+        if r.partial_skills:
+            right.markdown("**Partly**  " + chips(r.partial_skills, "part"), unsafe_allow_html=True)
         if r.missing_skills:
             right.markdown("**To build**  " + chips(r.missing_skills, "gap"), unsafe_allow_html=True)
 
@@ -138,6 +153,9 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
         error = st.session_state.get("explain_errors", {}).get(job.id)
         if explanation:
             st.markdown("**Advice for this role**\n\n" + explanation)
+            calls = st.session_state.get("tool_calls", {}).get(job.id) or []
+            if calls:
+                st.caption("How the AI checked this: " + ", ".join(tool_label(c) for c in calls))
         elif error:
             st.warning(error)
         advice, posting = st.columns(2)

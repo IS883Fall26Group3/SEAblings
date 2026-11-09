@@ -1,0 +1,32 @@
+pair,kind,cv,job_id,job_title,type,requirement,role,label,note
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,FP&A,main,partial,"accounting and cost analysis work, no direct FP&A role"
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Financial Modeling,main,missing,
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Excel,main,missing,
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Variance Analysis,main,partial,examined account balance changes during financial audits
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Headcount Analytics,main,missing,
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,P&L,main,partial,"worked with financial statements and contract profitability, P&L not named"
+P02,regular,AS,j012,Financial Planning & Analysis Analyst | Fully Remote US,years,1+ years of relevant experience,main,met,5 yrs: external and internal audit/accounting roles
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Financial Planning,second,partial,cost analysis and student club finance role only
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Budgeting,second,missing,
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Forecasting,second,missing,
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Financial Modeling,second,missing,
+P03,regular,AS,j040,"Remote FP&A Analyst | 4-Day Week, Equity & Growth",skill,Performance Analysis,second,partial,cost comparison and profitability analysis in audit role
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,FP&A,main,partial,"corporate credit and financial statement analysis, no FP&A role"
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Financial Modeling,main,met,
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Excel,main,met,
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Variance Analysis,main,partial,covenant and trigger tests on historic vs projected financials
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,Headcount Analytics,main,missing,
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,skill,P&L,main,met,3-statement modeling and margin analysis across credit roles
+P06,regular,SA,j012,Financial Planning & Analysis Analyst | Fully Remote US,years,1+ years of relevant experience,main,met,7.8 yrs: three credit and financial analysis roles
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,skill,Product Management,main,partial,"partnered with product team as intern and led ERP rollout, no PM role"
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,skill,Roadmap Strategy,main,missing,
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,skill,Voice of Customer,main,missing,
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,skill,Pricing Models,main,partial,intern promotional markdown pricing and Excel modeling in skills
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,skill,SQL,main,missing,
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,skill,Data Analytics,main,partial,supply chain spend/forecast analysis and BI tools in skills
+P10,regular,SU,j069,Product Manager III - Vaux Smart Autonomy,years,4+ years of relevant experience,main,missing,0.4 yrs intern touching pricing; 4.1 yrs in supply chain operations
+P14,regular,ADW,j022,Remote Junior Product Analyst: Agile Requirements,skill,Business Analysis,main,partial,sales performance tracking and GTM initiatives in territory management
+P14,regular,ADW,j022,Remote Junior Product Analyst: Agile Requirements,skill,Agile Methodologies,main,missing,
+P14,regular,ADW,j022,Remote Junior Product Analyst: Agile Requirements,skill,Requirements Documentation,main,missing,
+P14,regular,ADW,j022,Remote Junior Product Analyst: Agile Requirements,skill,Product Development,main,partial,"designed B2B2C voucher pilot and micro-station rollout, not software PM"
+P14,regular,ADW,j022,Remote Junior Product Analyst: Agile Requirements,skill,Testing,main,missing,"commercial merchant pilot only, no QA or software testing"

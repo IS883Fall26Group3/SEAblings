@@ -1,0 +1,17 @@
+case,jobs,phase,step,model,seconds,input_tokens,output_tokens,texts_embedded
+one,1,search,extracting skills from your CV,gemini-flash-lite-latest,2.59,618,325,0
+one,1,search,reading the job descriptions,gemini-flash-lite-latest,2.6,459,233,0
+one,1,search,judging your relevant experience,gemini-flash-lite-latest,3.13,744,173,0
+one,1,search,comparing skills,gemini-embedding-001,0.48,0,0,16
+one,1,search,checking each requirement against your CV,gemini-flash-lite-latest,2.81,1620,386,0
+one,1,search,comparing skills,gemini-embedding-001,0.27,0,0,2
+one,1,search,comparing skills,gemini-embedding-001,0.33,0,0,7
+ten,10,search,extracting skills from your CV,gemini-flash-lite-latest,3.38,645,349,0
+ten,10,search,reading the job descriptions,gemini-flash-lite-latest,7.45,1000,2150,0
+ten,10,search,judging your relevant experience,gemini-flash-lite-latest,3.84,1549,955,0
+ten,10,search,comparing skills,gemini-embedding-001,11.01,0,0,55
+ten,10,search,checking each requirement against your CV,gemini-flash-lite-latest,5.22,10180,2112,0
+ten,10,search,comparing skills,gemini-embedding-001,0.48,0,0,11
+ten,10,search,comparing skills,gemini-embedding-001,0.27,0,0,4
+ten,10,advice,writing advice,gemini-flash-lite-latest,1.97,736,21,0
+ten,10,advice,writing advice,gemini-flash-lite-latest,2.49,1068,108,0

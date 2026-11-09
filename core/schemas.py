@@ -15,6 +15,9 @@ class Role(BaseModel):
 
 
 class CandidateProfile(BaseModel):
+    # Checked before matching (core/input_checks.py): a recipe or a letter is not scored as a CV
+    document_type: str = Field(default="cv", description="'cv' if the text is a CV or resume; "
+                               "otherwise 2-4 words on what it is, e.g. 'recipe' or 'cover letter'")
     summary: str = Field(description="2-3 sentence professional summary")
     years_experience: float = Field(description="Total years of professional experience")
     seniority: str = Field(description="One of: entry, mid, senior, lead")
@@ -29,6 +32,10 @@ class CandidateProfile(BaseModel):
 
 class JobRequirements(BaseModel):
     job_id: str = ""
+    # Checked before matching (core/input_checks.py): a news item is not scored as a job
+    document_type: str = Field(default="job posting", description="'job posting' if the text is a job "
+                               "posting or job description; otherwise 2-4 words on what it is, e.g. "
+                               "'news article'")
     required_skills: list[str]
     nice_to_have_skills: list[str]
     min_years_experience: Optional[float] = None
@@ -63,6 +70,35 @@ class RelevantExperienceBatch(BaseModel):
     items: list[RelevantExperience]
 
 
+class RequirementLabel(BaseModel):
+    """The LLM's verdict on one required skill, from the CV lines retrieved for it (reason first)."""
+    requirement: str = Field(description="The requirement exactly as listed")
+    reason: str = Field(default="", description="One short sentence: what the CV lines show, or that "
+                                                "none of them show it")
+    status: str = Field(description="met, partial or missing")
+    quote: str = Field(default="", description="For met or partial: the words from one CV line that "
+                                               "show it, copied exactly. Empty for missing.")
+
+
+class JobRequirementLabels(BaseModel):
+    job_id: str = ""
+    labels: list[RequirementLabel] = Field(default_factory=list)
+
+
+class RequirementLabelBatch(BaseModel):
+    items: list[JobRequirementLabels]
+
+
+class RequirementCheck(BaseModel):
+    """A requirement's final label as shown on the card. The quote is kept only when it appears word
+    for word in the CV (core/requirements.py: quote_in_cv); otherwise it is dropped."""
+    requirement: str
+    status: str               # met, partial or missing
+    quote: str = ""
+    quote_verified: bool = False
+    reason: str = ""
+
+
 class Job(BaseModel):
     id: str
     title: str
@@ -94,3 +130,13 @@ class MatchResult(BaseModel):
     embedding_similarity: float = 0.0   # profile similarity from the embedding alone, before the rating
     field_match: str = ""               # the judge's same / related / different, empty when not rated
     work_match: str = ""
+    # Per-requirement labels from retrieval + LLM (core/requirements.py); empty when they weren't made,
+    # and then matched / missing come from the skill matcher alone.
+    partial_skills: list[str] = []
+    requirement_checks: list[RequirementCheck] = []
+
+
+class ToolCall(BaseModel):
+    """One tool the model chose to call while writing advice (shown under the advice)."""
+    name: str
+    args: dict = {}

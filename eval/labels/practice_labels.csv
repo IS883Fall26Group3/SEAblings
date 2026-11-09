@@ -1,0 +1,65 @@
+﻿pair,kind,cv,job_id,job_title,type,requirement,role,label,note
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Strategy Consulting,main,missing,no consulting role; sourcing strategy only
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Quantitative Analysis,main,met,"should-cost analysis, linear programming"
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Problem Solving,main,met,troubleshooting decision trees for problem wells
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Written Communication,main,partial,implied only: contract frameworks
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Verbal Communication,main,partial,"implied: QBRs, negotiation"
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Stakeholder Management,main,met,named in skills
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Team Collaboration,main,met,cross-functional collaboration shown
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),skill,Project Management,main,met,managed well execution to targets
+D01,regular,AYP,j061,Oliver Wyman - Senior Consultant (Generalist),years,2+ years of relevant experience,main,missing,0 yrs strategy consulting
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,Strategy Consulting,main,missing,no consulting role
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,Market Analysis,main,met,market intelligence and benchmarking
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,Competitive Positioning,main,missing,
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,Operating Model Design,main,partial,"reorganized teams, standardized processes"
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,International Strategy,main,missing,
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,Problem Solving,main,met,troubleshooting decision trees
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,skill,Executive Communication,main,partial,"influencing senior leaders, not shown in action"
+D02,regular,AYP,j048,Strategy Consultant / Sr Strategy Consultant – Remote,years,4+ years of relevant experience,main,missing,0 yrs strategy roles
+D03,regular,AYP,j035,Lead Product Analyst,skill,Insurance Products,main,missing,"banking products, not insurance"
+D03,regular,AYP,j035,Lead Product Analyst,skill,Underwriting,main,partial,"credit approvals, not insurance underwriting"
+D03,regular,AYP,j035,Lead Product Analyst,skill,Claims,main,missing,
+D03,regular,AYP,j035,Lead Product Analyst,skill,Pricing,main,partial,"procurement pricing, not product pricing"
+D03,regular,AYP,j035,Lead Product Analyst,skill,Relational Database Tools,main,missing,ERP tools only
+D03,regular,AYP,j035,Lead Product Analyst,skill,SQL,main,missing,
+D03,regular,AYP,j035,Lead Product Analyst,skill,Python,main,met,skills section
+D03,regular,AYP,j035,Lead Product Analyst,skill,Problem Solving,main,met,troubleshooting decision trees
+D03,regular,AYP,j035,Lead Product Analyst,years,2+ years of relevant experience,main,met,2.4 yrs card analytics role
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,Python,main,met,skills section
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,SQL,main,missing,
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,Tableau,main,missing,
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,Power BI,main,missing,
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,Databricks,main,missing,
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,Snowflake,main,missing,
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,Machine Learning,main,partial,"certificate only, no work use"
+D04,regular,AYP,j037,Junior Machine Learning Engineer-remote/Data Scientist,skill,GenAI / LLMs,main,missing,
+D05,regular,VV,j003,BI Developer II: Power BI Insights & Data Modeling,skill,Power BI,main,partial,"Tableau and Looker Studio, same kind of tool"
+D05,regular,VV,j003,BI Developer II: Power BI Insights & Data Modeling,skill,Data Modeling,main,missing,dashboards only
+D05,regular,VV,j003,BI Developer II: Power BI Insights & Data Modeling,skill,Dashboard Development,main,met,created data dashboards
+D05,regular,VV,j003,BI Developer II: Power BI Insights & Data Modeling,skill,Reporting,main,met,produced reports
+D05,regular,VV,j003,BI Developer II: Power BI Insights & Data Modeling,skill,Self-Service Analytics,main,missing,
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,Data Analytics,main,met,"analyst role, applied analytics"
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,SQL,main,met,skills section
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,Python,main,met,skills section
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,R,main,met,skills section
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,Statistical Modeling,main,missing,"surveys and evaluation, no modeling"
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,Predictive Analytics,main,missing,
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,Generative AI,main,missing,
+D06,regular,VV,j030,Remote Data Analyst V (6347),skill,Customer Insights Analytics,main,partial,"program participant analytics, not customers"
+D06,regular,VV,j030,Remote Data Analyst V (6347),years,8+ years of relevant experience,main,missing,2.2 yrs: analyst and analytics project roles
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,Quality Systems,main,missing,
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,Data Visualization,main,met,dashboards; Tableau
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,Business Intelligence,main,partial,"dashboards within program roles, no BI role"
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,Power BI,main,partial,"Tableau, same kind of tool"
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,SQL,main,met,skills section
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,Python,main,met,skills section
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",skill,Databricks,main,missing,
+D07,regular,VV,j057,"Senior Analyst, R&D Quality Data Analytics",years,3+ years of relevant experience,main,partial,"2.2 yrs analytics roles, no quality"
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,Business Intelligence,main,partial,"dashboards within program roles, no BI role"
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,Report Development,main,met,produced reports
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,SQL,main,met,skills section
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,ETL,main,missing,
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,Relational Databases,main,partial,"SQL listed, no database named"
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,Crystal Reports,main,partial,"Tableau, same kind of tool"
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,skill,ITIL Foundation,main,missing,
+D08,regular,VV,j059,Business Intelligence Developer/Report Writer,years,5+ years of relevant experience,main,missing,no IT roles; 1.6 yrs analyst

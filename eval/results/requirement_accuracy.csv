@@ -1,0 +1,111 @@
+pair,kind,cv,job_id,type,requirement,team,keyword,app_run1,app_run2,app_run3
+P01,regular,AS,j054,skill,Financial Analysis,met,missing,met,met,met
+P01,regular,AS,j054,skill,Financial Forecasting,missing,missing,missing,missing,missing
+P01,regular,AS,j054,skill,Excel,missing,missing,missing,missing,missing
+P01,regular,AS,j054,skill,PowerPoint,missing,missing,missing,missing,missing
+P01,regular,AS,j054,skill,Financial Modeling,missing,missing,partial,partial,missing
+P01,regular,AS,j054,skill,Data Analysis,partial,missing,missing,missing,missing
+P01,regular,AS,j054,years,2+ years of relevant experience,met,missing,met,met,met
+P05,regular,LB,j006,skill,Management Consulting,met,missing,met,met,met
+P05,regular,LB,j006,skill,Business Strategy,met,met,met,met,met
+P05,regular,LB,j006,skill,Structured Problem Solving,partial,missing,partial,partial,partial
+P05,regular,LB,j006,skill,Business Analysis,met,missing,partial,partial,partial
+P05,regular,LB,j006,skill,Written Communication,partial,missing,missing,missing,missing
+P05,regular,LB,j006,years,1+ years of relevant experience,met,missing,met,met,met
+P09,regular,ZW,j031,skill,Data Engineering,met,missing,partial,partial,met
+P09,regular,ZW,j031,skill,Databricks,partial,missing,missing,missing,missing
+P09,regular,ZW,j031,skill,Apache Spark,partial,missing,partial,partial,partial
+P09,regular,ZW,j031,skill,Delta Lake,missing,missing,missing,missing,missing
+P09,regular,ZW,j031,skill,SQL,met,met,met,met,met
+P09,regular,ZW,j031,skill,Python,met,met,met,met,met
+P09,regular,ZW,j031,skill,Azure,missing,missing,missing,missing,missing
+P09,regular,ZW,j031,skill,ETL,met,met,met,met,met
+P09,regular,ZW,j031,years,7+ years of relevant experience,met,missing,met,met,met
+P13,regular,MS,j019,skill,Management Consulting,missing,missing,partial,partial,partial
+P13,regular,MS,j019,skill,Life Sciences,partial,missing,met,met,met
+P13,regular,MS,j019,skill,Structured Problem Solving,met,missing,met,met,met
+P13,regular,MS,j019,skill,Biotech,partial,missing,met,met,met
+P13,regular,MS,j019,skill,Change Management,partial,missing,partial,partial,partial
+P13,regular,MS,j019,skill,Data Analysis,partial,missing,met,met,met
+P13,regular,MS,j019,years,2.5+ years of relevant experience,partial,missing,missing,missing,missing
+P02,regular,AS,j012,skill,FP&A,partial,missing,partial,partial,partial
+P02,regular,AS,j012,skill,Financial Modeling,missing,missing,partial,partial,missing
+P02,regular,AS,j012,skill,Excel,missing,missing,missing,missing,missing
+P02,regular,AS,j012,skill,Variance Analysis,partial,missing,partial,met,partial
+P02,regular,AS,j012,skill,Headcount Analytics,missing,missing,missing,missing,missing
+P02,regular,AS,j012,skill,P&L,partial,missing,missing,missing,missing
+P02,regular,AS,j012,years,1+ years of relevant experience,met,missing,met,met,met
+P06,regular,SA,j012,skill,FP&A,partial,missing,met,partial,partial
+P06,regular,SA,j012,skill,Financial Modeling,met,met,met,met,met
+P06,regular,SA,j012,skill,Excel,met,met,met,met,met
+P06,regular,SA,j012,skill,Variance Analysis,partial,missing,missing,partial,partial
+P06,regular,SA,j012,skill,Headcount Analytics,missing,missing,missing,missing,missing
+P06,regular,SA,j012,skill,P&L,met,missing,missing,partial,partial
+P06,regular,SA,j012,years,1+ years of relevant experience,met,missing,missing,missing,missing
+P10,regular,SU,j069,skill,Product Management,partial,missing,missing,partial,missing
+P10,regular,SU,j069,skill,Roadmap Strategy,missing,missing,partial,partial,missing
+P10,regular,SU,j069,skill,Voice of Customer,missing,missing,missing,missing,missing
+P10,regular,SU,j069,skill,Pricing Models,partial,missing,met,met,met
+P10,regular,SU,j069,skill,SQL,missing,missing,missing,missing,missing
+P10,regular,SU,j069,skill,Data Analytics,partial,missing,met,met,met
+P10,regular,SU,j069,years,4+ years of relevant experience,missing,missing,met,met,met
+P14,regular,ADW,j022,skill,Business Analysis,partial,missing,met,met,partial
+P14,regular,ADW,j022,skill,Agile Methodologies,missing,missing,missing,missing,missing
+P14,regular,ADW,j022,skill,Requirements Documentation,missing,missing,missing,missing,missing
+P14,regular,ADW,j022,skill,Product Development,partial,missing,met,met,met
+P14,regular,ADW,j022,skill,Testing,missing,missing,partial,partial,missing
+P03,regular,AS,j040,skill,Financial Planning,partial,missing,partial,met,partial
+P03,regular,AS,j040,skill,Budgeting,missing,missing,missing,missing,missing
+P03,regular,AS,j040,skill,Forecasting,missing,missing,missing,missing,missing
+P03,regular,AS,j040,skill,Financial Modeling,missing,missing,partial,partial,missing
+P03,regular,AS,j040,skill,Performance Analysis,partial,missing,partial,partial,partial
+P07,regular,SA,j054,skill,Financial Analysis,met,missing,met,met,met
+P07,regular,SA,j054,skill,Financial Forecasting,partial,missing,met,met,partial
+P07,regular,SA,j054,skill,Excel,met,met,met,met,met
+P07,regular,SA,j054,skill,PowerPoint,missing,missing,missing,missing,missing
+P07,regular,SA,j054,skill,Financial Modeling,met,met,met,met,met
+P07,regular,SA,j054,skill,Data Analysis,partial,missing,met,met,met
+P07,regular,SA,j054,years,2+ years of relevant experience,met,missing,met,met,met
+P11,regular,KF,j072,skill,Biotech Consulting,partial,missing,met,met,met
+P11,regular,KF,j072,skill,Data Analysis,partial,missing,met,met,met
+P11,regular,KF,j072,skill,Market Access,missing,missing,missing,missing,missing
+P11,regular,KF,j072,skill,Pricing,missing,missing,missing,missing,missing
+P11,regular,KF,j072,skill,Forecasting,missing,missing,missing,missing,missing
+P11,regular,KF,j072,skill,Excel,met,met,met,met,met
+P11,regular,KF,j072,skill,PowerPoint,met,met,met,met,met
+P11,regular,KF,j072,years,3+ years of relevant experience,partial,missing,missing,missing,missing
+P15,confusing,SU,j032,skill,Database Development,missing,missing,missing,missing,missing
+P15,confusing,SU,j032,skill,Business Intelligence,partial,missing,met,met,met
+P15,confusing,SU,j032,skill,SQL,missing,missing,missing,missing,missing
+P15,confusing,SU,j032,skill,Tableau,met,met,met,met,met
+P15,confusing,SU,j032,skill,Power BI,met,met,met,met,met
+P15,confusing,SU,j032,skill,ETL,missing,missing,missing,missing,missing
+P15,confusing,SU,j032,skill,Epic Clarity,missing,missing,missing,missing,missing
+P15,confusing,SU,j032,years,7+ years of relevant experience,missing,missing,missing,missing,missing
+P04,regular,LB,j062,skill,Management Consulting,met,missing,met,met,met
+P04,regular,LB,j062,skill,Operating Model Design,partial,missing,missing,missing,partial
+P04,regular,LB,j062,skill,Stakeholder Engagement,met,missing,met,met,met
+P04,regular,LB,j062,skill,Executive Presentations,met,missing,met,met,met
+P04,regular,LB,j062,skill,Workshop Facilitation,met,missing,met,met,met
+P04,regular,LB,j062,years,5+ years of relevant experience,met,missing,met,met,met
+P08,regular,ZW,j024,skill,Machine Learning,met,missing,missing,missing,missing
+P08,regular,ZW,j024,skill,Python,met,met,met,met,met
+P08,regular,ZW,j024,skill,PyTorch,missing,missing,missing,missing,missing
+P08,regular,ZW,j024,skill,TensorFlow,missing,missing,missing,missing,missing
+P08,regular,ZW,j024,skill,scikit-learn,partial,missing,missing,missing,missing
+P08,regular,ZW,j024,skill,Git,missing,missing,missing,missing,missing
+P08,regular,ZW,j024,years,1+ years of relevant experience,met,missing,met,met,met
+P12,regular,CYL,j022,skill,Business Analysis,met,missing,met,met,met
+P12,regular,CYL,j022,skill,Agile Methodologies,missing,missing,partial,partial,partial
+P12,regular,CYL,j022,skill,Requirements Documentation,met,missing,met,met,met
+P12,regular,CYL,j022,skill,Product Development,met,missing,met,met,met
+P12,regular,CYL,j022,skill,Testing,partial,missing,partial,met,partial
+P16,confusing,SA,j031,skill,Data Engineering,missing,missing,missing,partial,partial
+P16,confusing,SA,j031,skill,Databricks,missing,missing,missing,missing,missing
+P16,confusing,SA,j031,skill,Apache Spark,missing,missing,missing,missing,missing
+P16,confusing,SA,j031,skill,Delta Lake,missing,missing,missing,missing,missing
+P16,confusing,SA,j031,skill,SQL,met,met,met,met,met
+P16,confusing,SA,j031,skill,Python,met,met,met,met,met
+P16,confusing,SA,j031,skill,Azure,missing,missing,missing,missing,missing
+P16,confusing,SA,j031,skill,ETL,missing,missing,missing,missing,missing
+P16,confusing,SA,j031,years,7+ years of relevant experience,missing,missing,missing,missing,missing

@@ -1,0 +1,18 @@
+Brown Butter Chocolate Chip Cookies (written for this project's tests)
+
+Ingredients
+- 225 g butter, browned and cooled
+- 200 g brown sugar
+- 100 g white sugar
+- 2 eggs
+- 1 teaspoon vanilla extract
+- 280 g flour
+- 1 teaspoon baking soda
+- 300 g dark chocolate, chopped
+
+Method
+1. Whisk the browned butter with both sugars until smooth.
+2. Beat in the eggs and vanilla.
+3. Fold in the flour and baking soda, then the chocolate.
+4. Chill the dough for 30 minutes.
+5. Bake at 180 C for 11 minutes, until the edges are golden.

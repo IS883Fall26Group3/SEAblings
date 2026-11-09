@@ -78,3 +78,11 @@ class LLMProvider(ABC):
 
     def generate_text(self, prompt: str, what: str = "writing advice", temperature: float = 0.4) -> str:
         return self.complete(prompt, json_mode=False, temperature=temperature, what=what)
+
+    supports_tools: bool = False  # can the model call our Python functions (tool calling)?
+
+    def run_with_tools(self, system: str, prompt: str, tools: dict, what: str = "writing advice",
+                       temperature: float = 0.4, max_steps: int = 6):
+        """Let the model call tools (name -> Python function) until it answers. Returns
+        (answer text, list of core.schemas.ToolCall). Only providers with supports_tools have it."""
+        raise NotImplementedError(f"{self.name} can't call tools")

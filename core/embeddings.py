@@ -1,6 +1,7 @@
 """Text embeddings for skill matching and profile similarity.
 Each embedder carries its own thresholds: cosine values differ a lot between models."""
 import logging
+import re
 import threading
 import time
 from abc import ABC, abstractmethod
@@ -12,6 +13,11 @@ from .llm.base import LLMError
 from .llm.gemini import call_gemini, make_client
 
 log = logging.getLogger("seablings.llm")
+
+
+class EmbeddingQuotaError(LLMError):
+    """Gemini's free daily embedding quota is used up. Picking another chat model doesn't help;
+    the local embedding model does (streamlit_app.py switches to it)."""
 
 
 def _normalize(arr: np.ndarray) -> np.ndarray:
@@ -55,6 +61,20 @@ def embed_with_wait(embed, texts: list[str], on_wait=None, max_wait_s: float = 6
                        "or analyze fewer jobs.") from e
 
 
+def memo_embed(embed):
+    """Wrap an embed function so each distinct text is embedded once: retrieval and scoring embed the
+    same skills, and Gemini's free tier allows about 100 texts a minute."""
+    cache: dict[str, np.ndarray] = {}
+
+    def run(texts: list[str]) -> np.ndarray:
+        todo = list(dict.fromkeys(t for t in texts if t not in cache))
+        if todo:
+            cache.update(zip(todo, embed(todo)))
+        return np.stack([cache[t] for t in texts]) if texts else np.zeros((0, 1), dtype=np.float32)
+
+    return run
+
+
 class GeminiEmbedder(Embedder):
     # Gemini cosines are high and compressed: at 0.80 every skill matched (eval/README.md, step 4);
     # the document band is the p5-p95 of CV-job cosines over the 176 labeled pairs at 7,000 chars
@@ -75,10 +95,18 @@ class GeminiEmbedder(Embedder):
         vectors = []
         for i in range(0, len(texts), batch_size):
             chunk = texts[i:i + batch_size]
-            resp = call_gemini(lambda: self.client.models.embed_content(
-                model=self.model, contents=chunk,
-                config=types.EmbedContentConfig(task_type="SEMANTIC_SIMILARITY")),
-                "comparing skills", self.model)
+            try:
+                resp = call_gemini(lambda: self.client.models.embed_content(
+                    model=self.model, contents=chunk,
+                    config=types.EmbedContentConfig(task_type="SEMANTIC_SIMILARITY")),
+                    "comparing skills", self.model)
+            except LLMError as e:
+                if "daily quota" in str(e):  # no other Gemini model helps: the app switches to local
+                    when = re.search(r"resets in about ([0-9hms]+)", str(e))
+                    raise EmbeddingQuotaError(
+                        "Gemini's free daily quota for embeddings is used up"
+                        + (f" (it resets in about {when[1]})." if when else ".")) from e
+                raise
             vectors.extend(e.values for e in resp.embeddings)
         return _normalize(np.array(vectors, dtype=np.float32))
 

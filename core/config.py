@@ -31,6 +31,10 @@ class Settings:
     # Profile similarity: "document" (whole CV vs whole posting), "summary" (CV summary vs the job's
     # role_summary) or "chunks" (best CV chunks per job). See core/similarity.py, eval/README.md step 6.
     profile_similarity: str = "document"
+    # Required skills: "llm" (retrieve the closest CV lines and skills-knowledge-base families, then
+    # the LLM labels each met / partial / missing with a quote; core/requirements.py) or "match"
+    # (matched or missing by name and embedding only, core/matcher.py).
+    requirement_labels: str = "llm"
     llm_timeout_s: int = 60
     max_cv_chars: int = 15_000
     # What the LLM reads of each posting (skills, years). Covers ~95% of postings in full
@@ -67,4 +71,5 @@ def get_settings() -> Settings:
         embeddings=env("EMBEDDINGS", "auto"),
         experience_fit=env("EXPERIENCE_FIT", "judge"),
         profile_similarity=env("PROFILE_SIMILARITY", "document"),
+        requirement_labels=env("REQUIREMENT_LABELS", "llm"),
     )
