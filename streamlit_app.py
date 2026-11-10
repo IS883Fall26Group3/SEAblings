@@ -246,16 +246,46 @@ ui.inject_css()
 ui.app_header()
 
 version = st.session_state.get("jobs_version", 0)
+notice = st.session_state.get("notice")
 
+# Sidebar: the AI model and what the app can't do. The inputs live on the main page.
 with st.sidebar:
-    with st.container(border=True, key="cv_section"):
+    with st.container(border=True, key="model_section"):
+        st.subheader("AI model", anchor=False)
+        st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
+                     help="Each Gemini model has its own free daily quota. Auto tries them in order "
+                          "and uses the offline model (if installed) as a last resort.")
+        with st.expander("Connection check"):
+            key = S.gemini_api_key
+            st.caption(f"Gemini key: {'found, ends in ' + key[-4:] if key else 'missing'}  \n"
+                       f"Embeddings: {S.embeddings} (Gemini: {S.gemini_embed_model})  \n"
+                       f"Job source: {S.job_source}")
+            if st.button("Test selected model", width="stretch"):
+                for k in model_chain(st.session_state["model_choice"]):
+                    try:
+                        t = time.time()
+                        with st.spinner(f"Testing {label(k)}..."):
+                            get_provider(k).generate_text("Reply with OK.", what="testing the connection")
+                        st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
+                    except Exception as e:
+                        st.error(f"{label(k)}: {e}")
+    ui.limitations(S)
+
+# Main page: a short intro on the landing page, then the inputs.
+if not st.session_state.get("results") and not st.session_state.get("running") \
+        and not (notice and notice[2]):
+    ui.hero()
+
+with st.container(key="inputs"):
+    cv_col, jobs_col = st.columns(2, gap="medium")
+    with cv_col, st.container(border=True, key="cv_section"):
         st.subheader("1. Your CV", anchor=False)
         upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
         cv_paste = "" if upload is not None else st.text_area(
             "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
         if upload is None and not cv_paste.strip():
             st.selectbox("No CV yet? Try a fictional sample CV", list(SAMPLE_CVS), key="sample_cv")
-    with st.container(border=True, key="jobs_section"):
+    with jobs_col, st.container(border=True, key="jobs_section"):
         st.subheader("2. Jobs to match", anchor=False)
         mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
                         help="Use job descriptions you already have, or search current openings online.")
@@ -278,31 +308,12 @@ with st.sidebar:
             limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs, key=f"limit_{version}")
             if S.job_source == "sample":
                 st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
-    with st.container(border=True, key="model_section"):
-        st.subheader("3. AI model", anchor=False)
-        st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
-                     help="Each Gemini model has its own free daily quota. Auto tries them in order "
-                          "and uses the offline model (if installed) as a last resort.")
     st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
               type="primary", width="stretch", on_click=start_run)
     if input_error := st.session_state.get("input_error"):
         st.error(input_error)
     st.caption("Your CV is processed in memory and not saved by this app. With a Gemini model, "
                "its text is sent to Google's Gemini API for analysis.")
-
-    with st.expander("Connection check"):
-        key = S.gemini_api_key
-        st.caption(f"Gemini key: {'found, ends in ' + key[-4:] if key else 'missing'}  \n"
-                   f"Embeddings: {S.embeddings} (Gemini: {S.gemini_embed_model})  \n"
-                   f"Job source: {S.job_source}")
-        if st.button("Test selected model", width="stretch"):
-            for k in model_chain(st.session_state["model_choice"]):
-                try:
-                    t = time.time()
-                    get_provider(k).generate_text("Reply with OK.", what="testing the connection")
-                    st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
-                except Exception as e:
-                    st.error(f"{label(k)}: {e}")
 
 # Separate slots: the results slot stays empty during a run, which blanks the last page at once.
 progress_slot = st.empty()
@@ -313,7 +324,7 @@ if st.session_state.get("running"):
         st.session_state.update(input_error="Enter the role you're looking for.", running=False)
         st.rerun()
 
-    ui.grey_out_sidebar()
+    ui.grey_out_inputs()
     main = progress_slot.container()
     choice = st.session_state["model_choice"]
     status = main.status("Getting started", expanded=True)
@@ -453,7 +464,6 @@ if st.session_state.get("running"):
     st.session_state["running"] = False
     st.rerun()  # redraw the finished page; what the run finished is in session_state
 
-notice = st.session_state.get("notice")
 with results_slot.container():
     if results := st.session_state.get("results"):
         title, button = st.columns([5, 1], vertical_alignment="center")
@@ -473,7 +483,5 @@ with results_slot.container():
         retry.button("Try again", type="primary", on_click=start_run, width="stretch")
         new.button("New search", on_click=new_search, width="stretch")
         show_progress()
-    else:
-        if notice:
-            show_notice()
-        ui.hero()
+    elif notice:
+        show_notice()

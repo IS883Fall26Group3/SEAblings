@@ -55,7 +55,8 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 
 ## Using the app
 
-The sidebar has three sections: **1. Your CV**, **2. Jobs to match** and **3. AI model**. **New search**,
+The main page opens with a short intro, then two sections side by side: **1. Your CV** and **2. Jobs to
+match**. The sidebar holds the **AI model** menu (with a connection check) and the app's **Limitations**. **New search**,
 beside the results, clears them and the job inputs but keeps your CV. During a run, numbered steps show
 what's finished, and your profile and the jobs appear as soon as they're ready. If a later step fails, that
 work stays on the page with **Try again** (finished steps come back from the cache, with no new calls) and
@@ -63,7 +64,7 @@ work stays on the page with **Try again** (finished steps come back from the cac
 
 ## Choosing a model
 
-The sidebar's **AI model** menu offers each Gemini model listed in `GEMINI_MODELS`, an offline
+The **AI model** menu in the sidebar offers each Gemini model listed in `GEMINI_MODELS`, an offline
 Hugging Face model (when installed), and **Auto**. Gemini's free tier limits requests per day
 *per model*, so Auto tries the models in order and moves on when one hits its quota or is
 overloaded. The offline model is the last resort: no quota, but slower and less accurate.
@@ -139,7 +140,7 @@ core/                   business logic, no Streamlit imports (testable)
   advisor.py            tools the advice model calls (compute_match_score, search_cv)
   input_checks.py       stops a non-CV or a non-posting before it is scored
   validation.py         rule-based checks on the CV, job descriptions and role, before any LLM call
-  samples.py            the fictional sample CVs offered in the sidebar
+  samples.py            the fictional sample CVs offered on the main page
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
 data/sample/            fictional CVs (5) and job postings (10) for dev, tests and the demo

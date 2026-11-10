@@ -53,12 +53,12 @@ def run(case: str) -> None:
     at.sidebar.selectbox(key="model_choice").set_value(MODEL).run()
     if case == "one":
         job = json.loads((REPO / "data/sample/jobs.json").read_text(encoding="utf-8"))[5]
-        jd = next(t for t in at.sidebar.text_area if t.label.startswith("Or paste a job"))
+        jd = next(t for t in at.text_area if t.label.startswith("Or paste a job"))
         jd.set_value(job["title"] + "\n" + job["description"]).run()
     else:
-        at.sidebar.selectbox(key="sample_cv").set_value("Mei Chen: product analytics, fintech").run()
+        at.selectbox(key="sample_cv").set_value("Mei Chen: product analytics, fintech").run()
     t = time.time()
-    at.sidebar.button[0].click().run()
+    next(b for b in at.button if b.label in ("Analyze my match", "Find matching jobs")).click().run()
     wall = {"search": time.time() - t}
     if at.exception or at.error:
         raise SystemExit(f"app error: {[e.value for e in at.error]} {[str(e.value)[:300] for e in at.exception]}")

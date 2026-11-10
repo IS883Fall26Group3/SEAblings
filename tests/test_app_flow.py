@@ -76,8 +76,10 @@ def text(elements):
     return " ".join(e.value for e in elements)
 
 
-def test_sidebar_has_three_numbered_sections(app):
-    assert [h.value for h in app.sidebar.subheader] == ["1. Your CV", "2. Jobs to match", "3. AI model"]
+def test_inputs_on_the_main_page_and_model_and_limitations_in_the_sidebar(app):
+    assert [h.value for h in app.main.subheader] == ["1. Your CV", "2. Jobs to match"]
+    assert [h.value for h in app.sidebar.subheader] == ["AI model", "Limitations"]
+    assert "See how well your CV fits the job" in text(app.markdown)
 
 
 def test_full_run_shows_ranked_results_and_unlocks_the_page(app):
@@ -104,10 +106,10 @@ def test_search_mode_ranks_the_jobs_it_finds(app):
     assert "Ranked" in text(app.caption)
 
 
-def test_empty_role_asks_for_one_in_the_sidebar(app):
+def test_empty_role_asks_for_one_under_the_button(app):
     app.radio[0].set_value("Search live jobs").run()
     click(app, "Find matching jobs")
-    assert app.sidebar.error[0].value == "Enter the role you're looking for."
+    assert app.main.error[0].value == "Enter the role you're looking for."
     assert not app.session_state["running"]
 
 

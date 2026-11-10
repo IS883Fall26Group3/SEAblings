@@ -14,11 +14,30 @@ def inject_css() -> None:
     st.markdown(f"<style>{CSS.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 
-def grey_out_sidebar() -> None:
+def grey_out_inputs() -> None:
     """Clicking an input would stop the run partway. Uses CSS because disabled=True drops text
     typed just before the click (Streamlit 1.66)."""
-    st.markdown('<style>[data-testid="stSidebar"] { opacity: .5; pointer-events: none; }</style>',
-                unsafe_allow_html=True)
+    st.markdown('<style>.st-key-inputs, [data-testid="stSidebar"] '
+                '{ opacity: .5; pointer-events: none; }</style>', unsafe_allow_html=True)
+
+
+def limitations(s) -> None:
+    """What the app can't do, so users read the score with the right expectations."""
+    search = ("Live search covers US job listings only, up to 10 jobs per search."
+              if s.job_source == "jsearch" else
+              "Job search uses fictional sample listings in this setup, not live openings.")
+    items = [
+        "The score is based on your CV text only. A skill your CV doesn't mention counts as not found.",
+        "Scanned PDFs (images of text) can't be read. Upload a text-based PDF, DOCX or TXT.",
+        f"The AI reads up to {s.max_cv_chars:,} characters of your CV and {s.max_jd_chars:,} of each posting.",
+        search,
+        "The free Gemini models have daily limits. Auto switches to another model when one runs out; "
+        "the offline model is slower and less accurate.",
+        "AI advice can be wrong. Check it before you change your CV.",
+    ]
+    with st.container(border=True, key="limits_section"):
+        st.subheader("Limitations", anchor=False)
+        st.markdown("\n".join(f"- {i}" for i in items))
 
 
 def app_header() -> None:
