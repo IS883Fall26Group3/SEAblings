@@ -126,6 +126,12 @@ def label(key: str) -> str:
     return OPTIONS.get(key, key)
 
 
+def request_advice(job_id: str) -> None:
+    """Button callback: only marks the job. The advice is written after every card is drawn, so the
+    whole page can be locked while it runs (see the results section)."""
+    st.session_state["advice_pending"] = job_id
+
+
 def handle_explain(result) -> None:
     errs = st.session_state.setdefault("explain_errors", {})
     try:
@@ -167,6 +173,15 @@ def stop_if_invalid(checks: list[tuple[str, bool, str]]) -> None:
                                             for name, ok, problem in checks))
 
 
+def read_input(read) -> tuple[str, str]:
+    """(text, problem): a file or paste we can't read (scanned PDF, too little text, wrong type)
+    becomes a problem shown with the other input checks, not an error with Try again."""
+    try:
+        return read(), ""
+    except ValueError as e:
+        return "", str(e)
+
+
 def job_count(n: int) -> str:
     return "1 job" if n == 1 else f"{n} jobs"
 
@@ -203,7 +218,8 @@ class StageLog:
 # Everything one run produces, including the CV text kept for the advice tools. Cleared when a run
 # starts, so old results can't come back after a failure.
 RUN_KEYS = ("profile", "jobs", "results", "cv_text", "models_used", "embedder_used", "run_summary",
-            "notice", "notes", "input_error", "explanations", "explain_errors", "tool_calls")
+            "notice", "notes", "input_error", "explanations", "explain_errors", "tool_calls",
+            "advice_pending")
 
 
 def start_run() -> None:
@@ -344,21 +360,28 @@ if st.session_state.get("running"):
         sample_postings = mode == MODE_JD and not jd_files and not jd_text.strip()
         reading = "Reading your CV" if mode == MODE_SEARCH else "Reading your CV and job descriptions"
         log.start(reading)
+        cv_error = ""  # a file or paste we couldn't read (e.g. a scanned PDF) is shown with the checks
         if upload is not None:
-            cv_text = extract_text(upload.getvalue(), upload.name, S.max_cv_chars)
+            cv_text, cv_error = read_input(lambda: extract_text(upload.getvalue(), upload.name, S.max_cv_chars))
         elif cv_paste.strip():
-            cv_text = clean_text(cv_paste, S.max_cv_chars)
+            cv_text, cv_error = read_input(lambda: clean_text(cv_paste, S.max_cv_chars))
         else:
             cv_text = sample_cv(st.session_state.get("sample_cv", ""))
         cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
         st.session_state["cv_text"] = cv_text  # in memory only; the advice tools (search_cv) need it
         user_cv = upload is not None or bool(cv_paste.strip())
-        checks = [("CV", not user_cv or looks_like_resume(cv_text), NOT_CV)]
+        checks = [("CV", not cv_error and (not user_cv or looks_like_resume(cv_text)), cv_error or NOT_CV)]
         if sample_postings:
             raw_jobs = sample_jobs()
         elif mode == MODE_JD:
-            items = [(f.name, extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
-                     for f in jd_files]
+            items = []
+            for f in jd_files:
+                text, error = read_input(
+                    lambda: extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
+                if error:
+                    checks.append((f"Job description ({f.name})", False, error))
+                else:
+                    items.append((f.name, text))
             if jd_text.strip():
                 items.append(("Pasted job description", jd_text))
             checks += [(name if name == "Pasted job description" else f"Job description ({name})",
@@ -467,7 +490,7 @@ if st.session_state.get("running"):
     st.session_state["running"] = False
     st.rerun()  # redraw the finished page; what the run finished is in session_state
 
-with results_slot.container():
+with results_slot.container(), st.container(key="results"):
     if results := st.session_state.get("results"):
         title, button = st.columns([5, 1], vertical_alignment="center")
         title.markdown("## Your matches")
@@ -477,9 +500,22 @@ with results_slot.container():
         for note in st.session_state.get("notes", []):
             st.caption(note)
         ui.profile_panel(st.session_state["profile"])
+        pending = st.session_state.get("advice_pending")
+        if pending:
+            ui.grey_out_results()
+        slot = pending_result = None
         for i, r in enumerate(results):
             # results are sorted best first: the top 3 show their breakdown open
-            ui.match_card(r, i, handle_explain, st.session_state["profile"], show_breakdown=i < 3)
+            card_slot = ui.match_card(r, i, request_advice, st.session_state["profile"],
+                                      show_breakdown=i < 3, pending=r.job.id == pending)
+            if card_slot is not None:
+                slot, pending_result = card_slot, r
+        if pending:
+            st.session_state.pop("advice_pending")
+            if pending_result is not None:
+                with slot.container(), st.spinner("Writing advice for this role..."):
+                    handle_explain(pending_result)
+            st.rerun()
     elif notice and notice[2]:
         show_notice()
         retry, new, _ = st.columns([1, 1, 3])

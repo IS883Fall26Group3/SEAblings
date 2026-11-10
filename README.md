@@ -6,7 +6,8 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 ## How it works
 
 1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. PDFs are read in layout
-   mode, which keeps each printed line on its own line. Without a CV, the user picks one of 5 fictional
+   mode, which keeps each printed line on its own line. A PDF with almost no text but with images on its pages is a scan: the app
+   says so for that CV or job description file and asks for a text-based PDF, DOCX, TXT or pasted text. Without a CV, the user picks one of 5 fictional
    sample CVs (`core/samples.py`, `data/sample/`).
    **Check the inputs** (`core/validation.py`): simple rules, no LLM call, so a wrong input costs no quota.
    A CV scores points for section headings, date ranges, contact details and a degree; a job description for

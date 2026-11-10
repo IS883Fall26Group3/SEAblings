@@ -198,3 +198,13 @@ def test_new_search_keeps_the_cv_and_empties_the_job_inputs(app):
     assert "See how well your CV fits the job" in text(app.markdown)
     assert app.text_area[0].value == CV
     assert app.text_area[1].value == ""
+
+
+def test_get_advice_runs_after_the_cards_are_drawn(app):
+    analyze(app)
+    click(app, "Get advice for this role")
+    job_id = app.session_state["results"][0].job.id
+    assert "advice_pending" not in app.session_state  # cleared once the advice is written
+    written = app.session_state["explanations"] if "explanations" in app.session_state else {}
+    failed = app.session_state["explain_errors"] if "explain_errors" in app.session_state else {}
+    assert job_id in written or job_id in failed

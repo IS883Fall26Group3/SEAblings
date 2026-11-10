@@ -21,6 +21,15 @@ def grey_out_inputs() -> None:
                 '{ opacity: .5; pointer-events: none; }</style>', unsafe_allow_html=True)
 
 
+def grey_out_results() -> None:
+    """While advice is written, a click anywhere would stop it partway, so lock the whole page."""
+    st.markdown('<style>.st-key-inputs, [data-testid="stSidebar"] { opacity: .5; pointer-events: none; }'
+                '.st-key-results { pointer-events: none; }'
+                '.st-key-results [data-testid="stButton"], .st-key-results [data-testid="stLinkButton"], '
+                '.st-key-results [data-testid="stExpander"] { opacity: .5; }</style>',
+                unsafe_allow_html=True)
+
+
 def limitations(s) -> None:
     """What the app can't do, so users read the score with the right expectations."""
     search = ("Live search covers US job listings only, up to 10 jobs per search."
@@ -192,7 +201,9 @@ def tool_label(call) -> str:
 
 
 def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
-               show_breakdown: bool = True) -> None:
+               show_breakdown: bool = True, pending: bool = False):
+    """One job's card. on_explain(job_id) runs when its advice button is clicked. When pending (advice
+    asked for, not written yet), returns an empty slot under the card for the app to show a spinner in."""
     job = r.job
     with st.container(border=True):
         left, right = st.columns([1, 6], vertical_alignment="center")
@@ -224,9 +235,9 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
         elif error:
             st.warning(error)
         advice, posting = st.columns(2)
-        if not explanation and advice.button("Get advice for this role", key=f"explain_{idx}"):
-            with advice, st.spinner("Writing advice for this role..."):
-                on_explain(r)
-            st.rerun()
+        slot = advice.empty() if pending else None
+        if not explanation and not pending:
+            advice.button("Get advice for this role", key=f"explain_{idx}", on_click=on_explain, args=(job.id,))
         if job.url:
             posting.link_button("Open job posting", job.url)
+    return slot
