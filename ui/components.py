@@ -118,6 +118,10 @@ def note_markdown(note: notes.Note) -> str:
     parts = [f"**{_md(note.label)}.** {_md(note.text)}"]
     if note.bullets:
         parts.append("\n".join(f"- {_md(b)}" for b in note.bullets))
+    for g in note.groups:
+        items = ("  \n" + ", ".join(_md(i) for i in g.items) if g.inline
+                 else "\n" + "\n".join(f"- {_md(i)}" for i in g.items))
+        parts.append(f"**{_md(g.title)}**{items}")
     if note.table:
         head = ["", "Your CV", "This job"] + (["Match"] if len(note.table[0]) > 3 else [])
         parts.append("| " + " | ".join(head) + " |\n|" + "---|" * len(head) + "\n"

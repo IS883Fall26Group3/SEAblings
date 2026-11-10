@@ -5,9 +5,11 @@ Steps:
 1. Call compute_match_score with the job_id. It returns the app's match score, how the score is
    computed, and every requirement labeled met, partial or missing with the CV line behind it.
    Never estimate, round differently or change the score yourself.
-2. For each partial or missing requirement (at most 4, most important first), call search_cv with
-   the requirement to see whether the CV already shows it or related experience that could be
-   worded better. Never list a requirement under Gaps without searching the CV for it first.
+2. Pick the requirements to tailor for (at most 4, most important first):
+   - partial requirements, and
+   - missing requirements that have a cv_mention: a CV line names them, so they may not be real gaps.
+   For a partial requirement, call search_cv with the requirement to find the CV line that best shows it.
+   Skip missing requirements with no cv_mention: the job card already lists them.
 3. Write the advice.
 
 Rules:
@@ -18,10 +20,11 @@ Rules:
   the line doesn't contain.
 - If a line only suggests a requirement (a partial match), phrase the suggestion as a condition:
   "If your downstream work was in oil and gas, name it". Never state it as a fact.
-- If nothing in the CV supports a requirement, list it under Gaps as something to learn or gain,
-  never as something to add to the CV.
+- For a missing requirement with a cv_mention, quote that line and say how to make it show the
+  requirement more clearly, so a recruiter sees it is met.
+- Don't list gaps: the job card already shows the skills not found in the CV.
 
-Format (markdown, at most 120 words):
+Format (markdown, at most 150 words):
 **Fit:** one sentence with the score out of 100 from compute_match_score and the main reason.
-**Tailor your CV:** up to 2 bullets, each quoting the CV line to reword and saying how.
-**Gaps:** bullets naming the requirements the CV doesn't show.
+**Tailor your CV:** up to 4 bullets, each naming the requirement, quoting the CV line to reword and
+saying how.

@@ -83,6 +83,17 @@ def test_checks_keep_only_verified_quotes_and_known_statuses():
     assert "rust" not in checks  # unknown status: the matcher decides
 
 
+def test_missing_label_keeps_a_retrieved_line_that_names_it():
+    retrieved = retrieve_evidence([job := job_with(["tableau", "power bi", "sql"])], CV, fake_embed, kb())
+    labels = [RequirementLabel(requirement="tableau", status="missing"),
+              RequirementLabel(requirement="power bi", status="missing"),
+              RequirementLabel(requirement="sql", status="met", quote="Wrote SQL queries")]
+    checks = {c.requirement: c for c in to_checks(retrieved[job.id], labels, CV)}
+    assert "Tableau" in checks["tableau"].mention  # the LLM said missing, but a line names it
+    assert checks["power bi"].mention == ""        # no line names it: a gap as far as the CV shows
+    assert checks["sql"].mention == ""             # only missing requirements get a mention
+
+
 class FakeLLM(LLMProvider):
     name = "fake"
 

@@ -4,8 +4,8 @@ import numpy as np
 from core.config import get_settings
 from core.job_sources.sample import SampleSource
 from core.matcher import background_factor, match_skills_detail, score_jobs
-from core.schemas import CandidateProfile, Job, JobRequirements, MatchResult, Role
-from core.score_notes import experience_note, role_line, similarity_note, skill_note
+from core.schemas import CandidateProfile, Job, JobRequirements, MatchResult, RequirementCheck, Role
+from core.score_notes import Group, evidence_groups, experience_note, role_line, similarity_note, skill_note
 from test_matcher import FakeEmbedder
 
 JOB = Job(id="j1", title="Data Analyst", company="ATC", location="", description="",
@@ -23,6 +23,54 @@ def result(**kw) -> MatchResult:
 
 
 # ---------- skill coverage ----------
+
+SKILLS_LINE = "Software: SAP, Salesforce, Tableau, Power BI, MS Excel (modeling and optimization), Google Analytics, Canva"
+
+
+def checks_result(*checks):
+    return result(matched_skills=["Tableau"], partial_skills=["Dashboards"], missing_skills=["Python", "Excel"],
+                  requirement_checks=list(checks))
+
+
+def test_met_quotes_are_hidden():
+    r = checks_result(RequirementCheck(requirement="Tableau", status="met", quote=SKILLS_LINE, quote_verified=True))
+    assert evidence_groups(r) == []
+
+
+def test_partly_met_shows_the_reason_and_a_short_quote():
+    r = checks_result(RequirementCheck(requirement="Dashboards", status="partial", quote=SKILLS_LINE,
+                                       quote_verified=True, reason="Lists BI tools, but no dashboard built."))
+    assert evidence_groups(r) == [Group("Partly met:", ['Dashboards: Lists BI tools, but no dashboard built. '
+                                                        'Your CV: "Software: SAP, Salesforce, Tableau, Power BI, '
+                                                        'MS Excel (modeling and optimization), Google Analytics, '
+                                                        'Canva"'])]
+    long = RequirementCheck(requirement="Data checks", status="partial", reason="Forecasting touches it.",
+                            quote=" ".join(f"w{i}" for i in range(20)), quote_verified=True)
+    assert evidence_groups(checks_result(long))[0].items[0].endswith('w13 w14…"')
+
+
+def test_partly_met_with_an_unverified_quote_shows_only_the_reason():
+    r = checks_result(RequirementCheck(requirement="Dashboards", status="partial", quote="made up",
+                                       reason="Related BI tools."))
+    assert evidence_groups(r) == [Group("Partly met:", ["Dashboards: Related BI tools."])]
+
+
+def test_missing_skill_a_cv_line_names_may_not_be_a_real_gap():
+    r = checks_result(RequirementCheck(requirement="Excel", status="missing", mention="Built models in Excel"),
+                      RequirementCheck(requirement="Python", status="missing"),
+                      RequirementCheck(requirement="Rust", status="missing"))
+    assert evidence_groups(r) == [
+        Group("May not be a real gap:", ['Excel: your CV says "Built models in Excel"']),
+        Group("Not found in your CV:", ["Python, Rust"], inline=True)]
+
+
+def test_each_group_is_capped():
+    r = checks_result(*[RequirementCheck(requirement=f"S{i}", status="partial", reason="Related.") for i in range(5)])
+    assert evidence_groups(r)[0].items[3:] == ["2 more."]
+
+
+def test_no_labels_means_no_bullets():
+    assert evidence_groups(checks_result()) == []
 
 def test_partial_coverage_names_close_matches_and_gives_the_tip():
     r = result(matched_skills=["Data Analysis", "Power BI", "SQL"],

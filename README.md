@@ -33,6 +33,11 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    - The LLM labels the skill met, partial or missing from that text alone, with a quote
      (`prompts/label_requirements.md`).
    - Code keeps a quote only if it appears word for word in the CV.
+   - A second check on "missing": if a retrieved CV line names the skill word for word, code keeps
+     that line (`mention`), and the card says it may not be a real gap. No extra LLM call.
+   - Under Skill coverage, the card groups the skills: **Partly met** (the LLM's reason and a shortened
+     quote), **May not be a real gap** (the CV line that names it) and **Not found in your CV**. Met skills
+     show as "You have" chips without quotes (`SHOW_MET_QUOTES` in `core/score_notes.py` turns them back on).
 7. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`.
    - A partly met skill counts half toward skill coverage.
    - Embeddings come from `core/embeddings.py`: Gemini, or a local model without a key.
@@ -43,7 +48,9 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 8. **Advice** (on demand, tool calling, `core/advisor.py`): the model gets no score in its prompt.
    - It calls `compute_match_score`, which runs the formula above, and `search_cv`, which retrieves
      CV lines for a phrase.
-   - It writes advice that may only reword what the CV already says; anything else goes under Gaps.
+   - It writes advice that may only reword what the CV already says: **Fit**, then **Tailor your CV** for
+     partly met skills and for missing skills a CV line names (`cv_mention`), asking to make that line
+     show the requirement more clearly. No Gaps list: Skill coverage already shows what's not found.
    - The card shows which tools it used.
 
 ## Using the app
@@ -260,7 +267,8 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
         industry or number;
       - a partial match is phrased as a condition ("If your downstream work was in oil and gas,
         name it");
-      - a requirement goes under **Gaps** only after `search_cv` finds nothing for it.
+      - a requirement goes under **Gaps** only after `search_cv` finds nothing for it. (Later replaced:
+        the card's Skill coverage lists the skills not found, so the advice no longer repeats them.)
   - **Commits and contribution** (our question; §8.2 item 8, §6.4).
     - **Done:** all four members commit from their own GitHub accounts.
     - **Not yet:** a comment at the top of each section naming who wrote it.
