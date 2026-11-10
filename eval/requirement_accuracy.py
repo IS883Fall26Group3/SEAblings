@@ -233,11 +233,79 @@ def report(name: str, key: dict, pred: dict[tuple, str], quiet: bool = False) ->
     return {"accuracy": acc, "balanced": bal, "recall": recall, "n": len(rows)}
 
 
+# ---------- comparison: chain of thought vs none ----------
+def compare(runs: int, pairs, frozen_path, prefix: str, main_key: dict) -> None:
+    """Both labeling prompts on the same pairs, `runs` times each, same model: accuracy per run,
+    tokens per run, and the requirements where the two versions disagree (to see why one wins)."""
+    key = {k: v for k, v in main_key.items() if k[0] in {p[0] for p in pairs}}
+    print(f"\ncomparison: labeling prompt, {len(pairs)} pairs, {len(key)} requirements, {MODEL}, "
+          f"{runs} runs per version")
+    results, summary = {}, []
+    for variant in VARIANTS:
+        tokens: list = []
+        app_runs = app_labels(runs, pairs, frozen_path, prefix, MODEL, variant, tokens)
+        results[variant] = [{k: v[0] for k, v in run.items()} for run in app_runs]
+        for i, (run, (t_in, t_out)) in enumerate(zip(results[variant], tokens), 1):
+            r = report(f"{variant} run {i}", key, run, quiet=True)
+            summary.append({"version": variant, "run": i, "accuracy": round(r["accuracy"], 4),
+                            "balanced_accuracy": round(r["balanced"], 4),
+                            **{f"{c}_right": (round(r["recall"][c], 4) if r["recall"][c] is not None else "")
+                               for c in LABELS3},
+                            "requirements": r["n"], "input_tokens": t_in, "output_tokens": t_out})
+
+    print(f"\n{'version':<12} {'accuracy mean (min-max)':<26} {'met / partial / missing right':<31} "
+          "tokens in / out per run")
+    means = {}
+    for variant in VARIANTS:
+        rows = [x for x in summary if x["version"] == variant]
+        acc = [x["accuracy"] for x in rows]
+        per = [np.mean([x[f"{c}_right"] for x in rows if x[f"{c}_right"] != ""] or [0]) for c in LABELS3]
+        t_in, t_out = np.mean([x["input_tokens"] for x in rows]), np.mean([x["output_tokens"] for x in rows])
+        means[variant] = (np.mean(acc), t_in, t_out)
+        print(f"{variant:<12} {f'{np.mean(acc):.1%} ({min(acc):.1%}-{max(acc):.1%})':<26} "
+              f"{' / '.join(f'{x:.0%}' for x in per):<31} {t_in:,.0f} / {t_out:,.0f}")
+    (a1, i1, o1), (a2, i2, o2) = means["reason"], means["label_only"]
+    print(f"\nreason vs label_only: {100 * (a1 - a2):+.1f} points accuracy for {o1 - o2:+,.0f} output and "
+          f"{i1 - i2:+,.0f} input tokens per run ({o1 / o2 if o2 else float('nan'):.1f}x the output)")
+
+    # Why: the requirements where the versions' most common labels differ, with the team's label.
+    def usual(variant, k):
+        return Counter(run[k] for run in results[variant] if k in run).most_common(1)[0][0]
+    differ = [(k, key[k]["label"], usual("reason", k), usual("label_only", k)) for k in key
+              if all(k in run for v in VARIANTS for run in results[v]) and usual("reason", k) != usual("label_only", k)]
+    print(f"\n{len(differ)} requirements where the versions usually disagree "
+          f"(reason right on {sum(t == r for _, t, r, _ in differ)}, label_only right on "
+          f"{sum(t == l for _, t, _, l in differ)}):")
+    for (pair, req), team, r, l in differ[:15]:
+        print(f"  {pair} {req}: team {team}, reason {r}, label_only {l}")
+
+    with (OUT / "comparison_summary.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(summary[0]))
+        w.writeheader()
+        w.writerows(summary)
+    with (OUT / "comparison_labels.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["pair", "kind", "type", "requirement", "team"]
+                   + [f"{v}_run{i}" for v in VARIANTS for i in range(1, runs + 1)])
+        for k, v in key.items():
+            w.writerow([k[0], v["kind"], v["type"], k[1], v["label"]]
+                       + [run.get(k, "") for var in VARIANTS for run in results[var]])
+    print("\nwrote results/comparison_summary.csv and results/comparison_labels.csv")
+
+
 def main() -> None:
     name = sys.argv[sys.argv.index("--set") + 1] if "--set" in sys.argv else "test"
     pairs, key_files, frozen_path, prefix, out_name = SETS[name]
+    if "--pairs" in sys.argv:  # e.g. --pairs P03,P07: only the pairs where the difference matters
+        wanted = set(sys.argv[sys.argv.index("--pairs") + 1].split(","))
+        if unknown := wanted - {p[0] for p in pairs}:
+            raise SystemExit(f"unknown pairs: {', '.join(sorted(unknown))}")
+        pairs = [p for p in pairs if p[0] in wanted]
     print(f"set: {name}, labeling code version {VERSION}")
     main_key, second, problems = load_key(key_files())
+    ids = {p[0] for p in pairs}
+    main_key = {k: v for k, v in main_key.items() if k[0] in ids}
+    second = {k: v for k, v in second.items() if k[0] in ids}
     expected = sum(1 for _ in main_key) + len(problems)
     print(f"answer key: {len(main_key)} labeled requirements in {len({k[0] for k in main_key})} pairs "
           f"({dict(Counter(v['label'] for v in main_key.values()))})")
@@ -257,6 +325,10 @@ def main() -> None:
             if main_key[k]["label"] != second[k]["label"]:
                 print(f"  {k[0]} {k[1]}: {main_key[k]['labeler']} {main_key[k]['label']}, "
                       f"{second[k]['labeler']} {second[k]['label']}")
+
+    if "--compare" in sys.argv:
+        compare(int(sys.argv[sys.argv.index("--compare") + 1]), pairs, frozen_path, prefix, main_key)
+        return
 
     cvs = load_cvs()
     cv_of = {p[0]: p[1] for p in pairs}

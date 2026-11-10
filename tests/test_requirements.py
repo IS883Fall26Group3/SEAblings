@@ -9,7 +9,7 @@ from core.llm.base import LLMProvider
 from core.matcher import score_jobs
 from core.requirements import cv_lines, quote_in_cv, retrieve_evidence, to_checks
 from core.schemas import CandidateProfile, JobRequirements, RequirementCheck, RequirementLabel
-from core.skill_extractor import label_requirements
+from core.skill_extractor import PROMPTS, label_requirements
 from test_matcher import FakeEmbedder, fake_embed
 
 CV = """ALEX RIVERA
@@ -138,3 +138,20 @@ def test_knowledge_base_file_loads():
     assert len(entries) > 100 and {e.source for e in entries} == {"hand", "onet"}
     bi = next(e for e in entries if e.family == "Data analysis and business intelligence")
     assert "Tableau" in bi.skills and "Power BI" in bi.skills
+
+
+def test_label_only_variant_asks_for_no_reason_and_still_verifies_quotes():
+    """The chain-of-thought comparison (eval/requirement_accuracy.py --compare): same rules, examples and
+    retrieved lines; only the reason before each label is dropped."""
+    job = job_with(["inventory"])
+    retrieved = retrieve_evidence([job], CV, fake_embed, kb(), k_lines=1)
+    llm = FakeLLM({"items": [{"job_id": job.id, "labels": [
+        {"requirement": "inventory", "status": "met", "quote": "Managed inventory"}]}]})
+    checks = label_requirements(llm, [job], retrieved, CV, variant="label_only")
+    assert checks[job.id][0].status == "met" and checks[job.id][0].quote_verified
+    assert checks[job.id][0].reason == ""
+    reason_first = (PROMPTS / "label_requirements.md").read_text(encoding="utf-8")
+    label_only = llm.prompts[0]
+    assert "1. reason:" in reason_first and "1. reason:" not in label_only
+    assert '-> reason "' not in label_only and "Don't explain your choice." in label_only
+    assert '"Managed inventory for three warehouses"' in label_only
