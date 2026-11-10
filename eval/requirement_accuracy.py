@@ -14,7 +14,13 @@ usage (from the repo root):
   python eval/requirement_accuracy.py --app 3   # also the app's labels, 3 runs (needs GEMINI_API_KEY)
   python eval/requirement_accuracy.py --set practice --app 1   # the practice set (practice_set.py),
                                                                # where changes are tuned
-Writes results/requirement_accuracy.csv or results/practice_accuracy.csv (labels only, no CV text).
+  python eval/requirement_accuracy.py --compare 5              # chain of thought vs none: the labeling
+         prompt with a short reason before each label ("reason", the app's) vs the same prompt with
+         no reason ("label_only"), 5 runs each, same model, with tokens per run
+  ... --compare 5 --pairs P03,P07   # only these pairs (pick the ones where the difference matters)
+Writes results/requirement_accuracy.csv or results/practice_accuracy.csv (labels only, no CV text);
+--compare writes results/comparison_summary.csv and results/comparison_labels.csv instead.
+Every run is saved as it finishes, so a run stopped by the daily quota resumes where it left off.
 The app's labels are cached per run and per VERSION; bump VERSION whenever the labeling code or prompt
 changes, so labels from older code are never reused."""
 import csv
@@ -35,13 +41,16 @@ from core.matcher import score_jobs  # noqa: E402
 from core.requirements import retrieve_evidence  # noqa: E402
 from core.schemas import (CandidateProfile, Job, JobRequirements, RequirementCheck, Role)  # noqa: E402
 from core.skill_extractor import judge_experience, label_requirements  # noqa: E402
+import core.llm.gemini as gemini  # noqa: E402
 from extract import load_cvs, patient  # noqa: E402
 from skillmatch import embed_cached  # noqa: E402
 
 OUT = HERE / "results"
 LABELS3 = ("met", "partial", "missing")
 MODEL = "gemini-flash-lite-latest"
-VERSION = "v2"  # v1: as first committed. v2: word-match retrieval, prompt aligned with labeling_guide.md
+VERSION = "v3"  # v1: as first committed. v2: word-match retrieval, prompt aligned with labeling_guide.md.
+# v3: prompts put the CV and postings in <cv>/<job> tags and say they are data (prompt injection)
+VARIANTS = ("reason", "label_only")  # core/skill_extractor.py: LABEL_VARIANTS
 
 # name: (pairs as (pair, CV, job, kind), answer-key files, frozen requirement lists, cache prefix, output)
 SETS = {
@@ -51,6 +60,35 @@ SETS = {
     "practice": (practice_set.PRACTICE, lambda: [practice_set.KEY], practice_set.FROZEN, "practice",
                  "practice_accuracy.csv"),
 }
+
+
+# ---------- tokens: every Gemini call is counted while TOKENS["on"] ----------
+TOKENS = {"on": False, "in": 0, "out": 0}
+_call_gemini = gemini.call_gemini
+
+
+def _counted(fn, what, model):
+    result = _call_gemini(fn, what, model)
+    if TOKENS["on"]:
+        u = getattr(result, "usage_metadata", None)
+        TOKENS["in"] += getattr(u, "prompt_token_count", None) or 0
+        TOKENS["out"] += ((getattr(u, "candidates_token_count", None) or 0)
+                          + (getattr(u, "thoughts_token_count", None) or 0))
+    return result
+
+
+gemini.call_gemini = _counted  # the chat models call it through the module, so this sees every call
+
+
+def counting(fn):
+    """fn() plus the tokens its Gemini calls used (retries included)."""
+    def run():
+        TOKENS.update(on=True, **{"in": 0, "out": 0})
+        try:
+            return {"checks": fn(), "input_tokens": TOKENS["in"], "output_tokens": TOKENS["out"]}
+        finally:
+            TOKENS["on"] = False
+    return run
 
 
 # ---------- the answer key ----------
@@ -107,8 +145,10 @@ def cached(path, key, fn, label):
     return done[key]
 
 
-def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MODEL) -> list[dict]:
-    """One dict per run: (pair, requirement) -> (label, quote verified or None)."""
+def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MODEL,
+               variant: str = "reason", tokens: list | None = None) -> list[dict]:
+    """One dict per run: (pair, requirement) -> (label, quote verified or None). If tokens is a list,
+    (input, output) tokens of each run's labeling calls are appended to it."""
     s = get_settings()
     emb = build_embedder(s)
     def embed(texts: list[str]) -> np.ndarray:  # cached on disk, paced for the free tier
@@ -127,16 +167,21 @@ def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MO
     judge_file = OUT / f"{prefix}_judge_{MODEL}.json"  # judged once: it only feeds the years rows
     out = []
     for run in range(1, runs + 1):
-        run_file = OUT / f"{prefix}_labels_{label_model}_{VERSION}_run{run}.json"
-        labels = {}
+        tag = "" if variant == "reason" else f"_{variant}"
+        run_file = OUT / f"{prefix}_labels{tag}_{label_model}_{VERSION}_run{run}.json"
+        labels, used = {}, [0, 0]
         for cv, items in sorted(by_cv.items()):
             cv_jobs = [jobs[jid].model_copy(deep=True) for _, jid in items]
             judged = cached(judge_file, cv, lambda: {jid: x.model_dump() for jid, x in judge_experience(
                 llm, cvs[cv], cv_jobs, s.max_jd_chars, s.local_max_jd_chars).items()}, f"judge {cv}")
             retrieved = retrieve_evidence(cv_jobs, cvs[cv], embed, kb)
-            checks = cached(run_file, cv, lambda: {jid: [c.model_dump() for c in cs] for jid, cs in
-                                                   label_requirements(labeler, cv_jobs, retrieved, cvs[cv]).items()},
-                            f"run {run} labels {cv}")
+            saved = cached(run_file, cv, counting(lambda: {jid: [c.model_dump() for c in cs] for jid, cs in
+                                                           label_requirements(labeler, cv_jobs, retrieved, cvs[cv],
+                                                                              variant).items()}),
+                           f"{variant} run {run} labels {cv}")
+            checks = saved["checks"]
+            used[0] += saved["input_tokens"]
+            used[1] += saved["output_tokens"]
             results = score_jobs(
                 CandidateProfile(**profiles[cv]), cvs[cv], cv_jobs, emb, s, embed_fn=embed,
                 relevant_roles={j: [Role(**r) for r in x["relevant_roles"]] for j, x in judged.items()},
@@ -157,11 +202,13 @@ def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MO
                     labels[(pid, f"{mn:g}+ years of relevant experience")] = (
                         "met" if pct == 100 else "partial" if pct >= 50 else "missing", None)
         out.append(labels)
+        if tokens is not None:
+            tokens.append(tuple(used))
     return out
 
 
 # ---------- reporting ----------
-def report(name: str, key: dict, pred: dict[tuple, str]) -> dict:
+def report(name: str, key: dict, pred: dict[tuple, str], quiet: bool = False) -> dict:
     rows = [(k, v["label"], pred[k]) for k, v in key.items() if k in pred]
     acc = sum(t == p for _, t, p in rows) / len(rows)
     recall = {c: (sum(t == p == c for _, t, p in rows) / n) if (n := sum(t == c for _, t, _ in rows)) else None
@@ -172,6 +219,8 @@ def report(name: str, key: dict, pred: dict[tuple, str]) -> dict:
         for val in sorted({key[k][field] for k, _, _ in rows}):
             sub = [(t, p) for k, t, p in rows if key[k][field] == val]
             parts[f"{val}"] = (sum(t == p for t, p in sub) / len(sub), len(sub))
+    if quiet:
+        return {"accuracy": acc, "balanced": bal, "recall": recall, "n": len(rows)}
     print(f"\n{name}: accuracy {acc:.1%} ({sum(t == p for _, t, p in rows)}/{len(rows)}), "
           f"balanced accuracy {bal:.1%}")
     print("  share of each team label the labeler got right: "
@@ -181,7 +230,7 @@ def report(name: str, key: dict, pred: dict[tuple, str]) -> dict:
     print("  team label (rows) x this labeler (columns):  " + "  ".join(f"{c:>7}" for c in LABELS3))
     for t in LABELS3:
         print(f"  {t:>44}  " + "  ".join(f"{confusion[(t, p)]:>7}" for p in LABELS3))
-    return {"accuracy": acc, "balanced": bal}
+    return {"accuracy": acc, "balanced": bal, "recall": recall, "n": len(rows)}
 
 
 def main() -> None:
