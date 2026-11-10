@@ -1,6 +1,6 @@
 # SEAblings: CV-to-job matching
 
-IS883 Fall 2026, Group 3. Upload a CV, enter a target role and location, and get current job
+IS883 Fall 2026, Group 3. Upload a CV, enter a target role (location optional), and get current job
 openings ranked by how well your skills match, with matched skills, gaps, and advice per role.
 
 ## How it works
@@ -11,7 +11,8 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
    stops (`core/input_checks.py`).
 3. **Search jobs** (`core/job_sources/`): JSearch API (aggregates Google for Jobs, incl. Indeed listings),
-   or offline sample data. Without a job description, the 10 fictional sample postings are used.
+   or offline sample data. With no location, it searches across the US. A role with fewer than 2
+   different letters or over 80 characters is rejected before any search (`core/validation.py`). Without a job description, the 10 fictional sample postings are used.
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
    A text that isn't a job posting, or has no requirements at all, is skipped with a message and
    never scored.
@@ -38,6 +39,11 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
      CV lines for a phrase.
    - It writes advice that may only reword what the CV already says; anything else goes under Gaps.
    - The card shows which tools it used.
+
+## Using the app
+
+The sidebar has three sections: **1. Your CV**, **2. Jobs to match** and **3. AI model**. **New search**,
+beside the results, clears them and the job inputs but keeps your CV.
 
 ## Choosing a model
 
@@ -116,6 +122,7 @@ core/                   business logic, no Streamlit imports (testable)
   knowledge.py          skills knowledge base: loading, saved vectors, search
   advisor.py            tools the advice model calls (compute_match_score, search_cv)
   input_checks.py       stops a non-CV or a non-posting before it is scored
+  validation.py         rule-based check on the role, before any search
   samples.py            the fictional sample CVs offered in the sidebar
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
@@ -174,7 +181,7 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
   partial one, gives each job a match score, ranks the jobs, and suggests what to add.
 - **The user's input, and what comes back to the user:**
   - In: a CV (PDF, DOCX or TXT, or pasted text) and either job descriptions they already have
-    (uploaded or pasted) or a role and location to search live openings.
+    (uploaded or pasted) or a role (location optional) to search live openings.
   - Out: jobs ranked by a 0-100 match score. Each job shows matched and missing skills, the years of
     relevant experience counted against the minimum asked, how close the CV's field and kind of work
     are to the job's, and, on request, short advice on what to add.

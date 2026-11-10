@@ -37,6 +37,7 @@ from core.requirements import retrieve_evidence  # noqa: E402
 from core.samples import SAMPLE_CVS, sample_cv, sample_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience, label_requirements)
+from core.validation import looks_like_role  # noqa: E402
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -143,36 +144,60 @@ def handle_explain(result) -> None:
         errs[result.job.id] = str(e)
 
 
+# Everything one run produces, including the CV text kept for the advice tools.
+RUN_KEYS = ("profile", "results", "cv_text", "models_used", "embedder_used",
+            "explanations", "explain_errors", "tool_calls")
+
+
+def new_search() -> None:
+    """Clear the page, keeping the CV. A new version in their keys empties the job inputs."""
+    for k in RUN_KEYS:
+        st.session_state.pop(k, None)
+    st.session_state["jobs_version"] = st.session_state.get("jobs_version", 0) + 1
+
+
 # ---------- layout ----------
 ui.inject_css()
 ui.app_header()
 
+version = st.session_state.get("jobs_version", 0)
+
 with st.sidebar:
-    st.subheader("Your search")
-    upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
-    cv_paste = "" if upload is not None else st.text_area(
-        "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
-    if upload is None and not cv_paste.strip():
-        st.selectbox("No CV yet? Try a fictional sample CV", list(SAMPLE_CVS), key="sample_cv")
-    mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
-                    help="Use job descriptions you already have, or search current openings online.")
-    query = location = ""
-    limit = S.default_num_jobs
-    jd_files, jd_text = [], ""
-    if mode == MODE_JD:
-        jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
-                                    accept_multiple_files=True)
-        jd_text = st.text_area("Or paste a job description", height=150,
-                               placeholder="Paste the full posting. Put the job title on the first line.")
-        if not jd_files and not jd_text.strip():
-            st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} fictional sample postings.")
-    else:
-        query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst")
-        location = st.text_input("Location", placeholder="e.g. Boston, MA or Remote")
-        limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs)
-    st.selectbox("AI model", list(OPTIONS), format_func=label, key="model_choice",
-                 help="Each Gemini model has its own free daily quota. Auto tries them in order "
-                      "and uses the offline model (if installed) as a last resort.")
+    with st.container(border=True, key="cv_section"):
+        st.subheader("1. Your CV", anchor=False)
+        upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
+        cv_paste = "" if upload is not None else st.text_area(
+            "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
+        if upload is None and not cv_paste.strip():
+            st.selectbox("No CV yet? Try a fictional sample CV", list(SAMPLE_CVS), key="sample_cv")
+    with st.container(border=True, key="jobs_section"):
+        st.subheader("2. Jobs to match", anchor=False)
+        mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
+                        help="Use job descriptions you already have, or search current openings online.")
+        query = location = ""
+        limit = S.default_num_jobs
+        jd_files, jd_text = [], ""
+        if mode == MODE_JD:
+            jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
+                                        accept_multiple_files=True, key=f"jd_files_{version}")
+            jd_text = st.text_area("Or paste a job description", height=150, key=f"jd_text_{version}",
+                                   placeholder="Paste the full posting. Put the job title on the first line.")
+            if not jd_files and not jd_text.strip():
+                st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} fictional sample postings.")
+        else:
+            query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst",
+                                  key=f"query_{version}")
+            location = st.text_input("Location (optional)", placeholder="e.g. Boston, MA or Remote",
+                                     key=f"location_{version}",
+                                     help="If left empty, we search for this role across the US.")
+            limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs, key=f"limit_{version}")
+            if S.job_source == "sample":
+                st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
+    with st.container(border=True, key="model_section"):
+        st.subheader("3. AI model", anchor=False)
+        st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
+                     help="Each Gemini model has its own free daily quota. Auto tries them in order "
+                          "and uses the offline model (if installed) as a last resort.")
     run = st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
                     type="primary", width="stretch")
     st.caption("Your CV is processed in memory and not saved by this app. With a Gemini model, "
@@ -191,12 +216,13 @@ with st.sidebar:
                     st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
                 except Exception as e:
                     st.error(f"{label(k)}: {e}")
-    if mode == MODE_SEARCH and S.job_source == "sample":
-        st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
 
 if run:
     if mode == MODE_SEARCH and not query.strip():
         st.sidebar.error("Enter the role you're looking for.")
+        st.stop()
+    if mode == MODE_SEARCH and not looks_like_role(query):
+        st.sidebar.error("Enter a job role, such as Data analyst.")
         st.stop()
     for k in ("explanations", "explain_errors", "tool_calls"):
         st.session_state.pop(k, None)
@@ -321,7 +347,9 @@ results = st.session_state.get("results")
 if not results:
     ui.hero()
 else:
-    st.markdown("## Your matches")
+    title, button = st.columns([5, 1], vertical_alignment="center")
+    title.markdown("## Your matches")
+    button.button("New search", on_click=new_search, width="stretch")
     st.caption(f"Analyzed with {st.session_state['models_used']}; "
                f"similarity by {st.session_state['embedder_used']}.")
     ui.profile_panel(st.session_state["profile"])
