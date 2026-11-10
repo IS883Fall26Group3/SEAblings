@@ -1,6 +1,7 @@
 """Provider interface shared by Gemini and local models, plus JSON helpers."""
 import json
 import logging
+import re
 import types
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
@@ -16,6 +17,13 @@ log = logging.getLogger("seablings.llm")
 # The app sets it (Streamlit); core/ only calls announce_retry. One value per thread, so visitors
 # never see each other's messages.
 _on_retry: ContextVar = ContextVar("on_retry", default=None)
+
+
+def fence(tag: str, text: str) -> str:
+    """Put a user's document inside <tag> tags for a prompt, removing any <cv>/<job> tags already in it
+    so the text can't close the tag early and pose as instructions."""
+    clean = re.sub(r"</?\s*(?:cv|job)\s*>", "", text, flags=re.I)
+    return f"<{tag}>\n{clean}\n</{tag}>"
 
 
 def announce_retry(message: str) -> None:

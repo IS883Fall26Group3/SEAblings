@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from typing import Callable
 
-from .llm.base import LLMProvider
+from .llm.base import LLMProvider, fence
 from .requirements import Retrieved, job_block, to_checks
 from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBatch, RelevantExperience,
                       RelevantExperienceBatch, RequirementCheck, RequirementLabelBatch, ToolCall)
@@ -18,7 +18,7 @@ def _prompt(name: str, **kwargs) -> str:
 def extract_profile(llm: LLMProvider, cv_text: str) -> CandidateProfile:
     if llm.max_cv_chars:
         cv_text = cv_text[:llm.max_cv_chars]
-    return llm.generate_json(_prompt("extract_profile.md", cv_text=cv_text), CandidateProfile,
+    return llm.generate_json(_prompt("extract_profile.md", cv_text=fence("cv", cv_text)), CandidateProfile,
                              what="extracting skills from your CV")
 
 
@@ -29,7 +29,7 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
     if llm.batch_jobs:
         # One call for all jobs: saves free-tier quota versus one call per job.
         blocks = "\n\n".join(
-            f"### job_id: {j.id}\nTitle: {j.title}\n{j.description[:max_jd_chars]}" for j in jobs)
+            f"### job_id: {j.id}\nTitle: {j.title}\n{fence('job', j.description[:max_jd_chars])}" for j in jobs)
         batch = llm.generate_json(_prompt("extract_requirements.md", jobs=blocks),
                                   JobRequirementsBatch, what="reading the job descriptions")
         by_id = {r.job_id: r for r in batch.items}
@@ -40,7 +40,7 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
         for j in jobs:
             req = llm.generate_json(
                 _prompt("extract_requirements_single.md", title=j.title,
-                        description=j.description[:local_max_jd_chars]),
+                        description=fence("job", j.description[:local_max_jd_chars])),
                 JobRequirements, what=f"reading the posting for {j.title}")
             j.requirements = req.model_copy(update={"job_id": j.id})
     return jobs
@@ -61,12 +61,12 @@ def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_cha
         return (f"### job_id: {j.id}\nTitle: {j.title}\n"
                 f"Required skills: {', '.join(req.required_skills) if req else 'not extracted'}\n"
                 f"Minimum years: {req.min_years_experience if req and req.min_years_experience else 'not stated'}\n"
-                f"{j.description[:max_jd_chars]}")
+                f"{fence('job', j.description[:max_jd_chars])}")
 
     groups = [jobs] if llm.batch_jobs else [[j] for j in jobs]
     out = {}
     for group in groups:
-        batch = llm.generate_json(_prompt("judge_experience.md", cv_text=cv_text,
+        batch = llm.generate_json(_prompt("judge_experience.md", cv_text=fence("cv", cv_text),
                                           jobs="\n\n".join(block(j) for j in group)),
                                   RelevantExperienceBatch, what="judging your relevant experience")
         items = batch.items

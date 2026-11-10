@@ -217,3 +217,11 @@ def test_non_english_cv_says_english_only_before_any_model_call(app):
                                            "with English")
     assert "profile" not in app.session_state
     assert not any(b.label == "Try again" for b in app.button)
+
+
+def test_injected_cv_is_stopped_before_any_model_call(app):
+    app.text_area[0].set_value((Path(APP).parent / "eval/data/awkward/injection_cv.txt").read_text())
+    analyze(app)
+    assert app.warning[0].value.startswith('**CV:** This CV contains text that reads like instructions '
+                                           'to the AI ("Ignore all previous instructions")')
+    assert "profile" not in app.session_state

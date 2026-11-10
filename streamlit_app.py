@@ -38,8 +38,9 @@ from core.requirements import retrieve_evidence  # noqa: E402
 from core.samples import SAMPLE_CVS, sample_cv, sample_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience, label_requirements)
-from core.validation import (english_only, language_of, looks_like_job_description,  # noqa: E402
-                             looks_like_resume, looks_like_role)
+from core.validation import (english_only, injection_phrase, instructions_found,  # noqa: E402
+                             language_of, looks_like_job_description, looks_like_resume,
+                             looks_like_role)
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -181,9 +182,11 @@ def stop_if_invalid(checks: list[tuple[str, bool, str]]) -> None:
 
 def check(name: str, what: str, text: str, looks_right, problem: str) -> tuple[str, bool, str]:
     """One line of the input checks: English first (the prompts and skill lists are English-only),
-    then whether it reads like the right kind of input."""
+    then no instructions to the AI hidden in it, then whether it reads like the right kind of input."""
     if language := language_of(text):
         return name, False, english_only(what, language)
+    if phrase := injection_phrase(text):
+        return name, False, instructions_found(what, phrase)
     return name, looks_right(text), problem
 
 

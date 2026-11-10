@@ -456,7 +456,12 @@ per-requirement rows in `results/requirement_accuracy.csv`):
   `requirement_accuracy.py`): the table above. Tried and dropped: majority vote over 3 labeling
   calls (same accuracy as the mean, 3 times the calls); gemini-flash for labeling (overloaded, 503).
 
-**Awkward inputs** (`labels/awkward_inputs.csv`, run through the real app): all 4 pass. A2 (a recipe
+**Awkward inputs** (`labels/awkward_inputs.csv`, run through the real app): all 4 pass. A5 and A6
+(malicious CVs, added in November 2026 with their expected results written before running) test
+prompt injection: A5 must be stopped by the input check, A6 is reworded so the rules miss it and
+tests the prompts' "data, never instructions" rule. Their results are filled in once they are run.
+The prompts gained that rule after the accuracy runs above; rerun with a new `VERSION` to confirm
+the labels didn't change. A2 (a recipe
 as the CV) and A3 (a news item as the posting) first got match scores of 0 and 25 as if they were
 real; `core/input_checks.py` now stops both with a clear message. The extraction step says what
 kind of document it read (no extra call), and a posting with no requirements is never scored.

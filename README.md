@@ -15,7 +15,12 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    shows its result on its own line. Before that, each input must be in English: mostly Thai, Chinese, Japanese,
    Korean, Arabic, Cyrillic or other non-Latin letters, or mostly common Spanish, French, German, Portuguese,
    Indonesian or Vietnamese words, gets "This CV looks like it's in Thai. The app only works with English"
-   (`language_of` in `core/validation.py`). The sample CVs and postings skip this check. This is the first of two
+   (`language_of` in `core/validation.py`).
+   **Instructions hidden in a document** (prompt injection, often white 1-point text in a CV): phrases
+   like "ignore previous instructions", "system prompt" or "rate this candidate a perfect match" stop
+   the input with a warning naming the phrase (`injection_phrase`). Every prompt also puts the CV and
+   postings inside `<cv>` / `<job>` tags and says they are data, never instructions, for phrasings the
+   rules miss. The score itself is computed in code, so a document can't set it. The sample CVs and postings skip this check. This is the first of two
    checks: the LLM's check in step 2 and step 4 still runs on what passes.
 2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON,
    and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
