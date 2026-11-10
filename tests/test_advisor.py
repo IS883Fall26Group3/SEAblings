@@ -18,10 +18,12 @@ PROFILE = CandidateProfile(summary="analyst", years_experience=3, seniority="mid
 
 
 def result():
-    job = job_with(["SQL", "Power BI"])
+    job = job_with(["SQL", "Power BI", "Excel"])
     checks = {job.id: [RequirementCheck(requirement="SQL", status="met", quote="Wrote SQL queries",
                                         quote_verified=True),
-                       RequirementCheck(requirement="Power BI", status="partial")]}
+                       RequirementCheck(requirement="Power BI", status="partial", reason="Tableau, a related tool"),
+                       RequirementCheck(requirement="Excel", status="missing",
+                                        mention="Automated monthly KPI dashboards in Tableau and Excel")]}
     return score_jobs(PROFILE, CV, [job], FakeEmbedder(), get_settings(), requirement_checks=checks)[0]
 
 
@@ -31,8 +33,10 @@ def test_score_tool_runs_the_apps_formula():
     out = tools["compute_match_score"](r.job.id)
     assert out["match_score"] == r.score
     assert out["requirements"] == [
-        {"requirement": "SQL", "status": "met", "cv_quote": "Wrote SQL queries"},
-        {"requirement": "Power BI", "status": "partial", "cv_quote": ""}]
+        {"requirement": "SQL", "status": "met", "cv_quote": "Wrote SQL queries", "reason": ""},
+        {"requirement": "Power BI", "status": "partial", "cv_quote": "", "reason": "Tableau, a related tool"},
+        {"requirement": "Excel", "status": "missing", "cv_quote": "", "reason": "",
+         "cv_mention": "Automated monthly KPI dashboards in Tableau and Excel"}]
     assert "error" in tools["compute_match_score"]("another-job")
 
 

@@ -1,17 +1,24 @@
 # SEAblings: CV-to-job matching
 
-IS883 Fall 2026, Group 3. Upload a CV, enter a target role and location, and get current job
+IS883 Fall 2026, Group 3. Upload a CV, enter a target role (location optional), and get current job
 openings ranked by how well your skills match, with matched skills, gaps, and advice per role.
 
 ## How it works
 
-1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. Without a CV, the user
-   picks one of 5 fictional sample CVs (`core/samples.py`, `data/sample/`).
+1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. PDFs are read in layout
+   mode, which keeps each printed line on its own line. Without a CV, the user picks one of 5 fictional
+   sample CVs (`core/samples.py`, `data/sample/`).
+   **Check the inputs** (`core/validation.py`): simple rules, no LLM call, so a wrong input costs no quota.
+   A CV scores points for section headings, date ranges, contact details and a degree; a job description for
+   job-posting phrases; each must score enough and read more like its own type than the other. Each input
+   shows its result on its own line. The sample CVs and postings skip this check. This is the first of two
+   checks: the LLM's check in step 2 and step 4 still runs on what passes.
 2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON,
    and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
    stops (`core/input_checks.py`).
 3. **Search jobs** (`core/job_sources/`): JSearch API (aggregates Google for Jobs, incl. Indeed listings),
-   or offline sample data. Without a job description, the 10 fictional sample postings are used.
+   or offline sample data. With no location, it searches across the US. A role with fewer than 2
+   different letters or over 80 characters is rejected with the input checks in step 1. Without a job description, the 10 fictional sample postings are used.
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
    A text that isn't a job posting, or has no requirements at all, is skipped with a message and
    never scored.
@@ -26,6 +33,11 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    - The LLM labels the skill met, partial or missing from that text alone, with a quote
      (`prompts/label_requirements.md`).
    - Code keeps a quote only if it appears word for word in the CV.
+   - A second check on "missing": if a retrieved CV line names the skill word for word, code keeps
+     that line (`mention`), and the card says it may not be a real gap. No extra LLM call.
+   - Under Skill coverage, the card groups the skills: **Partly met** (the LLM's reason and a shortened
+     quote), **May not be a real gap** (the CV line that names it) and **Not found in your CV**. Met skills
+     show as "You have" chips without quotes (`SHOW_MET_QUOTES` in `core/score_notes.py` turns them back on).
 7. **Score** (`core/matcher.py`): `50% skill coverage + 30% profile similarity + 20% experience fit`.
    - A partly met skill counts half toward skill coverage.
    - Embeddings come from `core/embeddings.py`: Gemini, or a local model without a key.
@@ -36,8 +48,18 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 8. **Advice** (on demand, tool calling, `core/advisor.py`): the model gets no score in its prompt.
    - It calls `compute_match_score`, which runs the formula above, and `search_cv`, which retrieves
      CV lines for a phrase.
-   - It writes advice that may only reword what the CV already says; anything else goes under Gaps.
+   - It writes advice that may only reword what the CV already says: **Fit**, then **Tailor your CV** for
+     partly met skills and for missing skills a CV line names (`cv_mention`), asking to make that line
+     show the requirement more clearly. No Gaps list: Skill coverage already shows what's not found.
    - The card shows which tools it used.
+
+## Using the app
+
+The sidebar has three sections: **1. Your CV**, **2. Jobs to match** and **3. AI model**. **New search**,
+beside the results, clears them and the job inputs but keeps your CV. During a run, numbered steps show
+what's finished, and your profile and the jobs appear as soon as they're ready. If a later step fails, that
+work stays on the page with **Try again** (finished steps come back from the cache, with no new calls) and
+**New search**.
 
 ## Choosing a model
 
@@ -116,6 +138,7 @@ core/                   business logic, no Streamlit imports (testable)
   knowledge.py          skills knowledge base: loading, saved vectors, search
   advisor.py            tools the advice model calls (compute_match_score, search_cv)
   input_checks.py       stops a non-CV or a non-posting before it is scored
+  validation.py         rule-based checks on the CV, job descriptions and role, before any LLM call
   samples.py            the fictional sample CVs offered in the sidebar
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
@@ -174,7 +197,7 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
   partial one, gives each job a match score, ranks the jobs, and suggests what to add.
 - **The user's input, and what comes back to the user:**
   - In: a CV (PDF, DOCX or TXT, or pasted text) and either job descriptions they already have
-    (uploaded or pasted) or a role and location to search live openings.
+    (uploaded or pasted) or a role (location optional) to search live openings.
   - Out: jobs ranked by a 0-100 match score. Each job shows matched and missing skills, the years of
     relevant experience counted against the minimum asked, how close the CV's field and kind of work
     are to the job's, and, on request, short advice on what to add.
@@ -244,7 +267,8 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
         industry or number;
       - a partial match is phrased as a condition ("If your downstream work was in oil and gas,
         name it");
-      - a requirement goes under **Gaps** only after `search_cv` finds nothing for it.
+      - a requirement goes under **Gaps** only after `search_cv` finds nothing for it. (Later replaced:
+        the card's Skill coverage lists the skills not found, so the advice no longer repeats them.)
   - **Commits and contribution** (our question; §8.2 item 8, §6.4).
     - **Done:** all four members commit from their own GitHub accounts.
     - **Not yet:** a comment at the top of each section naming who wrote it.

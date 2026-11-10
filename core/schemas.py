@@ -97,6 +97,9 @@ class RequirementCheck(BaseModel):
     quote: str = ""
     quote_verified: bool = False
     reason: str = ""
+    # For a missing requirement: a retrieved CV line that names it, so the card can say it may not be
+    # a real gap. Found by a word match in Python (core/requirements.py: to_checks), not by the LLM.
+    mention: str = ""
 
 
 class Job(BaseModel):

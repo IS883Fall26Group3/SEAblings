@@ -29,10 +29,20 @@ MATCH_LABELS = {"same": "Closely related", "related": "Related", "different": "D
 
 
 @dataclass
+class Group:
+    """A titled list under a note, e.g. "Partly met:" with one line per skill. inline puts the
+    items on one line after the title instead of as bullets."""
+    title: str
+    items: list[str]
+    inline: bool = False
+
+
+@dataclass
 class Note:
     label: str
     text: str
     bullets: list[str] = field(default_factory=list)
+    groups: list[Group] = field(default_factory=list)
     table: list[tuple[str, ...]] = field(default_factory=list)  # (row, your CV, this job[, match])
     after: str = ""
 
@@ -66,12 +76,40 @@ def role_line(r: Role) -> str:
     return f"{r.title} ({span})" if span else r.title
 
 
-def evidence_bullets(r: MatchResult, limit: int = 6) -> list[str]:
-    """'SQL: "Wrote SQL queries to consolidate sales data"', for each met or partly met requirement
-    whose quote was found word for word in the CV."""
-    out = [f'{c.requirement}{" (partly)" if c.status == "partial" else ""}: "{c.quote}"'
-           for c in r.requirement_checks if c.quote_verified and c.status in ("met", "partial")]
-    return out[:limit] + ([f"{len(out) - limit} more."] if len(out) > limit else [])
+# Met skills already show as "You have" chips and their quotes are often one skills line repeated,
+# so their quotes are hidden. Set to True to list them again.
+SHOW_MET_QUOTES = False
+MAX_QUOTE_WORDS = 15
+MAX_ITEMS = 3  # per group: partly met, and may not be a real gap
+
+
+def _short(quote: str) -> str:
+    words = quote.split()
+    return quote if len(words) <= MAX_QUOTE_WORDS else " ".join(words[:MAX_QUOTE_WORDS]) + "…"
+
+
+def _group(title: str, items: list[str]) -> list[Group]:
+    if not items:
+        return []
+    extra = len(items) - MAX_ITEMS
+    return [Group(title, items[:MAX_ITEMS] + ([f"{extra} more."] if extra > 0 else []))]
+
+
+def evidence_groups(r: MatchResult) -> list[Group]:
+    """From the per-requirement labels: why each partly met skill counts half (the LLM's reason and
+    the CV quote), then each missing skill a CV line still names (it may not be a real gap), then the
+    missing skills no line names. Quotes are shown only when found word for word in the CV."""
+    checks = r.requirement_checks
+    met = [f'{c.requirement}: "{_short(c.quote)}"'
+           for c in checks if SHOW_MET_QUOTES and c.status == "met" and c.quote_verified]
+    partly = [f"{c.requirement}: " + " ".join(
+                  x for x in (c.reason, f'Your CV: "{_short(c.quote)}"' if c.quote_verified else "") if x)
+              for c in checks if c.status == "partial" and (c.reason or c.quote_verified)]
+    missing = [c for c in checks if c.status == "missing"]
+    maybe = [f'{c.requirement}: your CV says "{_short(c.mention)}"' for c in missing if c.mention]
+    absent = [c.requirement for c in missing if not c.mention]
+    return (_group("Met:", met) + _group("Partly met:", partly) + _group("May not be a real gap:", maybe)
+            + ([Group("Not found in your CV:", [", ".join(absent)], inline=True)] if absent else []))
 
 
 def skill_note(r: MatchResult, profile: CandidateProfile) -> Note:
@@ -82,10 +120,9 @@ def skill_note(r: MatchResult, profile: CandidateProfile) -> Note:
                     "part is set to a neutral 50%.")
     if p:
         note = _skill_note_with_partial(r, m, p, k, n)
-        note.bullets = evidence_bullets(r)
-        return note
-    note = _skill_note(r, profile, m, k, n)
-    note.bullets = evidence_bullets(r)
+    else:
+        note = _skill_note(r, profile, m, k, n)
+    note.groups = evidence_groups(r)
     return note
 
 

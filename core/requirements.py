@@ -113,9 +113,18 @@ def retrieve_evidence(jobs: list[Job], cv_text: str, embed: EmbedFn, kb: SkillKB
     return {j.id: [Retrieved(s, *found[norm(s)]) for s in required_skills(j)] for j in jobs}
 
 
+def mention(r: Retrieved) -> str:
+    """The first retrieved CV line that names the requirement, or "". Used on a requirement the LLM
+    labeled missing: a line naming it means the label may be wrong, so the card says it may not be a
+    real gap."""
+    named = _naming([_words(x) for x in r.lines], _terms(r.requirement))
+    return r.lines[named[0]] if named else ""
+
+
 def to_checks(retrieved: list[Retrieved], labels: list[RequirementLabel], cv_text: str) -> list[RequirementCheck]:
     """Match the LLM's labels to the job's requirements and verify each quote. A requirement the LLM
-    skipped, or labeled with an unknown status, is left out: the skill matcher decides it instead."""
+    skipped, or labeled with an unknown status, is left out: the skill matcher decides it instead.
+    A missing requirement keeps the CV line that names it, if one was retrieved (mention)."""
     by_req = {norm(x.requirement): x for x in labels}
     out = []
     for r in retrieved:
@@ -127,7 +136,8 @@ def to_checks(retrieved: list[Retrieved], labels: list[RequirementLabel], cv_tex
         verified = bool(quote) and quote_in_cv(quote, cv_text)
         out.append(RequirementCheck(requirement=r.requirement, status=status,
                                     quote=quote if verified else "", quote_verified=verified,
-                                    reason=label.reason.strip()))
+                                    reason=label.reason.strip(),
+                                    mention=mention(r) if status == "missing" else ""))
     return out
 
 

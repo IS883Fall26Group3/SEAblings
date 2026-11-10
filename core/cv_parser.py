@@ -13,7 +13,9 @@ def extract_text(file_bytes: bytes, filename: str, max_chars: int = 15_000,
     name = filename.lower()
     if name.endswith(".pdf"):
         reader = PdfReader(io.BytesIO(file_bytes))
-        text = "\n".join(page.extract_text() or "" for page in reader.pages)
+        # Layout mode keeps each printed line on its own line; the default can run a whole page
+        # into a few long lines (some macOS PDFs), which hides headings and bullets.
+        text = "\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
     elif name.endswith(".docx"):
         doc = Document(io.BytesIO(file_bytes))
         text = "\n".join(p.text for p in doc.paragraphs)
