@@ -5,14 +5,20 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 
 ## How it works
 
-1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. Without a CV, the user
-   picks one of 5 fictional sample CVs (`core/samples.py`, `data/sample/`).
+1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. PDFs are read in layout
+   mode, which keeps each printed line on its own line. Without a CV, the user picks one of 5 fictional
+   sample CVs (`core/samples.py`, `data/sample/`).
+   **Check the inputs** (`core/validation.py`): simple rules, no LLM call, so a wrong input costs no quota.
+   A CV scores points for section headings, date ranges, contact details and a degree; a job description for
+   job-posting phrases; each must score enough and read more like its own type than the other. Each input
+   shows its result on its own line. The sample CVs and postings skip this check. This is the first of two
+   checks: the LLM's check in step 2 and step 4 still runs on what passes.
 2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON,
    and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
    stops (`core/input_checks.py`).
 3. **Search jobs** (`core/job_sources/`): JSearch API (aggregates Google for Jobs, incl. Indeed listings),
    or offline sample data. With no location, it searches across the US. A role with fewer than 2
-   different letters or over 80 characters is rejected before any search (`core/validation.py`). Without a job description, the 10 fictional sample postings are used.
+   different letters or over 80 characters is rejected with the input checks in step 1. Without a job description, the 10 fictional sample postings are used.
 4. **Extract job requirements**: one batched call for all jobs (one call per job on the offline model).
    A text that isn't a job posting, or has no requirements at all, is skipped with a message and
    never scored.
@@ -43,7 +49,10 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 ## Using the app
 
 The sidebar has three sections: **1. Your CV**, **2. Jobs to match** and **3. AI model**. **New search**,
-beside the results, clears them and the job inputs but keeps your CV.
+beside the results, clears them and the job inputs but keeps your CV. During a run, numbered steps show
+what's finished, and your profile and the jobs appear as soon as they're ready. If a later step fails, that
+work stays on the page with **Try again** (finished steps come back from the cache, with no new calls) and
+**New search**.
 
 ## Choosing a model
 
@@ -122,7 +131,7 @@ core/                   business logic, no Streamlit imports (testable)
   knowledge.py          skills knowledge base: loading, saved vectors, search
   advisor.py            tools the advice model calls (compute_match_score, search_cv)
   input_checks.py       stops a non-CV or a non-posting before it is scored
-  validation.py         rule-based check on the role, before any search
+  validation.py         rule-based checks on the CV, job descriptions and role, before any LLM call
   samples.py            the fictional sample CVs offered in the sidebar
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)

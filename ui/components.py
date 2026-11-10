@@ -5,13 +5,20 @@ from pathlib import Path
 import streamlit as st
 
 from core import score_notes as notes
-from core.schemas import CandidateProfile, MatchResult
+from core.schemas import CandidateProfile, Job, MatchResult
 
 CSS = Path(__file__).with_name("styles.css")
 
 
 def inject_css() -> None:
     st.markdown(f"<style>{CSS.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
+
+
+def grey_out_sidebar() -> None:
+    """Clicking an input would stop the run partway. Uses CSS because disabled=True drops text
+    typed just before the click (Streamlit 1.66)."""
+    st.markdown('<style>[data-testid="stSidebar"] { opacity: .5; pointer-events: none; }</style>',
+                unsafe_allow_html=True)
 
 
 def app_header() -> None:
@@ -66,13 +73,37 @@ def score_ring(score: float) -> str:
             f'<span>{score:.0f}</span></div>')
 
 
-def profile_panel(profile: CandidateProfile) -> None:
-    with st.expander("What we read from your CV", expanded=False):
+def profile_panel(profile: CandidateProfile, expanded: bool = False) -> None:
+    with st.expander("What we read from your CV", expanded=expanded):
         c1, c2 = st.columns(2)
         c1.metric("Experience", f"{profile.years_experience:g} years")
         c2.metric("Level", profile.seniority.title())
         st.write(profile.summary)
         st.markdown(chips(profile.skills, "have"), unsafe_allow_html=True)
+
+
+def job_heading(job: Job) -> str:
+    meta = ", ".join(x for x in (job.company, job.location, job.employment_type.title()) if x)
+    via = "" if not job.source else f" (via {escape(job.source)})" if meta else escape(job.source)
+    return (f'<p class="sea-job-title">{escape(job.title)}</p>'
+            f'<p class="sea-meta">{escape(meta)}{via}</p>')
+
+
+def job_previews(jobs: list[Job]) -> None:
+    """The jobs before they are scored, with their requirements once those are extracted."""
+    st.markdown("#### The jobs we're looking at")
+    for job in jobs:
+        with st.container(border=True):
+            st.markdown(job_heading(job), unsafe_allow_html=True)
+            req = job.requirements
+            if not req:
+                continue
+            if req.role_summary:
+                st.write(req.role_summary)
+            if req.min_years_experience:
+                st.caption(f"Asks for at least {req.min_years_experience:g} years of experience")
+            if req.required_skills:
+                st.markdown("**Required**  " + chips(req.required_skills, "gap"), unsafe_allow_html=True)
 
 
 def _md(text: str) -> str:
@@ -128,11 +159,7 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
     with st.container(border=True):
         left, right = st.columns([1, 6], vertical_alignment="center")
         left.markdown(score_ring(r.score), unsafe_allow_html=True)
-        meta = ", ".join(x for x in (job.company, job.location, job.employment_type.title()) if x)
-        via = "" if not job.source else f" (via {escape(job.source)})" if meta else escape(job.source)
-        right.markdown(
-            f'<p class="sea-job-title">{escape(job.title)}</p>'
-            f'<p class="sea-meta">{escape(meta)}{via}</p>', unsafe_allow_html=True)
+        right.markdown(job_heading(job), unsafe_allow_html=True)
 
         if r.matched_skills:
             right.markdown("**You have**  " + chips(r.matched_skills, "have"), unsafe_allow_html=True)

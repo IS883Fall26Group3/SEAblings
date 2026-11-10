@@ -37,7 +37,7 @@ from core.requirements import retrieve_evidence  # noqa: E402
 from core.samples import SAMPLE_CVS, sample_cv, sample_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience, label_requirements)
-from core.validation import looks_like_role  # noqa: E402
+from core.validation import looks_like_job_description, looks_like_resume, looks_like_role  # noqa: E402
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -144,9 +144,94 @@ def handle_explain(result) -> None:
         errs[result.job.id] = str(e)
 
 
-# Everything one run produces, including the CV text kept for the advice tools.
-RUN_KEYS = ("profile", "results", "cv_text", "models_used", "embedder_used",
-            "explanations", "explain_errors", "tool_calls")
+OK = "Looks good."
+NOT_CV = "This doesn't look like a resume. Please upload or paste your resume."
+NOT_JD = "This doesn't look like a job posting. Please upload or paste a job description."
+NOT_ROLE = "Enter a job role, such as Data analyst."
+
+
+class RunStopped(Exception):
+    """Ends a run early with a message. kind is "error" or "warning"; retry offers Try again, which
+    only helps when something failed, not when an input is wrong."""
+
+    def __init__(self, kind: str, message: str, retry: bool = False):
+        super().__init__(message)
+        self.kind, self.retry = kind, retry
+
+
+def stop_if_invalid(checks: list[tuple[str, bool, str]]) -> None:
+    """checks: (input name, passed, problem). Lists every input on its own line if any failed."""
+    if all(ok for _, ok, _ in checks):
+        return
+    raise RunStopped("warning", "  \n".join(f"**{name}:** {OK if ok else problem}"
+                                            for name, ok, problem in checks))
+
+
+def job_count(n: int) -> str:
+    return "1 job" if n == 1 else f"{n} jobs"
+
+
+class StageLog:
+    """Status box narration: a tick for each finished stage, then the one in progress."""
+
+    def __init__(self, status, total: int):
+        self.status, self.total, self.number = status, total, 0
+        self.lines, self.notes, self.current = [], [], ""
+        self.box = status.empty()
+
+    def start(self, text: str) -> None:
+        self.number += 1
+        self.current = text
+        self.status.update(label=f"Step {self.number} of {self.total}: {text}", expanded=True)
+        self.draw()
+
+    def done(self, text: str) -> None:
+        self.lines.append(f"✓ {text}")
+        self.current = ""
+        self.draw()
+
+    def note(self, text: str) -> None:
+        self.notes.append(text)
+        self.lines.append(f"⚠️ {text}")
+        self.draw()
+
+    def draw(self) -> None:
+        current = [f"⏳ {self.current}"] if self.current else []
+        self.box.markdown("  \n".join(self.lines + current))
+
+
+# Everything one run produces, including the CV text kept for the advice tools. Cleared when a run
+# starts, so old results can't come back after a failure.
+RUN_KEYS = ("profile", "jobs", "results", "cv_text", "models_used", "embedder_used", "run_summary",
+            "notice", "notes", "input_error", "explanations", "explain_errors", "tool_calls")
+
+
+def start_run() -> None:
+    for k in RUN_KEYS:
+        st.session_state.pop(k, None)
+    st.session_state["running"] = True
+
+
+def show_notice() -> None:
+    kind, message, _ = st.session_state["notice"]
+    (st.error if kind == "error" else st.warning)(message)
+    for note in st.session_state.get("notes", []):
+        st.caption(note)
+
+
+def show_progress() -> None:
+    """What's finished so far, during a run and after one that stopped early."""
+    if profile := st.session_state.get("profile"):
+        ui.profile_panel(profile, expanded=True)
+    if jobs := st.session_state.get("jobs"):
+        ui.job_previews(jobs)
+
+
+def publish(live, **finished) -> None:
+    """Save a finished stage right away (a rerun erases anything only drawn) and show it."""
+    st.session_state.update(finished)
+    with live.container():
+        show_progress()
 
 
 def new_search() -> None:
@@ -198,8 +283,10 @@ with st.sidebar:
         st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
                      help="Each Gemini model has its own free daily quota. Auto tries them in order "
                           "and uses the offline model (if installed) as a last resort.")
-    run = st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
-                    type="primary", width="stretch")
+    st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
+              type="primary", width="stretch", on_click=start_run)
+    if input_error := st.session_state.get("input_error"):
+        st.error(input_error)
     st.caption("Your CV is processed in memory and not saved by this app. With a Gemini model, "
                "its text is sent to Google's Gemini API for analysis.")
 
@@ -217,142 +304,176 @@ with st.sidebar:
                 except Exception as e:
                     st.error(f"{label(k)}: {e}")
 
-if run:
+# Separate slots: the results slot stays empty during a run, which blanks the last page at once.
+progress_slot = st.empty()
+results_slot = st.empty()
+
+if st.session_state.get("running"):
     if mode == MODE_SEARCH and not query.strip():
-        st.sidebar.error("Enter the role you're looking for.")
-        st.stop()
-    if mode == MODE_SEARCH and not looks_like_role(query):
-        st.sidebar.error("Enter a job role, such as Data analyst.")
-        st.stop()
-    for k in ("explanations", "explain_errors", "tool_calls"):
-        st.session_state.pop(k, None)
+        st.session_state.update(input_error="Enter the role you're looking for.", running=False)
+        st.rerun()
+
+    ui.grey_out_sidebar()
+    main = progress_slot.container()
     choice = st.session_state["model_choice"]
-    with st.status("Matching your CV to jobs", expanded=True) as status:
-        def notify(k, e):
-            remember_if_spent(k, e)
-            st.write(f"{label(k)} unavailable: {e} Trying the next model.")
-        try:
-            st.write("Reading your CV")
-            if upload is not None:
-                cv_text = extract_text(upload.getvalue(), upload.name, S.max_cv_chars)
-            elif cv_paste.strip():
-                cv_text = clean_text(cv_paste, S.max_cv_chars)
-            else:
-                cv_text = sample_cv(st.session_state.get("sample_cv", ""))
-            cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
+    status = main.status("Getting started", expanded=True)
+    live = main.empty()
+    log = StageLog(status, 4 + (mode == MODE_SEARCH) + (S.experience_fit == "judge")
+                   + (S.requirement_labels == "llm"))
 
-            st.write("Extracting your skills")
-            profile, used_p = with_fallback(model_chain(choice), lambda k: cached_profile(cv_hash, cv_text, k), notify)
-            if problem := cv_problem(profile):
-                status.update(label="This doesn't look like a CV", state="error")
-                st.error(f"{problem} Upload or paste your CV, or clear the CV box to try a sample CV.")
-                st.stop()
-
-            if mode == MODE_JD and not jd_files and not jd_text.strip():
-                st.write("Using the fictional sample job postings")
-                raw_jobs = sample_jobs()
-            elif mode == MODE_JD:
-                st.write("Reading your job descriptions")
-                items = [(f.name.rsplit(".", 1)[0],
-                          extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
-                         for f in jd_files]
+    def notify(k, e):
+        remember_if_spent(k, e)
+        log.note(f"{label(k)} unavailable: {e} Trying the next model.")
+    try:
+        # Defense 1: simple rules on what the user gave, before any model call, so a wrong input
+        # costs no quota. The sample CVs and postings are ours, so they are trusted.
+        sample_postings = mode == MODE_JD and not jd_files and not jd_text.strip()
+        reading = "Reading your CV" if mode == MODE_SEARCH else "Reading your CV and job descriptions"
+        log.start(reading)
+        if upload is not None:
+            cv_text = extract_text(upload.getvalue(), upload.name, S.max_cv_chars)
+        elif cv_paste.strip():
+            cv_text = clean_text(cv_paste, S.max_cv_chars)
+        else:
+            cv_text = sample_cv(st.session_state.get("sample_cv", ""))
+        cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
+        st.session_state["cv_text"] = cv_text  # in memory only; the advice tools (search_cv) need it
+        user_cv = upload is not None or bool(cv_paste.strip())
+        checks = [("CV", not user_cv or looks_like_resume(cv_text), NOT_CV)]
+        if sample_postings:
+            raw_jobs = sample_jobs()
+        elif mode == MODE_JD:
+            items = [(f.name, extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
+                     for f in jd_files]
+            if jd_text.strip():
                 items.append(("Pasted job description", jd_text))
-                raw_jobs = jobs_from_descriptions(items)
-            else:
-                st.write(f"Searching jobs for \"{query}\"")
-                raw_jobs = cached_search(S.job_source, query.strip(), location.strip(), limit)
-            if not raw_jobs:
-                status.update(label="No jobs found", state="error")
-                st.warning("No openings matched this search. Try a broader role or location.")
-                st.stop()
+            checks += [(name if name == "Pasted job description" else f"Job description ({name})",
+                        looks_like_job_description(text), NOT_JD) for name, text in items]
+            raw_jobs = jobs_from_descriptions([(n.rsplit(".", 1)[0], t) for n, t in items])
+        else:
+            checks.append(("Role", looks_like_role(query), NOT_ROLE))
+        stop_if_invalid(checks)
+        log.done("Read your CV and the fictional sample job postings" if sample_postings
+                 else reading.replace("Reading", "Read"))
 
-            st.write("Reading the job descriptions")
-            ids = tuple(j.id for j in raw_jobs)
-            jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
-            jobs = name_from_requirements(jobs)
-            skipped = [(j, why) for j in jobs if (why := posting_problem(j))]
-            for j, why in skipped:  # never score a news item or an empty posting as a job
-                st.write(f"Skipped \"{j.title}\": {why}.")
-            jobs = [j for j in jobs if not posting_problem(j)]
-            if not jobs:
-                status.update(label="No job requirements found", state="error")
-                st.warning("No job requirements were found in what you gave, so there is nothing to "
-                           "match. Paste the full job posting, including its requirements.")
-                st.stop()
-            ids = tuple(j.id for j in jobs)
+        log.start("Extracting your skills")
+        profile, used_p = with_fallback(model_chain(choice), lambda k: cached_profile(cv_hash, cv_text, k), notify)
+        # Defense 2: the model says what kind of document it read, in the same extraction call.
+        if problem := cv_problem(profile):
+            raise RunStopped("error", f"{problem} Upload or paste your CV, or clear the CV box to try a sample CV.")
+        publish(live, profile=profile)
+        log.done(f"Found {len(profile.skills)} skills and {profile.years_experience:g} years of experience")
 
-            relevant, background, used_e = None, None, used_j
-            if S.experience_fit == "judge":
-                st.write("Judging your relevant experience")
-                try:
-                    judged, used_e = with_fallback(
-                        model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
-                    relevant = {jid: x.relevant_roles for jid, x in judged.items()}
-                    background = {jid: (x.field_match, x.work_match) for jid, x in judged.items()}
-                except LLMError as e:  # the rest of the match is ready: score with total years instead
-                    st.write(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
-                             "all your years instead.")
+        if mode == MODE_SEARCH:
+            log.start(f"Searching jobs for \"{query}\"")
+            raw_jobs = cached_search(S.job_source, query.strip(), location.strip(), limit)
+            publish(live, jobs=raw_jobs)
+            log.done(f"Found {job_count(len(raw_jobs))}")
+        if not raw_jobs:
+            raise RunStopped("warning", "No openings matched this search. Try a broader role or location.")
 
-            def embedding_steps(emb):
-                """Everything that needs embeddings, so it can run again on the local model."""
-                embed = search_embed(emb, lambda s: st.write(
-                    f"Gemini's per-minute limit is reached. Waiting {s} seconds, then trying again…"))
-                roles = (relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
-                         if S.experience_fit == "roles" else relevant)
-                checks, used_r = None, used_j
-                if S.requirement_labels == "llm":
-                    # Retrieval: the CV lines and knowledge-base families closest to each requirement
-                    # go to the LLM, which labels it met / partial / missing with a quote.
-                    st.write("Checking each requirement against your CV")
-                    try:
-                        retrieved = retrieve_evidence(jobs, cv_text, embed, get_kb(emb.name, emb))
-                        checks, used_r = with_fallback(
-                            model_chain(choice),
-                            lambda k: cached_labels(cv_hash, ids, k, emb.name, jobs, retrieved, cv_text), notify)
-                    except EmbeddingQuotaError:
-                        raise
-                    except LLMError as e:  # the rest of the match is ready: match skills by name instead
-                        st.write(f"Couldn't check each requirement ({e}) Skills are matched by name and "
-                                 "meaning instead.")
-                st.write("Scoring each job")
-                return score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=roles,
-                                  background=background, requirement_checks=checks), used_r
+        log.start("Reading the job requirements")
+        ids = tuple(j.id for j in raw_jobs)
+        jobs, used_j = with_fallback(model_chain(choice), lambda k: cached_requirements(ids, k, raw_jobs), notify)
+        jobs = name_from_requirements(jobs)
+        skipped = [(j, why) for j in jobs if (why := posting_problem(j))]
+        for j, why in skipped:  # never score a news item or an empty posting as a job
+            log.note(f"Skipped \"{j.title}\": {why}.")
+        jobs = [j for j in jobs if not posting_problem(j)]
+        if not jobs:
+            raise RunStopped("warning", "No job requirements were found in what you gave, so there is nothing "
+                                        "to match. Paste the full job posting, including its requirements.")
+        publish(live, jobs=jobs)
+        log.done(f"Read the requirements for {job_count(len(jobs))}")
+        ids = tuple(j.id for j in jobs)
 
-            emb = get_embedder()
+        relevant, background, used_e = None, None, used_j
+        if S.experience_fit == "judge":
+            log.start("Judging your relevant experience")
             try:
-                results, used_r = embedding_steps(emb)
-            except EmbeddingQuotaError as e:
-                if not local_available():
-                    raise LLMError(f"{e} Try again after it resets, or set EMBEDDINGS = \"local\" in "
-                                   "Secrets with llama-cpp-python installed.") from e
-                st.write(f"{e} Switching to the offline embedding model for this session (it loads in "
-                         "about a minute the first time).")
-                st.session_state["embed_local"] = True
-                emb = get_embedder()
-                results, used_r = embedding_steps(emb)
-            used = sorted({label(used_p), label(used_j), label(used_e), label(used_r)})
-            # The CV text stays in this session's memory only, for the advice tools (search_cv).
-            st.session_state.update(profile=profile, results=results, cv_text=cv_text,
-                                    models_used=", ".join(used), embedder_used=emb.name)
-            done = "Analyzed 1 job" if len(results) == 1 else f"Ranked {len(results)} jobs"
-            if skipped:
-                done += f" (skipped {len(skipped)} that isn't a job posting)"
-            status.update(label=done, state="complete", expanded=False)
-        except Exception as e:  # show a clear next step instead of a stack trace
-            status.update(label="Something went wrong", state="error")
-            st.error(str(e))
-            st.stop()
+                judged, used_e = with_fallback(
+                    model_chain(choice), lambda k: cached_judgment(cv_hash, ids, k, cv_text, jobs), notify)
+                relevant = {jid: x.relevant_roles for jid, x in judged.items()}
+                background = {jid: (x.field_match, x.work_match) for jid, x in judged.items()}
+                log.done("Judged your relevant experience")
+            except LLMError as e:  # the rest of the match is ready: score with total years instead
+                log.note(f"Couldn't judge your relevant experience ({e}) Experience fit uses "
+                         "all your years instead.")
 
-results = st.session_state.get("results")
-if not results:
-    ui.hero()
-else:
-    title, button = st.columns([5, 1], vertical_alignment="center")
-    title.markdown("## Your matches")
-    button.button("New search", on_click=new_search, width="stretch")
-    st.caption(f"Analyzed with {st.session_state['models_used']}; "
-               f"similarity by {st.session_state['embedder_used']}.")
-    ui.profile_panel(st.session_state["profile"])
-    for i, r in enumerate(results):
-        # results are sorted best first: the top 3 show their breakdown open
-        ui.match_card(r, i, handle_explain, st.session_state["profile"], show_breakdown=i < 3)
+        def embedding_steps(emb):
+            """Everything that needs embeddings, so it can run again on the local model."""
+            embed = search_embed(emb, lambda s: log.note(
+                f"Gemini's per-minute limit is reached. Waiting {s} seconds, then trying again…"))
+            roles = (relevant_roles_by_roles(profile.roles, jobs, embed, emb.role_threshold)
+                     if S.experience_fit == "roles" else relevant)
+            checks, used_r = None, used_j
+            if S.requirement_labels == "llm":
+                # Retrieval: the CV lines and knowledge-base families closest to each requirement
+                # go to the LLM, which labels it met / partial / missing with a quote.
+                log.start("Checking each requirement against your CV")
+                try:
+                    retrieved = retrieve_evidence(jobs, cv_text, embed, get_kb(emb.name, emb))
+                    checks, used_r = with_fallback(
+                        model_chain(choice),
+                        lambda k: cached_labels(cv_hash, ids, k, emb.name, jobs, retrieved, cv_text), notify)
+                    log.done("Checked each requirement against your CV")
+                except EmbeddingQuotaError:
+                    raise
+                except LLMError as e:  # the rest of the match is ready: match skills by name instead
+                    log.note(f"Couldn't check each requirement ({e}) Skills are matched by name and "
+                             "meaning instead.")
+            log.start("Scoring each job")
+            return score_jobs(profile, cv_text, jobs, emb, S, embed_fn=embed, relevant_roles=roles,
+                              background=background, requirement_checks=checks), used_r
+
+        emb = get_embedder()
+        steps_so_far = log.number
+        try:
+            results, used_r = embedding_steps(emb)
+        except EmbeddingQuotaError as e:
+            if not local_available():
+                raise LLMError(f"{e} Try again after it resets, or set EMBEDDINGS = \"local\" in "
+                               "Secrets with llama-cpp-python installed.") from e
+            log.note(f"{e} Switching to the offline embedding model for this session (it loads in "
+                     "about a minute the first time).")
+            st.session_state["embed_local"] = True
+            emb = get_embedder()
+            log.number = steps_so_far  # the same steps again, on the local model
+            results, used_r = embedding_steps(emb)
+        used = sorted({label(used_p), label(used_j), label(used_e), label(used_r)})
+        summary = "Analyzed 1 job" if len(results) == 1 else f"Ranked {len(results)} jobs"
+        if skipped:
+            summary += f" (skipped {len(skipped)} that isn't a job posting)"
+        st.session_state.update(results=results, models_used=", ".join(used), embedder_used=emb.name,
+                                run_summary=summary, notes=log.notes)
+    except RunStopped as e:
+        st.session_state.update(notice=(e.kind, str(e), e.retry), notes=log.notes)
+    except Exception as e:  # show a clear next step instead of a stack trace
+        st.session_state.update(notice=("error", str(e), True), notes=log.notes)
+    st.session_state["running"] = False
+    st.rerun()  # redraw the finished page; what the run finished is in session_state
+
+notice = st.session_state.get("notice")
+with results_slot.container():
+    if results := st.session_state.get("results"):
+        title, button = st.columns([5, 1], vertical_alignment="center")
+        title.markdown("## Your matches")
+        button.button("New search", on_click=new_search, width="stretch")
+        st.caption(f"{st.session_state['run_summary']}. Analyzed with {st.session_state['models_used']}; "
+                   f"similarity by {st.session_state['embedder_used']}.")
+        for note in st.session_state.get("notes", []):
+            st.caption(note)
+        ui.profile_panel(st.session_state["profile"])
+        for i, r in enumerate(results):
+            # results are sorted best first: the top 3 show their breakdown open
+            ui.match_card(r, i, handle_explain, st.session_state["profile"], show_breakdown=i < 3)
+    elif notice and notice[2]:
+        show_notice()
+        retry, new, _ = st.columns([1, 1, 3])
+        retry.button("Try again", type="primary", on_click=start_run, width="stretch")
+        new.button("New search", on_click=new_search, width="stretch")
+        show_progress()
+    else:
+        if notice:
+            show_notice()
+        ui.hero()
