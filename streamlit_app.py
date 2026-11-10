@@ -243,7 +243,6 @@ def new_search() -> None:
 
 # ---------- layout ----------
 ui.inject_css()
-ui.app_header()
 
 version = st.session_state.get("jobs_version", 0)
 notice = st.session_state.get("notice")
@@ -274,7 +273,9 @@ with st.sidebar:
 # Main page: a short intro on the landing page, then the inputs.
 if not st.session_state.get("results") and not st.session_state.get("running") \
         and not (notice and notice[2]):
-    ui.hero()
+    ui.hero()  # the banner carries the app name, so no header bar above it
+else:
+    ui.app_header()
 
 with st.container(key="inputs"):
     cv_col, jobs_col = st.columns(2, gap="medium")
