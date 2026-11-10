@@ -249,6 +249,7 @@ notice = st.session_state.get("notice")
 
 # Sidebar: the AI model and what the app can't do. The inputs live on the main page.
 with st.sidebar:
+    st.markdown('<p class="sea-side-brand">🌊 SEAblings · AI CV-to-job matcher</p>', unsafe_allow_html=True)
     with st.container(border=True, key="model_section"):
         st.subheader("AI model", anchor=False)
         st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
@@ -285,7 +286,7 @@ with st.container(key="inputs"):
         cv_paste = "" if upload is not None else st.text_area(
             "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
         if upload is None and not cv_paste.strip():
-            st.selectbox("No CV yet? Try a fictional sample CV", list(SAMPLE_CVS), key="sample_cv")
+            st.selectbox("No CV yet? Try a sample CV", list(SAMPLE_CVS), key="sample_cv")
     with jobs_col, st.container(border=True, key="jobs_section"):
         st.subheader("2. Jobs to match", anchor=False)
         mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
@@ -299,7 +300,7 @@ with st.container(key="inputs"):
             jd_text = st.text_area("Or paste a job description", height=150, key=f"jd_text_{version}",
                                    placeholder="Paste the full posting. Put the job title on the first line.")
             if not jd_files and not jd_text.strip():
-                st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} fictional sample postings.")
+                st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} sample postings.")
         else:
             query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst",
                                   key=f"query_{version}")
@@ -365,7 +366,7 @@ if st.session_state.get("running"):
         else:
             checks.append(("Role", looks_like_role(query), NOT_ROLE))
         stop_if_invalid(checks)
-        log.done("Read your CV and the fictional sample job postings" if sample_postings
+        log.done("Read your CV and the sample job postings" if sample_postings
                  else reading.replace("Reading", "Read"))
 
         log.start("Extracting your skills")

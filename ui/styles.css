@@ -31,11 +31,10 @@ h1, h2, h3, .sea-title { font-family: 'Bricolage Grotesque', system-ui, sans-ser
 .sea-banner {
   position: relative; overflow: hidden; border-radius: 18px; margin-bottom: 1.25rem;
   padding: 1.6rem 2rem 1.5rem; min-height: 210px;
-  background: linear-gradient(120deg, #0A2F38 0%, #0E5E6F 60%, #2B8294 100%);
+  background: var(--deep);
   box-shadow: 0 8px 24px rgba(14, 94, 111, .18);
 }
-.sea-banner-text { position: relative; z-index: 1; max-width: 58%; }
-.sea-kicker { color: #CFE3DE; font-size: .9rem; margin: 0 0 .35rem; letter-spacing: .01em; }
+.sea-banner-text { position: relative; z-index: 1; max-width: 70%; }
 .sea-banner h1 {
   color: white; font-size: 2.3rem; font-weight: 800; line-height: 1.1; margin: 0 0 .5rem;
   padding: 0; letter-spacing: -0.02em;
@@ -44,14 +43,17 @@ h1, h2, h3, .sea-title { font-family: 'Bricolage Grotesque', system-ui, sans-ser
 .sea-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
 .sea-pill {
   display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .85rem;
-  border-radius: 999px; font-size: .9rem; font-weight: 600; color: white;
+  border-radius: 999px; font-size: .9rem; color: #E4EFEC;
   background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .28);
 }
-.sea-pill[title] { cursor: help; }
+.sea-pill b { color: white; font-weight: 600; }
+.sea-pill-n {
+  display: inline-grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: 50%;
+  background: var(--glass); color: var(--deep); font-weight: 800; font-size: .8rem;
+}
 .sea-scene {
-  position: absolute; right: 0; bottom: 0; height: 100%; width: auto; max-width: 46%;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%);
-  mask-image: linear-gradient(to right, transparent, #000 22%);
+  position: absolute; right: 2.5rem; top: 50%; transform: translateY(-50%);
+  height: 72%; width: auto; max-width: 24%;
 }
 @media (max-width: 900px) {
   .sea-banner-text { max-width: 100%; }
@@ -60,8 +62,11 @@ h1, h2, h3, .sea-title { font-family: 'Bricolage Grotesque', system-ui, sans-ser
 }
 
 /* Input and sidebar sections: each a separate white card */
-.st-key-cv_section, .st-key-jobs_section, .st-key-model_section, .st-key-limits_section { background: white; }
-.st-key-limits_section li { font-size: .9rem; }
+.st-key-cv_section, .st-key-jobs_section, .st-key-model_section { background: white; }
+.st-key-limits_section { padding: 0 .25rem; }
+.st-key-limits_section h3 { font-size: 1.05rem; }
+.st-key-limits_section li { font-size: .88rem; color: #3E5459; margin-bottom: .15rem; }
+.sea-side-brand { font-size: .9rem; font-weight: 600; color: var(--deep); margin: 0 0 .25rem; }
 /* Only one CV per run, so no "add another file" button */
 .st-key-cv_section button[aria-label="Add files"] { display: none; }
 

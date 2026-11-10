@@ -24,18 +24,16 @@ def grey_out_inputs() -> None:
 def limitations(s) -> None:
     """What the app can't do, so users read the score with the right expectations."""
     search = ("Live search covers US job listings only, up to 10 jobs per search."
-              if s.job_source == "jsearch" else
-              "Job search uses fictional sample listings in this setup, not live openings.")
+              if s.job_source == "jsearch" else "Job search uses sample listings in this setup, not live openings.")
     items = [
-        "The score is based on your CV text only. A skill your CV doesn't mention counts as not found.",
-        "Scanned PDFs (images of text) can't be read. Upload a text-based PDF, DOCX or TXT.",
-        f"The AI reads up to {s.max_cv_chars:,} characters of your CV and {s.max_jd_chars:,} of each posting.",
+        "The score is based on your CV text only.",
+        "Scanned PDFs (images of text) can't be read.",
+        f"The model reads up to {s.max_cv_chars:,} characters of your CV and {s.max_jd_chars:,} of each posting.",
         search,
-        "The free Gemini models have daily limits. Auto switches to another model when one runs out; "
-        "the offline model is slower and less accurate.",
+        "If a Gemini model reaches its daily limit, we automatically switch to another model.",
         "AI advice can be wrong. Check it before you change your CV.",
     ]
-    with st.container(border=True, key="limits_section"):
+    with st.container(key="limits_section"):
         st.subheader("Limitations", anchor=False)
         st.markdown("\n".join(f"- {i}" for i in items))
 
@@ -53,21 +51,15 @@ def app_header() -> None:
     )
 
 
-FEATURES = [
-    ("📄", "CV and job match"),
-    ("✅", "Requirement-by-requirement check"),
-    ("📊", "Score out of 100", "50% skill coverage + 30% profile similarity + 20% experience fit. "
-                               "The same CV and job always get the same score."),
-    ("💬", "Advice for each role"),
+STEPS = [
+    ("1", "Upload your CV", "PDF, DOCX or TXT, or paste it"),
+    ("2", "Add the jobs you want", "paste postings or search live openings"),
+    ("3", "See how well you fit", "a score, your gaps and advice per role"),
 ]
 
-# Sea scene for the landing banner: moon, clouds, a CV and a job posting floating on the waves.
+# Landing banner drawing: a CV and a job posting, with a check for the match.
 SCENE = (
-    '<svg class="sea-scene" viewBox="0 0 420 210" aria-hidden="true">'
-    '<circle cx="372" cy="46" r="15" fill="#F4E3A1"/>'
-    '<ellipse cx="318" cy="52" rx="34" ry="7" fill="#fff" opacity=".18"/>'
-    '<ellipse cx="350" cy="62" rx="26" ry="6" fill="#fff" opacity=".14"/>'
-    '<ellipse cx="120" cy="40" rx="30" ry="6" fill="#fff" opacity=".14"/>'
+    '<svg class="sea-scene" viewBox="138 32 180 140" aria-hidden="true">'
     '<g transform="rotate(8 268 110)">'
     '<rect x="228" y="58" width="82" height="104" rx="8" fill="#CFE3DE" opacity=".55"/>'
     '<rect x="242" y="76" width="44" height="7" rx="3" fill="#0E5E6F" opacity=".5"/>'
@@ -85,31 +77,21 @@ SCENE = (
     '<circle cx="232" cy="56" r="17" fill="#D9A21B"/>'
     '<path d="M224 56l6 6 11-12" fill="none" stroke="#12262B" stroke-width="3.5" '
     'stroke-linecap="round" stroke-linejoin="round"/>'
-    '<path d="M0 150 Q35 136 70 150 T140 150 T210 150 T280 150 T350 150 T420 150 V210 H0Z" '
-    'fill="#fff" opacity=".12"/>'
-    '<path d="M0 166 Q35 152 70 166 T140 166 T210 166 T280 166 T350 166 T420 166 V210 H0Z" '
-    'fill="#CFE3DE" opacity=".22"/>'
-    '<path d="M0 184 Q35 172 70 184 T140 184 T210 184 T280 184 T350 184 T420 184 V210 H0Z" '
-    'fill="#CFE3DE" opacity=".35"/>'
-    '<g transform="translate(372 150)"><rect x="-7" y="-20" width="14" height="22" rx="4" fill="#D9A21B"/>'
-    '<rect x="-7" y="-12" width="14" height="5" fill="#F2F6F5"/>'
-    '<line x1="0" y1="-20" x2="0" y2="-30" stroke="#F2F6F5" stroke-width="2"/></g>'
     '</svg>'
 )
 
 
 def hero() -> None:
     """Landing banner: what the app does in one line, with the inputs right below it."""
-    pills = "".join(
-        f'<span class="sea-pill"{f" title={chr(34)}{escape(f[2])}{chr(34)}" if len(f) > 2 else ""}>'
-        f'<span aria-hidden="true">{f[0]}</span> {escape(f[1])}</span>' for f in FEATURES)
+    steps = "".join(
+        f'<span class="sea-pill"><span class="sea-pill-n">{n}</span>'
+        f'<span><b>{escape(t)}</b>: {escape(d)}</span></span>' for n, t, d in STEPS)
     st.markdown(
         f'<div class="sea-banner">{SCENE}<div class="sea-banner-text">'
-        '<p class="sea-kicker">🌊 SEAblings · AI CV-to-job matcher</p>'
         '<h1>See how well your CV fits the job</h1>'
         '<p class="sea-lede">Upload your CV and the jobs you\'re considering. See how well you match '
         'each one, which requirements you meet, and what to work on next.</p>'
-        f'<div class="sea-pills">{pills}</div></div></div>',
+        f'<div class="sea-pills">{steps}</div></div></div>',
         unsafe_allow_html=True,
     )
 
