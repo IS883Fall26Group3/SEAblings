@@ -295,6 +295,16 @@ if not st.session_state.get("results") and not st.session_state.get("running") \
 else:
     ui.app_header()
 
+# Why the last run stopped, right under the header so it's seen first.
+if notice:
+    show_notice()
+    if notice[2]:  # something failed, so trying again can help
+        retry, new, _ = st.columns([1, 1, 3])
+        retry.button("Try again", type="primary", on_click=start_run, width="stretch")
+        new.button("New search", on_click=new_search, width="stretch")
+if input_error := st.session_state.get("input_error"):
+    st.error(input_error)
+
 with st.container(key="inputs"):
     cv_col, jobs_col = st.columns(2, gap="medium")
     with cv_col, st.container(border=True, key="cv_section"):
@@ -329,8 +339,6 @@ with st.container(key="inputs"):
                 st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
     st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
               type="primary", width="stretch", on_click=start_run)
-    if input_error := st.session_state.get("input_error"):
-        st.error(input_error)
     st.caption("Your CV is processed in memory and not saved by this app. With a Gemini model, "
                "its text is sent to Google's Gemini API for analysis.")
 
@@ -517,10 +525,4 @@ with results_slot.container(), st.container(key="results"):
                     handle_explain(pending_result)
             st.rerun()
     elif notice and notice[2]:
-        show_notice()
-        retry, new, _ = st.columns([1, 1, 3])
-        retry.button("Try again", type="primary", on_click=start_run, width="stretch")
-        new.button("New search", on_click=new_search, width="stretch")
-        show_progress()
-    elif notice:
-        show_notice()
+        show_progress()  # what finished before the failure (the notice is at the top)

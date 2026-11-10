@@ -74,7 +74,10 @@ overloaded. The offline model is the last resort: no quota, but slower and less 
 `llama-cpp-python`, the same setup as the course's `llama_demo`. It downloads from Hugging Face the
 first time it's used and again after each app restart. Output is constrained to the expected JSON
 schema, which keeps a small model's extraction well-formed. It reads each job separately, so fewer
-jobs means faster results.
+jobs means faster results. Running out of memory would stop the whole app on Streamlit Cloud, so before
+loading it the app checks the server's free memory (`core/memory.py`, Linux only). Below 1,500 MB
+(`LOCAL_LLM_MIN_FREE_MB`; 200 MB for the offline embedding model, `LOCAL_EMBED_MIN_FREE_MB`) it isn't
+loaded, and the user is asked to pick a Gemini model or try again later.
 
 Embeddings use Gemini (`gemini-embedding-001`) whenever `GEMINI_API_KEY` is set, and a small local
 model (bge-small, GGUF, via `llama-cpp-python`) otherwise; set `EMBEDDINGS = "local"` to force the

@@ -10,6 +10,7 @@ import numpy as np
 from google.genai import types
 
 from .llm.base import LLMError
+from .memory import not_enough_memory
 from .llm.gemini import call_gemini, make_client
 
 log = logging.getLogger("seablings.llm")
@@ -120,14 +121,22 @@ class LocalEmbedder(Embedder):
     # so a higher limit wouldn't add anything; a lower one would need the bands re-measured.
     max_chars = 3_000
 
-    def __init__(self, repo_id: str, filename: str, n_threads: int = 2):
+    def __init__(self, repo_id: str, filename: str, n_threads: int = 2, min_free_mb: int = 0):
         try:
             from llama_cpp import Llama
         except ImportError as e:
             raise LLMError("Local embeddings need llama-cpp-python installed.") from e
+        if (free := not_enough_memory(min_free_mb)) is not None:
+            log.warning("not loading %s: %d MB free, needs %d MB", repo_id, free, min_free_mb)
+            raise LLMError(f"The offline similarity model needs about {min_free_mb:,} MB of free memory, "
+                           f"but this server has {free:,} MB free right now, so it wasn't loaded. "
+                           "Try again later.")
         start = time.time()
-        self.llm = Llama.from_pretrained(repo_id=repo_id, filename=filename, embedding=True,
-                                         n_ctx=512, n_batch=512, n_threads=n_threads, verbose=False)
+        try:
+            self.llm = Llama.from_pretrained(repo_id=repo_id, filename=filename, embedding=True,
+                                             n_ctx=512, n_batch=512, n_threads=n_threads, verbose=False)
+        except Exception as e:  # download failed, or llama.cpp couldn't set the model up
+            raise LLMError(f"Couldn't load the offline similarity model {repo_id} ({filename}): {e}") from e
         self.lock = threading.Lock()
         self.name = f"Local: {repo_id.split('/')[-1].removesuffix('-gguf')}"
         log.info("loaded %s in %.1fs", repo_id, time.time() - start)

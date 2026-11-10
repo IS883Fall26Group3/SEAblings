@@ -5,6 +5,7 @@ import logging
 import threading
 import time
 
+from ..memory import not_enough_memory
 from .base import LLMError, LLMProvider
 
 log = logging.getLogger("seablings.llm")
@@ -14,11 +15,16 @@ class LlamaCppProvider(LLMProvider):
     batch_jobs = False  # small models are more reliable one job at a time
 
     def __init__(self, repo_id: str, filename: str, n_ctx: int = 8192, n_threads: int = 2,
-                 max_tokens: int = 512, max_cv_chars: int = 8000):
+                 max_tokens: int = 512, max_cv_chars: int = 8000, min_free_mb: int = 0):
         try:
             from llama_cpp import Llama
         except ImportError as e:
             raise LLMError("Offline mode isn't installed (needs llama-cpp-python).") from e
+        if (free := not_enough_memory(min_free_mb)) is not None:
+            log.warning("not loading %s: %d MB free, needs %d MB", repo_id, free, min_free_mb)
+            raise LLMError(f"The offline model needs about {min_free_mb:,} MB of free memory, but this "
+                           f"server has {free:,} MB free right now, so it wasn't loaded. Pick a Gemini "
+                           "model, or try again later.")
         start = time.time()
         try:
             self.llm = Llama.from_pretrained(repo_id=repo_id, filename=filename, n_ctx=n_ctx,

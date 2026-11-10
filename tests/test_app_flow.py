@@ -106,7 +106,7 @@ def test_search_mode_ranks_the_jobs_it_finds(app):
     assert "Ranked" in text(app.caption)
 
 
-def test_empty_role_asks_for_one_under_the_button(app):
+def test_empty_role_asks_for_one_at_the_top(app):
     app.radio[0].set_value("Search live jobs").run()
     click(app, "Find matching jobs")
     assert app.main.error[0].value == "Enter the role you're looking for."

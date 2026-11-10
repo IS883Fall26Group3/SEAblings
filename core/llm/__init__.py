@@ -37,7 +37,7 @@ def build_provider(key: str, s: Settings) -> LLMProvider:
     if kind == "local":
         from .local_llama import LlamaCppProvider
         return LlamaCppProvider(name, s.local_llm_file, s.local_n_ctx, s.local_threads,
-                                max_cv_chars=s.local_max_cv_chars)
+                                max_cv_chars=s.local_max_cv_chars, min_free_mb=s.local_llm_min_free_mb)
     raise ValueError(f"Unknown model key: {key}")
 
 
@@ -47,7 +47,8 @@ def build_embedder(s: Settings):
     use_gemini = s.embeddings == "gemini" or (s.embeddings == "auto" and bool(s.gemini_api_key))
     if use_gemini:
         return GeminiEmbedder(s.gemini_api_key, s.gemini_embed_model, s.llm_timeout_s)
-    return LocalEmbedder(s.local_embed_repo, s.local_embed_file, s.local_threads)
+    return LocalEmbedder(s.local_embed_repo, s.local_embed_file, s.local_threads,
+                         min_free_mb=s.local_embed_min_free_mb)
 
 
 def with_fallback(chain: list[str], fn: Callable[[str], R],
