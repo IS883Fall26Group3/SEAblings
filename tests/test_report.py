@@ -25,7 +25,7 @@ def test_report_has_the_profile_jobs_breakdown_and_advice():
     text = pdf_text(data)
     for expected in ("Data Analyst", "72/100", "Skill coverage: 50%", "Profile similarity: 40%",
                      "Experience fit: 100%", "Missing", "Met", "Advice for this role", "What to do",
-                     "Learn Python -> pandas", "1. Build a demo", "Analyst with 8 years' experience - retail"):
+                     "Learn Python -> pandas", "check important decisions with a career advisor", "1. Build a demo", "Analyst with 8 years' experience - retail"):
         assert expected in text, expected
 
 

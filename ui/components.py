@@ -30,6 +30,11 @@ def grey_out_results() -> None:
                 unsafe_allow_html=True)
 
 
+# Shown in the sidebar, under the results and in the PDF report (ui/report.py).
+DISCLAIMER = ("This app is a study project, not professional career, recruiting or legal advice. "
+              "Use the results as one input, and check important decisions with a career advisor.")
+
+
 def limitations(s) -> None:
     """What the app can't do, so users read the score with the right expectations."""
     search = (f"Live search covers US job listings only, {s.jsearch_num_jobs} jobs per search."
@@ -42,6 +47,7 @@ def limitations(s) -> None:
         search,
         "If a Gemini model reaches its daily limit, we automatically switch to another model.",
         "AI advice can be wrong. Check it before you change your CV.",
+        "This is not professional career advice.",
     ]
     with st.container(key="limits_section"):
         st.subheader("Limitations", anchor=False)

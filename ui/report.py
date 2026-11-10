@@ -10,6 +10,7 @@ from fpdf import FPDF, FontFace
 
 from core import score_notes as notes
 from core.schemas import CandidateProfile, MatchResult
+from ui.components import DISCLAIMER
 
 DEEP = (14, 94, 111)    # var(--deep) in ui/styles.css
 GREY = (90, 100, 105)
@@ -153,5 +154,5 @@ def build_pdf(results: list[MatchResult], profile: CandidateProfile, *, summary:
         pdf.gap(5)
 
     pdf.text("The score is based on your CV text only. AI advice can be wrong: check it before you "
-             "change your CV.", size=8, color=GREY)
+             "change your CV. " + DISCLAIMER, size=8, color=GREY)
     return bytes(pdf.output())
