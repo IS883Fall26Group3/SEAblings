@@ -144,7 +144,8 @@ core/                   business logic, no Streamlit imports (testable)
   samples.py            the fictional sample CVs offered on the main page
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
-data/sample/            fictional CVs (5) and job postings (10) for dev, tests and the demo
+data/sample/            fictional CVs (5) and job postings (10) for dev, tests and the demo;
+                        scanned_cv.pdf is the sample CV as a scan, to show the scanned-PDF message
 data/skill_aliases.csv  skill name lookup table (built by scripts/build_skill_aliases.py)
 data/skill_kb.csv       skills knowledge base, the retrieval corpus (built by scripts/build_skill_kb.py)
 data/skill_kb_vectors/  its embeddings, saved per embedding model

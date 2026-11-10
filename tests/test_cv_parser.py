@@ -67,3 +67,9 @@ def test_blank_pdf_without_images_is_not_called_scanned():
     with pytest.raises(ValueError, match="Couldn't read enough text") as e:
         extract_text(make_pdf(with_image=False), "cv.pdf")
     assert not isinstance(e.value, ScannedDocumentError)
+
+
+def test_demo_scanned_cv_is_recognized_as_scanned():
+    scanned = SAMPLE.with_name("scanned_cv.pdf")
+    with pytest.raises(ScannedDocumentError, match="This CV looks like a scanned PDF"):
+        extract_text(scanned.read_bytes(), scanned.name)
