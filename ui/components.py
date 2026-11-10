@@ -32,7 +32,7 @@ def grey_out_results() -> None:
 
 def limitations(s) -> None:
     """What the app can't do, so users read the score with the right expectations."""
-    search = ("Live search covers US job listings only, up to 10 jobs per search."
+    search = (f"Live search covers US job listings only, {s.jsearch_num_jobs} jobs per search."
               if s.job_source == "jsearch" else "Job search uses sample listings in this setup, not live openings.")
     items = [
         "The score is based on your CV text only.",

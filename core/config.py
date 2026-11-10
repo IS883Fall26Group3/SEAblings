@@ -50,7 +50,8 @@ class Settings:
     # Llama 3.2 1B: ~0.8 GB weights + ~0.25 GB context at 8,192 tokens + working space.
     local_llm_min_free_mb: int = 1_500
     local_embed_min_free_mb: int = 200  # bge-small: ~35 MB weights
-    default_num_jobs: int = 10
+    default_num_jobs: int = 10        # sample listings (no quota)
+    jsearch_num_jobs: int = 3         # live search: fewer jobs, fewer tokens per search
     # Scoring weights (must sum to 1.0). Tune with your evaluation set.
     w_skill_coverage: float = 0.5
     w_semantic: float = 0.3

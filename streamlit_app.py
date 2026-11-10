@@ -341,7 +341,7 @@ with st.container(key="inputs"):
         mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
                         help="Use job descriptions you already have, or search current openings online.")
         query = location = ""
-        limit = S.default_num_jobs
+        limit = S.jsearch_num_jobs if S.job_source == "jsearch" else S.default_num_jobs
         jd_files, jd_text = [], ""
         if mode == MODE_JD:
             jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
@@ -356,7 +356,6 @@ with st.container(key="inputs"):
             location = st.text_input("Location (optional)", placeholder="e.g. Boston, MA or Remote",
                                      key=f"location_{version}",
                                      help="If left empty, we search for this role across the US.")
-            limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs, key=f"limit_{version}")
             if S.job_source == "sample":
                 st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
     st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
