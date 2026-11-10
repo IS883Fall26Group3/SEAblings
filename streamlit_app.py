@@ -309,6 +309,7 @@ with st.sidebar:
                         st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
                     except Exception as e:
                         st.error(f"{label(k)}: {e}")
+    st.caption(f"⚠️ {ui.DISCLAIMER}")
     ui.limitations(S)
 
 # Main page: a short intro on the landing page, then the inputs.
@@ -560,7 +561,6 @@ with results_slot.container(), st.container(key="results"):
                                       show_breakdown=i < 3, pending=r.job.id == pending)
             if card_slot is not None:
                 slot, pending_result = card_slot, r
-        st.caption(f"⚠️ {ui.DISCLAIMER}")
         if pending:
             st.session_state.pop("advice_pending")
             if pending_result is not None:

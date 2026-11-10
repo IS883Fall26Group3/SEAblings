@@ -30,9 +30,10 @@ def grey_out_results() -> None:
                 unsafe_allow_html=True)
 
 
-# Shown in the sidebar, under the results and in the PDF report (ui/report.py).
+# Shown under the AI model box in the sidebar, under the results and in the PDF report (ui/report.py).
 DISCLAIMER = ("This app is a study project, not professional career, recruiting or legal advice. "
               "Use the results as one input, and check important decisions with a career advisor.")
+CARD_DISCLAIMER = "Not professional career advice. Check important decisions with a career advisor."
 
 
 def limitations(s) -> None:
@@ -47,7 +48,6 @@ def limitations(s) -> None:
         search,
         "If a Gemini model reaches its daily limit, we automatically switch to another model.",
         "AI advice can be wrong. Check it before you change your CV.",
-        "This is not professional career advice.",
     ]
     with st.container(key="limits_section"):
         st.subheader("Limitations", anchor=False)
@@ -247,4 +247,5 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
             advice.button("Get advice for this role", key=f"explain_{idx}", on_click=on_explain, args=(job.id,))
         if job.url:
             posting.link_button("Open job posting", job.url)
+        st.caption(f"⚠️ {CARD_DISCLAIMER}")
     return slot
