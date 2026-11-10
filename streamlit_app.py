@@ -249,7 +249,8 @@ notice = st.session_state.get("notice")
 
 # Sidebar: the AI model and what the app can't do. The inputs live on the main page.
 with st.sidebar:
-    st.markdown('<p class="sea-side-brand">🌊 SEAblings · AI CV-to-job matcher</p>', unsafe_allow_html=True)
+    st.markdown('<p class="sea-side-brand">🌊 SEAblings · AI CV-to-job matcher</p>'
+                '<p class="sea-side-team">IS883 project (Team 3)</p>', unsafe_allow_html=True)
     with st.container(border=True, key="model_section"):
         st.subheader("AI model", anchor=False)
         st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",

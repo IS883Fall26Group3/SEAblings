@@ -66,7 +66,8 @@ h1, h2, h3, .sea-title { font-family: 'Bricolage Grotesque', system-ui, sans-ser
 .st-key-limits_section { padding: 0 .25rem; }
 .st-key-limits_section h3 { font-size: 1.05rem; }
 .st-key-limits_section li { font-size: .88rem; color: #3E5459; margin-bottom: .15rem; }
-.sea-side-brand { font-size: .9rem; font-weight: 600; color: var(--deep); margin: 0 0 .25rem; }
+.sea-side-brand { font-size: .9rem; font-weight: 600; color: var(--deep); margin: 0; }
+.sea-side-team { font-size: .8rem; color: #5A6E73; margin: 0 0 .25rem; }
 /* Only one CV per run, so no "add another file" button */
 .st-key-cv_section button[aria-label="Add files"] { display: none; }
 
