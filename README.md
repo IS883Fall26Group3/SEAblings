@@ -249,7 +249,8 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
       as met when the CV has the same skill under a standard name ("MS Excel" = "Excel") or a very
       close one by embeddings.
     - **Profile similarity:** compares the whole CV with the whole posting by embeddings, then scales
-      that down when the LLM rates the field and kind of work as only related or different.
+      that down when the LLM rates the field and kind of work as only related or different
+      (shown on the card as Partial or Missing).
     - **Experience fit:** the LLM picks the CV roles relevant to the job; Python adds up their years
       from the dates.
     - **Why:** postings and CVs share generic wording ("management", "operations", Excel) across
