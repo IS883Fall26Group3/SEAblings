@@ -107,6 +107,13 @@ def apply_checks(required: list[str], checks: list[RequirementCheck], matched: l
     return met, partial, missing, close
 
 
+def unlabeled_skills(job: Job, checks: list[RequirementCheck]) -> list[str]:
+    """The job's required skills that have no label, so the backup skill matcher decides them."""
+    req = job.requirements
+    labeled = {_norm(c.requirement) for c in checks}
+    return [x for x in (req.required_skills if req else []) if x.strip() and _norm(x) not in labeled]
+
+
 def similarity_band(embedder, mode: str) -> tuple[float, float]:
     """Each PROFILE_SIMILARITY mode has its own cosine range; 'document' uses cos_low/cos_high."""
     return getattr(embedder, "sim_bands", {}).get(mode, (embedder.cos_low, embedder.cos_high))
@@ -133,19 +140,20 @@ def score_jobs(profile: CandidateProfile, cv_text: str, jobs: list[Job], embedde
     sims = profile_cosines(s.profile_similarity, profile, cv_text, jobs, embed,
                            getattr(embedder, "max_chars", 7_000))
 
-    all_skills = list(profile.skills)
-    for j in jobs:
-        if j.requirements:
-            all_skills += j.requirements.required_skills
-    unique = list(dict.fromkeys(_norm(x) for x in all_skills if x.strip()))
+    # The backup skill matcher only decides requirements the labels skipped, so only those (and the
+    # CV skills) are embedded. When every requirement is labeled, this embedding call is skipped.
+    cv_skills = [x for x in profile.skills if x.strip()]
+    unlabeled = {j.id: unlabeled_skills(j, (requirement_checks or {}).get(j.id) or []) for j in jobs}
+    todo = [x for skills in unlabeled.values() for x in skills]
+    unique = list(dict.fromkeys(_norm(x) for x in (cv_skills + todo) if x.strip())) if todo else []
     vec = dict(zip(unique, embed(unique))) if unique else {}
 
     results = []
     for job, (cos, mode) in zip(jobs, sims):
         req = job.requirements
         required = [x for x in (req.required_skills if req else []) if x.strip()]
-        cv_skills = [x for x in profile.skills if x.strip()]
-        matched, missing, close = match_skills_detail(cv_skills, required, vec, embedder.skill_threshold)
+        matched, missing, close = match_skills_detail(cv_skills, unlabeled[job.id], vec,
+                                                      embedder.skill_threshold)
         checks = (requirement_checks or {}).get(job.id) or []
         partial = []
         if checks:

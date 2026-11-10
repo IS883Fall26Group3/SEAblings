@@ -155,3 +155,29 @@ def test_label_only_variant_asks_for_no_reason_and_still_verifies_quotes():
     assert "1. reason:" in reason_first and "1. reason:" not in label_only
     assert '-> reason "' not in label_only and "Don't explain your choice." in label_only
     assert '"Managed inventory for three warehouses"' in label_only
+
+
+def test_backup_matcher_embeds_nothing_when_every_requirement_is_labeled():
+    """Embed C (the backup skill matcher) only embeds requirements the labels skipped."""
+    profile = CandidateProfile(summary="analyst", years_experience=3, seniority="mid",
+                               skills=["SQL"], job_titles=[])
+    job = job_with(["SQL", "Python"])
+    calls = []
+
+    def counting_embed(texts):
+        calls.append(list(texts))
+        return fake_embed(texts)
+
+    all_labeled = {job.id: [RequirementCheck(requirement="sql", status="met"),
+                            RequirementCheck(requirement="python", status="missing")]}
+    score_jobs(profile, CV, [job], FakeEmbedder(), get_settings(), embed_fn=counting_embed,
+               requirement_checks=all_labeled)
+    assert not any("python" in c for c in calls)  # only the profile similarity call ran
+
+    calls.clear()
+    one_skipped = {job.id: [RequirementCheck(requirement="sql", status="met")]}
+    r = score_jobs(profile, CV, [job], FakeEmbedder(), get_settings(), embed_fn=counting_embed,
+                   requirement_checks=one_skipped)[0]
+    skill_call = next(c for c in calls if "python" in c)
+    assert "sql" in skill_call            # the CV skill, to compare against
+    assert r.missing_skills == ["Python"]  # decided by the backup matcher
