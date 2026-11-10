@@ -42,6 +42,7 @@ from core.validation import (english_only, injection_phrase, instructions_found,
                              language_of, looks_like_job_description, looks_like_resume,
                              looks_like_role)
 from ui import components as ui  # noqa: E402
+from ui.report import build_pdf  # noqa: E402
 
 S = get_settings()
 OPTIONS = model_options(S)
@@ -530,8 +531,19 @@ if st.session_state.get("running"):
 
 with results_slot.container(), st.container(key="results"):
     if results := st.session_state.get("results"):
-        title, button = st.columns([5, 1], vertical_alignment="center")
+        title, download, button = st.columns([4, 1.4, 1], vertical_alignment="center")
         title.markdown("## Your matches")
+        try:
+            report = build_pdf(results, st.session_state["profile"], summary=st.session_state["run_summary"],
+                               models=st.session_state["models_used"],
+                               embedder=st.session_state["embedder_used"],
+                               explanations=st.session_state.get("explanations"))
+            download.download_button("Download report (PDF)", report, file_name="seablings_match_report.pdf",
+                                     mime="application/pdf", width="stretch", on_click="ignore",
+                                     help="Your matches and score breakdowns, plus the advice for any role "
+                                          "you asked for.")
+        except Exception:  # the report is extra: never let it break the results page
+            download.caption("The PDF report isn't available for this search.")
         button.button("New search", on_click=new_search, width="stretch")
         st.caption(f"{st.session_state['run_summary']}. Analyzed with {st.session_state['models_used']}; "
                    f"similarity by {st.session_state['embedder_used']}.")
