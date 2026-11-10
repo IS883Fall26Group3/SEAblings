@@ -1,6 +1,7 @@
 """SEAblings: CV-to-job matching. This file wires UI to core/ and holds no business logic."""
 import hashlib
 import time
+from contextlib import ExitStack
 import logging
 import os
 from dataclasses import replace
@@ -30,7 +31,7 @@ from core.job_sources import get_job_source, jobs_from_descriptions, name_from_r
 from core.input_checks import cv_problem, posting_problem  # noqa: E402
 from core.knowledge import SkillKB  # noqa: E402
 from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
-                      local_available, model_options, with_fallback)
+                      local_available, model_options, retry_notices, with_fallback)
 from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.requirements import retrieve_evidence  # noqa: E402
@@ -127,6 +128,10 @@ def label(key: str) -> str:
     return OPTIONS.get(key, key)
 
 
+def toast_retry(message: str) -> None:
+    st.toast(message, icon="🔁")
+
+
 def request_advice(job_id: str) -> None:
     """Button callback: only marks the job. The advice is written after every card is drawn, so the
     whole page can be locked while it runs (see the results section)."""
@@ -214,6 +219,11 @@ class StageLog:
         self.current = ""
         self.draw()
 
+    def retry(self, text: str) -> None:
+        """Shown while the step waits, but not kept in the notes under the results."""
+        self.lines.append(f"🔁 {text}")
+        self.draw()
+
     def note(self, text: str) -> None:
         self.notes.append(text)
         self.lines.append(f"⚠️ {text}")
@@ -290,7 +300,7 @@ with st.sidebar:
                 for k in model_chain(st.session_state["model_choice"]):
                     try:
                         t = time.time()
-                        with st.spinner(f"Testing {label(k)}..."):
+                        with st.spinner(f"Testing {label(k)}..."), retry_notices(toast_retry):
                             get_provider(k).generate_text("Reply with OK.", what="testing the connection")
                         st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
                     except Exception as e:
@@ -371,6 +381,8 @@ if st.session_state.get("running"):
     def notify(k, e):
         remember_if_spent(k, e)
         log.note(f"{label(k)} unavailable: {e} Trying the next model.")
+    retries = ExitStack()  # until the run ends, retry messages appear in the steps box
+    retries.enter_context(retry_notices(log.retry))
     try:
         # Defense 1: simple rules on what the user gave, before any model call, so a wrong input
         # costs no quota. The sample CVs and postings are ours, so they are trusted.
@@ -510,6 +522,7 @@ if st.session_state.get("running"):
         st.session_state.update(notice=(e.kind, str(e), e.retry), notes=log.notes)
     except Exception as e:  # show a clear next step instead of a stack trace
         st.session_state.update(notice=("error", str(e), True), notes=log.notes)
+    retries.close()
     st.session_state["running"] = False
     st.rerun()  # redraw the finished page; what the run finished is in session_state
 
@@ -536,7 +549,8 @@ with results_slot.container(), st.container(key="results"):
         if pending:
             st.session_state.pop("advice_pending")
             if pending_result is not None:
-                with slot.container(), st.spinner("Writing advice for this role..."):
+                with slot.container(), st.spinner("Writing advice for this role..."), \
+                        retry_notices(toast_retry):
                     handle_explain(pending_result)
             st.rerun()
     elif notice and notice[2]:

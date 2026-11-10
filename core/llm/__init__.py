@@ -4,7 +4,7 @@ import logging
 from typing import Callable, TypeVar
 
 from ..config import Settings
-from .base import LLMError, LLMProvider
+from .base import LLMError, LLMProvider, retry_notices
 from .gemini import GeminiProvider
 
 log = logging.getLogger("seablings.llm")
@@ -70,4 +70,4 @@ def with_fallback(chain: list[str], fn: Callable[[str], R],
 
 
 __all__ = ["AUTO", "LLMError", "LLMProvider", "auto_chain", "build_embedder", "build_provider",
-           "local_available", "model_options", "with_fallback"]
+           "local_available", "model_options", "retry_notices", "with_fallback"]

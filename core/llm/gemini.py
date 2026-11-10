@@ -6,7 +6,7 @@ import time
 from google import genai
 from google.genai import errors, types
 
-from .base import LLMError, LLMProvider
+from .base import LLMError, LLMProvider, announce_retry
 
 log = logging.getLogger("seablings.llm")
 
@@ -44,6 +44,9 @@ def _explain(e: Exception, model: str) -> LLMError:
     return LLMError(f"Gemini request failed ({code}): {msg[:300]}")
 
 
+RETRY_WAIT_S = 5
+
+
 def call_gemini(fn, what: str, model: str):
     """Run one Gemini call; retry once on a brief overload; never wait on a daily quota."""
     for attempt in range(2):
@@ -57,7 +60,10 @@ def call_gemini(fn, what: str, model: str):
             transient = getattr(e, "code", None) == 503 or (
                 getattr(e, "code", None) == 429 and "PerDay" not in str(e))
             if transient and attempt == 0:
-                time.sleep(5)
+                why = ("is busy right now" if getattr(e, "code", None) == 503
+                       else "hit its per-minute limit")
+                announce_retry(f"{model} {why}. Trying again in {RETRY_WAIT_S} seconds…")
+                time.sleep(RETRY_WAIT_S)
                 continue
             raise _explain(e, model) from e
         except Exception as e:  # timeouts and network errors
