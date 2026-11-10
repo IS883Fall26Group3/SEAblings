@@ -12,7 +12,10 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
    **Check the inputs** (`core/validation.py`): simple rules, no LLM call, so a wrong input costs no quota.
    A CV scores points for section headings, date ranges, contact details and a degree; a job description for
    job-posting phrases; each must score enough and read more like its own type than the other. Each input
-   shows its result on its own line. The sample CVs and postings skip this check. This is the first of two
+   shows its result on its own line. Before that, each input must be in English: mostly Thai, Chinese, Japanese,
+   Korean, Arabic, Cyrillic or other non-Latin letters, or mostly common Spanish, French, German, Portuguese,
+   Indonesian or Vietnamese words, gets "This CV looks like it's in Thai. The app only works with English"
+   (`language_of` in `core/validation.py`). The sample CVs and postings skip this check. This is the first of two
    checks: the LLM's check in step 2 and step 4 still runs on what passes.
 2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON,
    and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
@@ -128,7 +131,14 @@ Set `JOB_SOURCE = "sample"` during development to save quota. Each teammate shou
 ## Deploy (Streamlit Community Cloud)
 
 Main file: `streamlit_app.py`. Paste the contents of your `secrets.toml` into App settings > Secrets.
-No model weights are stored or downloaded, which keeps the app within free-tier memory limits.
+
+**Reboot after every secrets change.** Open the app, then **Manage app** (bottom right) > **⋮** >
+**Reboot app**. Saving secrets doesn't reliably reach models and job sources that are already loaded
+and cached, so without a reboot the app can keep using the old keys or settings. The same goes for
+running locally: stop Streamlit (Ctrl+C) and start it again after editing `.streamlit/secrets.toml`.
+
+No model weights are stored in the repo. The offline models download from Hugging Face on first
+use, and only load when there's enough free memory (see **Offline model** above).
 
 ## Project structure
 

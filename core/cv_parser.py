@@ -15,11 +15,17 @@ class ScannedDocumentError(ValueError):
 
 def _page_text(page) -> str:
     # Layout mode keeps each printed line on its own line; the default can run a whole page
-    # into a few long lines (some macOS PDFs), which hides headings and bullets.
-    try:
-        return page.extract_text(extraction_mode="layout") or ""
-    except Exception:  # an unusual page (no content stream, odd fonts): treat as no text
-        return ""
+    # into a few long lines (some macOS PDFs), which hides headings and bullets. But layout mode
+    # finds no text at all in some PDFs (Canva exports with Thai fonts), so fall back to the default.
+    text = ""
+    for mode in ("layout", "plain"):
+        try:
+            text = page.extract_text(extraction_mode=mode) or ""
+        except Exception:  # an unusual page (no content stream, odd fonts): try the other mode
+            continue
+        if len(text.split()) >= 5:
+            break
+    return text
 
 
 def _has_images(reader: PdfReader) -> bool:
@@ -61,6 +67,7 @@ def extract_text(file_bytes: bytes, filename: str, max_chars: int = 15_000,
 def clean_text(text: str, max_chars: int = 15_000, what: str = "CV",
                hint: str = "Paste the full text.") -> str:
     """Tidy whitespace and check there's enough text to analyze (used for files and pasted text)."""
+    text = text.replace("\x00", "")  # some PDFs put NUL characters between letters
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
     if len(text) < MIN_CHARS:

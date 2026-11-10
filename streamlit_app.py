@@ -37,7 +37,8 @@ from core.requirements import retrieve_evidence  # noqa: E402
 from core.samples import SAMPLE_CVS, sample_cv, sample_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience, label_requirements)
-from core.validation import looks_like_job_description, looks_like_resume, looks_like_role  # noqa: E402
+from core.validation import (english_only, language_of, looks_like_job_description,  # noqa: E402
+                             looks_like_resume, looks_like_role)
 from ui import components as ui  # noqa: E402
 
 S = get_settings()
@@ -171,6 +172,14 @@ def stop_if_invalid(checks: list[tuple[str, bool, str]]) -> None:
         return
     raise RunStopped("warning", "  \n".join(f"**{name}:** {OK if ok else problem}"
                                             for name, ok, problem in checks))
+
+
+def check(name: str, what: str, text: str, looks_right, problem: str) -> tuple[str, bool, str]:
+    """One line of the input checks: English first (the prompts and skill lists are English-only),
+    then whether it reads like the right kind of input."""
+    if language := language_of(text):
+        return name, False, english_only(what, language)
+    return name, looks_right(text), problem
 
 
 def read_input(read) -> tuple[str, str]:
@@ -378,7 +387,12 @@ if st.session_state.get("running"):
         cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
         st.session_state["cv_text"] = cv_text  # in memory only; the advice tools (search_cv) need it
         user_cv = upload is not None or bool(cv_paste.strip())
-        checks = [("CV", not cv_error and (not user_cv or looks_like_resume(cv_text)), cv_error or NOT_CV)]
+        if cv_error:
+            checks = [("CV", False, cv_error)]
+        elif user_cv:
+            checks = [check("CV", "CV", cv_text, looks_like_resume, NOT_CV)]
+        else:
+            checks = [("CV", True, "")]  # a sample CV is ours, so it's trusted
         if sample_postings:
             raw_jobs = sample_jobs()
         elif mode == MODE_JD:
@@ -392,11 +406,12 @@ if st.session_state.get("running"):
                     items.append((f.name, text))
             if jd_text.strip():
                 items.append(("Pasted job description", jd_text))
-            checks += [(name if name == "Pasted job description" else f"Job description ({name})",
-                        looks_like_job_description(text), NOT_JD) for name, text in items]
+            checks += [check(name if name == "Pasted job description" else f"Job description ({name})",
+                             "job description", text, looks_like_job_description, NOT_JD)
+                       for name, text in items]
             raw_jobs = jobs_from_descriptions([(n.rsplit(".", 1)[0], t) for n, t in items])
         else:
-            checks.append(("Role", looks_like_role(query), NOT_ROLE))
+            checks.append(check("Role", "role", query, looks_like_role, NOT_ROLE))
         stop_if_invalid(checks)
         log.done("Read your CV and the sample job postings" if sample_postings
                  else reading.replace("Reading", "Read"))

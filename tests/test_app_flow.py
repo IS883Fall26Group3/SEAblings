@@ -208,3 +208,12 @@ def test_get_advice_runs_after_the_cards_are_drawn(app):
     written = app.session_state["explanations"] if "explanations" in app.session_state else {}
     failed = app.session_state["explain_errors"] if "explain_errors" in app.session_state else {}
     assert job_id in written or job_id in failed
+
+
+def test_non_english_cv_says_english_only_before_any_model_call(app):
+    app.text_area[0].set_value("นักวิเคราะห์ข้อมูล มีประสบการณ์ห้าปีในบริษัทพลังงาน ทำงานกับ SQL และ Excel " * 6)
+    analyze(app)
+    assert app.warning[0].value.startswith("**CV:** This CV looks like it's in Thai. The app only works "
+                                           "with English")
+    assert "profile" not in app.session_state
+    assert not any(b.label == "Try again" for b in app.button)

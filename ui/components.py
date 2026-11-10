@@ -36,6 +36,7 @@ def limitations(s) -> None:
               if s.job_source == "jsearch" else "Job search uses sample listings in this setup, not live openings.")
     items = [
         "The score is based on your CV text only.",
+        "Only English CVs, job descriptions and roles are supported.",
         "Scanned PDFs (images of text) can't be read.",
         f"The model reads up to {s.max_cv_chars:,} characters of your CV and {s.max_jd_chars:,} of each posting.",
         search,
