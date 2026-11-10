@@ -191,7 +191,8 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
             st.warning(error)
         advice, posting = st.columns(2)
         if not explanation and advice.button("Get advice for this role", key=f"explain_{idx}"):
-            on_explain(r)
+            with advice, st.spinner("Writing advice for this role..."):
+                on_explain(r)
             st.rerun()
         if job.url:
             posting.link_button("Open job posting", job.url)
