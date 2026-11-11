@@ -80,7 +80,7 @@ def role_line(r: Role) -> str:
 # so their quotes are hidden. Set to True to list them again.
 SHOW_MET_QUOTES = False
 MAX_QUOTE_WORDS = 15
-MAX_ITEMS = 3  # per group: partly met, and may not be a real gap
+MAX_ITEMS = 3  # per group
 
 
 def _short(quote: str) -> str:
@@ -97,19 +97,16 @@ def _group(title: str, items: list[str]) -> list[Group]:
 
 def evidence_groups(r: MatchResult) -> list[Group]:
     """From the per-requirement labels: why each partly met skill counts half (the LLM's reason and
-    the CV quote), then each missing skill a CV line still names (it may not be a real gap), then the
-    missing skills no line names. Quotes are shown only when found word for word in the CV."""
+    the CV quote), then the missing skills. Quotes are shown only when found word for word in the CV."""
     checks = r.requirement_checks
     met = [f'{c.requirement}: "{_short(c.quote)}"'
            for c in checks if SHOW_MET_QUOTES and c.status == "met" and c.quote_verified]
     partly = [f"{c.requirement}: " + " ".join(
                   x for x in (c.reason, f'Your CV: "{_short(c.quote)}"' if c.quote_verified else "") if x)
               for c in checks if c.status == "partial" and (c.reason or c.quote_verified)]
-    missing = [c for c in checks if c.status == "missing"]
-    maybe = [f'{c.requirement}: your CV says "{_short(c.mention)}"' for c in missing if c.mention]
-    absent = [c.requirement for c in missing if not c.mention]
-    return (_group("Met:", met) + _group("Partly met:", partly) + _group("May not be a real gap:", maybe)
-            + ([Group("Not found in your CV:", [", ".join(absent)], inline=True)] if absent else []))
+    missing = [c.requirement for c in checks if c.status == "missing"]
+    return (_group("Met:", met) + _group("Partly met:", partly)
+            + ([Group("Not found in your CV:", [", ".join(missing)], inline=True)] if missing else []))
 
 
 def skill_note(r: MatchResult, profile: CandidateProfile) -> Note:
