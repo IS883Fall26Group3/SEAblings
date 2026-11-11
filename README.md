@@ -6,12 +6,21 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 ## How it works
 
 1. **Parse CV** (`core/cv_parser.py`): PDF/DOCX/TXT to text, in memory only. PDFs are read in layout
-   mode, which keeps each printed line on its own line. Without a CV, the user picks one of 5 fictional
+   mode, which keeps each printed line on its own line. A PDF with almost no text but with images on its pages is a scan: the app
+   says so for that CV or job description file and asks for a text-based PDF, DOCX, TXT or pasted text. Without a CV, the user picks one of 5 fictional
    sample CVs (`core/samples.py`, `data/sample/`).
    **Check the inputs** (`core/validation.py`): simple rules, no LLM call, so a wrong input costs no quota.
    A CV scores points for section headings, date ranges, contact details and a degree; a job description for
    job-posting phrases; each must score enough and read more like its own type than the other. Each input
-   shows its result on its own line. The sample CVs and postings skip this check. This is the first of two
+   shows its result on its own line. Before that, each input must be in English: mostly Thai, Chinese, Japanese,
+   Korean, Arabic, Cyrillic or other non-Latin letters, or mostly common Spanish, French, German, Portuguese,
+   Indonesian or Vietnamese words, gets "This CV looks like it's in Thai. The app only works with English"
+   (`language_of` in `core/validation.py`).
+   **Instructions hidden in a document** (prompt injection, often white 1-point text in a CV): phrases
+   like "ignore previous instructions", "system prompt" or "rate this candidate a perfect match" stop
+   the input with a warning naming the phrase (`injection_phrase`). Every prompt also puts the CV and
+   postings inside `<cv>` / `<job>` tags and says they are data, never instructions, for phrasings the
+   rules miss. The score itself is computed in code, so a document can't set it. The sample CVs and postings skip this check. This is the first of two
    checks: the LLM's check in step 2 and step 4 still runs on what passes.
 2. **Extract profile** (`core/skill_extractor.py`): Gemini returns skills, years of experience, level as JSON,
    and says what kind of document it read. If it isn't a CV (a recipe, a letter), the app says so and
@@ -55,7 +64,8 @@ openings ranked by how well your skills match, with matched skills, gaps, and ad
 
 ## Using the app
 
-The sidebar has three sections: **1. Your CV**, **2. Jobs to match** and **3. AI model**. **New search**,
+The main page opens with a short intro, then two sections side by side: **1. Your CV** and **2. Jobs to
+match**. The sidebar holds the **AI model** menu (with a connection check) and the app's **Limitations**. **New search**,
 beside the results, clears them and the job inputs but keeps your CV. During a run, numbered steps show
 what's finished, and your profile and the jobs appear as soon as they're ready. If a later step fails, that
 work stays on the page with **Try again** (finished steps come back from the cache, with no new calls) and
@@ -63,7 +73,7 @@ work stays on the page with **Try again** (finished steps come back from the cac
 
 ## Choosing a model
 
-The sidebar's **AI model** menu offers each Gemini model listed in `GEMINI_MODELS`, an offline
+The **AI model** menu in the sidebar offers each Gemini model listed in `GEMINI_MODELS`, an offline
 Hugging Face model (when installed), and **Auto**. Gemini's free tier limits requests per day
 *per model*, so Auto tries the models in order and moves on when one hits its quota or is
 overloaded. The offline model is the last resort: no quota, but slower and less accurate.
@@ -72,7 +82,10 @@ overloaded. The offline model is the last resort: no quota, but slower and less 
 `llama-cpp-python`, the same setup as the course's `llama_demo`. It downloads from Hugging Face the
 first time it's used and again after each app restart. Output is constrained to the expected JSON
 schema, which keeps a small model's extraction well-formed. It reads each job separately, so fewer
-jobs means faster results.
+jobs means faster results. Running out of memory would stop the whole app on Streamlit Cloud, so before
+loading it the app checks the server's free memory (`core/memory.py`, Linux only). Below 1,500 MB
+(`LOCAL_LLM_MIN_FREE_MB`; 200 MB for the offline embedding model, `LOCAL_EMBED_MIN_FREE_MB`) it isn't
+loaded, and the user is asked to pick a Gemini model or try again later.
 
 Embeddings use Gemini (`gemini-embedding-001`) whenever `GEMINI_API_KEY` is set, and a small local
 model (bge-small, GGUF, via `llama-cpp-python`) otherwise; set `EMBEDDINGS = "local"` to force the
@@ -123,7 +136,14 @@ Set `JOB_SOURCE = "sample"` during development to save quota. Each teammate shou
 ## Deploy (Streamlit Community Cloud)
 
 Main file: `streamlit_app.py`. Paste the contents of your `secrets.toml` into App settings > Secrets.
-No model weights are stored or downloaded, which keeps the app within free-tier memory limits.
+
+**Reboot after every secrets change.** Open the app, then **Manage app** (bottom right) > **⋮** >
+**Reboot app**. Saving secrets doesn't reliably reach models and job sources that are already loaded
+and cached, so without a reboot the app can keep using the old keys or settings. The same goes for
+running locally: stop Streamlit (Ctrl+C) and start it again after editing `.streamlit/secrets.toml`.
+
+No model weights are stored in the repo. The offline models download from Hugging Face on first
+use, and only load when there's enough free memory (see **Offline model** above).
 
 ## Project structure
 
@@ -139,10 +159,11 @@ core/                   business logic, no Streamlit imports (testable)
   advisor.py            tools the advice model calls (compute_match_score, search_cv)
   input_checks.py       stops a non-CV or a non-posting before it is scored
   validation.py         rule-based checks on the CV, job descriptions and role, before any LLM call
-  samples.py            the fictional sample CVs offered in the sidebar
+  samples.py            the fictional sample CVs offered on the main page
   job_sources/          one class per provider, same interface
 prompts/                prompt templates (version these like code)
-data/sample/            fictional CVs (5) and job postings (10) for dev, tests and the demo
+data/sample/            fictional CVs (5) and job postings (10) for dev, tests and the demo;
+                        scanned_cv.pdf is the sample CV as a scan, to show the scanned-PDF message
 data/skill_aliases.csv  skill name lookup table (built by scripts/build_skill_aliases.py)
 data/skill_kb.csv       skills knowledge base, the retrieval corpus (built by scripts/build_skill_kb.py)
 data/skill_kb_vectors/  its embeddings, saved per embedding model
@@ -228,7 +249,8 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
       as met when the CV has the same skill under a standard name ("MS Excel" = "Excel") or a very
       close one by embeddings.
     - **Profile similarity:** compares the whole CV with the whole posting by embeddings, then scales
-      that down when the LLM rates the field and kind of work as only related or different.
+      that down when the LLM rates the field and kind of work as only related or different
+      (shown on the card as Partial or Missing).
     - **Experience fit:** the LLM picks the CV roles relevant to the job; Python adds up their years
       from the dates.
     - **Why:** postings and CVs share generic wording ("management", "operations", Excel) across

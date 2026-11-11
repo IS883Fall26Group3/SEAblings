@@ -14,11 +14,44 @@ def inject_css() -> None:
     st.markdown(f"<style>{CSS.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 
-def grey_out_sidebar() -> None:
+def grey_out_inputs() -> None:
     """Clicking an input would stop the run partway. Uses CSS because disabled=True drops text
     typed just before the click (Streamlit 1.66)."""
-    st.markdown('<style>[data-testid="stSidebar"] { opacity: .5; pointer-events: none; }</style>',
+    st.markdown('<style>.st-key-inputs, [data-testid="stSidebar"] '
+                '{ opacity: .5; pointer-events: none; }</style>', unsafe_allow_html=True)
+
+
+def grey_out_results() -> None:
+    """While advice is written, a click anywhere would stop it partway, so lock the whole page."""
+    st.markdown('<style>.st-key-inputs, [data-testid="stSidebar"] { opacity: .5; pointer-events: none; }'
+                '.st-key-results { pointer-events: none; }'
+                '.st-key-results [data-testid="stButton"], .st-key-results [data-testid="stLinkButton"], '
+                '.st-key-results [data-testid="stExpander"] { opacity: .5; }</style>',
                 unsafe_allow_html=True)
+
+
+# Shown under the AI model box in the sidebar, under the results and in the PDF report (ui/report.py).
+DISCLAIMER = ("This app is a study project, not professional career, recruiting or legal advice. "
+              "Use the results as one input, and check important decisions with a career advisor.")
+CARD_DISCLAIMER = "Not professional career advice. Check important decisions with a career advisor."
+
+
+def limitations(s) -> None:
+    """What the app can't do, so users read the score with the right expectations."""
+    search = (f"Live search covers US job listings only, {s.jsearch_num_jobs} jobs per search."
+              if s.job_source == "jsearch" else "Job search uses sample listings in this setup, not live openings.")
+    items = [
+        "The score is based on your CV text only.",
+        "Only English CVs, job descriptions and roles are supported.",
+        "Scanned PDFs (images of text) can't be read.",
+        f"The model reads up to {s.max_cv_chars:,} characters of your CV and {s.max_jd_chars:,} of each posting.",
+        search,
+        "If a Gemini model reaches its daily limit, we automatically switch to another model.",
+        "AI advice can be wrong. Check it before you change your CV.",
+    ]
+    with st.container(key="limits_section"):
+        st.subheader("Limitations", anchor=False)
+        st.markdown("\n".join(f"- {i}" for i in items))
 
 
 def app_header() -> None:
@@ -35,29 +68,46 @@ def app_header() -> None:
 
 
 STEPS = [
-    ("1", "Upload your CV", "PDF, DOCX or TXT. AI reads your skills, experience and level."),
-    ("2", "Add the jobs you want", "Upload or paste job descriptions, or search live "
-                                   "openings for a role and location."),
-    ("3", "See how well you fit", "A match score for each job, the skills you have, "
-                                  "the gaps to close, and advice for the role."),
+    ("1", "Upload your CV", "PDF, DOCX or TXT, or paste it"),
+    ("2", "Add the jobs you want", "paste postings or search live openings"),
+    ("3", "See how well you fit", "a score, your gaps and advice per role"),
 ]
+
+# Landing banner drawing: a CV and a job posting, with a check for the match.
+SCENE = (
+    '<svg class="sea-scene" viewBox="138 32 180 140" aria-hidden="true">'
+    '<g transform="rotate(8 268 110)">'
+    '<rect x="228" y="58" width="82" height="104" rx="8" fill="#CFE3DE" opacity=".55"/>'
+    '<rect x="242" y="76" width="44" height="7" rx="3" fill="#0E5E6F" opacity=".5"/>'
+    '<rect x="242" y="92" width="54" height="5" rx="2.5" fill="#0E5E6F" opacity=".35"/>'
+    '<rect x="242" y="104" width="48" height="5" rx="2.5" fill="#0E5E6F" opacity=".35"/>'
+    '<rect x="242" y="116" width="52" height="5" rx="2.5" fill="#0E5E6F" opacity=".35"/></g>'
+    '<g transform="rotate(-6 190 110)">'
+    '<rect x="146" y="50" width="88" height="112" rx="8" fill="#F2F6F5" opacity=".9"/>'
+    '<circle cx="168" cy="74" r="10" fill="#0E5E6F" opacity=".55"/>'
+    '<rect x="184" y="68" width="36" height="6" rx="3" fill="#0E5E6F" opacity=".6"/>'
+    '<rect x="184" y="79" width="26" height="4" rx="2" fill="#0E5E6F" opacity=".35"/>'
+    '<rect x="160" y="96" width="60" height="5" rx="2.5" fill="#0E5E6F" opacity=".3"/>'
+    '<rect x="160" y="108" width="52" height="5" rx="2.5" fill="#0E5E6F" opacity=".3"/>'
+    '<rect x="160" y="120" width="58" height="5" rx="2.5" fill="#0E5E6F" opacity=".3"/></g>'
+    '<circle cx="232" cy="56" r="17" fill="#D9A21B"/>'
+    '<path d="M224 56l6 6 11-12" fill="none" stroke="#12262B" stroke-width="3.5" '
+    'stroke-linecap="round" stroke-linejoin="round"/>'
+    '</svg>'
+)
 
 
 def hero() -> None:
+    """Landing banner: what the app does in one line, with the inputs right below it."""
     steps = "".join(
-        f'<div class="sea-step"><span class="sea-step-n">{n}</span>'
-        f'<p class="sea-step-t">{t}</p><p class="sea-step-d">{d}</p></div>'
-        for n, t, d in STEPS)
+        f'<span class="sea-pill"><span class="sea-pill-n">{n}</span>'
+        f'<span><b>{escape(t)}</b>: {escape(d)}</span></span>' for n, t, d in STEPS)
     st.markdown(
-        f"""<div class="sea-hero">
-        <h1>See how well your CV fits the job</h1>
-        <p>Stop guessing whether you're a fit. Upload your CV and the job descriptions you're
-        considering, and see how well you match each one, plus what to learn next.</p>
-        </div>
-        <div class="sea-steps">{steps}</div>
-        <div class="sea-score-note"><b>How the score works:</b>
-        50% skill coverage + 30% profile similarity + 20% experience fit.
-        The same CV and job always get the same score.</div>""",
+        f'<div class="sea-banner">{SCENE}<div class="sea-banner-text">'
+        '<h1>See how well your CV fits the job</h1>'
+        '<p class="sea-lede">Upload your CV and the jobs you\'re considering. See how well you match '
+        'each one, which requirements you meet, and what to work on next.</p>'
+        f'<div class="sea-pills">{steps}</div></div></div>',
         unsafe_allow_html=True,
     )
 
@@ -158,7 +208,9 @@ def tool_label(call) -> str:
 
 
 def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
-               show_breakdown: bool = True) -> None:
+               show_breakdown: bool = True, pending: bool = False):
+    """One job's card. on_explain(job_id) runs when its advice button is clicked. When pending (advice
+    asked for, not written yet), returns an empty slot under the card for the app to show a spinner in."""
     job = r.job
     with st.container(border=True):
         left, right = st.columns([1, 6], vertical_alignment="center")
@@ -190,8 +242,10 @@ def match_card(r: MatchResult, idx: int, on_explain, profile: CandidateProfile,
         elif error:
             st.warning(error)
         advice, posting = st.columns(2)
-        if not explanation and advice.button("Get advice for this role", key=f"explain_{idx}"):
-            on_explain(r)
-            st.rerun()
+        slot = advice.empty() if pending else None
+        if not explanation and not pending:
+            advice.button("Get advice for this role", key=f"explain_{idx}", on_click=on_explain, args=(job.id,))
         if job.url:
             posting.link_button("Open job posting", job.url)
+        st.caption(f"⚠️ {CARD_DISCLAIMER}")
+    return slot

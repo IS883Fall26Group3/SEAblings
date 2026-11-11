@@ -76,8 +76,10 @@ def text(elements):
     return " ".join(e.value for e in elements)
 
 
-def test_sidebar_has_three_numbered_sections(app):
-    assert [h.value for h in app.sidebar.subheader] == ["1. Your CV", "2. Jobs to match", "3. AI model"]
+def test_inputs_on_the_main_page_and_model_and_limitations_in_the_sidebar(app):
+    assert [h.value for h in app.main.subheader] == ["1. Your CV", "2. Jobs to match"]
+    assert [h.value for h in app.sidebar.subheader] == ["AI model", "Limitations"]
+    assert "See how well your CV fits the job" in text(app.markdown)
 
 
 def test_full_run_shows_ranked_results_and_unlocks_the_page(app):
@@ -104,10 +106,10 @@ def test_search_mode_ranks_the_jobs_it_finds(app):
     assert "Ranked" in text(app.caption)
 
 
-def test_empty_role_asks_for_one_in_the_sidebar(app):
+def test_empty_role_asks_for_one_at_the_top(app):
     app.radio[0].set_value("Search live jobs").run()
     click(app, "Find matching jobs")
-    assert app.sidebar.error[0].value == "Enter the role you're looking for."
+    assert app.main.error[0].value == "Enter the role you're looking for."
     assert not app.session_state["running"]
 
 
@@ -196,3 +198,30 @@ def test_new_search_keeps_the_cv_and_empties_the_job_inputs(app):
     assert "See how well your CV fits the job" in text(app.markdown)
     assert app.text_area[0].value == CV
     assert app.text_area[1].value == ""
+
+
+def test_get_advice_runs_after_the_cards_are_drawn(app):
+    analyze(app)
+    click(app, "Get advice for this role")
+    job_id = app.session_state["results"][0].job.id
+    assert "advice_pending" not in app.session_state  # cleared once the advice is written
+    written = app.session_state["explanations"] if "explanations" in app.session_state else {}
+    failed = app.session_state["explain_errors"] if "explain_errors" in app.session_state else {}
+    assert job_id in written or job_id in failed
+
+
+def test_non_english_cv_says_english_only_before_any_model_call(app):
+    app.text_area[0].set_value("นักวิเคราะห์ข้อมูล มีประสบการณ์ห้าปีในบริษัทพลังงาน ทำงานกับ SQL และ Excel " * 6)
+    analyze(app)
+    assert app.warning[0].value.startswith("**CV:** This CV looks like it's in Thai. The app only works "
+                                           "with English")
+    assert "profile" not in app.session_state
+    assert not any(b.label == "Try again" for b in app.button)
+
+
+def test_injected_cv_is_stopped_before_any_model_call(app):
+    app.text_area[0].set_value((Path(APP).parent / "eval/data/awkward/injection_cv.txt").read_text())
+    analyze(app)
+    assert app.warning[0].value.startswith('**CV:** This CV contains text that reads like instructions '
+                                           'to the AI ("Ignore all previous instructions")')
+    assert "profile" not in app.session_state

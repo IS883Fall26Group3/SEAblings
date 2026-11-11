@@ -29,14 +29,16 @@ import env  # noqa: F401  (GEMINI_API_KEY from .streamlit/secrets.toml)
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 from core.config import get_settings  # noqa: E402
-from core.llm import build_provider, with_fallback  # noqa: E402
+from core.llm import build_provider  # noqa: E402
 from core.schemas import Job  # noqa: E402
 from core.skill_extractor import extract_requirements  # noqa: E402
 
 LABELS = HERE / "labels"
 PEOPLE = LABELS / "requirements"  # one answer-key file per labeler
 JOBS = HERE / "data" / "jobs" / "jobs_jsearch.json"
-MODELS = ["gemini:gemini-flash-lite-latest", "gemini:gemini-flash-latest"]
+# One fixed model, no fallback: every compared run reads what this model froze, so a failure stops
+# with an error instead of quietly switching models (course rule: comparisons use one fixed model).
+MODEL = "gemini:gemini-flash-lite-latest"
 
 # (pair id, CV, job id, kind, labeler, second labeler). Earlier fit rating in the comment.
 # Nobody labels their own CV. The second labeler labels the same pair separately, to measure how
@@ -88,9 +90,8 @@ def freeze_requirements(jobs: dict[str, Job]) -> dict:
         return json.loads(path.read_text(encoding="utf-8"))
     s = get_settings()
     wanted = [jobs[jid].model_copy() for jid in dict.fromkeys(p[2] for p in PAIRS)]
-    done, model = with_fallback(MODELS, lambda k: extract_requirements(
-        build_provider(k, s), wanted, s.max_jd_chars, s.local_max_jd_chars),
-        lambda k, e: print(f"{k} failed: {e}"))
+    done, model = extract_requirements(build_provider(MODEL, s), wanted, s.max_jd_chars,
+                                       s.local_max_jd_chars), MODEL
     frozen = {"model": model, "jobs": {}}
     for j in done:
         if j.requirements is None:

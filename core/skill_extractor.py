@@ -3,10 +3,18 @@ import json
 from pathlib import Path
 from typing import Callable
 
-from .llm.base import LLMProvider
+from .llm.base import LLMProvider, fence
 from .requirements import Retrieved, job_block, to_checks
 from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBatch, RelevantExperience,
-                      RelevantExperienceBatch, RequirementCheck, RequirementLabelBatch, ToolCall)
+                      RelevantExperienceBatch, RequirementCheck, RequirementLabel, RequirementLabelBatch,
+                      RequirementLabelOnlyBatch, ToolCall)
+
+# Labeling prompt versions: (prompt file, answer format). The app uses "reason"; "label_only" exists
+# for the chain-of-thought comparison in eval/requirement_accuracy.py --compare.
+LABEL_VARIANTS = {
+    "reason": ("label_requirements.md", RequirementLabelBatch),
+    "label_only": ("label_requirements_label_only.md", RequirementLabelOnlyBatch),
+}
 
 PROMPTS = Path(__file__).resolve().parent.parent / "prompts"
 
@@ -18,7 +26,7 @@ def _prompt(name: str, **kwargs) -> str:
 def extract_profile(llm: LLMProvider, cv_text: str) -> CandidateProfile:
     if llm.max_cv_chars:
         cv_text = cv_text[:llm.max_cv_chars]
-    return llm.generate_json(_prompt("extract_profile.md", cv_text=cv_text), CandidateProfile,
+    return llm.generate_json(_prompt("extract_profile.md", cv_text=fence("cv", cv_text)), CandidateProfile,
                              what="extracting skills from your CV")
 
 
@@ -29,7 +37,7 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
     if llm.batch_jobs:
         # One call for all jobs: saves free-tier quota versus one call per job.
         blocks = "\n\n".join(
-            f"### job_id: {j.id}\nTitle: {j.title}\n{j.description[:max_jd_chars]}" for j in jobs)
+            f"### job_id: {j.id}\nTitle: {j.title}\n{fence('job', j.description[:max_jd_chars])}" for j in jobs)
         batch = llm.generate_json(_prompt("extract_requirements.md", jobs=blocks),
                                   JobRequirementsBatch, what="reading the job descriptions")
         by_id = {r.job_id: r for r in batch.items}
@@ -40,7 +48,7 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
         for j in jobs:
             req = llm.generate_json(
                 _prompt("extract_requirements_single.md", title=j.title,
-                        description=j.description[:local_max_jd_chars]),
+                        description=fence("job", j.description[:local_max_jd_chars])),
                 JobRequirements, what=f"reading the posting for {j.title}")
             j.requirements = req.model_copy(update={"job_id": j.id})
     return jobs
@@ -61,12 +69,12 @@ def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_cha
         return (f"### job_id: {j.id}\nTitle: {j.title}\n"
                 f"Required skills: {', '.join(req.required_skills) if req else 'not extracted'}\n"
                 f"Minimum years: {req.min_years_experience if req and req.min_years_experience else 'not stated'}\n"
-                f"{j.description[:max_jd_chars]}")
+                f"{fence('job', j.description[:max_jd_chars])}")
 
     groups = [jobs] if llm.batch_jobs else [[j] for j in jobs]
     out = {}
     for group in groups:
-        batch = llm.generate_json(_prompt("judge_experience.md", cv_text=cv_text,
+        batch = llm.generate_json(_prompt("judge_experience.md", cv_text=fence("cv", cv_text),
                                           jobs="\n\n".join(block(j) for j in group)),
                                   RelevantExperienceBatch, what="judging your relevant experience")
         items = batch.items
@@ -77,10 +85,12 @@ def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_cha
 
 
 def label_requirements(llm: LLMProvider, jobs: list[Job], retrieved: dict[str, list[Retrieved]],
-                       cv_text: str) -> dict[str, list[RequirementCheck]]:
+                       cv_text: str, variant: str = "reason") -> dict[str, list[RequirementCheck]]:
     """Label each required skill met / partial / missing from the CV lines and knowledge-base
     families retrieved for it (core/requirements.py), then verify every quote against the CV.
-    One call for all jobs on Gemini; one per job on small local models."""
+    One call for all jobs on Gemini; one per job on small local models. variant picks the prompt
+    (LABEL_VARIANTS): "reason" writes a short reason before each label (chain of thought)."""
+    prompt_file, answer = LABEL_VARIANTS[variant]
     todo = [j for j in jobs if retrieved.get(j.id)]
     groups = [todo] if llm.batch_jobs else [[j] for j in todo]
     by_id = {j.id: j for j in todo}
@@ -89,15 +99,17 @@ def label_requirements(llm: LLMProvider, jobs: list[Job], retrieved: dict[str, l
         if not group:
             continue
         batch = llm.generate_json(
-            _prompt("label_requirements.md", jobs="\n\n".join(job_block(j, retrieved[j.id]) for j in group)),
+            _prompt(prompt_file, jobs="\n\n".join(job_block(j, retrieved[j.id]) for j in group)),
             # temperature 0: the same CV and posting should get the same labels as often as possible
-            RequirementLabelBatch, what="checking each requirement against your CV", temperature=0.0)
+            answer, what="checking each requirement against your CV", temperature=0.0)
         items = batch.items
         if len(group) == 1 and len(items) == 1:
             items[0].job_id = group[0].id  # small models sometimes garble the id of a single job
         for item in items:
             if item.job_id in by_id:
-                out[item.job_id] = to_checks(retrieved[item.job_id], item.labels, cv_text)
+                labels = [x if isinstance(x, RequirementLabel) else RequirementLabel(**x.model_dump())
+                          for x in item.labels]  # label-only answers have no reason
+                out[item.job_id] = to_checks(retrieved[item.job_id], labels, cv_text)
     return out
 
 

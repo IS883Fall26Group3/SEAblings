@@ -124,17 +124,17 @@ def test_rating_that_lowers_the_score_is_explained():
     n = similarity_note(r, PROFILE)
     assert n.label == "No clear match"
     assert n.text == ("The wording of your CV and this posting overlaps (36%), but the field and type of "
-                      "work are different, so this counts as 0%.")
-    assert n.table[0] == ("Field", "Retail technology", "Technology consulting", "Different")
+                      "work are rated Missing, so this counts as 0%.")
+    assert n.table[0] == ("Field", "Retail technology", "Technology consulting", "Missing")
     assert n.table[2] == ("Level", "Senior", "Entry", "")  # level isn't rated
 
 
 def test_rating_that_keeps_the_score_uses_the_usual_sentence():
     r = result(semantic_similarity=1, embedding_similarity=1, field_match="same", work_match="same")
     assert similarity_note(r, PROFILE).text == "Your CV and this posting describe very similar work."
-    assert similarity_note(r, PROFILE).table[0][3] == "Closely related"  # "same" is shown this way
+    assert similarity_note(r, PROFILE).table[0][3] == "Met"  # "same" is shown this way
     mixed = result(semantic_similarity=0.75, embedding_similarity=1, field_match="same", work_match="related")
-    assert "but the type of work is only related, so this counts as 75%." in similarity_note(mixed, PROFILE).text
+    assert "but the type of work is rated Partial, so this counts as 75%." in similarity_note(mixed, PROFILE).text
 
 
 # ---------- experience fit ----------

@@ -23,9 +23,9 @@ SIMILARITY_LEVELS = [  # (lowest percent, label, sentence)
 ]
 
 
-# The judge's rating as shown in the Match column. "same" reads as "100%" beside a lower profile
-# similarity (the similarity also depends on wording), so it is shown as "Closely related".
-MATCH_LABELS = {"same": "Closely related", "related": "Related", "different": "Different"}
+# The judge's rating (same / related / different) as shown in the Match column, in the same words as
+# the requirement labels (met / partial / missing) so the card uses one scale throughout.
+MATCH_LABELS = {"same": "Met", "related": "Partial", "different": "Missing"}
 
 
 @dataclass
@@ -172,7 +172,7 @@ def _cap(s: str) -> str:
 
 def _adjustment(r: MatchResult, pct: int) -> str:
     """Why the rating lowered the embedding score, e.g. 'The wording overlaps (36%), but the field
-    and type of work are different, so this counts as 0%.' Empty when nothing was lowered."""
+    and type of work are rated Missing, so this counts as 0%.' Empty when nothing was lowered."""
     before = _pct(r.embedding_similarity)
     if before <= pct:
         return ""
@@ -185,7 +185,7 @@ def _adjustment(r: MatchResult, pct: int) -> str:
         if names:
             what = " and ".join(names)
             verb = "are" if len(names) > 1 else "is"
-            parts.append(f"the {what} {verb} {'different' if match == 'different' else 'only related'}")
+            parts.append(f"the {what} {verb} rated {MATCH_LABELS[match]}")
     return (f"The wording of your CV and this posting overlaps ({before}%), but {' and '.join(parts)}, "
             f"so this counts as {pct}%.")
 

@@ -104,3 +104,47 @@ def test_gemini_sends_schema_and_falls_back_on_400():
     assert out == '{"a": 1}'
     assert configs[0].response_json_schema == {"type": "object"}
     assert configs[1].response_json_schema is None
+
+
+# ---------- retries are announced, so a slow step says why ----------
+def test_malformed_json_retry_is_announced():
+    from pydantic import BaseModel
+    from core.llm.base import LLMProvider, retry_notices
+
+    class Reply(BaseModel):
+        ok: bool
+
+    class Flaky(LLMProvider):
+        name = "flaky-model"
+        replies = iter(["not json", '{"ok": true}'])
+
+        def complete(self, prompt, *, json_mode, temperature, what, schema=None):
+            return next(self.replies)
+
+    heard = []
+    with retry_notices(heard.append):
+        assert Flaky().generate_json("p", Reply, what="reading the job requirements").ok
+    assert heard == ["flaky-model sent an answer the app couldn't read while reading the job "
+                     "requirements. Asking again…"]
+
+
+def test_overload_retry_is_announced_and_nothing_heard_outside(monkeypatch):
+    from google.genai import errors
+    from core.llm import gemini
+    from core.llm.base import retry_notices
+
+    monkeypatch.setattr(gemini.time, "sleep", lambda s: None)
+
+    def busy_once():
+        calls.append(1)
+        if len(calls) == 1:
+            raise errors.APIError(503, {"error": {"message": "overloaded", "status": "UNAVAILABLE"}})
+        return "done"
+
+    heard, calls = [], []
+    with retry_notices(heard.append):
+        assert gemini.call_gemini(busy_once, "extracting skills", "flash-lite") == "done"
+    assert heard == ["flash-lite is busy right now. Trying again in 5 seconds…"]
+    calls.clear()
+    gemini.call_gemini(busy_once, "extracting skills", "flash-lite")  # no listener: no error
+    assert len(heard) == 1

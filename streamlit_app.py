@@ -1,6 +1,7 @@
 """SEAblings: CV-to-job matching. This file wires UI to core/ and holds no business logic."""
 import hashlib
 import time
+from contextlib import ExitStack
 import logging
 import os
 from dataclasses import replace
@@ -30,15 +31,18 @@ from core.job_sources import get_job_source, jobs_from_descriptions, name_from_r
 from core.input_checks import cv_problem, posting_problem  # noqa: E402
 from core.knowledge import SkillKB  # noqa: E402
 from core.llm import (AUTO, LLMError, auto_chain, build_embedder, build_provider,  # noqa: E402
-                      local_available, model_options, with_fallback)
+                      local_available, model_options, retry_notices, with_fallback)
 from core.experience import relevant_roles_by_roles  # noqa: E402
 from core.matcher import score_jobs  # noqa: E402
 from core.requirements import retrieve_evidence  # noqa: E402
 from core.samples import SAMPLE_CVS, sample_cv, sample_jobs  # noqa: E402
 from core.skill_extractor import (explain_match, extract_profile, extract_requirements,  # noqa: E402
                                   judge_experience, label_requirements)
-from core.validation import looks_like_job_description, looks_like_resume, looks_like_role  # noqa: E402
+from core.validation import (english_only, injection_phrase, instructions_found,  # noqa: E402
+                             language_of, looks_like_job_description, looks_like_resume,
+                             looks_like_role)
 from ui import components as ui  # noqa: E402
+from ui.report import build_pdf  # noqa: E402
 
 S = get_settings()
 OPTIONS = model_options(S)
@@ -126,6 +130,16 @@ def label(key: str) -> str:
     return OPTIONS.get(key, key)
 
 
+def toast_retry(message: str) -> None:
+    st.toast(message, icon="🔁")
+
+
+def request_advice(job_id: str) -> None:
+    """Button callback: only marks the job. The advice is written after every card is drawn, so the
+    whole page can be locked while it runs (see the results section)."""
+    st.session_state["advice_pending"] = job_id
+
+
 def handle_explain(result) -> None:
     errs = st.session_state.setdefault("explain_errors", {})
     try:
@@ -167,6 +181,25 @@ def stop_if_invalid(checks: list[tuple[str, bool, str]]) -> None:
                                             for name, ok, problem in checks))
 
 
+def check(name: str, what: str, text: str, looks_right, problem: str) -> tuple[str, bool, str]:
+    """One line of the input checks: English first (the prompts and skill lists are English-only),
+    then no instructions to the AI hidden in it, then whether it reads like the right kind of input."""
+    if language := language_of(text):
+        return name, False, english_only(what, language)
+    if phrase := injection_phrase(text):
+        return name, False, instructions_found(what, phrase)
+    return name, looks_right(text), problem
+
+
+def read_input(read) -> tuple[str, str]:
+    """(text, problem): a file or paste we can't read (scanned PDF, too little text, wrong type)
+    becomes a problem shown with the other input checks, not an error with Try again."""
+    try:
+        return read(), ""
+    except ValueError as e:
+        return "", str(e)
+
+
 def job_count(n: int) -> str:
     return "1 job" if n == 1 else f"{n} jobs"
 
@@ -190,6 +223,11 @@ class StageLog:
         self.current = ""
         self.draw()
 
+    def retry(self, text: str) -> None:
+        """Shown while the step waits, but not kept in the notes under the results."""
+        self.lines.append(f"🔁 {text}")
+        self.draw()
+
     def note(self, text: str) -> None:
         self.notes.append(text)
         self.lines.append(f"⚠️ {text}")
@@ -203,7 +241,8 @@ class StageLog:
 # Everything one run produces, including the CV text kept for the advice tools. Cleared when a run
 # starts, so old results can't come back after a failure.
 RUN_KEYS = ("profile", "jobs", "results", "cv_text", "models_used", "embedder_used", "run_summary",
-            "notice", "notes", "input_error", "explanations", "explain_errors", "tool_calls")
+            "notice", "notes", "input_error", "explanations", "explain_errors", "tool_calls",
+            "advice_pending")
 
 
 def start_run() -> None:
@@ -243,24 +282,68 @@ def new_search() -> None:
 
 # ---------- layout ----------
 ui.inject_css()
-ui.app_header()
 
 version = st.session_state.get("jobs_version", 0)
+notice = st.session_state.get("notice")
 
+# Sidebar: the AI model and what the app can't do. The inputs live on the main page.
 with st.sidebar:
-    with st.container(border=True, key="cv_section"):
+    st.markdown('<p class="sea-side-brand">🌊 SEAblings · AI CV-to-job matcher</p>'
+                '<p class="sea-side-team">IS883 project (Team 3)</p>', unsafe_allow_html=True)
+    with st.container(border=True, key="model_section"):
+        st.subheader("AI model", anchor=False)
+        st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
+                     help="Each Gemini model has its own free daily quota. Auto tries them in order "
+                          "and uses the offline model (if installed) as a last resort.")
+        with st.expander("Connection check"):
+            key = S.gemini_api_key
+            st.caption(f"Gemini key: {'found, ends in ' + key[-4:] if key else 'missing'}  \n"
+                       f"Embeddings: {S.embeddings} (Gemini: {S.gemini_embed_model})  \n"
+                       f"Job source: {S.job_source}")
+            if st.button("Test selected model", width="stretch"):
+                for k in model_chain(st.session_state["model_choice"]):
+                    try:
+                        t = time.time()
+                        with st.spinner(f"Testing {label(k)}..."), retry_notices(toast_retry):
+                            get_provider(k).generate_text("Reply with OK.", what="testing the connection")
+                        st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
+                    except Exception as e:
+                        st.error(f"{label(k)}: {e}")
+    st.caption(f"⚠️ {ui.DISCLAIMER}")
+    ui.limitations(S)
+
+# Main page: a short intro on the landing page, then the inputs.
+if not st.session_state.get("results") and not st.session_state.get("running") \
+        and not (notice and notice[2]):
+    ui.hero()  # the banner carries the app name, so no header bar above it
+else:
+    ui.app_header()
+
+# Why the last run stopped, right under the header so it's seen first.
+if notice:
+    show_notice()
+    if notice[2]:  # something failed, so trying again can help
+        retry, new, _ = st.columns([1, 1, 3])
+        retry.button("Try again", type="primary", on_click=start_run, width="stretch")
+        new.button("New search", on_click=new_search, width="stretch")
+if input_error := st.session_state.get("input_error"):
+    st.error(input_error)
+
+with st.container(key="inputs"):
+    cv_col, jobs_col = st.columns(2, gap="medium")
+    with cv_col, st.container(border=True, key="cv_section"):
         st.subheader("1. Your CV", anchor=False)
         upload = st.file_uploader("CV (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"])
         cv_paste = "" if upload is not None else st.text_area(
             "Or paste your CV", height=150, placeholder="Paste the text of your CV here.")
         if upload is None and not cv_paste.strip():
-            st.selectbox("No CV yet? Try a fictional sample CV", list(SAMPLE_CVS), key="sample_cv")
-    with st.container(border=True, key="jobs_section"):
+            st.selectbox("No CV yet? Try a sample CV", list(SAMPLE_CVS), key="sample_cv")
+    with jobs_col, st.container(border=True, key="jobs_section"):
         st.subheader("2. Jobs to match", anchor=False)
         mode = st.radio("Match against", [MODE_JD, MODE_SEARCH], horizontal=True,
                         help="Use job descriptions you already have, or search current openings online.")
         query = location = ""
-        limit = S.default_num_jobs
+        limit = S.jsearch_num_jobs if S.job_source == "jsearch" else S.default_num_jobs
         jd_files, jd_text = [], ""
         if mode == MODE_JD:
             jd_files = st.file_uploader("Job descriptions (PDF, DOCX or TXT)", type=["pdf", "docx", "txt"],
@@ -268,41 +351,19 @@ with st.sidebar:
             jd_text = st.text_area("Or paste a job description", height=150, key=f"jd_text_{version}",
                                    placeholder="Paste the full posting. Put the job title on the first line.")
             if not jd_files and not jd_text.strip():
-                st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} fictional sample postings.")
+                st.caption(f"No job descriptions yet? We'll use {len(sample_jobs())} sample postings.")
         else:
             query = st.text_input("Role you're looking for", placeholder="e.g. Data analyst",
                                   key=f"query_{version}")
             location = st.text_input("Location (optional)", placeholder="e.g. Boston, MA or Remote",
                                      key=f"location_{version}",
                                      help="If left empty, we search for this role across the US.")
-            limit = st.slider("Number of jobs", 3, 10, S.default_num_jobs, key=f"limit_{version}")
             if S.job_source == "sample":
                 st.info("Using sample job listings. Set JOB_SOURCE to \"jsearch\" in secrets for live jobs.")
-    with st.container(border=True, key="model_section"):
-        st.subheader("3. AI model", anchor=False)
-        st.selectbox("Choose a model", list(OPTIONS), format_func=label, key="model_choice",
-                     help="Each Gemini model has its own free daily quota. Auto tries them in order "
-                          "and uses the offline model (if installed) as a last resort.")
     st.button("Analyze my match" if mode == MODE_JD else "Find matching jobs",
               type="primary", width="stretch", on_click=start_run)
-    if input_error := st.session_state.get("input_error"):
-        st.error(input_error)
     st.caption("Your CV is processed in memory and not saved by this app. With a Gemini model, "
                "its text is sent to Google's Gemini API for analysis.")
-
-    with st.expander("Connection check"):
-        key = S.gemini_api_key
-        st.caption(f"Gemini key: {'found, ends in ' + key[-4:] if key else 'missing'}  \n"
-                   f"Embeddings: {S.embeddings} (Gemini: {S.gemini_embed_model})  \n"
-                   f"Job source: {S.job_source}")
-        if st.button("Test selected model", width="stretch"):
-            for k in model_chain(st.session_state["model_choice"]):
-                try:
-                    t = time.time()
-                    get_provider(k).generate_text("Reply with OK.", what="testing the connection")
-                    st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
-                except Exception as e:
-                    st.error(f"{label(k)}: {e}")
 
 # Separate slots: the results slot stays empty during a run, which blanks the last page at once.
 progress_slot = st.empty()
@@ -313,7 +374,7 @@ if st.session_state.get("running"):
         st.session_state.update(input_error="Enter the role you're looking for.", running=False)
         st.rerun()
 
-    ui.grey_out_sidebar()
+    ui.grey_out_inputs()
     main = progress_slot.container()
     choice = st.session_state["model_choice"]
     status = main.status("Getting started", expanded=True)
@@ -324,36 +385,51 @@ if st.session_state.get("running"):
     def notify(k, e):
         remember_if_spent(k, e)
         log.note(f"{label(k)} unavailable: {e} Trying the next model.")
+    retries = ExitStack()  # until the run ends, retry messages appear in the steps box
+    retries.enter_context(retry_notices(log.retry))
     try:
         # Defense 1: simple rules on what the user gave, before any model call, so a wrong input
         # costs no quota. The sample CVs and postings are ours, so they are trusted.
         sample_postings = mode == MODE_JD and not jd_files and not jd_text.strip()
         reading = "Reading your CV" if mode == MODE_SEARCH else "Reading your CV and job descriptions"
         log.start(reading)
+        cv_error = ""  # a file or paste we couldn't read (e.g. a scanned PDF) is shown with the checks
         if upload is not None:
-            cv_text = extract_text(upload.getvalue(), upload.name, S.max_cv_chars)
+            cv_text, cv_error = read_input(lambda: extract_text(upload.getvalue(), upload.name, S.max_cv_chars))
         elif cv_paste.strip():
-            cv_text = clean_text(cv_paste, S.max_cv_chars)
+            cv_text, cv_error = read_input(lambda: clean_text(cv_paste, S.max_cv_chars))
         else:
             cv_text = sample_cv(st.session_state.get("sample_cv", ""))
         cv_hash = hashlib.sha256(cv_text.encode()).hexdigest()
         st.session_state["cv_text"] = cv_text  # in memory only; the advice tools (search_cv) need it
         user_cv = upload is not None or bool(cv_paste.strip())
-        checks = [("CV", not user_cv or looks_like_resume(cv_text), NOT_CV)]
+        if cv_error:
+            checks = [("CV", False, cv_error)]
+        elif user_cv:
+            checks = [check("CV", "CV", cv_text, looks_like_resume, NOT_CV)]
+        else:
+            checks = [("CV", True, "")]  # a sample CV is ours, so it's trusted
         if sample_postings:
             raw_jobs = sample_jobs()
         elif mode == MODE_JD:
-            items = [(f.name, extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
-                     for f in jd_files]
+            items = []
+            for f in jd_files:
+                text, error = read_input(
+                    lambda: extract_text(f.getvalue(), f.name, S.max_jd_file_chars, what="job description"))
+                if error:
+                    checks.append((f"Job description ({f.name})", False, error))
+                else:
+                    items.append((f.name, text))
             if jd_text.strip():
                 items.append(("Pasted job description", jd_text))
-            checks += [(name if name == "Pasted job description" else f"Job description ({name})",
-                        looks_like_job_description(text), NOT_JD) for name, text in items]
+            checks += [check(name if name == "Pasted job description" else f"Job description ({name})",
+                             "job description", text, looks_like_job_description, NOT_JD)
+                       for name, text in items]
             raw_jobs = jobs_from_descriptions([(n.rsplit(".", 1)[0], t) for n, t in items])
         else:
-            checks.append(("Role", looks_like_role(query), NOT_ROLE))
+            checks.append(check("Role", "role", query, looks_like_role, NOT_ROLE))
         stop_if_invalid(checks)
-        log.done("Read your CV and the fictional sample job postings" if sample_postings
+        log.done("Read your CV and the sample job postings" if sample_postings
                  else reading.replace("Reading", "Read"))
 
         log.start("Extracting your skills")
@@ -450,30 +526,47 @@ if st.session_state.get("running"):
         st.session_state.update(notice=(e.kind, str(e), e.retry), notes=log.notes)
     except Exception as e:  # show a clear next step instead of a stack trace
         st.session_state.update(notice=("error", str(e), True), notes=log.notes)
+    retries.close()
     st.session_state["running"] = False
     st.rerun()  # redraw the finished page; what the run finished is in session_state
 
-notice = st.session_state.get("notice")
-with results_slot.container():
+with results_slot.container(), st.container(key="results"):
     if results := st.session_state.get("results"):
-        title, button = st.columns([5, 1], vertical_alignment="center")
+        title, download, button = st.columns([4, 1.4, 1], vertical_alignment="center")
         title.markdown("## Your matches")
+        try:
+            report = build_pdf(results, st.session_state["profile"], summary=st.session_state["run_summary"],
+                               models=st.session_state["models_used"],
+                               embedder=st.session_state["embedder_used"],
+                               explanations=st.session_state.get("explanations"))
+            download.download_button("Download report (PDF)", report, file_name="seablings_match_report.pdf",
+                                     mime="application/pdf", width="stretch", on_click="ignore",
+                                     help="Your matches and score breakdowns, plus the advice for any role "
+                                          "you asked for.")
+        except Exception:  # the report is extra: never let it break the results page
+            download.caption("The PDF report isn't available for this search.")
         button.button("New search", on_click=new_search, width="stretch")
         st.caption(f"{st.session_state['run_summary']}. Analyzed with {st.session_state['models_used']}; "
                    f"similarity by {st.session_state['embedder_used']}.")
         for note in st.session_state.get("notes", []):
             st.caption(note)
         ui.profile_panel(st.session_state["profile"])
+        pending = st.session_state.get("advice_pending")
+        if pending:
+            ui.grey_out_results()
+        slot = pending_result = None
         for i, r in enumerate(results):
             # results are sorted best first: the top 3 show their breakdown open
-            ui.match_card(r, i, handle_explain, st.session_state["profile"], show_breakdown=i < 3)
+            card_slot = ui.match_card(r, i, request_advice, st.session_state["profile"],
+                                      show_breakdown=i < 3, pending=r.job.id == pending)
+            if card_slot is not None:
+                slot, pending_result = card_slot, r
+        if pending:
+            st.session_state.pop("advice_pending")
+            if pending_result is not None:
+                with slot.container(), st.spinner("Writing advice for this role..."), \
+                        retry_notices(toast_retry):
+                    handle_explain(pending_result)
+            st.rerun()
     elif notice and notice[2]:
-        show_notice()
-        retry, new, _ = st.columns([1, 1, 3])
-        retry.button("Try again", type="primary", on_click=start_run, width="stretch")
-        new.button("New search", on_click=new_search, width="stretch")
-        show_progress()
-    else:
-        if notice:
-            show_notice()
-        ui.hero()
+        show_progress()  # what finished before the failure (the notice is at the top)

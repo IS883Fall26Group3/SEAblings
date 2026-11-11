@@ -1,12 +1,49 @@
 """Provider interface shared by Gemini and local models, plus JSON helpers."""
 import json
+import logging
+import re
 import types
 from abc import ABC, abstractmethod
+from contextlib import contextmanager
+from contextvars import ContextVar
 from typing import TypeVar, Union, get_args, get_origin
 
 from pydantic import BaseModel, ValidationError
 
 T = TypeVar("T", bound=BaseModel)
+log = logging.getLogger("seablings.llm")
+
+# Who to tell when a call is tried again, so the user isn't left wondering why a step is slow.
+# The app sets it (Streamlit); core/ only calls announce_retry. One value per thread, so visitors
+# never see each other's messages.
+_on_retry: ContextVar = ContextVar("on_retry", default=None)
+
+
+def fence(tag: str, text: str) -> str:
+    """Put a user's document inside <tag> tags for a prompt, removing any <cv>/<job> tags already in it
+    so the text can't close the tag early and pose as instructions."""
+    clean = re.sub(r"</?\s*(?:cv|job)\s*>", "", text, flags=re.I)
+    return f"<{tag}>\n{clean}\n</{tag}>"
+
+
+def announce_retry(message: str) -> None:
+    log.info("retry: %s", message)
+    callback = _on_retry.get()
+    if callback:
+        try:
+            callback(message)
+        except Exception:  # showing the message must never break the call itself
+            log.exception("couldn't show the retry message")
+
+
+@contextmanager
+def retry_notices(callback):
+    """Inside this block, retry messages go to callback(message)."""
+    token = _on_retry.set(callback)
+    try:
+        yield
+    finally:
+        _on_retry.reset(token)
 
 
 class LLMError(RuntimeError):
@@ -66,7 +103,10 @@ class LLMProvider(ABC):
         full = (f"{prompt}\n\nRespond with only a JSON object in exactly this shape, "
                 f"no commentary:\n{schema_hint(schema)}")
         last = None
-        for _ in range(2):  # one retry if the JSON is malformed
+        for attempt in range(2):  # one retry if the JSON is malformed
+            if attempt:
+                announce_retry(f"{self.name} sent an answer the app couldn't read while {what}. "
+                               "Asking again…")
             raw = self.complete(full, json_mode=True, temperature=temperature, what=what,
                                 schema=schema.model_json_schema())
             try:

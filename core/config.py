@@ -45,7 +45,13 @@ class Settings:
     local_max_jd_chars: int = 1_500
     local_n_ctx: int = 8_192         # llama-cpp's default context (512 tokens) is too small for a CV
     local_threads: int = 2           # Streamlit Community Cloud allows up to 2 CPUs
-    default_num_jobs: int = 10
+    # Free memory needed before loading an offline model (MB). Running out stops the whole app on
+    # Streamlit Cloud, so below this the model isn't loaded and the user is told why (core/memory.py).
+    # Llama 3.2 1B: ~0.8 GB weights + ~0.25 GB context at 8,192 tokens + working space.
+    local_llm_min_free_mb: int = 1_500
+    local_embed_min_free_mb: int = 200  # bge-small: ~35 MB weights
+    default_num_jobs: int = 10        # sample listings (no quota)
+    jsearch_num_jobs: int = 3         # live search: fewer jobs, fewer tokens per search
     # Scoring weights (must sum to 1.0). Tune with your evaluation set.
     w_skill_coverage: float = 0.5
     w_semantic: float = 0.3
@@ -72,4 +78,6 @@ def get_settings() -> Settings:
         experience_fit=env("EXPERIENCE_FIT", "judge"),
         profile_similarity=env("PROFILE_SIMILARITY", "document"),
         requirement_labels=env("REQUIREMENT_LABELS", "llm"),
+        local_llm_min_free_mb=int(env("LOCAL_LLM_MIN_FREE_MB", "1500")),
+        local_embed_min_free_mb=int(env("LOCAL_EMBED_MIN_FREE_MB", "200")),
     )

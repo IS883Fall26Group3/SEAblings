@@ -15,8 +15,8 @@ Builds, once:
 usage (from the repo root):
   python eval/practice_set.py        # needs GEMINI_API_KEY; never overwrites a filled-in sheet
 Then: python eval/requirement_accuracy.py --set practice --app 1"""
-from requirement_set import (LABELS, MODELS, Job, build_provider, extract_requirements,  # noqa: F401
-                             get_settings, json, load_jobs, with_fallback, write_new, years_text)
+from requirement_set import (LABELS, MODEL, Job, build_provider, extract_requirements,  # noqa: F401
+                             get_settings, json, load_jobs, write_new, years_text)
 
 # (pair id, CV, job id, kind). Earlier fit rating (labels/cv_job_reviewed.csv) in the comment.
 PRACTICE = [
@@ -39,9 +39,8 @@ def freeze() -> dict:
         return json.loads(FROZEN.read_text(encoding="utf-8"))
     s, jobs = get_settings(), load_jobs()
     wanted = [jobs[jid].model_copy() for jid in dict.fromkeys(p[2] for p in PRACTICE)]
-    done, model = with_fallback(MODELS, lambda k: extract_requirements(
-        build_provider(k, s), wanted, s.max_jd_chars, s.local_max_jd_chars),
-        lambda k, e: print(f"{k} failed: {e}"))
+    done, model = extract_requirements(build_provider(MODEL, s), wanted, s.max_jd_chars,
+                                       s.local_max_jd_chars), MODEL  # one fixed model, as for the test set
     frozen = {"model": model, "jobs": {}}
     for j in done:
         if j.requirements is None:

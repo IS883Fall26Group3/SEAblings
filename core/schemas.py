@@ -89,6 +89,24 @@ class RequirementLabelBatch(BaseModel):
     items: list[JobRequirementLabels]
 
 
+# The same answer without the reason: the "label only" prompt (prompts/label_requirements_label_only.md),
+# compared with reason-first in eval/requirement_accuracy.py --compare. Not used by the app.
+class RequirementLabelOnly(BaseModel):
+    requirement: str = Field(description="The requirement exactly as listed")
+    status: str = Field(description="met, partial or missing")
+    quote: str = Field(default="", description="For met or partial: the words from one CV line that "
+                                               "show it, copied exactly. Empty for missing.")
+
+
+class JobRequirementLabelsOnly(BaseModel):
+    job_id: str = ""
+    labels: list[RequirementLabelOnly] = Field(default_factory=list)
+
+
+class RequirementLabelOnlyBatch(BaseModel):
+    items: list[JobRequirementLabelsOnly]
+
+
 class RequirementCheck(BaseModel):
     """A requirement's final label as shown on the card. The quote is kept only when it appears word
     for word in the CV (core/requirements.py: quote_in_cv); otherwise it is dropped."""
