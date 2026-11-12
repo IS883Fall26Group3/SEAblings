@@ -19,19 +19,15 @@ EmbedFn = Callable[[list[str]], np.ndarray]
 
 def requirement_rows(r: MatchResult) -> list[dict]:
     """Every required skill with its label, the labeler's reason and, when verified, the CV words
-    behind it. A missing skill also gets cv_mention: a CV line that names it, so it may not be a real
-    gap (the same line the card shows)."""
+    behind it."""
     checks = {norm(c.requirement): c for c in r.requirement_checks}
     rows = [(s, "met") for s in r.matched_skills] + [(s, "partial") for s in r.partial_skills] \
         + [(s, "missing") for s in r.missing_skills]
     out = []
     for s, st in rows:
         c = checks.get(norm(s))
-        row = {"requirement": s, "status": st, "cv_quote": c.quote if c and c.quote_verified else "",
-               "reason": c.reason if c else ""}
-        if st == "missing":
-            row["cv_mention"] = c.mention if c else ""
-        out.append(row)
+        out.append({"requirement": s, "status": st, "cv_quote": c.quote if c and c.quote_verified else "",
+                    "reason": c.reason if c else ""})
     return out
 
 

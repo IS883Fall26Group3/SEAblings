@@ -22,8 +22,7 @@ def result():
     checks = {job.id: [RequirementCheck(requirement="SQL", status="met", quote="Wrote SQL queries",
                                         quote_verified=True),
                        RequirementCheck(requirement="Power BI", status="partial", reason="Tableau, a related tool"),
-                       RequirementCheck(requirement="Excel", status="missing",
-                                        mention="Automated monthly KPI dashboards in Tableau and Excel")]}
+                       RequirementCheck(requirement="Excel", status="missing")]}
     return score_jobs(PROFILE, CV, [job], FakeEmbedder(), get_settings(), requirement_checks=checks)[0]
 
 
@@ -35,8 +34,7 @@ def test_score_tool_runs_the_apps_formula():
     assert out["requirements"] == [
         {"requirement": "SQL", "status": "met", "cv_quote": "Wrote SQL queries", "reason": ""},
         {"requirement": "Power BI", "status": "partial", "cv_quote": "", "reason": "Tableau, a related tool"},
-        {"requirement": "Excel", "status": "missing", "cv_quote": "", "reason": "",
-         "cv_mention": "Automated monthly KPI dashboards in Tableau and Excel"}]
+        {"requirement": "Excel", "status": "missing", "cv_quote": "", "reason": ""}]
     assert "error" in tools["compute_match_score"]("another-job")
 
 

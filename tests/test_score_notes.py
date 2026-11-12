@@ -55,13 +55,10 @@ def test_partly_met_with_an_unverified_quote_shows_only_the_reason():
     assert evidence_groups(r) == [Group("Partly met:", ["Dashboards: Related BI tools."])]
 
 
-def test_missing_skill_a_cv_line_names_may_not_be_a_real_gap():
-    r = checks_result(RequirementCheck(requirement="Excel", status="missing", mention="Built models in Excel"),
-                      RequirementCheck(requirement="Python", status="missing"),
+def test_missing_skills_are_listed_on_one_line():
+    r = checks_result(RequirementCheck(requirement="Python", status="missing"),
                       RequirementCheck(requirement="Rust", status="missing"))
-    assert evidence_groups(r) == [
-        Group("May not be a real gap:", ['Excel: your CV says "Built models in Excel"']),
-        Group("Not found in your CV:", ["Python, Rust"], inline=True)]
+    assert evidence_groups(r) == [Group("Not found in your CV:", ["Python, Rust"], inline=True)]
 
 
 def test_each_group_is_capped():
