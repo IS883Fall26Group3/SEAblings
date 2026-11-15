@@ -205,10 +205,10 @@ most common tools, and 30 business-skill families written by the team.
 
 | Area | Files | Owner |
 |---|---|---|
-| Job data | `core/job_sources/`, `data/sample/` | Maylada |
+| Job data | `core/job_sources/`, `data/sample/` | Maylada, Tigor |
 | LLM and extraction | `core/llm/`, `core/embeddings.py`, `core/skill_extractor.py`, `core/cv_parser.py`, `prompts/` | Tigor, Sheila |
 | Scoring and evaluation | `core/matcher.py`, `tests/`, evaluation notebook | Dominggo |
-| UI and deployment | `streamlit_app.py`, `ui/`, `.streamlit/`, README | Sheila |
+| UI and deployment | `streamlit_app.py`, `ui/`, `.streamlit/`, README | Sheila, Maylada |
 
 ## Workflow
 
