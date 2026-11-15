@@ -1,4 +1,3 @@
-# --- Maylada (with Claude Code): free-memory check before an offline model loads ---
 """How much memory this app can still use, so an offline model is never loaded into too little.
 
 On Streamlit Community Cloud running out of memory stops the whole app (no Python error to catch),

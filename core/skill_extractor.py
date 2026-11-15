@@ -9,7 +9,6 @@ from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBat
                       RelevantExperienceBatch, RequirementCheck, RequirementLabel, RequirementLabelBatch,
                       RequirementLabelOnlyBatch, ToolCall)
 
-# --- Maylada (with Claude Code): prompt variants for the technique comparison ---
 # Labeling prompt versions: (prompt file, answer format). The app uses "reason": a short reason before
 # each label (chain of thought) and 3 worked examples (few-shot). The others exist only for the
 # technique comparison in eval/requirement_accuracy.py --compare; each differs from it in one way.
@@ -61,7 +60,6 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
     return jobs
 
 
-# --- Maylada (with Claude Code): invalid values (directives §5.5, test input A8) ---
 MAX_MIN_YEARS = 40  # longer than a working life: a typo or a joke, not a requirement
 
 

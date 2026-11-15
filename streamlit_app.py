@@ -134,7 +134,6 @@ def toast_retry(message: str) -> None:
     st.toast(message, icon="🔁")
 
 
-# --- Maylada (with Claude Code): per-session request cap (directives §3.2) ---
 CAP_MESSAGE = ("You've used all {cap} AI requests for this session. The limit keeps this free public "
                "app working for everyone. Open the app in a new browser tab to start a new session.")
 
@@ -211,7 +210,6 @@ def check(name: str, what: str, text: str, looks_right, problem: str) -> tuple[s
     return name, looks_right(text), problem
 
 
-# --- Maylada (with Claude Code): input reading and the input checks (scanned, English, injection) ---
 def read_input(read) -> tuple[str, str]:
     """(text, problem): a file or paste we can't read (scanned PDF, too little text, wrong type)
     becomes a problem shown with the other input checks, not an error with Try again."""
@@ -304,7 +302,6 @@ def new_search() -> None:
     st.session_state["jobs_version"] = st.session_state.get("jobs_version", 0) + 1
 
 
-# --- Maylada (with Claude Code): page layout: banner, main-page inputs, sidebar ---
 # ---------- layout ----------
 ui.inject_css()
 

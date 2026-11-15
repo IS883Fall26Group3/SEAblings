@@ -216,8 +216,7 @@ most common tools, and 30 business-skill families written by the team.
 - Work on `feature/<short-name>` branches; open a pull request with at least one reviewer.
 - Track tasks as plain cards on the Projects board (no GitHub Issues), each with an owner, start and
   end dates, a status and a priority (project directives §5.7).
-- Put a comment at the top of every section you write: `# --- Name: what it does ---`. Code written
-  with an AI tool also names the tool: `# --- Name (with Claude Code): what it does ---`.
+- Put a comment at the top of every section you write: `# --- Name: what it does ---`.
 
 ## Privacy
 
@@ -395,8 +394,6 @@ career office) or at much higher volume.
 
 - Each member commits from their own account. Sections carry a comment naming who wrote them:
   `# --- Name: what ---`.
-- Code written with an AI coding tool says so where it sits: `# --- Name (with Claude Code): what ---`
-  (Claude Code by Anthropic, used for coding, debugging and running the evaluation scripts).
 - The team's labels (the answer key) were written by us without AI tools; the practice-set labels and
   some eval drafts were made with Claude, as `eval/README.md` states.
 - Every use of AI tools goes in the report's Generative AI appendix. The report and slides are written
@@ -715,7 +712,7 @@ over repeated runs.
   | Simpler interface: model settings under "Advanced", shorter job cards | Partly: inputs on the main page, model choice in the sidebar, PDF report; no "Advanced" section, top 3 cards still open their breakdown | _(team to assign)_ |
   | Approximate result without the LLM when the API fails or times out | Partly: fallbacks for the judge, the labels and daily embedding quota | _(team to assign)_ |
   | Confusing examples and a failure our metric can't catch, for the presentation | Done (slides; "Final deliverable", Evaluation item 5) | _(team to assign)_ |
-  | A comment at the top of each section naming who wrote it | Partly: Maylada's sections labeled; the others to do | Each member |
+  | A comment at the top of each section naming who wrote it | Not yet | Each member |
 
   Already built: per-requirement labels (met / partial / missing) from retrieved CV lines and the
   skills knowledge base, the word-for-word quote check, and tool-calling advice.

@@ -25,7 +25,6 @@ SIMILARITY_LEVELS = [  # (lowest percent, label, sentence)
 
 # The judge's rating (same / related / different) as shown in the Match column, in the same words as
 # the requirement labels (met / partial / missing) so the card uses one scale throughout.
-# --- Maylada (with Claude Code): Met / Partial / Missing wording ---
 MATCH_LABELS = {"same": "Met", "related": "Partial", "different": "Missing"}
 
 

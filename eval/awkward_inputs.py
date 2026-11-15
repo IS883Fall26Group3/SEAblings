@@ -13,7 +13,6 @@ usage (from the repo root; needs GEMINI_API_KEY in .streamlit/secrets.toml):
   python eval/awkward_inputs.py            # all cases
   python eval/awkward_inputs.py A8 A9      # only these
 Prints what each run showed; fill in labels/awkward_inputs.csv from it."""
-# --- Maylada (with Claude Code): test harness for the awkward inputs (directives §5.5 item 2) ---
 import json
 import sys
 from pathlib import Path

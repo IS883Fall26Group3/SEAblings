@@ -107,7 +107,6 @@ def apply_checks(required: list[str], checks: list[RequirementCheck], matched: l
     return met, partial, missing, close
 
 
-# --- Maylada (with Claude Code): backup matcher only for unlabeled requirements ---
 def unlabeled_skills(job: Job, checks: list[RequirementCheck]) -> list[str]:
     """The job's required skills that have no label, so the backup skill matcher decides them."""
     req = job.requirements
