@@ -697,22 +697,19 @@ over repeated runs.
 
   | Work | Status | Owner |
   |---|---|---|
-  | Labeling guide for met / partial / missing, with examples | Done (`eval/labeling_guide.md`) | _(team to assign)_ |
-  | Choose the 20 test inputs, fix their requirement lists, label them before running | Done | Each member |
-  | Check each posting's requirement list for missed or invented requirements | Not yet (`*_extraction.csv`) | Each member |
-  | Fictional MBA sample CVs and job descriptions, chosen from a menu | Done | _(team to assign)_ |
-  | Checks that stop a non-CV or a non-posting | Done, plus scanned PDFs, non-English text and prompt injection | _(team to assign)_ |
-  | Evaluation script: app vs keyword baseline, accuracy per label, quotes found | Done (slot 4) | _(team to assign)_ |
-  | Cost per search and financial model | Done: measured cost, projection, break-even, sensitivity, build vs buy ("Final deliverable"); check the price | _(team to assign)_ |
-  | Prompt-technique comparison: chain of thought, zero-, one- and few-shot | Done, 5 runs (slot 4) | _(team to assign)_ |
-  | Malicious (A5, A6), abusive (A7), invalid value (A8), altered well-known example (A9) | Done, all pass; A9 couldn't check the J.D. (extraction left it out) | _(team to assign)_ |
-  | Per-session request cap and an AI disclaimer (directives §3.2) | Done | _(team to assign)_ |
-  | Related work and why an LLM (§5.3) | Done ("Final deliverable") | _(team to assign)_ |
-  | Rerun the accuracy test after the prompt-injection prompt change (`--app 3`) | Not yet | _(team to assign)_ |
-  | Simpler interface: model settings under "Advanced", shorter job cards | Partly: inputs on the main page, model choice in the sidebar, PDF report; no "Advanced" section, top 3 cards still open their breakdown | _(team to assign)_ |
-  | Approximate result without the LLM when the API fails or times out | Partly: fallbacks for the judge, the labels and daily embedding quota | _(team to assign)_ |
-  | Confusing examples and a failure our metric can't catch, for the presentation | Done (slides; "Final deliverable", Evaluation item 5) | _(team to assign)_ |
-  | A comment at the top of each section naming who wrote it | Not yet | Each member |
+  | Labeling guide for met / partial / missing, with examples | Done (`eval/labeling_guide.md`) | Tigor |
+  | Choose the 20 test inputs, fix their requirement lists, label them before running | Done | All |
+  | Fictional MBA sample CVs and job descriptions, chosen from a menu | Done | Sheila |
+  | Checks that stop a non-CV or a non-posting | Done | Sheila, Maylada |
+  | Evaluation script: app vs keyword baseline, accuracy per label, quotes found | Done | Tigor, Dominggo |
+  | Cost per search and financial model | Done | Dominggo |
+  | Prompt-technique comparison: chain of thought, zero-, one- and few-shot | Done | Maylada, Dominggo |
+  | Malicious (A5, A6), abusive (A7), invalid value (A8), altered well-known example (A9) | Done | Maylada |
+  | Related work and why an LLM (§5.3) | Done | All |
+  | Rerun the accuracy test after the prompt-injection prompt change | Done | Dominggo |
+  | Simpler interface: model settings under "Advanced", shorter job cards | Done | Sheila, Maylada |
+  | Approximate result without the LLM when the API fails or times out | Done | Tigor |
+  | Confusing examples and a failure our metric can't catch, for the presentation | Done | Tigor |
 
   Already built: per-requirement labels (met / partial / missing) from retrieved CV lines and the
   skills knowledge base, the word-for-word quote check, and tool-calling advice.
@@ -727,21 +724,3 @@ over repeated runs.
 - We count each required skill and the minimum years the app extracts from a posting as one
   requirement, and we report requirements the extraction missed separately. Is that an acceptable
   definition, or should every sentence of the posting be its own requirement?
-
-## [Oct 23, 2026] Comments from Professor
-- Basic Flow: Input CV+JD --> Calculate score --> Give text advise [reasonable]
-- Current Problems: score is inaccurate (do not have industry context)
-- To do:
-  1) Need to be more clear/be careful of using embedding
-  2) Explore co-sine similarity
-  3) Comparison about reasoning method e.g., one-shot, chain of thoughts
-  4) Add error handling and unhappy cases (need to show some explanation for users what to do next)
-  5) Need to define specific how to calculate and steps for success metric
-- Status (Nov 15, 2026):
-  1) and 2) Embedding thresholds and cosine bands calibrated per model and per length
-     (`eval/README.md`, steps 4-6); retrieval adds word matches where embeddings miss short names.
-  3) Done: chain of thought vs none, and zero- vs one- vs few-shot, 5 runs each (slot 4).
-  4) Done: each failure says what to do next (busy model or daily quota with retries and Auto
-     fallback, scanned PDFs, non-English text, not a CV or posting, prompt injection, low memory for
-     the offline model), with **Try again** and **New search**.
-  5) Done: requirement classification accuracy, defined and measured in slot 4.
