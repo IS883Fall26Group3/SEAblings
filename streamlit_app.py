@@ -134,9 +134,28 @@ def toast_retry(message: str) -> None:
     st.toast(message, icon="🔁")
 
 
+CAP_MESSAGE = ("You've used all {cap} AI requests for this session. The limit keeps this free public "
+               "app working for everyone. Open the app in a new browser tab to start a new session.")
+
+
+def requests_left() -> int:
+    return max(S.session_request_cap - st.session_state.get("requests_used", 0), 0)
+
+
+def use_request() -> bool:
+    """Count one AI request (a search, an advice request or a model test); False once the cap is reached."""
+    if requests_left() <= 0:
+        return False
+    st.session_state["requests_used"] = st.session_state.get("requests_used", 0) + 1
+    return True
+
+
 def request_advice(job_id: str) -> None:
     """Button callback: only marks the job. The advice is written after every card is drawn, so the
     whole page can be locked while it runs (see the results section)."""
+    if not use_request():
+        st.session_state.setdefault("explain_errors", {})[job_id] = CAP_MESSAGE.format(cap=S.session_request_cap)
+        return
     st.session_state["advice_pending"] = job_id
 
 
@@ -248,6 +267,9 @@ RUN_KEYS = ("profile", "jobs", "results", "cv_text", "models_used", "embedder_us
 def start_run() -> None:
     for k in RUN_KEYS:
         st.session_state.pop(k, None)
+    if not use_request():
+        st.session_state["input_error"] = CAP_MESSAGE.format(cap=S.session_request_cap)
+        return
     st.session_state["running"] = True
 
 
@@ -300,7 +322,8 @@ with st.sidebar:
             st.caption(f"Gemini key: {'found, ends in ' + key[-4:] if key else 'missing'}  \n"
                        f"Embeddings: {S.embeddings} (Gemini: {S.gemini_embed_model})  \n"
                        f"Job source: {S.job_source}")
-            if st.button("Test selected model", width="stretch"):
+            if st.button("Test selected model", width="stretch", disabled=requests_left() == 0) \
+                    and use_request():
                 for k in model_chain(st.session_state["model_choice"]):
                     try:
                         t = time.time()
@@ -309,6 +332,7 @@ with st.sidebar:
                         st.success(f"{label(k)}: OK in {time.time() - t:.1f}s")
                     except Exception as e:
                         st.error(f"{label(k)}: {e}")
+        st.caption(f"AI requests left this session: {requests_left()} of {S.session_request_cap}")
     st.caption(f"⚠️ {ui.DISCLAIMER}")
     ui.limitations(S)
 
@@ -371,6 +395,7 @@ results_slot = st.empty()
 
 if st.session_state.get("running"):
     if mode == MODE_SEARCH and not query.strip():
+        st.session_state["requests_used"] -= 1  # nothing was sent, so it doesn't count
         st.session_state.update(input_error="Enter the role you're looking for.", running=False)
         st.rerun()
 

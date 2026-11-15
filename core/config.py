@@ -52,6 +52,9 @@ class Settings:
     local_embed_min_free_mb: int = 200  # bge-small: ~35 MB weights
     default_num_jobs: int = 10        # sample listings (no quota)
     jsearch_num_jobs: int = 3         # live search: fewer jobs, fewer tokens per search
+    # Requests one browser session may make (a search, an advice request or a model test each count
+    # one), so a public app can't spend the whole free-tier quota. A new session starts again.
+    session_request_cap: int = 15
     # Scoring weights (must sum to 1.0). Tune with your evaluation set.
     w_skill_coverage: float = 0.5
     w_semantic: float = 0.3
@@ -80,4 +83,5 @@ def get_settings() -> Settings:
         requirement_labels=env("REQUIREMENT_LABELS", "llm"),
         local_llm_min_free_mb=int(env("LOCAL_LLM_MIN_FREE_MB", "1500")),
         local_embed_min_free_mb=int(env("LOCAL_EMBED_MIN_FREE_MB", "200")),
+        session_request_cap=int(env("SESSION_REQUEST_CAP", "15")),
     )

@@ -72,9 +72,19 @@ work stays on the page with **Try again** (finished steps come back from the cac
 
 **Download report (PDF)**, beside the results, saves what the page shows: what was read from the CV,
 and for each job its score, skills, score breakdown and any advice asked for (`ui/report.py`, built
-with `fpdf2` in memory, nothing stored). A disclaimer that the app is a study project, not
-professional career advice, sits under the AI model menu, on every job card and at the end of the PDF
-(`DISCLAIMER` and `CARD_DISCLAIMER` in `ui/components.py`).
+with `fpdf2` in memory, nothing stored). A disclaimer that the scores, labels and advice are generated
+by an AI language model and may be wrong, and are not professional career advice, sits under the AI
+model menu, on every job card and at the end of the PDF (`DISCLAIMER` and `CARD_DISCLAIMER` in
+`ui/components.py`).
+
+**Request cap.** Each browser session may make 15 AI requests (`SESSION_REQUEST_CAP`, held in
+`st.session_state`): a search, a "Get advice" click and a model test each count one. The AI model box
+shows how many are left; at the cap the app says so instead of calling the model, and a new browser
+tab starts a new session. This keeps a public app on the free tier from being drained by one visitor.
+
+**Limitations shown in the sidebar:** English only; scanned PDFs can't be read; two-column CVs may be
+read out of order (a one-column CV works best); the model reads up to 15,000 characters of the CV and
+10,000 of each posting; live search covers US listings, 3 jobs per search; AI advice can be wrong.
 
 ## Choosing a model
 
@@ -195,21 +205,199 @@ most common tools, and 30 business-skill families written by the team.
 
 | Area | Files | Owner |
 |---|---|---|
-| Job data | `core/job_sources/`, `data/sample/` | TBD |
-| LLM and extraction | `core/llm/`, `core/embeddings.py`, `core/skill_extractor.py`, `core/cv_parser.py`, `prompts/` | TBD |
-| Scoring and evaluation | `core/matcher.py`, `tests/`, evaluation notebook | TBD |
-| UI and deployment | `streamlit_app.py`, `ui/`, `.streamlit/`, README | TBD |
+| Job data | `core/job_sources/`, `data/sample/` | Maylada, Tigor |
+| LLM and extraction | `core/llm/`, `core/embeddings.py`, `core/skill_extractor.py`, `core/cv_parser.py`, `prompts/` | Tigor, Sheila |
+| Scoring and evaluation | `core/matcher.py`, `tests/`, evaluation notebook | Dominggo |
+| UI and deployment | `streamlit_app.py`, `ui/`, `.streamlit/`, README | Sheila, Maylada |
 
 ## Workflow
 
 - `main` is always deployable; Streamlit Cloud redeploys on every push to it.
 - Work on `feature/<short-name>` branches; open a pull request with at least one reviewer.
-- Track tasks in GitHub Issues and the Projects board; link each PR to its issue.
+- Track tasks as plain cards on the Projects board (no GitHub Issues), each with an owner, start and
+  end dates, a status and a priority (project directives §5.7).
+- Put a comment at the top of every section you write: `# --- Name: what it does ---`.
 
 ## Privacy
 
 CVs are processed in memory and never written to disk or logs. Never commit real CVs or API keys.
 Note that content sent to the Gemini API free tier may be used by Google to improve its products.
+
+## Final deliverable (project directives §5)
+
+Where each part the project directives ask for lives. The detail is in `eval/README.md`.
+
+### Related work, and why this needs an LLM (§5.3)
+
+- **Jobscan** ([jobscan.co](https://www.jobscan.co/resume-scanner)) gives a 0-100% "match rate" for a
+  resume against one posting, mostly from shared keywords and formatting. It is fast and shows which
+  words to add, but it rewards keyword stuffing and can't see that "Tableau" is close to "Power BI" or
+  that a course is not work experience; Jobscan itself says the score isn't what an employer's
+  applicant-tracking system assigns.
+- **LinkedIn Skills Match** ([help page](https://www.linkedin.com/help/linkedin/answer/a793433)) shows
+  "x of y skills match your profile" on a job. It needs a LinkedIn profile with a skills list, counts a
+  skill as present or absent, and doesn't show which line of your CV proves it.
+- **Research on LLMs for resume-job matching**, e.g. *Evaluating the Promise and Pitfalls of LLMs in
+  Hiring Decisions* ([arXiv 2507.02087](https://arxiv.org/abs/2507.02087)), compares frontier LLMs
+  with a purpose-built matching model on accuracy and on fairness across gender and race. It is written
+  for employers screening candidates, and its authors sell a competing hiring product. Our app advises
+  the student only and rejects nobody.
+
+**Which parts need a model, and which don't.** A model is needed where meaning matters: reading a CV
+and a posting written in free text, judging that "automated KPI dashboards in Power BI" shows data
+visualization, telling a related tool (partial) from the same tool (met), and writing advice. Rules
+and code do the rest, because they are cheaper, faster and can't hallucinate: the input checks (is it a
+CV, English, an injection attempt), the quote check, the years arithmetic and the score formula. The
+word-matching baseline (50.9%) shows what rules alone reach on the labels; the app reaches 70.0%.
+
+### Architecture diagram (§5.2)
+
+Each model call is labeled with its prompt file (`prompts/`); C1-C4 mark where the four §5.1
+capabilities fire: **C1** structured prompting, **C2** tool calling, **C3** retrieval over our own
+sources, **C4** structured output. Dotted lines are failure paths.
+
+```mermaid
+flowchart TD
+    U["User: CV (PDF, DOCX, TXT, pasted or a sample)<br/>+ job descriptions, or a role to search"] --> P["Python: read the files<br/>core/cv_parser.py"]
+    S["JSearch API (3 jobs) or the 10 sample postings"] --> P
+    P --> CHK["Python, no AI: input checks<br/>a CV? a posting? English? injection phrase?<br/>core/validation.py"]
+    CHK -. "fails a check" .-> STOP["Message at the top, no model call"]
+    P -. "scanned PDF" .-> STOP
+    CHK --> A["LLM 1 · extract_profile.md<br/>C1 · C4 JSON CandidateProfile"]
+    CHK --> B["LLM 2 · extract_requirements.md<br/>C1 · C4 JSON, all jobs in one call"]
+    A -. "not a CV" .-> NO["Message: this doesn't look like a CV"]
+    B -. "not a posting / no requirements" .-> SK["Job skipped with a message"]
+    A --> J["LLM 3 · judge_experience.md<br/>C1 guided steps · C4 JSON"]
+    B --> J
+    B --> R["Embed A · C3 retrieval: CV lines that name each requirement,<br/>then the closest by embedding + 2 closest skill families"]
+    KB[("data/skill_kb.csv<br/>164 skill families")] --> R
+    R --> L["LLM 4 · label_requirements.md<br/>C1 reason + 3 examples · C4 JSON met / partial / missing + quote"]
+    L --> V["Python: keep a quote only if it is word for word in the CV"]
+    V --> BM["Embed C · backup matcher, only for requirements LLM 4 didn't label<br/>skill_aliases.csv, cosine ≥ 0.925"]
+    P --> EB["Embed B · whole CV vs whole posting"]
+    J --> M["Python: score = 50% skills + 30% similarity × field rating + 20% relevant years"]
+    BM --> M
+    EB --> M
+    M --> C["Ranked job cards + PDF report"]
+    C --> X["On click · LLM 5-6 · advice_system.md + explain_match.md<br/>C2 tool calling"]
+    X <-->|"tool calls"| TL["Python tools: compute_match_score · search_cv<br/>core/advisor.py"]
+    A -. "busy / quota / bad JSON: retry, then next model, then offline Llama" .-> F["Auto fallback · core/llm"]
+    J -. "fails" .-> T["Experience fit uses total years"]
+    L -. "fails" .-> SM["Every requirement goes to the backup matcher"]
+    R -. "daily embedding quota" .-> OFF["Embedding steps rerun on the offline model"]
+```
+
+### Evaluation (§5.5)
+
+1. **Success metric, fixed at the workshop checkpoint:** requirement classification accuracy, the
+   share of the 110 requirements the app labels as our answer key does. **Result: 70.0%** (mean of 3
+   runs, 66.4-76.4%) against a 75% target and a 50.9% keyword baseline. The technique comparison
+   below scores the 97 skill requirements only: the 13 years rows come from the experience step, not
+   the labeling prompt, so they can't show a difference between prompts.
+2. **Test set, expected results written before running:** 16 CV-job pairs (14 regular, 2 confusing)
+   and 9 awkward inputs (`eval/labels/awkward_inputs.csv`, run with `eval/awkward_inputs.py`):
+
+   | Kind (directives §5.5) | Input | Result |
+   |---|---|---|
+   | Empty input | A1: no CV | pass (a sample CV is used) |
+   | Outside scope / wrong kind | A2: a recipe as the CV · A3: company news as the posting | pass (stopped with a message) |
+   | Short input | A4: a two-line posting | pass |
+   | Malicious | A5: "Ignore all previous instructions…" · A6: the same, reworded | pass (A5 stopped before any call; A6 labels unchanged, no quote from the note, score within 3 points) |
+   | Abusive | A7: insults pasted as the CV | pass (stopped before any call) |
+   | Invalid value | A8: a posting asking for 150+ years | pass (dropped as impossible; skills labeled as usual) |
+   | Altered well-known example | A9: Barack Obama's career with the law degree removed, vs a legal-counsel posting | pass on the labels (litigation and constitutional law missing, though the real Obama taught it); the J.D. and bar weren't checked, because the extraction left them out |
+
+3. **Deterministic checks:** every met or partial quote is checked word for word against the CV by
+   code (170 of 171 found; the check dropped the other), and every model reply is parsed against a
+   Pydantic schema (one retry, then the next model).
+4. **Comparison of techniques, 5 runs per version, costed:** on the labeling prompt (all 16 pairs,
+   chosen because this step decides half the score and has an answer key), chain of thought vs none and
+   zero- vs one- vs few-shot. **No written reasoning was best: 73.2% vs 68.5%, and 19% cheaper.** The
+   reason made the model restate a CV line in the requirement's words and then label it met, so it
+   over-labeled met; the number of examples made no clear difference. The gain came from judging the
+   CV lines more strictly, not from recall: the labels can only quote the retrieved lines of these
+   classmate CVs, which the model has not seen. Full tables in `eval/README.md` ("Comparison").
+5. **A failure the metric can't catch:** a quote can be real and still prove nothing. On the sample
+   CV the app labeled "oil and gas industry" met, quoting "Corporate Planning Analyst, Example Energy
+   Co.": the quote check passes (the line is in the CV), and if our label had also been met, accuracy
+   would score it right, yet an energy company doesn't prove oil and gas. To catch it: a person reads a
+   sample of quotes and marks whether each proves its label.
+
+### Financial model (§5.6)
+
+**1. Measured cost per interaction** (token counts from `eval/measure_cost.py`, Gemini paid tier at
+$0.30 / $2.50 per 1M input / output tokens; confirm on Google's pricing page):
+
+| Interaction | Tokens in / out | Cost |
+|---|---|---|
+| Search, 1 CV vs 1 posting | 3,441 / 1,117 | 3,441 × $0.30/1M + 1,117 × $2.50/1M = **$0.0038** |
+| Search, 1 CV vs 10 postings | 13,374 / 5,566 | $0.0040 + $0.0139 = **$0.0179** |
+| Advice for one job | 1,804 / 129 | $0.0005 + $0.0003 = **$0.0009** |
+
+The comparison's labeling call costs $2.66 per 1,000 calls with the app's prompt and $2.16 without
+the written reason, so switching would lower this step's cost by about a fifth.
+
+**2. Projection** (team slides): 156k U.S. MBA students, 78.7k of them job-searching; 5% subscribe =
+3,940 subscribers, each checking 150 CV-job matches over a 5-month search (50 applications × 3
+postings). At about 10,400 tokens per match (search, advice and embeddings) that is $0.88 of AI and
+$0.13 of JSearch per subscriber: **$3.5k AI + $0.5k JSearch a year**. The slides price a match at
+$5.87 per 1,000; at the rates above the same tokens cost $6.17 per 1,000, so the price assumption
+should be checked.
+
+**3. Value and break-even.** At $1 a month for 5 months, each subscriber pays $5 and costs about
+$1.01, so $3.99 is kept: **$19.7k revenue, $15.7k kept a year (80%)**. The fixed cost is the JSearch
+Pro plan, $25 a month ($300 a year), so the app breaks even at about **75 subscribers**
+($300 ÷ $3.99). Hosting is not included: a paid product would likely need paid hosting rather than
+Streamlit Community Cloud; at an assumed $50 a month for hosting, break-even is about 226 subscribers. For the student,
+the value is time: reading 150 postings against a CV by hand, at an assumed 10 minutes each, is about
+25 hours per search.
+
+**4. Assumptions:** 5% of searching MBA students subscribe; $1 a month for 5 months; 150 matches per
+search; 1 live search per application; Gemini paid-tier prices as above; JSearch Pro $25/month +
+$0.003 per extra request; no card fees or hosting; 10 minutes to read one posting by hand.
+
+**5. Sensitivity** (kept a year = subscribers × margin):
+
+| Change | Kept a year |
+|---|---|
+| As assumed | $15.7k |
+| Subscribers halved (2.5%) | about $7.9k |
+| Subscribers doubled (10%) | about $31.4k |
+| Tokens per match doubled (AI $1.76 per subscriber) | about $12.3k |
+| Price halved ($0.50 a month) | about $5.9k |
+
+No single assumption moved by a factor of two makes the app lose money, because almost every cost
+grows with use. The assumption we are least sure of is the price students would pay and how many
+would subscribe; the margin depends on it far more than on tokens.
+
+**6. Build versus buy.** We call a hosted API (Gemini). Running open weights ourselves (we already
+ship Llama 3.2 1B as the offline fallback) would keep CVs on our own servers, a real privacy gain,
+and remove per-token fees. But a model small enough to host cheaply labels worse, a larger one needs a
+GPU server costing far more than $3.5k a year at this volume, and we would maintain it ourselves. At
+this scale, buying is cheaper; owning would make sense for privacy-sensitive users (e.g. a university
+career office) or at much higher volume.
+
+### Limitations, and what we would do next
+
+- **Partial is weak:** 31% of the team's partial labels right; the model over-labels met. Next: more
+  partial examples in the rules, tested on practice pairs labeled by us.
+- **Labels vary between runs** (66-76% on the same test, temperature 0).
+- **Degree and licence requirements can be dropped:** the extraction prompt asks for skills and says
+  nothing about degrees or licences, and in test A9 it left out the J.D. and the bar admission.
+- **Quotes are checked for existence, not relevance** (the failure above).
+- **Input limits:** English only, no scanned PDFs, two-column CVs may be read out of order, 15,000
+  characters of a CV and 10,000 of a posting.
+- **Not yet built:** checking each posting's requirement list for missed or invented requirements
+  (`*_extraction.csv`).
+
+### Attribution and use of AI tools (§6.4, §9)
+
+- Each member commits from their own account. Sections carry a comment naming who wrote them:
+  `# --- Name: what ---`.
+- The team's labels (the answer key) were written by us without AI tools; the practice-set labels and
+  some eval drafts were made with Claude, as `eval/README.md` states.
+- Every use of AI tools goes in the report's Generative AI appendix. The report and slides are written
+  by the team.
 
 ## Workshop checkpoint
 Team name: SEAblings!
@@ -219,6 +407,9 @@ Members: Ardian Dominggo Wiryosukarno, Maylada Kanokchoteworakarn, Sheila Hana F
 - **Attending the Oct 23 workshop?** Yes
 - **Project board link:** https://github.com/orgs/IS883Fall26Group3/projects/1
 - **Streamlit app URL:** https://seablings.streamlit.app/
+- **Where our API keys live:** in Streamlit Community Cloud's app secrets (`GEMINI_API_KEY`,
+  `RAPIDAPI_KEY`); locally in `.streamlit/secrets.toml`, which is in `.gitignore`. No key is in the
+  repository; `.streamlit/secrets.toml.example` shows the names only.
 
 ### 1. THE PROJECT, AS IT STANDS TODAY
 - **Who the user is:** an MBA student applying for internships or full-time jobs.
@@ -368,10 +559,8 @@ flowchart TD
     jobs into one call.
   - The requirement check is three quarters of the input tokens, since it carries the retrieved CV
     lines for every requirement.
-  - **In dollars** (Gemini paid tier, assuming $0.30 / $2.50 per 1M input / output tokens for
-    gemini-flash-lite-latest; check Google's pricing page): about **$0.018 per ten-job search**
-    (13,374 × $0.30 + 5,566 × $2.50 per 1M), so about $18 per 1,000 searches. Live search now
-    returns 3 jobs, so a live search costs less.
+  - In dollars, with the projection, break-even and sensitivity: see **Financial model** in
+    "Final deliverable" above.
   - The tightest free-tier limit is embeddings: 1,000 texts a day per Google project, so about 14
     ten-job searches. Texts already embedded in a session are reused, and the skills knowledge base
     is embedded ahead of time.
@@ -399,7 +588,8 @@ flowchart TD
     missing from the CV **before** the app is run on that pair.
   - **Built:** 16 CV-job pairs (9 CVs, 12 postings, 110 requirements: 38 met, 31 partial, 41
     missing), 2 of them confusing pairs, plus the 4 awkward inputs: 20 test inputs. Two malicious
-    inputs (prompt injection, A5 and A6) were added later: 22. Details in
+    inputs (prompt injection, A5 and A6), an abusive input (A7), an invalid value (A8) and an altered
+    well-known example (A9) were added later: 25 (see "Final deliverable"). Details in
     `eval/README.md` ("Success metric").
 - **Results** (`eval/requirement_accuracy.py`; the app's labels vary between runs, so it ran 3 times):
 
@@ -426,8 +616,8 @@ flowchart TD
     clear message and no score.
   - **Malicious inputs:** A5 ("Ignore all previous instructions…" in the CV) is stopped by the input
     check with no model call: pass. A6 (a reworded "note to the screening system") gets past the
-    rules, but the labels ignore it (PyTorch stays missing, no quote taken from the note): pass on
-    labels; its score check against the plain CV is still to run (`eval/awkward_injection.py`).
+    rules, but the labels ignore it (PyTorch stays missing, no quote taken from the note, score within
+    3 points of the plain CV): pass (`eval/awkward_inputs.py`).
   - The 70.0% above was measured before the prompts gained the prompt-injection rule; rerun
     `python eval/requirement_accuracy.py --app 3` to confirm it.
 - **Prompt techniques** (the Oct 23 feedback, item 3; `eval/README.md`, "Comparison"): the labeling
@@ -507,21 +697,19 @@ over repeated runs.
 
   | Work | Status | Owner |
   |---|---|---|
-  | Labeling guide for met / partial / missing, with examples | Done (`eval/labeling_guide.md`) | _(team to assign)_ |
-  | Choose the 20 test inputs, fix their requirement lists, label them before running | Done | Each member |
-  | Check each posting's requirement list for missed or invented requirements | Not yet (`*_extraction.csv`) | Each member |
-  | Fictional MBA sample CVs and job descriptions, chosen from a menu | Done | _(team to assign)_ |
-  | Checks that stop a non-CV or a non-posting | Done, plus scanned PDFs, non-English text and prompt injection | _(team to assign)_ |
-  | Evaluation script: app vs keyword baseline, accuracy per label, quotes found | Done (slot 4) | _(team to assign)_ |
-  | Cost per search | Done: tokens and time measured, about $0.018 per ten-job search (slot 3; check the price) | _(team to assign)_ |
-  | Prompt-technique comparison: chain of thought, zero-, one- and few-shot | Done, 5 runs (slot 4) | _(team to assign)_ |
-  | Malicious inputs A5 and A6 (prompt injection) | Run: A5 pass, A6 pass on labels; A6 score check to run | _(team to assign)_ |
-  | Invalid-value test input (e.g. a posting asking for 150+ years) | Not yet | _(team to assign)_ |
-  | Rerun the accuracy test after the prompt-injection prompt change (`--app 3`) | Not yet | _(team to assign)_ |
-  | Simpler interface: model settings under "Advanced", shorter job cards | Partly: inputs on the main page, model choice in the sidebar, PDF report; no "Advanced" section, top 3 cards still open their breakdown | _(team to assign)_ |
-  | Approximate result without the LLM when the API fails or times out | Partly: fallbacks for the judge, the labels and daily embedding quota | _(team to assign)_ |
-  | Confusing examples and a failure our metric can't catch, for the presentation | Not yet | _(team to assign)_ |
-  | A comment at the top of each section naming who wrote it | Not yet | Each member |
+  | Labeling guide for met / partial / missing, with examples | Done (`eval/labeling_guide.md`) | Tigor |
+  | Choose the 20 test inputs, fix their requirement lists, label them before running | Done | All |
+  | Fictional MBA sample CVs and job descriptions, chosen from a menu | Done | Sheila |
+  | Checks that stop a non-CV or a non-posting | Done | Sheila, Maylada |
+  | Evaluation script: app vs keyword baseline, accuracy per label, quotes found | Done | Tigor, Dominggo |
+  | Cost per search and financial model | Done | Dominggo |
+  | Prompt-technique comparison: chain of thought, zero-, one- and few-shot | Done | Maylada, Dominggo |
+  | Malicious (A5, A6), abusive (A7), invalid value (A8), altered well-known example (A9) | Done | Maylada |
+  | Related work and why an LLM (§5.3) | Done | All |
+  | Rerun the accuracy test after the prompt-injection prompt change | Done | Dominggo |
+  | Simpler interface: model settings under "Advanced", shorter job cards | Done | Sheila, Maylada |
+  | Approximate result without the LLM when the API fails or times out | Done | Tigor |
+  | Confusing examples and a failure our metric can't catch, for the presentation | Done | Tigor |
 
   Already built: per-requirement labels (met / partial / missing) from retrieved CV lines and the
   skills knowledge base, the word-for-word quote check, and tool-calling advice.
@@ -536,21 +724,3 @@ over repeated runs.
 - We count each required skill and the minimum years the app extracts from a posting as one
   requirement, and we report requirements the extraction missed separately. Is that an acceptable
   definition, or should every sentence of the posting be its own requirement?
-
-## [Oct 23, 2026] Comments from Professor
-- Basic Flow: Input CV+JD --> Calculate score --> Give text advise [reasonable]
-- Current Problems: score is inaccurate (do not have industry context)
-- To do:
-  1) Need to be more clear/be careful of using embedding
-  2) Explore co-sine similarity
-  3) Comparison about reasoning method e.g., one-shot, chain of thoughts
-  4) Add error handling and unhappy cases (need to show some explanation for users what to do next)
-  5) Need to define specific how to calculate and steps for success metric
-- Status (Nov 15, 2026):
-  1) and 2) Embedding thresholds and cosine bands calibrated per model and per length
-     (`eval/README.md`, steps 4-6); retrieval adds word matches where embeddings miss short names.
-  3) Done: chain of thought vs none, and zero- vs one- vs few-shot, 5 runs each (slot 4).
-  4) Done: each failure says what to do next (busy model or daily quota with retries and Auto
-     fallback, scanned PDFs, non-English text, not a CV or posting, prompt injection, low memory for
-     the offline model), with **Try again** and **New search**.
-  5) Done: requirement classification accuracy, defined and measured in slot 4.
