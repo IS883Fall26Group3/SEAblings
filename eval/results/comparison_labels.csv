@@ -1,0 +1,98 @@
+pair,kind,type,requirement,team,reason_run1,reason_run2,reason_run3,reason_run4,reason_run5,label_only_run1,label_only_run2,label_only_run3,label_only_run4,label_only_run5,one_shot_run1,one_shot_run2,one_shot_run3,one_shot_run4,one_shot_run5,zero_shot_run1,zero_shot_run2,zero_shot_run3,zero_shot_run4,zero_shot_run5
+P01,regular,skill,Financial Analysis,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P01,regular,skill,Financial Forecasting,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P01,regular,skill,Excel,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P01,regular,skill,PowerPoint,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P01,regular,skill,Financial Modeling,missing,missing,partial,missing,partial,missing,missing,missing,missing,missing,missing,partial,partial,missing,missing,missing,missing,missing,missing,missing,missing
+P01,regular,skill,Data Analysis,partial,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P05,regular,skill,Management Consulting,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P05,regular,skill,Business Strategy,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P05,regular,skill,Structured Problem Solving,partial,met,met,met,met,met,partial,partial,partial,partial,partial,met,met,partial,partial,met,met,met,met,met,met
+P05,regular,skill,Business Analysis,met,met,met,met,met,met,met,partial,partial,met,met,met,met,partial,met,met,met,met,met,met,met
+P05,regular,skill,Written Communication,partial,missing,missing,missing,missing,missing,partial,missing,missing,missing,partial,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing
+P09,regular,skill,Data Engineering,met,partial,partial,partial,partial,partial,met,partial,met,met,met,partial,partial,partial,partial,partial,partial,missing,met,missing,met
+P09,regular,skill,Databricks,partial,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P09,regular,skill,Apache Spark,partial,partial,missing,partial,partial,partial,missing,missing,missing,missing,missing,partial,partial,partial,partial,partial,partial,partial,partial,partial,partial
+P09,regular,skill,Delta Lake,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P09,regular,skill,SQL,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P09,regular,skill,Python,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P09,regular,skill,Azure,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P09,regular,skill,ETL,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P13,regular,skill,Management Consulting,missing,missing,missing,missing,partial,partial,partial,partial,partial,partial,missing,partial,partial,partial,partial,partial,missing,missing,partial,partial,partial
+P13,regular,skill,Life Sciences,partial,partial,met,met,met,met,met,met,met,met,met,partial,met,met,partial,partial,met,met,met,met,met
+P13,regular,skill,Structured Problem Solving,met,met,met,met,met,met,met,met,met,met,partial,met,met,met,met,met,met,met,met,met,met
+P13,regular,skill,Biotech,partial,met,met,met,partial,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P13,regular,skill,Change Management,partial,partial,partial,partial,partial,partial,partial,partial,missing,partial,missing,partial,partial,partial,partial,partial,partial,partial,partial,partial,partial
+P13,regular,skill,Data Analysis,partial,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P02,regular,skill,FP&A,partial,missing,partial,partial,partial,missing,missing,missing,missing,missing,missing,partial,partial,partial,missing,missing,partial,missing,missing,missing,partial
+P02,regular,skill,Financial Modeling,missing,missing,partial,missing,partial,missing,missing,missing,missing,missing,missing,partial,partial,missing,missing,missing,missing,missing,missing,missing,missing
+P02,regular,skill,Excel,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P02,regular,skill,Variance Analysis,partial,met,met,met,met,partial,met,partial,partial,partial,met,met,partial,met,partial,partial,met,met,met,met,met
+P02,regular,skill,Headcount Analytics,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P02,regular,skill,P&L,partial,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P06,regular,skill,FP&A,partial,missing,missing,partial,partial,partial,partial,partial,met,met,met,partial,partial,partial,met,partial,partial,missing,met,met,missing
+P06,regular,skill,Financial Modeling,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P06,regular,skill,Excel,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P06,regular,skill,Variance Analysis,partial,missing,missing,partial,partial,missing,partial,partial,met,met,met,partial,missing,partial,missing,missing,partial,missing,partial,met,missing
+P06,regular,skill,Headcount Analytics,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P06,regular,skill,P&L,met,missing,partial,partial,partial,missing,partial,partial,met,met,met,partial,partial,partial,missing,missing,partial,missing,partial,partial,missing
+P10,regular,skill,Product Management,partial,missing,partial,partial,missing,missing,partial,partial,partial,partial,partial,missing,partial,missing,missing,partial,missing,missing,missing,missing,missing
+P10,regular,skill,Roadmap Strategy,missing,partial,partial,partial,partial,missing,partial,partial,partial,partial,partial,missing,partial,missing,missing,partial,partial,missing,missing,missing,partial
+P10,regular,skill,Voice of Customer,missing,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P10,regular,skill,Pricing Models,partial,met,met,met,met,met,partial,partial,met,met,partial,met,met,met,met,met,met,met,met,met,met
+P10,regular,skill,SQL,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P10,regular,skill,Data Analytics,partial,met,met,met,met,met,met,met,met,partial,met,met,met,met,met,met,met,met,met,met,met
+P14,regular,skill,Business Analysis,partial,partial,met,met,met,partial,partial,partial,partial,missing,missing,met,met,partial,met,partial,partial,partial,partial,partial,partial
+P14,regular,skill,Agile Methodologies,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P14,regular,skill,Requirements Documentation,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P14,regular,skill,Product Development,partial,met,met,met,met,met,partial,met,met,partial,met,met,met,met,met,met,met,met,met,met,met
+P14,regular,skill,Testing,missing,partial,partial,missing,missing,partial,missing,missing,missing,missing,missing,missing,partial,partial,missing,partial,partial,partial,missing,partial,partial
+P03,regular,skill,Financial Planning,partial,missing,missing,missing,partial,missing,missing,missing,missing,missing,missing,partial,missing,partial,missing,missing,partial,missing,missing,missing,missing
+P03,regular,skill,Budgeting,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing
+P03,regular,skill,Forecasting,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P03,regular,skill,Financial Modeling,missing,missing,partial,missing,partial,missing,missing,missing,missing,missing,missing,partial,partial,missing,missing,missing,missing,missing,missing,missing,missing
+P03,regular,skill,Performance Analysis,partial,met,partial,partial,partial,partial,missing,missing,partial,missing,missing,partial,partial,partial,partial,partial,met,met,met,partial,met
+P07,regular,skill,Financial Analysis,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P07,regular,skill,Financial Forecasting,partial,met,met,met,met,met,partial,partial,met,met,met,met,met,met,met,met,met,met,met,met,met
+P07,regular,skill,Excel,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P07,regular,skill,PowerPoint,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P07,regular,skill,Financial Modeling,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P07,regular,skill,Data Analysis,partial,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P11,regular,skill,Biotech Consulting,partial,met,met,met,partial,met,partial,partial,partial,partial,partial,partial,partial,partial,met,partial,met,met,met,met,met
+P11,regular,skill,Data Analysis,partial,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P11,regular,skill,Market Access,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing,missing,missing,missing,missing
+P11,regular,skill,Pricing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P11,regular,skill,Forecasting,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P11,regular,skill,Excel,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P11,regular,skill,PowerPoint,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P15,confusing,skill,Database Development,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P15,confusing,skill,Business Intelligence,partial,met,met,met,met,met,met,met,met,partial,met,met,met,met,met,met,met,met,met,met,met
+P15,confusing,skill,SQL,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P15,confusing,skill,Tableau,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P15,confusing,skill,Power BI,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P15,confusing,skill,ETL,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing,missing,missing,missing,missing
+P15,confusing,skill,Epic Clarity,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P04,regular,skill,Management Consulting,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P04,regular,skill,Operating Model Design,partial,missing,partial,missing,missing,missing,partial,partial,partial,partial,partial,missing,missing,missing,missing,missing,partial,partial,missing,missing,missing
+P04,regular,skill,Stakeholder Engagement,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P04,regular,skill,Executive Presentations,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P04,regular,skill,Workshop Facilitation,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P08,regular,skill,Machine Learning,met,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing,missing,missing,missing,missing
+P08,regular,skill,Python,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P08,regular,skill,PyTorch,missing,missing,met,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P08,regular,skill,TensorFlow,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P08,regular,skill,scikit-learn,partial,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P08,regular,skill,Git,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P12,regular,skill,Business Analysis,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P12,regular,skill,Agile Methodologies,missing,partial,partial,partial,met,missing,partial,partial,partial,partial,partial,partial,missing,partial,missing,met,partial,missing,missing,partial,missing
+P12,regular,skill,Requirements Documentation,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P12,regular,skill,Product Development,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P12,regular,skill,Testing,partial,met,partial,met,met,partial,met,met,met,met,partial,partial,met,partial,partial,met,met,met,met,partial,met
+P16,confusing,skill,Data Engineering,missing,partial,partial,partial,partial,partial,partial,partial,partial,partial,partial,partial,partial,partial,missing,partial,partial,partial,partial,partial,missing
+P16,confusing,skill,Databricks,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P16,confusing,skill,Apache Spark,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P16,confusing,skill,Delta Lake,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P16,confusing,skill,SQL,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met
+P16,confusing,skill,Python,met,met,met,met,met,met,met,met,met,met,met,met,met,met,met,partial,met,met,met,met,met
+P16,confusing,skill,Azure,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing,missing
+P16,confusing,skill,ETL,missing,missing,missing,partial,missing,missing,missing,missing,missing,missing,missing,missing,missing,partial,missing,missing,missing,missing,partial,missing,missing

@@ -9,11 +9,14 @@ from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBat
                       RelevantExperienceBatch, RequirementCheck, RequirementLabel, RequirementLabelBatch,
                       RequirementLabelOnlyBatch, ToolCall)
 
-# Labeling prompt versions: (prompt file, answer format). The app uses "reason"; "label_only" exists
-# for the chain-of-thought comparison in eval/requirement_accuracy.py --compare.
+# Labeling prompt versions: (prompt file, answer format). The app uses "reason": a short reason before
+# each label (chain of thought) and 3 worked examples (few-shot). The others exist only for the
+# technique comparison in eval/requirement_accuracy.py --compare; each differs from it in one way.
 LABEL_VARIANTS = {
     "reason": ("label_requirements.md", RequirementLabelBatch),
-    "label_only": ("label_requirements_label_only.md", RequirementLabelOnlyBatch),
+    "label_only": ("label_requirements_label_only.md", RequirementLabelOnlyBatch),  # no reason
+    "one_shot": ("label_requirements_one_shot.md", RequirementLabelBatch),        # 1 example
+    "zero_shot": ("label_requirements_zero_shot.md", RequirementLabelBatch),      # no examples
 }
 
 PROMPTS = Path(__file__).resolve().parent.parent / "prompts"

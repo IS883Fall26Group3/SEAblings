@@ -5,6 +5,8 @@ so a run interrupted by a quota or timeout resumes where it stopped.
 usage (from the repo root):
   python eval/extract.py local                      # offline Llama, no API key
   python eval/extract.py gemini:gemini-flash-latest # needs GEMINI_API_KEY
+  python eval/extract.py gemini:gemini-flash-lite-latest --cvs test   # only the CVs in the 16 test
+                                                    # pairs (requirement_set.py), no jobs; or --cvs AS,LB
 """
 import json
 import re
@@ -59,7 +61,8 @@ def patient(fn, label: str, pace_s: float, tries: int = 6):
             time.sleep(wait)
 
 
-def main(key: str):
+def main(key: str, only: set[str] | None = None):
+    """only: the CV names to read (None: every CV in data/resume)."""
     s = get_settings()
     if key == "local":
         key = f"local:{s.local_llm_repo}"
@@ -73,7 +76,7 @@ def main(key: str):
         cache.write_text(json.dumps(done, indent=1, ensure_ascii=False), encoding="utf-8")
 
     for name, text in load_cvs().items():
-        if name in done["cvs"]:
+        if name in done["cvs"] or (only is not None and name not in only):
             continue
         start = time.time()
         prof = patient(lambda: extract_profile(llm, text), f"cv {name}", pace)
@@ -83,7 +86,8 @@ def main(key: str):
         save()
         print(f"cv {name}: {len(done['cvs'][name]['skills'])} skills, {time.time() - start:.0f}s", flush=True)
 
-    todo = [j for j in load_jobs() if j.id not in done["jobs"]]
+    # With --cvs only CVs are read: the requirement comparison uses the frozen job requirements.
+    todo = [] if only is not None else [j for j in load_jobs() if j.id not in done["jobs"]]
     step = 10 if llm.batch_jobs else 1
     for i in range(0, len(todo), step):
         start = time.time()
@@ -99,5 +103,16 @@ def main(key: str):
     print(f"done: {len(done['cvs'])} CVs, {len(done['jobs'])} jobs -> {cache.name}")
 
 
+def wanted_cvs(arg: str) -> set[str]:
+    if arg != "test":
+        return set(arg.split(","))
+    from requirement_set import PAIRS  # here, not at the top: it isn't needed otherwise
+    return {p[1] for p in PAIRS}
+
+
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "local")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    only = wanted_cvs(sys.argv[sys.argv.index("--cvs") + 1]) if "--cvs" in sys.argv else None
+    if only:
+        args = [a for a in args if a != sys.argv[sys.argv.index("--cvs") + 1]]
+    main(args[0] if args else "local", only)

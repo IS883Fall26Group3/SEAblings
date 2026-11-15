@@ -459,34 +459,96 @@ per-requirement rows in `results/requirement_accuracy.csv`):
 **Awkward inputs** (`labels/awkward_inputs.csv`, run through the real app): all 4 pass. A5 and A6
 (malicious CVs, added in November 2026 with their expected results written before running) test
 prompt injection: A5 must be stopped by the input check, A6 is reworded so the rules miss it and
-tests the prompts' "data, never instructions" rule. Their results are filled in once they are run.
+tests the prompts' "data, never instructions" rule. Run with `eval/awkward_injection.py`
+(Nov 10, 2026): A5 passes (stopped with the message, 0 model calls); A6 passes on labels and quotes
+(PyTorch stays missing, no quote from the note); its score check against the plain CV is pending
+(that run hit the daily embedding quota).
 The prompts gained that rule after the accuracy runs above; rerun with a new `VERSION` to confirm
 the labels didn't change. A2 (a recipe
 as the CV) and A3 (a news item as the posting) first got match scores of 0 and 25 as if they were
 real; `core/input_checks.py` now stops both with a clear message. The extraction step says what
 kind of document it read (no extra call), and a posting with no requirements is never scored.
 
-### Comparison: chain of thought vs none (requirement labels)
+### Comparison: prompt techniques (requirement labels)
 
-The course asks for one comparison of techniques, repeated and costed. Compared step: the requirement
-labels. **reason** (the app's prompt, `prompts/label_requirements.md`) writes one short sentence on
-what the CV lines show before each label; **label_only** (`prompts/label_requirements_label_only.md`)
-is the same prompt, rules, worked examples and retrieved CV lines with that sentence removed. Same
-model (gemini-flash-lite), temperature 0, frozen requirements, so only the reasoning differs.
+The course asks for one comparison of techniques, repeated and costed (and the Oct 23 feedback names
+one-shot and chain of thought). Compared step: the requirement labels, because they decide skill
+coverage (half the score) and the team's answer key says which label is right. The app's prompt
+(`prompts/label_requirements.md`) uses two techniques: a short **reason** before each label (chain of
+thought) and **3 worked examples** (few-shot). Each other version is a copy that differs in one way:
+
+| Version | Prompt file | Reason first? | Examples |
+|---|---|---|---|
+| App prompt | `label_requirements.md` | yes | 3 |
+| No written reasoning | `label_requirements_label_only.md` | no | 3 |
+| One-shot | `label_requirements_one_shot.md` | yes | 1 (Tableau for Power BI) |
+| Zero-shot | `label_requirements_zero_shot.md` | yes | 0 |
+
+Same model (gemini-flash-lite), temperature 0, the same retrieved CV lines and frozen requirements,
+so only the technique differs (`tests/test_requirements.py` checks the files stay that way).
 
 ```
-python eval/requirement_accuracy.py --compare 5                 # all 16 test pairs, 5 runs per version
-python eval/requirement_accuracy.py --compare 5 --pairs P03,P07  # only the pairs picked for the comparison
+python eval/extract.py gemini:gemini-flash-lite-latest --cvs test  # once: the 9 CVs in the pairs
+python eval/requirement_accuracy.py --compare 3                  # both tables, 3 runs per version
+python eval/requirement_accuracy.py --compare 3 --tables cot     # chain of thought vs none only
+python eval/requirement_accuracy.py --compare 3 --tables shots   # zero- vs one- vs few-shot only
+python eval/requirement_accuracy.py --compare 3 --pairs P03,P07  # only these pairs
+python eval/requirement_accuracy.py --compare 3 --price 0.30,2.50  # USD per 1M input,output tokens
 ```
 
-It prints, per version, the mean accuracy with its range over the runs, the share of each team label
-it got right, and the input and output tokens per run; then the requirements where the two versions
-usually disagree, with the team's label, to see why one wins. Rows: `results/comparison_summary.csv`
-(one per run per version) and `results/comparison_labels.csv` (each requirement's label in every run).
-About 9 labeling calls per run (one per CV), so 5 runs of both versions is about 90 calls.
+Only the 97 skill requirements are compared: the 13 years rows come from the relevant-experience
+call, which is the same whatever the labeling prompt, so it is skipped (saves one call per CV).
 
-**Results:** not run yet. To fill in: the table, whether the gain is worth the extra tokens, which
-pairs were picked and why (if `--pairs`), and why the better version won.
+It writes `results/comparison_table.md`, two tables ready to paste into the report or slides:
+
+| Column | Meaning |
+|---|---|
+| Accuracy: mean (min-max), SD | share of requirements labeled as the team did, over the runs |
+| Balanced accuracy | the mean of the three columns next to it, so the common label can't dominate |
+| Met / partial / missing right | the share of each team label the version got right |
+| Quotes found in CV | the share of met/partial quotes found word for word in the CV (invented quotes lower it) |
+| Input / output tok per call | tokens of one labeling call (one CV against its jobs), retries included |
+| Cost / 1,000 calls | at the `PRICE` in the script, Gemini paid tier; check the pricing page first |
+
+Under each table: the requirements where a version usually disagrees with the app prompt, with the
+team's label, to explain why one wins. Per-run rows: `results/comparison_summary.csv`; every label of
+every run: `results/comparison_labels.csv`. Calls: 9 per run (one per CV), so 3 runs of all four
+versions is 108 calls, plus 9 to read the CVs once; every run is saved as it finishes, so a run
+stopped by the daily quota resumes the next day, and a rerun with the saved runs makes no calls.
+With 16 pairs, a difference smaller than the versions' ranges is not a clear win.
+
+**Results** (Nov 10, 2026: 5 runs per version, all 16 pairs, 97 skill requirements; full tables and
+the disagreeing requirements in `results/comparison_table.md`):
+
+| Version | Accuracy: mean (min-max), SD | Met / partial / missing right | Output tok / call | Cost / 1,000 calls |
+|---|---|---|---|---|
+| App prompt (reasoning, 3 examples) | 68.5% (65%-71%), SD 2.5 | 90% / 23% / 86% | 727 | $2.66 |
+| No written reasoning | **73.2% (71%-75%), SD 1.6** | 93% / 32% / 89% | 535 | $2.16 |
+| One-shot (1 example) | 70.5% (66%-73%), SD 2.8 | 89% / 31% / 86% | 745 | $2.67 |
+| Zero-shot (no examples) | 69.3% (68%-71%), SD 1.1 | 91% / 18% / 91% | 693 | $2.52 |
+
+Input is about 2,600-2,800 tokens per call for every version; quotes found in the CV 99-100%.
+
+- **Chain of thought made the labels worse and dearer here.** Without the reason, accuracy is 4.7
+  points higher, steadier, with 26% fewer output tokens (19% cheaper). The ranges only touch (71%),
+  so the gain is consistent but modest. On the requirements where the two usually disagree, no
+  reasoning matches the team 10 times, the app prompt 5.
+- **Why: the reason talks the model into "met".** It restates the CV line in the requirement's words
+  and the label follows the restatement: "partnered with the Product team on pricing" becomes "the
+  CV explicitly mentions pricing strategy", so Pricing Models is met (team: partial); "strategy
+  consulting project for life-science brands" makes Biotech Consulting met (team: partial, a
+  2-month project). With the reason, the model labels 41 requirements met per run against 38 without
+  (team: 30), and its too-generous errors rise from 15 to 19 per run (too-strict ones: 12 vs 11).
+  The reasons also change between runs (P&L: "not managing a P&L" then "closely related to P&L
+  work"), which is why the app prompt varies more (SD 2.5 vs 1.6).
+- **The number of examples makes no clear difference:** 0, 1 and 3 examples overlap within 2 points.
+  They shift how often partial is used (9 per run with none, 16 with the one partial example, 13
+  with three), not overall accuracy.
+- **Both versions under-use partial** (13-14 per run against the team's 29): partial stays the
+  hardest label either way.
+- **The app is unchanged.** Switching to no reasoning on these numbers would tune on the test set:
+  confirm it on the practice set (`--set practice`) first. Untested: label first, reason after,
+  which would keep an explanation without letting it steer the label.
 
 ### Efficiency: calls, tokens and time per search
 

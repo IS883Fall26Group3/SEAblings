@@ -14,12 +14,15 @@ usage (from the repo root):
   python eval/requirement_accuracy.py --app 3   # also the app's labels, 3 runs (needs GEMINI_API_KEY)
   python eval/requirement_accuracy.py --set practice --app 1   # the practice set (practice_set.py),
                                                                # where changes are tuned
-  python eval/requirement_accuracy.py --compare 5              # chain of thought vs none: the labeling
-         prompt with a short reason before each label ("reason", the app's) vs the same prompt with
-         no reason ("label_only"), 5 runs each, same model, with tokens per run
-  ... --compare 5 --pairs P03,P07   # only these pairs (pick the ones where the difference matters)
+  python eval/requirement_accuracy.py --compare 3   # prompt techniques on the labeling step, 3 runs
+         each, same model: the app's prompt (chain of thought + 3 examples) vs no reasoning
+         ("label_only"), 1 example ("one_shot") and no examples ("zero_shot"); with tokens and cost
+  ... --compare 3 --tables cot          # only chain of thought vs none (cot, shots, or cot,shots)
+  ... --compare 3 --pairs P03,P07       # only these pairs (pick the ones where the difference matters)
+  ... --compare 3 --price 0.30,2.50     # USD per 1M input,output tokens for the cost column
 Writes results/requirement_accuracy.csv or results/practice_accuracy.csv (labels only, no CV text);
---compare writes results/comparison_summary.csv and results/comparison_labels.csv instead.
+--compare writes results/comparison_table.md (the tables, ready to paste), comparison_summary.csv
+and comparison_labels.csv instead.
 Every run is saved as it finishes, so a run stopped by the daily quota resumes where it left off.
 The app's labels are cached per run and per VERSION; bump VERSION whenever the labeling code or prompt
 changes, so labels from older code are never reused."""
@@ -50,7 +53,16 @@ LABELS3 = ("met", "partial", "missing")
 MODEL = "gemini-flash-lite-latest"
 VERSION = "v3"  # v1: as first committed. v2: word-match retrieval, prompt aligned with labeling_guide.md.
 # v3: prompts put the CV and postings in <cv>/<job> tags and say they are data (prompt injection)
-VARIANTS = ("reason", "label_only")  # core/skill_extractor.py: LABEL_VARIANTS
+VARIANTS = ("reason", "label_only", "one_shot", "zero_shot")  # core/skill_extractor.py: LABEL_VARIANTS
+NAMES = {"reason": "App prompt (reasoning, 3 examples)", "label_only": "No written reasoning",
+         "one_shot": "One-shot (1 example)", "zero_shot": "Zero-shot (no examples)"}
+# Each table compares the app's prompt with versions that differ from it in one way only.
+TABLES = {"cot": ("Chain of thought vs none", ("reason", "label_only")),
+          "shots": ("Zero-shot vs one-shot vs few-shot", ("reason", "one_shot", "zero_shot"))}
+# USD per 1M tokens (input, output) for MODEL on the paid tier; output includes thinking tokens.
+# Assumed: gemini-flash-lite-latest is Gemini 3.5 Flash-Lite. Check
+# https://ai.google.dev/gemini-api/docs/pricing before reporting, or pass --price.
+PRICE = (0.30, 2.50)
 
 # name: (pairs as (pair, CV, job, kind), answer-key files, frozen requirement lists, cache prefix, output)
 SETS = {
@@ -146,9 +158,11 @@ def cached(path, key, fn, label):
 
 
 def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MODEL,
-               variant: str = "reason", tokens: list | None = None) -> list[dict]:
+               variant: str = "reason", tokens: list | None = None, judge: bool = True) -> list[dict]:
     """One dict per run: (pair, requirement) -> (label, quote verified or None). If tokens is a list,
-    (input, output) tokens of each run's labeling calls are appended to it."""
+    (input, output) tokens of each run's labeling calls are appended to it. judge=False skips the
+    relevant-experience call (one per CV) and the years rows it decides: the comparison uses it,
+    since those rows are the same whatever the labeling prompt."""
     s = get_settings()
     emb = build_embedder(s)
     def embed(texts: list[str]) -> np.ndarray:  # cached on disk, paced for the free tier
@@ -173,7 +187,8 @@ def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MO
         for cv, items in sorted(by_cv.items()):
             cv_jobs = [jobs[jid].model_copy(deep=True) for _, jid in items]
             judged = cached(judge_file, cv, lambda: {jid: x.model_dump() for jid, x in judge_experience(
-                llm, cvs[cv], cv_jobs, s.max_jd_chars, s.local_max_jd_chars).items()}, f"judge {cv}")
+                llm, cvs[cv], cv_jobs, s.max_jd_chars, s.local_max_jd_chars).items()},
+                f"judge {cv}") if judge else {}
             retrieved = retrieve_evidence(cv_jobs, cvs[cv], embed, kb)
             saved = cached(run_file, cv, counting(lambda: {jid: [c.model_dump() for c in cs] for jid, cs in
                                                            label_requirements(labeler, cv_jobs, retrieved, cvs[cv],
@@ -197,7 +212,7 @@ def app_labels(runs: int, pairs, frozen_path, prefix: str, label_model: str = MO
                            "partial" if skill in r.partial_skills else "missing")
                     labels[(pid, skill)] = (lab, quotes.get(skill))
                 mn = r.job.requirements.min_years_experience
-                if mn:
+                if mn and judge:
                     pct = round(100 * r.seniority_fit)
                     labels[(pid, f"{mn:g}+ years of relevant experience")] = (
                         "met" if pct == 100 else "partial" if pct >= 50 else "missing", None)
@@ -233,52 +248,84 @@ def report(name: str, key: dict, pred: dict[tuple, str], quiet: bool = False) ->
     return {"accuracy": acc, "balanced": bal, "recall": recall, "n": len(rows)}
 
 
-# ---------- comparison: chain of thought vs none ----------
-def compare(runs: int, pairs, frozen_path, prefix: str, main_key: dict) -> None:
-    """Both labeling prompts on the same pairs, `runs` times each, same model: accuracy per run,
-    tokens per run, and the requirements where the two versions disagree (to see why one wins)."""
-    key = {k: v for k, v in main_key.items() if k[0] in {p[0] for p in pairs}}
-    print(f"\ncomparison: labeling prompt, {len(pairs)} pairs, {len(key)} requirements, {MODEL}, "
-          f"{runs} runs per version")
+# ---------- comparison: prompt techniques ----------
+def _range(xs: list[float]) -> str:
+    return f"{np.mean(xs):.1%} ({min(xs):.0%}-{max(xs):.0%}), SD {100 * np.std(xs, ddof=1 if len(xs) > 1 else 0):.1f}"
+
+
+def compare(runs: int, pairs, frozen_path, prefix: str, main_key: dict, tables=tuple(TABLES),
+            price: tuple[float, float] = PRICE) -> None:
+    """The labeling prompt versions on the same pairs, `runs` times each, same model. Per version:
+    accuracy (mean, range, SD over runs), the share of each team label it got right, the share of its
+    quotes found word for word in the CV, tokens and cost per labeling call; then, per table, the
+    requirements where the versions usually disagree with the app's prompt (to see why one wins)."""
+    # Skill rows only: the years rows come from the experience judge, not the labeling prompt.
+    key = {k: v for k, v in main_key.items() if k[0] in {p[0] for p in pairs} and v["type"] == "skill"}
+    calls = len({p[1] for p in pairs})  # one labeling call per CV on Gemini
+    variants = list(dict.fromkeys(v for t in tables for v in TABLES[t][1]))
+    print(f"\ncomparison: labeling prompt, {len(pairs)} pairs, {len(key)} requirements, {calls} calls per "
+          f"run, {MODEL}, {runs} runs per version, prices ${price[0]}/${price[1]} per 1M tokens in/out")
     results, summary = {}, []
-    for variant in VARIANTS:
+    for variant in variants:
         tokens: list = []
-        app_runs = app_labels(runs, pairs, frozen_path, prefix, MODEL, variant, tokens)
+        app_runs = app_labels(runs, pairs, frozen_path, prefix, MODEL, variant, tokens, judge=False)
         results[variant] = [{k: v[0] for k, v in run.items()} for run in app_runs]
-        for i, (run, (t_in, t_out)) in enumerate(zip(results[variant], tokens), 1):
-            r = report(f"{variant} run {i}", key, run, quiet=True)
+        for i, (run, (t_in, t_out)) in enumerate(zip(app_runs, tokens), 1):
+            r = report(f"{variant} run {i}", key, {k: v[0] for k, v in run.items()}, quiet=True)
+            quoted = [v[1] for k, v in run.items() if k in key and v[1] is not None]
             summary.append({"version": variant, "run": i, "accuracy": round(r["accuracy"], 4),
                             "balanced_accuracy": round(r["balanced"], 4),
                             **{f"{c}_right": (round(r["recall"][c], 4) if r["recall"][c] is not None else "")
                                for c in LABELS3},
-                            "requirements": r["n"], "input_tokens": t_in, "output_tokens": t_out})
+                            "quotes_found": round(sum(quoted) / len(quoted), 4) if quoted else "",
+                            "requirements": r["n"], "calls": calls,
+                            "input_tokens": t_in, "output_tokens": t_out})
 
-    print(f"\n{'version':<12} {'accuracy mean (min-max)':<26} {'met / partial / missing right':<31} "
-          "tokens in / out per run")
-    means = {}
-    for variant in VARIANTS:
+    def row(variant: str) -> dict:
         rows = [x for x in summary if x["version"] == variant]
-        acc = [x["accuracy"] for x in rows]
         per = [np.mean([x[f"{c}_right"] for x in rows if x[f"{c}_right"] != ""] or [0]) for c in LABELS3]
-        t_in, t_out = np.mean([x["input_tokens"] for x in rows]), np.mean([x["output_tokens"] for x in rows])
-        means[variant] = (np.mean(acc), t_in, t_out)
-        print(f"{variant:<12} {f'{np.mean(acc):.1%} ({min(acc):.1%}-{max(acc):.1%})':<26} "
-              f"{' / '.join(f'{x:.0%}' for x in per):<31} {t_in:,.0f} / {t_out:,.0f}")
-    (a1, i1, o1), (a2, i2, o2) = means["reason"], means["label_only"]
-    print(f"\nreason vs label_only: {100 * (a1 - a2):+.1f} points accuracy for {o1 - o2:+,.0f} output and "
-          f"{i1 - i2:+,.0f} input tokens per run ({o1 / o2 if o2 else float('nan'):.1f}x the output)")
+        quotes = [x["quotes_found"] for x in rows if x["quotes_found"] != ""]
+        t_in = np.mean([x["input_tokens"] for x in rows]) / calls
+        t_out = np.mean([x["output_tokens"] for x in rows]) / calls
+        return {"acc": [x["accuracy"] for x in rows], "bal": np.mean([x["balanced_accuracy"] for x in rows]),
+                "per": per, "quotes": np.mean(quotes) if quotes else float("nan"), "in": t_in, "out": t_out,
+                "cost": 1000 * (t_in * price[0] + t_out * price[1]) / 1e6}
 
-    # Why: the requirements where the versions' most common labels differ, with the team's label.
     def usual(variant, k):
         return Counter(run[k] for run in results[variant] if k in run).most_common(1)[0][0]
-    differ = [(k, key[k]["label"], usual("reason", k), usual("label_only", k)) for k in key
-              if all(k in run for v in VARIANTS for run in results[v]) and usual("reason", k) != usual("label_only", k)]
-    print(f"\n{len(differ)} requirements where the versions usually disagree "
-          f"(reason right on {sum(t == r for _, t, r, _ in differ)}, label_only right on "
-          f"{sum(t == l for _, t, _, l in differ)}):")
-    for (pair, req), team, r, l in differ[:15]:
-        print(f"  {pair} {req}: team {team}, reason {r}, label_only {l}")
 
+    head = ("| Version | Accuracy: mean (min-max), SD | Balanced accuracy | Met / partial / missing right "
+            "| Quotes found in CV | Input tok / call | Output tok / call | Cost / 1,000 calls |\n"
+            "|---|---|---|---|---|---|---|---|")
+    md = [f"Labeling step, {MODEL}, temperature 0, {runs} runs per version, {len(pairs)} test pairs "
+          f"({len(key)} skill requirements, team answer key; years rows left out). A call labels one CV "
+          f"against its jobs. Cost at ${price[0]:.2f} / ${price[1]:.2f} per 1M input / output tokens.", ""]
+    for t in tables:
+        title, vs = TABLES[t]
+        lines = [head]
+        for v in vs:
+            x = row(v)
+            quotes = "n/a" if np.isnan(x["quotes"]) else format(x["quotes"], ".0%")
+            lines.append(f"| {NAMES[v]} | {_range(x['acc'])} | {x['bal']:.1%} | "
+                         f"{' / '.join(f'{p:.0%}' for p in x['per'])} | {quotes} | "
+                         f"{x['in']:,.0f} | {x['out']:,.0f} | ${x['cost']:.2f} |")
+        md += [f"### {title}", "", *lines, ""]
+        print(f"\n{title}\n" + "\n".join(lines))
+        for v in vs[1:]:
+            differ = [(k, key[k]["label"], usual("reason", k), usual(v, k)) for k in key
+                      if all(k in run for var in ("reason", v) for run in results[var])
+                      and usual("reason", k) != usual(v, k)]
+            note = (f"{len(differ)} requirements where {NAMES[v]} usually disagrees with the app prompt "
+                    f"(app prompt right on {sum(a == b for _, a, b, _ in differ)}, {NAMES[v]} right on "
+                    f"{sum(a == c for _, a, _, c in differ)})")
+            print(note + ":")
+            md.append(note + ":")
+            for (pair, req), team, a, b in differ[:15]:
+                print(f"  {pair} {req}: team {team}, app prompt {a}, {v} {b}")
+                md.append(f"- {pair} {req}: team {team}, app prompt {a}, {NAMES[v]} {b}")
+            md.append("")
+
+    (OUT / "comparison_table.md").write_text("\n".join(md), encoding="utf-8")
     with (OUT / "comparison_summary.csv").open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(summary[0]))
         w.writeheader()
@@ -286,11 +333,11 @@ def compare(runs: int, pairs, frozen_path, prefix: str, main_key: dict) -> None:
     with (OUT / "comparison_labels.csv").open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow(["pair", "kind", "type", "requirement", "team"]
-                   + [f"{v}_run{i}" for v in VARIANTS for i in range(1, runs + 1)])
+                   + [f"{v}_run{i}" for v in variants for i in range(1, runs + 1)])
         for k, v in key.items():
             w.writerow([k[0], v["kind"], v["type"], k[1], v["label"]]
-                       + [run.get(k, "") for var in VARIANTS for run in results[var]])
-    print("\nwrote results/comparison_summary.csv and results/comparison_labels.csv")
+                       + [run.get(k, "") for var in variants for run in results[var]])
+    print("\nwrote results/comparison_table.md, comparison_summary.csv and comparison_labels.csv")
 
 
 def main() -> None:
@@ -327,7 +374,14 @@ def main() -> None:
                       f"{second[k]['labeler']} {second[k]['label']}")
 
     if "--compare" in sys.argv:
-        compare(int(sys.argv[sys.argv.index("--compare") + 1]), pairs, frozen_path, prefix, main_key)
+        tables = (sys.argv[sys.argv.index("--tables") + 1].split(",") if "--tables" in sys.argv
+                  else list(TABLES))
+        if unknown := set(tables) - set(TABLES):
+            raise SystemExit(f"unknown tables: {', '.join(sorted(unknown))} (use {', '.join(TABLES)})")
+        price = (tuple(float(x) for x in sys.argv[sys.argv.index("--price") + 1].split(","))
+                 if "--price" in sys.argv else PRICE)
+        compare(int(sys.argv[sys.argv.index("--compare") + 1]), pairs, frozen_path, prefix, main_key,
+                tables, price)
         return
 
     cvs = load_cvs()

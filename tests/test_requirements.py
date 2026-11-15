@@ -170,3 +170,21 @@ def test_backup_matcher_embeds_nothing_when_every_requirement_is_labeled():
     skill_call = next(c for c in calls if "python" in c)
     assert "sql" in skill_call            # the CV skill, to compare against
     assert r.missing_skills == ["Python"]  # decided by the backup matcher
+
+
+def test_shot_variants_differ_from_the_app_prompt_only_in_their_examples():
+    """Zero-shot and one-shot (eval/requirement_accuracy.py --compare) must stay copies of the app's
+    prompt with fewer examples, so the comparison measures the examples and nothing else."""
+    def without_examples(name):
+        text = (PROMPTS / name).read_text(encoding="utf-8")
+        if "Example" not in text:
+            return text
+        start = text.index("Example")
+        return text[:start] + text[text.index("Copy each job_id"):]
+    base = without_examples("label_requirements.md")
+    assert without_examples("label_requirements_one_shot.md") == base
+    assert without_examples("label_requirements_zero_shot.md") == base
+    one = (PROMPTS / "label_requirements_one_shot.md").read_text(encoding="utf-8")
+    zero = (PROMPTS / "label_requirements_zero_shot.md").read_text(encoding="utf-8")
+    assert one.count("- Requirement:") == 1 and zero.count("- Requirement:") == 0
+    assert "1. reason:" in one and "1. reason:" in zero  # both keep the chain of thought
