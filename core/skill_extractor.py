@@ -9,6 +9,7 @@ from .schemas import (CandidateProfile, Job, JobRequirements, JobRequirementsBat
                       RelevantExperienceBatch, RequirementCheck, RequirementLabel, RequirementLabelBatch,
                       RequirementLabelOnlyBatch, ToolCall)
 
+# --- Maylada (with Claude Code): prompt variants for the technique comparison ---
 # Labeling prompt versions: (prompt file, answer format). The app uses "reason": a short reason before
 # each label (chain of thought) and 3 worked examples (few-shot). The others exist only for the
 # technique comparison in eval/requirement_accuracy.py --compare; each differs from it in one way.
@@ -54,7 +55,20 @@ def extract_requirements(llm: LLMProvider, jobs: list[Job], max_jd_chars: int = 
                         description=fence("job", j.description[:local_max_jd_chars])),
                 JobRequirements, what=f"reading the posting for {j.title}")
             j.requirements = req.model_copy(update={"job_id": j.id})
+    for j in jobs:
+        if j.requirements and not plausible_years(j.requirements.min_years_experience):
+            j.requirements.min_years_experience = None  # an impossible minimum counts as not stated
     return jobs
+
+
+# --- Maylada (with Claude Code): invalid values (directives §5.5, test input A8) ---
+MAX_MIN_YEARS = 40  # longer than a working life: a typo or a joke, not a requirement
+
+
+def plausible_years(years: float | None) -> bool:
+    """A posting's minimum years is used only if it is a real number of years: 0 < years <= 40.
+    "150+ years" or "-2 years" would otherwise make the experience fit near 0 for everyone."""
+    return years is None or 0 < years <= MAX_MIN_YEARS
 
 
 def judge_experience(llm: LLMProvider, cv_text: str, jobs: list[Job], max_jd_chars: int = 10_000,

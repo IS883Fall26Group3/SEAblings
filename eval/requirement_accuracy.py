@@ -74,6 +74,7 @@ SETS = {
 }
 
 
+# --- Maylada (with Claude Code): token counting and the prompt-technique comparison ---
 # ---------- tokens: every Gemini call is counted while TOKENS["on"] ----------
 TOKENS = {"on": False, "in": 0, "out": 0}
 _call_gemini = gemini.call_gemini

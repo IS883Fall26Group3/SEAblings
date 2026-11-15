@@ -103,6 +103,7 @@ def main(key: str, only: set[str] | None = None):
     print(f"done: {len(done['cvs'])} CVs, {len(done['jobs'])} jobs -> {cache.name}")
 
 
+# --- Maylada (with Claude Code): --cvs option ---
 def wanted_cvs(arg: str) -> set[str]:
     if arg != "test":
         return set(arg.split(","))

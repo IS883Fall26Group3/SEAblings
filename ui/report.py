@@ -1,3 +1,4 @@
+# --- Maylada (with Claude Code): PDF report ---
 """The results page as a PDF, for the "Download report (PDF)" button.
 
 Same content as the page: what we read from the CV, then each job's score, skills, score breakdown

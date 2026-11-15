@@ -9,6 +9,7 @@ SUPPORTED = (".pdf", ".docx", ".txt")
 MIN_CHARS = 200
 
 
+# --- Maylada (with Claude Code): scanned-PDF detection and the plain-mode text fallback ---
 class ScannedDocumentError(ValueError):
     """A PDF that is pictures of pages, with no text layer to read."""
 

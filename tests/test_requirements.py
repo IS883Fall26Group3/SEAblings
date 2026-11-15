@@ -188,3 +188,15 @@ def test_shot_variants_differ_from_the_app_prompt_only_in_their_examples():
     zero = (PROMPTS / "label_requirements_zero_shot.md").read_text(encoding="utf-8")
     assert one.count("- Requirement:") == 1 and zero.count("- Requirement:") == 0
     assert "1. reason:" in one and "1. reason:" in zero  # both keep the chain of thought
+
+
+def test_impossible_minimum_years_counts_as_not_stated():
+    """Directives §5.5, invalid value (eval test input A8): "150+ years" isn't held against anyone."""
+    from core.skill_extractor import extract_requirements, plausible_years
+    assert plausible_years(None) and plausible_years(3) and plausible_years(40)
+    assert not plausible_years(150) and not plausible_years(-2) and not plausible_years(0)
+    job = job_with([])
+    llm = FakeLLM({"items": [{"job_id": job.id, "required_skills": ["SQL"], "nice_to_have_skills": [],
+                              "min_years_experience": 150}]})
+    llm.batch_jobs = True
+    assert extract_requirements(llm, [job])[0].requirements.min_years_experience is None

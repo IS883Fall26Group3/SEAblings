@@ -19,6 +19,7 @@ log = logging.getLogger("seablings.llm")
 _on_retry: ContextVar = ContextVar("on_retry", default=None)
 
 
+# --- Maylada (with Claude Code): <cv>/<job> tags against prompt injection ---
 def fence(tag: str, text: str) -> str:
     """Put a user's document inside <tag> tags for a prompt, removing any <cv>/<job> tags already in it
     so the text can't close the tag early and pose as instructions."""
@@ -26,6 +27,7 @@ def fence(tag: str, text: str) -> str:
     return f"<{tag}>\n{clean}\n</{tag}>"
 
 
+# --- Maylada (with Claude Code): retry notices shown to the user ---
 def announce_retry(message: str) -> None:
     log.info("retry: %s", message)
     callback = _on_retry.get()
